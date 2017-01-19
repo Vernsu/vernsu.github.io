@@ -3,14 +3,33 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Swift学徒</title>
+  <title>Swift中值语义的实现 | Swift学徒</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Swift学徒">
-<meta property="og:url" content="http://yoursite.com/index.html">
+  <meta name="description" content="什么是值语义目标对象由源对象拷贝生成，生成的目标对象与源对象彼此独立，改变互不影响。这就意味着，该对象的类型支持值语义。
+从另一个角度来说，如果一个对象的值，只能由自己修改，则说明这个对象的类型支持值语义。
+值语义的理解在OC中我们会经常这样写：
+1@property(nonatomic,copy) NSString * verifyCode;
+如果我们不这样写会导致什么问题？请看例子：
+1234">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Swift中值语义的实现">
+<meta property="og:url" content="http://yoursite.com/2017/01/19/001Swift中值语义的实现/index.html">
 <meta property="og:site_name" content="Swift学徒">
+<meta property="og:description" content="什么是值语义目标对象由源对象拷贝生成，生成的目标对象与源对象彼此独立，改变互不影响。这就意味着，该对象的类型支持值语义。
+从另一个角度来说，如果一个对象的值，只能由自己修改，则说明这个对象的类型支持值语义。
+值语义的理解在OC中我们会经常这样写：
+1@property(nonatomic,copy) NSString * verifyCode;
+如果我们不这样写会导致什么问题？请看例子：
+1234">
+<meta property="og:updated_time" content="2017-01-19T13:00:19.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Swift学徒">
+<meta name="twitter:title" content="Swift中值语义的实现">
+<meta name="twitter:description" content="什么是值语义目标对象由源对象拷贝生成，生成的目标对象与源对象彼此独立，改变互不影响。这就意味着，该对象的类型支持值语义。
+从另一个角度来说，如果一个对象的值，只能由自己修改，则说明这个对象的类型支持值语义。
+值语义的理解在OC中我们会经常这样写：
+1@property(nonatomic,copy) NSString * verifyCode;
+如果我们不这样写会导致什么问题？请看例子：
+1234">
   
     <link rel="alternate" href="/atom.xml" title="Swift学徒" type="application/atom+xml">
   
@@ -59,9 +78,7 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main">
-  
-    <article id="post-001Swift中值语义的实现" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-001Swift中值语义的实现" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2017/01/19/001Swift中值语义的实现/" class="article-date">
   <time datetime="2017-01-19T09:23:13.000Z" itemprop="datePublished">2017-01-19</time>
@@ -74,8 +91,8 @@
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/01/19/001Swift中值语义的实现/">Swift中值语义的实现</a>
+    <h1 class="article-title" itemprop="name">
+      Swift中值语义的实现
     </h1>
   
 
@@ -122,10 +139,9 @@
     </footer>
   </div>
   
-</article>
-
-
+    
   
+</article>
 
 </section>
         
