@@ -479,7 +479,10 @@
 <p><code>UIImage</code> 有很多 <code>Property</code>（<code>scale</code>，<code>capInset</code>，<code>renderimgmode</code>等），但是都是只读的，无法修改。所以一个变量没法影响另一个变量。</p>
 <p>注意：如果其中一个<code>Property</code>不是常量，那就破坏了<code>UIImage</code>的值语义。</p>
 <p>Cocoa 中有很多<code>Class</code>定义为不可变就是这个原因：不可变的引用类型拥有值语义。</p>
-<h3 id="Case-4：值类型内嵌套可变的引用类型"><a href="#Case-4：值类型内嵌套可变的引用类型" class="headerlink" title="Case 4：值类型内嵌套可变的引用类型"></a>Case 4：值类型内嵌套可变的引用类型</h3><p>使用一个特殊的技巧可以使这种情况也可以拥有值语义，<code>Swift</code>标准库里大量使用了这种技术。<br>具体的实现下一篇文章会详细介绍。</p>
+<h3 id="Case-4：值类型内嵌套可变的引用类型"><a href="#Case-4：值类型内嵌套可变的引用类型" class="headerlink" title="Case 4：值类型内嵌套可变的引用类型"></a>Case 4：值类型内嵌套可变的引用类型</h3><p>使用一个特殊的技巧可以使这种情况也可以拥有值语义，<code>Swift</code>标准库里大量使用了这种技术。<br>具体的实现请参考 <a href="https://vernsu.github.io/2017/01/20/" target="_blank" rel="external">Swift中值类型内嵌套可变引用类型时值语义的实现</a>。</p>
+<hr>
+<div style="text-align: center"><br>进一步的讨论，请关注公众号：SwiftBetter<br></div><br><div style="text-align: center"><br><img src="../images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>
+
 
           
         
