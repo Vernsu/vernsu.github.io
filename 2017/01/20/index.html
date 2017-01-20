@@ -93,7 +93,7 @@
 <meta property="og:description" content="简单的嵌套结构当一个值类型内嵌套一个可变引用类型拷贝时，引用类型作为 property 是引用的，拷贝所得的实例中 peoperty 和原实例中的 property 是同一个。举个例子：
 12345678910111213141516171819enum Color&amp;#123;    case blue    case green&amp;#125;class Bucket &amp;#123;    var c">
 <meta property="og:image" content="https://vernsu.github.io/images/wxqrcode.jpg">
-<meta property="og:updated_time" content="2017-01-20T06:46:54.000Z">
+<meta property="og:updated_time" content="2017-01-20T15:14:39.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Swift中值类型内嵌套可变引用类型时值语义的实现">
 <meta name="twitter:description" content="简单的嵌套结构当一个值类型内嵌套一个可变引用类型拷贝时，引用类型作为 property 是引用的，拷贝所得的实例中 peoperty 和原实例中的 property 是同一个。举个例子：
@@ -334,9 +334,15 @@
 <figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">PaintingPlan</span> // 值类型</span></div><div class="line">&#123;</div><div class="line">  <span class="comment">// 一个私有引用类型, for "deep storage"</span></div><div class="line">  <span class="keyword">private</span> <span class="keyword">var</span> bucket = <span class="type">Bucket</span>(color: .blue)</div><div class="line">  </div><div class="line">  <span class="comment">// 一个伪装的值类型，使用了 deep storage</span></div><div class="line">  <span class="keyword">var</span> bucketColor: <span class="type">Color</span> &#123;</div><div class="line">    <span class="keyword">get</span> &#123;</div><div class="line">      <span class="keyword">return</span> bucket.color</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">set</span> &#123;</div><div class="line">    <span class="comment">//注意，这里我们做了控制，让 bucket 只能指向了一个新的实例，而不能修改之前指向的实例，使得它拥有值语义。</span></div><div class="line">      bucket = <span class="type">Bucket</span>(color: newValue)</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">var</span> artPlan = <span class="type">PaintingPlan</span>()</div><div class="line"><span class="keyword">var</span> housePlan = artPlan</div><div class="line"></div><div class="line">housePlan.bucketColor = <span class="type">Color</span>.green</div><div class="line">artPlan.bucketColor <span class="comment">// blue！</span></div></pre></td></tr></table></figure>
 <p>对该 struct 的客户来说，表现出来的就是值语义。引入了一个计算属性，使用 get 和 set 来控制私有的引用类型的存取级别。这个行为在苹果官方文档中被叫做 deep storage，也被叫做 indiect storage 或 backing storage。</p>
 <p>当用户修改 bucketColor 时， setter 创建了一个不同的实例。</p>
-<h3 id="写时复制（COW）"><a href="#写时复制（COW）" class="headerlink" title="写时复制（COW）"></a>写时复制（COW）</h3><p>至此，值语义的实现算是解决了，但是这样做可能会导致潜在的性能问题。具体的下一篇文章会详细介绍。</p>
+<p>至此，值语义的实现算是解决了。</p>
+<h3 id="写时复制（COW）"><a href="#写时复制（COW）" class="headerlink" title="写时复制（COW）"></a>写时复制（COW）</h3><p>这样做，产生了另一个结果：和简单的值类型相比，给 PaintingPlan 分配一个值时，不会在分配时立刻拷贝 backing storage 。实际上多个实例会共享一个 backing storage。 但是看上去好像每个实例拥有他们自己的 backing storage，因为一旦需要，就会私下创建他自己的独特的 backing storage。</p>
+<p>这种模式被称作写时复制：因为系统只在当你需要修改变量的时候拷贝 backing storeage。</p>
+<p>Swift 标准库中大量使用了这种技术。Swift中很多值类型并不是原始的值类型，但是混合类型提供了值语义。</p>
+<p>这样做的好处在于提高性能。想象一个，如果 backing storeage 非常大，实例可以共用相同的 backing storeage， 这样可以节约拷贝占用的内存和计算力。</p>
+<p>但是一旦你使用变量修改实例，为了不影响别的变量，系统会拷贝 backing storeage 。这样可以推迟内存占用和计算力消耗直到必须拷贝时。</p>
+<p>这个例子还可以进一步的优化，详细介绍见这篇文章。</p>
 <hr>
-<div style="text-align: center"><br>关注公众号：SwiftBetter，进一步讨论主题<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>
+<div style="text-align: center"><br>关注公众号：SwiftBetter，获取进一步的讨论与彩蛋<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>
 
 
 
