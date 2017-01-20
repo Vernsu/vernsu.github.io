@@ -92,11 +92,13 @@
 <meta property="og:site_name" content="Swift学徒">
 <meta property="og:description" content="简单的嵌套结构当一个值类型内嵌套一个可变引用类型拷贝时，引用类型作为 property 是引用的，拷贝所得的实例中 peoperty 和原实例中的 property 是同一个。举个例子：
 12345678910111213141516171819enum Color&amp;#123;    case blue    case green&amp;#125;class Bucket &amp;#123;    var c">
-<meta property="og:updated_time" content="2017-01-20T05:44:24.000Z">
+<meta property="og:image" content="https://vernsu.github.io/images/wxqrcode.jpg">
+<meta property="og:updated_time" content="2017-01-20T06:46:54.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Swift中值类型内嵌套可变引用类型时值语义的实现">
 <meta name="twitter:description" content="简单的嵌套结构当一个值类型内嵌套一个可变引用类型拷贝时，引用类型作为 property 是引用的，拷贝所得的实例中 peoperty 和原实例中的 property 是同一个。举个例子：
 12345678910111213141516171819enum Color&amp;#123;    case blue    case green&amp;#125;class Bucket &amp;#123;    var c">
+<meta name="twitter:image" content="https://vernsu.github.io/images/wxqrcode.jpg">
 
 
 
@@ -333,6 +335,10 @@
 <p>对该 struct 的客户来说，表现出来的就是值语义。引入了一个计算属性，使用 get 和 set 来控制私有的引用类型的存取级别。这个行为在苹果官方文档中被叫做 deep storage，也被叫做 indiect storage 或 backing storage。</p>
 <p>当用户修改 bucketColor 时， setter 创建了一个不同的实例。</p>
 <h3 id="写时复制（COW）"><a href="#写时复制（COW）" class="headerlink" title="写时复制（COW）"></a>写时复制（COW）</h3><p>至此，值语义的实现算是解决了，但是这样做可能会导致潜在的性能问题。具体的下一篇文章会详细介绍。</p>
+<hr>
+<div style="text-align: center"><br>关注公众号：SwiftBetter，进一步讨论主题<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>
+
+
 
       
     </div>

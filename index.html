@@ -333,6 +333,10 @@
 <p>对该 struct 的客户来说，表现出来的就是值语义。引入了一个计算属性，使用 get 和 set 来控制私有的引用类型的存取级别。这个行为在苹果官方文档中被叫做 deep storage，也被叫做 indiect storage 或 backing storage。</p>
 <p>当用户修改 bucketColor 时， setter 创建了一个不同的实例。</p>
 <h3 id="写时复制（COW）"><a href="#写时复制（COW）" class="headerlink" title="写时复制（COW）"></a>写时复制（COW）</h3><p>至此，值语义的实现算是解决了，但是这样做可能会导致潜在的性能问题。具体的下一篇文章会详细介绍。</p>
+<hr>
+<div style="text-align: center"><br>关注公众号：SwiftBetter，进一步讨论主题<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>
+
+
 
           
         
@@ -481,7 +485,7 @@
 <p>Cocoa 中有很多<code>Class</code>定义为不可变就是这个原因：不可变的引用类型拥有值语义。</p>
 <h3 id="Case-4：值类型内嵌套可变的引用类型"><a href="#Case-4：值类型内嵌套可变的引用类型" class="headerlink" title="Case 4：值类型内嵌套可变的引用类型"></a>Case 4：值类型内嵌套可变的引用类型</h3><p>使用一个特殊的技巧可以使这种情况也可以拥有值语义，<code>Swift</code>标准库里大量使用了这种技术。<br>具体的实现请参考 <a href="https://vernsu.github.io/2017/01/20/" target="_blank" rel="external">Swift中值类型内嵌套可变引用类型时值语义的实现</a>。</p>
 <hr>
-<div style="text-align: center"><br>进一步的讨论，请关注公众号：SwiftBetter<br></div><br><div style="text-align: center"><br><img src="../images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>
+<div style="text-align: center"><br>关注公众号：SwiftBetter，进一步讨论主题<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>
 
 
           
