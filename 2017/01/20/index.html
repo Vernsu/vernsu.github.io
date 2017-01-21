@@ -93,7 +93,7 @@
 <meta property="og:description" content="简单的嵌套结构当一个值类型内嵌套一个可变引用类型拷贝时，引用类型作为 property 是引用的，拷贝所得的实例中 peoperty 和原实例中的 property 是同一个。举个例子：
 12345678910111213141516171819enum Color&amp;#123;    case blue    case green&amp;#125;class Bucket &amp;#123;    var c">
 <meta property="og:image" content="https://vernsu.github.io/images/wxqrcode.jpg">
-<meta property="og:updated_time" content="2017-01-20T15:45:27.000Z">
+<meta property="og:updated_time" content="2017-01-21T09:28:13.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Swift中值类型内嵌套可变引用类型时值语义的实现">
 <meta name="twitter:description" content="简单的嵌套结构当一个值类型内嵌套一个可变引用类型拷贝时，引用类型作为 property 是引用的，拷贝所得的实例中 peoperty 和原实例中的 property 是同一个。举个例子：
@@ -340,10 +340,9 @@
 <p>Swift 标准库中大量使用了这种技术。Swift中很多值类型并不是原始的值类型，但是混合类型提供了值语义。</p>
 <p>这样做的好处在于提高性能。想象一个，如果 backing storeage 非常大，实例可以共用相同的 backing storeage， 这样可以节约拷贝占用的内存和计算力。</p>
 <p>但是一旦你使用变量修改实例，为了不影响别的变量，系统会拷贝 backing storeage 。这样可以推迟内存占用和计算力消耗直到必须拷贝时。</p>
-<p>这个例子还可以进一步的优化，详细介绍见这篇文章。</p>
+<p>这个例子还可以进一步的优化，详细介绍参考<a href="https://vernsu.github.io/2017/01/21/" target="_blank" rel="external">写时复制（COW）在 Swift 中的应用</a>。</p>
 <hr>
-<div style="text-align: center"><br>关注公众号（ID：SwiftBetter），获取进一步的讨论与彩蛋<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>
-
+<div style="text-align: center"><br>关注公众号（ID：SwiftBetter），进一步探讨主题<br><br><br>每日精选高清题图，可做壁纸<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>
 
 
       
@@ -453,7 +452,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-count">4</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
