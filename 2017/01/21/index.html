@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="值类型,引用类型,写时复制,数组,吐槽," />
 
 
 
@@ -95,7 +95,7 @@
 引子王垠老师在 《Swift 语言的设计错误》一文中指出 array 这种大型数据结构，不应该采用值类型。而应该使用引用类型，将 array 拆分为可变和不可变的两个类。因为值类型的复制代价很大。
 王垠老师写到「由于这个原因，没有任何其它现代语言（Java，C#，……）把 array 作为 value type。」看到这句话时，我第一反应是：这是在黑最好的编程语言 PHP不">
 <meta property="og:image" content="https://vernsu.github.io/images/wxqrcode.jpg">
-<meta property="og:updated_time" content="2017-01-21T09:28:22.000Z">
+<meta property="og:updated_time" content="2017-01-22T10:55:47.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="写时复制（COW）在 Swift 中的应用">
 <meta name="twitter:description" content="注：本文结尾处有吐槽。
@@ -171,7 +171,7 @@
     </a>
   </div>
     
-      <p class="site-subtitle"></p>
+      <p class="site-subtitle">笨办法学Swift</p>
     
 </div>
 
@@ -196,6 +196,16 @@
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
             首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
           </a>
         </li>
       
@@ -372,6 +382,20 @@
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/值类型/" rel="tag"># 值类型</a>
+          
+            <a href="/tags/引用类型/" rel="tag"># 引用类型</a>
+          
+            <a href="/tags/写时复制/" rel="tag"># 写时复制</a>
+          
+            <a href="/tags/数组/" rel="tag"># 数组</a>
+          
+            <a href="/tags/吐槽/" rel="tag"># 吐槽</a>
+          
+        </div>
+      
 
       
         <div class="post-nav">
@@ -452,7 +476,7 @@
                src="/images/avatar.gif"
                alt="万恶胖为首" />
           <p class="site-author-name" itemprop="name">万恶胖为首</p>
-          <p class="site-description motion-element" itemprop="description"></p>
+          <p class="site-description motion-element" itemprop="description">笨办法学Swift</p>
         </div>
         <nav class="site-state motion-element">
         
@@ -467,6 +491,13 @@
 
           
 
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
           
 
         </nav>
