@@ -99,7 +99,7 @@
 
 这个错误的出现可谓历史悠久，源自Tony Hoare在1965年时提出的编程语言设计，而且广泛的被借鉴到其他语言中。Null 在其他语言中有各种各样的名字：NULL、nil、null、None、Nothing、Nil 和 nullptr。更糟糕">
 <meta property="og:image" content="https://vernsu.github.io/images/wxqrcode.jpg">
-<meta property="og:updated_time" content="2017-01-22T07:23:41.000Z">
+<meta property="og:updated_time" content="2017-01-22T07:32:16.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Swift 中为什么要引入 Optional？">
 <meta name="twitter:description" content="历史原因来自 StackOverflow 一个提问里描述到：
@@ -349,7 +349,7 @@
 <p>在这个例子中，tmp 中 明明不可能包含关键字，但是「Swift是最好的编程语言」这句话仍然被打印了出来。</p>
 <p>这就是哨兵值惹的祸，这样的问题防不胜防。</p>
 <p>如果一种语言允许任何东西为 null，那么任何东西都可以是 null。换句话说，我们使用任何一个对象都冒着它并不存在的风险，而编译器对这种状态一无所知。</p>
-<h2 id="Swift-中的优雅处理"><a href="#Swift-中的优雅处理" class="headerlink" title="Swift 中的优雅处理"></a>Swift 中的优雅处理</h2><p>Swift 用一个特殊类型 optional 处理一个值可能是 nil 的情况。当你使用 optional时，你必须处理nil的情况。这样就有效解决了解决了值含糊不清的问题。</p>
+<h2 id="Swift-中的优雅处理"><a href="#Swift-中的优雅处理" class="headerlink" title="Swift 中的优雅处理"></a>Swift 中的优雅处理</h2><p>Swift 用一个特殊类型 optional 处理一个值可能是 nil 的情况。当你使用 optional时，你必须处理nil的情况。这样就有效解决了解决了哨兵值含糊不清的问题。</p>
 <p>因为，null的问题之所以存在，是因为你可以在没有“检查” null 的情况下，对对象进行了操作。</p>
 <p>Optional 类型的设计让你没法在访问对象前不检查它。这让你没法犯错。</p>
 <p>比如，在 Swift 里面，你可以这样写：</p>
