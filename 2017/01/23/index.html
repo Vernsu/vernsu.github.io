@@ -99,7 +99,7 @@
 
 这个错误的出现可谓历史悠久，源自Tony Hoare在1965年时提出的编程语言设计，而且广泛的被借鉴到其他语言中。Null 在其他语言中有各种各样的名字：NULL、nil、null、None、Nothing、Nil 和 nullptr。更糟糕">
 <meta property="og:image" content="https://vernsu.github.io/images/wxqrcode.jpg">
-<meta property="og:updated_time" content="2017-01-22T10:54:54.000Z">
+<meta property="og:updated_time" content="2017-01-24T06:21:51.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Swift 中为什么要引入 Optional？">
 <meta name="twitter:description" content="历史原因来自 StackOverflow 一个提问里描述到：
@@ -365,7 +365,7 @@
 <p>这种使用了和正常状态同类型的特殊值来表示失败，没有值，不存在的含义，我们通常将这种值就叫做哨兵值。</p>
 <p>很多语言简单的处理了哨兵值，比如 Objective-C 中有 nil概念，但是仅仅只是和0的含义相同。</p>
 <p>在Objective-C中由于调用值为nil的对象的方法是被允许的。我们举一个 nil 造成的 bug：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">NSString * tmp = nil;</div><div class="line">if ([tmp rangeOfString:@&quot;Swift&quot;].location != NSNotFound) &#123;</div><div class="line">    NSLog(@&quot;Swift是最好的编程语言&quot;);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">NSString</span> * tmp = <span class="literal">nil</span>;</div><div class="line"><span class="keyword">if</span> ([tmp rangeOfString:<span class="string">@"Swift"</span>].location != <span class="built_in">NSNotFound</span>) &#123;</div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"Swift是最好的编程语言"</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>在这个例子中，tmp 中 明明不可能包含关键字，但是「Swift是最好的编程语言」这句话仍然被打印了出来。</p>
 <p>这就是哨兵值惹的祸，这样的问题防不胜防。</p>
 <p>如果一种语言允许任何东西为 null，那么任何东西都可以是 null。换句话说，我们使用任何一个对象都冒着它并不存在的风险，而编译器对这种状态一无所知。</p>
@@ -422,6 +422,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/01/24/" rel="prev" title="Swift中单例的实现">
+                Swift中单例的实现 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -491,7 +495,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-count">6</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -502,7 +506,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-count">14</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
