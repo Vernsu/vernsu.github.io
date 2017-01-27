@@ -93,7 +93,7 @@ Apple 已经提供">
 <meta property="og:description" content="介绍在实际项目开发中，可能需要对网络请求进行缓存。例如网络图片，基本的缓存需求是：每张的图片 URL 都对应在本地保存的一个图片，这样当请求之前访问过的 URL 将直接从本地读取这张图片，为了效率更高，我们还会把图片保存在内存中。当开始请求一个图片 URL 时，我们先从内存中尝试读取这张图片，如果没有，再尝试从硬盘中读取这张图片，如果还是没有，才真的去网络上请求这个图片资源。
 Apple 已经提供">
 <meta property="og:image" content="https://vernsu.github.io/images/wxqrcode.jpg">
-<meta property="og:updated_time" content="2017-01-26T15:13:18.000Z">
+<meta property="og:updated_time" content="2017-01-27T08:05:47.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="iOS 开发中 URLCache 的应用">
 <meta name="twitter:description" content="介绍在实际项目开发中，可能需要对网络请求进行缓存。例如网络图片，基本的缓存需求是：每张的图片 URL 都对应在本地保存的一个图片，这样当请求之前访问过的 URL 将直接从本地读取这张图片，为了效率更高，我们还会把图片保存在内存中。当开始请求一个图片 URL 时，我们先从内存中尝试读取这张图片，如果没有，再尝试从硬盘中读取这张图片，如果还是没有，才真的去网络上请求这个图片资源。
@@ -344,19 +344,24 @@ Apple 已经提供">
 <p>Apple 已经提供了一个强大的网络请求缓存类：URLCache。URLCache 提供了内存和硬盘缓存的综合缓存机制，能够控制内存和硬盘缓存的大小，并且可以控制缓存数据的存储路径。</p>
 <p>在 iOS8 之后 URLCache 是线程安全的。尽管 URLCache 实例方法能够安全的被多个执行上下文同时调用，还是要注意有些方法的使用。比如使用 <code>cacheResponse(for:)</code> 和 <code>storeCachedResponse(_:for:)</code> 在同一个 request 中读写响应，不可避免的会出现竞争条件。URLCache的子类必须实现线程安全的方法重载。</p>
 <p>URLCache.StoragePolicy 可以指定存储策略。分别是默认缓存，只在内存中缓存，不允许缓存。</p>
-<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><h3 id="在-SessionConfiguration-中配置-URLCache"><a href="#在-SessionConfiguration-中配置-URLCache" class="headerlink" title="在 SessionConfiguration 中配置 URLCache"></a>在 SessionConfiguration 中配置 URLCache</h3><p>在 NSURLSession 加载系统中，缓存被设计为 NSURLSessionConfiguration 对象的一个属性，该属性所指定的策略被该对象 session 的所有 request 所共享。</p>
+<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><h3 id="在-AppDelegate-中使用-URLCache"><a href="#在-AppDelegate-中使用-URLCache" class="headerlink" title="在 AppDelegate 中使用 URLCache"></a>在 AppDelegate 中使用 URLCache</h3><p>我们可以设置一个全局的 URLCache， 如果没有详细指定，任何 GET 请求都将被这个全局 URLCache 处理。下面代码设置了 5M 内存缓存空间和 30M 的硬盘缓存空间。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">application</span><span class="params">(<span class="number">_</span> application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?)</span></span> -&gt; <span class="type">Bool</span> &#123;</div><div class="line">    </div><div class="line">    <span class="keyword">let</span> cache = <span class="type">URLCache</span>(memoryCapacity: <span class="number">5</span> * <span class="number">1024</span> * <span class="number">1024</span>, diskCapacity: <span class="number">30</span> * <span class="number">1024</span> * <span class="number">1024</span>, diskPath: <span class="literal">nil</span>)</div><div class="line">    <span class="type">URLCache</span>.shared = cache</div><div class="line">        </div><div class="line">    <span class="keyword">return</span> <span class="literal">true</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>如果你没有添加以上代码，实际上 apple 就已经设置了默认的 URLCache，有512KB的内存缓存空间，以及10MB的硬盘缓存空间。默认 URLCache 同样可以通过 <code>URLCache.shared</code> 获取。</p>
+<p>我们还可以可以通过 <code>URLCache.shared.currentDiskUsage</code> 与<code>URLCache.shared.currentMemoryUsage</code>查看当前缓存占据的空间。使用 <code>URLCache.shared.diskCapacity</code> 与<code>URLCache.shared.memoryCapacity</code>直接修改缓存的大小。</p>
+<h3 id="在-SessionConfiguration-中配置-URLCache"><a href="#在-SessionConfiguration-中配置-URLCache" class="headerlink" title="在 SessionConfiguration 中配置 URLCache"></a>在 SessionConfiguration 中配置 URLCache</h3><p>在 NSURLSession 加载系统中，缓存被设计为 NSURLSessionConfiguration 对象的一个属性，该属性所指定的策略被该对象 session 的所有 request 所共享。</p>
 <figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> configuration = <span class="type">URLSessionConfiguration</span>.<span class="keyword">default</span></div><div class="line">configuration.urlCache?.memoryCapacity <span class="comment">//51200</span></div><div class="line">configuration.urlCache?.diskCapacity <span class="comment">//10000000</span></div></pre></td></tr></table></figure>
-<p>可以看到默认的 condiguration 有默认 的 urlCache，内存和硬盘的默认缓存大小分别是 512K 和 10M。</p>
+<p>可以看到默认的 condiguration 有默认 的 urlCache，内存和硬盘的默认缓存大小分别是 512KB 和 10M。</p>
 <p>可以使用自己创建的 URLCache 对象：</p>
 <figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> smallCache = <span class="type">URLCache</span>(memoryCapacity: <span class="number">512000</span>, diskCapacity: <span class="number">2000000</span>, diskPath: <span class="literal">nil</span>)</div><div class="line">configuration.urlCache = smallCache</div><div class="line">configuration.urlCache?.memoryCapacity <span class="comment">//51200</span></div><div class="line">configuration.urlCache?.diskCapacity <span class="comment">//20000000</span></div></pre></td></tr></table></figure>
-<h3 id="在-AppDelegate-中使用-URLCache"><a href="#在-AppDelegate-中使用-URLCache" class="headerlink" title="在 AppDelegate 中使用 URLCache"></a>在 AppDelegate 中使用 URLCache</h3><p>我们可以设置一个全局的 URLCache， 如果没有详细指定，任何求都将被这个全局 URLCache 处理。</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">application</span><span class="params">(<span class="number">_</span> application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?)</span></span> -&gt; <span class="type">Bool</span> &#123;</div><div class="line">    </div><div class="line">    <span class="keyword">let</span> cache = <span class="type">URLCache</span>(memoryCapacity: <span class="number">4</span> * <span class="number">1024</span> * <span class="number">1024</span>, diskCapacity: <span class="number">20</span> * <span class="number">1024</span> * <span class="number">1024</span>, diskPath: <span class="literal">nil</span>)</div><div class="line">    <span class="type">URLCache</span>.shared = cache</div><div class="line">        </div><div class="line">    <span class="keyword">return</span> <span class="literal">true</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>如果你没有添加以上代码，实际上 apple 就已经设置了默认的 URLCache，有512kb的内存缓存空间，以及10MB的硬盘缓存空间。默认 URLCache 同样可以通过 <code>URLCache.shared</code> 获取。</p>
+<p>现在我们构造一个 session 请求：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> XCPlayground</div><div class="line"><span class="type">XCPlaygroundPage</span>.currentPage.needsIndefiniteExecution = <span class="literal">true</span></div><div class="line"></div><div class="line"><span class="keyword">let</span> configuration = <span class="type">URLSessionConfiguration</span>.<span class="keyword">default</span></div><div class="line"><span class="keyword">let</span> smallCache = <span class="type">URLCache</span>(memoryCapacity: <span class="number">512000</span>, diskCapacity: <span class="number">2000000</span>, diskPath: <span class="literal">nil</span>)</div><div class="line">configuration.urlCache = smallCache</div><div class="line"><span class="keyword">let</span> session = <span class="type">URLSession</span>(configuration: configuration)</div><div class="line"></div><div class="line"><span class="keyword">let</span> url = <span class="type">URL</span>(string: <span class="string">"https://api.flickr.com/services/feeds/photos_public.gne?format=json&amp;nojsoncallback=1"</span>)!</div><div class="line"></div><div class="line"><span class="keyword">let</span> task = session.dataTask(with: url) &#123;</div><div class="line">    (data, response, error) <span class="keyword">in</span>   </div><div class="line">    <span class="keyword">guard</span> <span class="keyword">let</span> data = data <span class="keyword">else</span> &#123; <span class="built_in">print</span>(error ?? <span class="string">"未知错误"</span>); <span class="keyword">return</span> &#125;</div><div class="line">    </div><div class="line">    <span class="keyword">let</span> result = <span class="type">NSString</span>(data: data, encoding:<span class="type">String</span>.<span class="type">Encoding</span>.utf8.rawValue)</div><div class="line">    </div><div class="line">    <span class="type">XCPlaygroundPage</span>.currentPage.finishExecution()</div><div class="line">&#125;</div><div class="line">task.resume()</div></pre></td></tr></table></figure>
+<p>当这个请求命中缓存的时候， dataTask 将不会发起真正的网络请求，而是从缓存中获取内容，我们不用关心这个缓存到底来自硬盘还是内存。</p>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>网络缓存减少了需要向服务器发送请求的次数，同时也提升了离线或在低速网络中使用应用的体验。设置一个全局 URLCache 可以有效的减轻服务端压力。如果你没有设置，那就赶快动手设置一个。</p>
 <p>AFNetworking 的作者 Mattt曾经感叹过：</p>
 <blockquote>
 <p>无数开发者尝试自己做一个简陋而脆弱的系统来实现网络缓存的功能，殊不知  NSURLCache  只要两行代码就能搞定且好上 100 倍。</p>
 </blockquote>
+<p>缓存的目的本质上就是：以空间换时间。</p>
 <hr>
 <div style="text-align: center"><br>关注公众号（ID：SwiftBetter），进一步探讨主题<br><br><br>每日精选高清题图，可做壁纸<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>
 
@@ -405,6 +410,10 @@ Apple 已经提供">
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/01/27/" rel="prev" title="iOS 中的缓存策略：客户端篇">
+                iOS 中的缓存策略：客户端篇 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -474,7 +483,7 @@ Apple 已经提供">
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-count">9</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -520,7 +529,7 @@ Apple 已经提供">
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#介绍"><span class="nav-number">1.</span> <span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用"><span class="nav-number">2.</span> <span class="nav-text">使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#在-SessionConfiguration-中配置-URLCache"><span class="nav-number">2.1.</span> <span class="nav-text">在 SessionConfiguration 中配置 URLCache</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#在-AppDelegate-中使用-URLCache"><span class="nav-number">2.2.</span> <span class="nav-text">在 AppDelegate 中使用 URLCache</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">3.</span> <span class="nav-text">总结</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#介绍"><span class="nav-number">1.</span> <span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用"><span class="nav-number">2.</span> <span class="nav-text">使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#在-AppDelegate-中使用-URLCache"><span class="nav-number">2.1.</span> <span class="nav-text">在 AppDelegate 中使用 URLCache</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#在-SessionConfiguration-中配置-URLCache"><span class="nav-number">2.2.</span> <span class="nav-text">在 SessionConfiguration 中配置 URLCache</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">3.</span> <span class="nav-text">总结</span></a></li></ol></div>
             
 
           </div>
