@@ -93,7 +93,7 @@
 <meta property="og:description" content="《iOS 开发中常用的缓存策略：客户端篇》一文中我们提到 iOS 中 URL 加载系统默认的缓存策略使用当前 URL 的协议中的缓存策略。本文只关注 HTTP 协议中的缓存策略。
 使用 HTTP 头部中的 Cache-Control使用 URLCache 的一个优势在于，系统可以自动的理解 HTTP 头部中的 Cache-Control 字段定义的缓存策略。我们只需要服务端根据 HTTP 协议设置">
 <meta property="og:image" content="https://vernsu.github.io/images/wxqrcode.jpg">
-<meta property="og:updated_time" content="2017-01-28T12:54:26.000Z">
+<meta property="og:updated_time" content="2017-01-28T13:01:04.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="iOS 开发中常用的缓存策略：HTTP 协议篇">
 <meta name="twitter:description" content="《iOS 开发中常用的缓存策略：客户端篇》一文中我们提到 iOS 中 URL 加载系统默认的缓存策略使用当前 URL 的协议中的缓存策略。本文只关注 HTTP 协议中的缓存策略。
@@ -343,7 +343,7 @@
         <p><a href="http://swift.diagon.me/2017/01/27/">《iOS 开发中常用的缓存策略：客户端篇》</a>一文中我们提到 iOS 中 URL 加载系统默认的缓存策略使用当前 URL 的协议中的缓存策略。本文只关注 HTTP 协议中的缓存策略。</p>
 <h2 id="使用-HTTP-头部中的-Cache-Control"><a href="#使用-HTTP-头部中的-Cache-Control" class="headerlink" title="使用 HTTP 头部中的 Cache-Control"></a>使用 HTTP 头部中的 Cache-Control</h2><p>使用 URLCache 的一个优势在于，系统可以自动的理解 HTTP 头部中的 Cache-Control 字段定义的缓存策略。我们只需要服务端根据 HTTP 协议设置 Cache-Control 的内容，URLCache 就知道, 这个缓存应该是什么时候过期了，客户端中的实现不需要写任何代码。</p>
 <p>我们可以使用抓包工具或者在返回体中打印响应头信息:</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">print</span>((response <span class="keyword">as</span>? <span class="type">HTTPURLResponse</span>)?.allHeaderFields)</div></pre></td></tr></table></figure>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> configuration = <span class="type">URLSessionConfiguration</span>.<span class="keyword">default</span></div><div class="line"><span class="keyword">let</span> session = <span class="type">URLSession</span>(configuration: configuration)</div><div class="line"><span class="keyword">let</span> url = <span class="type">URL</span>(string: <span class="string">"https://api.flickr.com/services/feeds/photos_public.gne?format=json&amp;nojsoncallback=1"</span>)!</div><div class="line">        </div><div class="line"><span class="keyword">let</span> task = session.dataTask(with: url) &#123;</div><div class="line">    (data, response, error) <span class="keyword">in</span></div><div class="line">            </div><div class="line">    <span class="keyword">guard</span> <span class="keyword">let</span> data = data <span class="keyword">else</span> &#123; </div><div class="line">    	<span class="built_in">print</span>(error ?? <span class="string">"未知错误"</span>); <span class="keyword">return</span> </div><div class="line">    &#125;</div><div class="line">    <span class="built_in">print</span>((response <span class="keyword">as</span>? <span class="type">HTTPURLResponse</span>)?.allHeaderFields)           </div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>Cache-Control 常见指令有：</p>
 <ul>
 <li><p>max-age=86400 ：    表示过期时间，同时也意味着 <code>响应可以被缓存</code>。 缓存在一天内有效（60 秒 x 60 分 x 24 小时）。<strong>HTTP 协议通过 <code>max-age</code> 字段来告诉URLCache是否需要缓存数据。</strong></p>
