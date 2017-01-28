@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="URLCache,缓存,网络缓存," />
+  <meta name="keywords" content="URLCache,网络缓存,缓存," />
 
 
 
@@ -93,7 +93,7 @@ Apple 已经提供">
 <meta property="og:description" content="介绍在实际项目开发中，可能需要对网络请求进行缓存。例如网络图片，基本的缓存需求是：每张的图片 URL 都对应在本地保存的一个图片，这样当请求之前访问过的 URL 将直接从本地读取这张图片，为了效率更高，我们还会把图片保存在内存中。当开始请求一个图片 URL 时，我们先从内存中尝试读取这张图片，如果没有，再尝试从硬盘中读取这张图片，如果还是没有，才真的去网络上请求这个图片资源。
 Apple 已经提供">
 <meta property="og:image" content="https://vernsu.github.io/images/wxqrcode.jpg">
-<meta property="og:updated_time" content="2017-01-27T08:05:47.000Z">
+<meta property="og:updated_time" content="2017-01-28T05:42:07.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="iOS 开发中 URLCache 的应用">
 <meta name="twitter:description" content="介绍在实际项目开发中，可能需要对网络请求进行缓存。例如网络图片，基本的缓存需求是：每张的图片 URL 都对应在本地保存的一个图片，这样当请求之前访问过的 URL 将直接从本地读取这张图片，为了效率更高，我们还会把图片保存在内存中。当开始请求一个图片 URL 时，我们先从内存中尝试读取这张图片，如果没有，再尝试从硬盘中读取这张图片，如果还是没有，才真的去网络上请求这个图片资源。
@@ -356,7 +356,7 @@ Apple 已经提供">
 <p>现在我们构造一个 session 请求：</p>
 <figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> XCPlayground</div><div class="line"><span class="type">XCPlaygroundPage</span>.currentPage.needsIndefiniteExecution = <span class="literal">true</span></div><div class="line"></div><div class="line"><span class="keyword">let</span> configuration = <span class="type">URLSessionConfiguration</span>.<span class="keyword">default</span></div><div class="line"><span class="keyword">let</span> smallCache = <span class="type">URLCache</span>(memoryCapacity: <span class="number">512000</span>, diskCapacity: <span class="number">2000000</span>, diskPath: <span class="literal">nil</span>)</div><div class="line">configuration.urlCache = smallCache</div><div class="line"><span class="keyword">let</span> session = <span class="type">URLSession</span>(configuration: configuration)</div><div class="line"></div><div class="line"><span class="keyword">let</span> url = <span class="type">URL</span>(string: <span class="string">"https://api.flickr.com/services/feeds/photos_public.gne?format=json&amp;nojsoncallback=1"</span>)!</div><div class="line"></div><div class="line"><span class="keyword">let</span> task = session.dataTask(with: url) &#123;</div><div class="line">    (data, response, error) <span class="keyword">in</span>   </div><div class="line">    <span class="keyword">guard</span> <span class="keyword">let</span> data = data <span class="keyword">else</span> &#123; <span class="built_in">print</span>(error ?? <span class="string">"未知错误"</span>); <span class="keyword">return</span> &#125;</div><div class="line">    </div><div class="line">    <span class="keyword">let</span> result = <span class="type">NSString</span>(data: data, encoding:<span class="type">String</span>.<span class="type">Encoding</span>.utf8.rawValue)</div><div class="line">    </div><div class="line">    <span class="type">XCPlaygroundPage</span>.currentPage.finishExecution()</div><div class="line">&#125;</div><div class="line">task.resume()</div></pre></td></tr></table></figure>
 <p>当这个请求命中缓存的时候， dataTask 将不会发起真正的网络请求，而是从缓存中获取内容，我们不用关心这个缓存到底来自硬盘还是内存。</p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>网络缓存减少了需要向服务器发送请求的次数，同时也提升了离线或在低速网络中使用应用的体验。设置一个全局 URLCache 可以有效的减轻服务端压力。如果你没有设置，那就赶快动手设置一个。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>网络缓存减少了需要向服务器发送请求的次数，同时也提升了离线或在低速网络中使用应用的体验。如果系统遇到硬盘/内存空间太小的情况，系统也会主动清除一些硬盘/内存缓存的。设置一个全局 URLCache 可以有效的减轻服务端压力。如果你没有设置，那就赶快动手设置一个。</p>
 <p>AFNetworking 的作者 Mattt曾经感叹过：</p>
 <blockquote>
 <p>无数开发者尝试自己做一个简陋而脆弱的系统来实现网络缓存的功能，殊不知  NSURLCache  只要两行代码就能搞定且好上 100 倍。</p>
@@ -390,9 +390,9 @@ Apple 已经提供">
           
             <a href="/tags/URLCache/" rel="tag"># URLCache</a>
           
-            <a href="/tags/缓存/" rel="tag"># 缓存</a>
-          
             <a href="/tags/网络缓存/" rel="tag"># 网络缓存</a>
+          
+            <a href="/tags/缓存/" rel="tag"># 缓存</a>
           
         </div>
       
@@ -483,7 +483,7 @@ Apple 已经提供">
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-count">10</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -494,7 +494,7 @@ Apple 已经提供">
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">20</span>
+                <span class="site-state-item-count">25</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
