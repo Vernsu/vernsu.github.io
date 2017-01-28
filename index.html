@@ -341,8 +341,8 @@
       
         
           
-            <h2 id="HTTP-协议-中的缓存策略"><a href="#HTTP-协议-中的缓存策略" class="headerlink" title="HTTP 协议 中的缓存策略"></a>HTTP 协议 中的缓存策略</h2><p>iOS中 URL 加载系统默认的缓存策略使用当前 URL 的协议中的缓存策略。本文只关注 HTTP 协议中的缓存策略。</p>
-<h3 id="使用-HTTP-头部中的-Cache-Control"><a href="#使用-HTTP-头部中的-Cache-Control" class="headerlink" title="使用 HTTP 头部中的 Cache-Control"></a>使用 HTTP 头部中的 Cache-Control</h3><p>使用 URLCache 的一个优势在于，系统可以自动的理解 HTTP 头部中的 Cache-Control 字段定义的缓存策略。我们只需要服务端根据 HTTP 协议设置 Cache-Control 的内容，URLCache 就知道, 这个缓存应该是什么时候过期了，客户端中的实现不需要写任何代码。</p>
+            <p><a href="http://swift.diagon.me/2017/01/27/">《iOS 开发中常用的缓存策略：客户端篇》</a>一文中我们提到 iOS 中 URL 加载系统默认的缓存策略使用当前 URL 的协议中的缓存策略。本文只关注 HTTP 协议中的缓存策略。</p>
+<h2 id="使用-HTTP-头部中的-Cache-Control"><a href="#使用-HTTP-头部中的-Cache-Control" class="headerlink" title="使用 HTTP 头部中的 Cache-Control"></a>使用 HTTP 头部中的 Cache-Control</h2><p>使用 URLCache 的一个优势在于，系统可以自动的理解 HTTP 头部中的 Cache-Control 字段定义的缓存策略。我们只需要服务端根据 HTTP 协议设置 Cache-Control 的内容，URLCache 就知道, 这个缓存应该是什么时候过期了，客户端中的实现不需要写任何代码。</p>
 <p>我们可以使用抓包工具或者在返回体中打印响应头信息:</p>
 <figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">print</span>((response <span class="keyword">as</span>? <span class="type">HTTPURLResponse</span>)?.allHeaderFields)</div></pre></td></tr></table></figure>
 <p>Cache-Control 常见指令有：</p>
@@ -357,7 +357,7 @@
 <h2 id="自定义缓存策略"><a href="#自定义缓存策略" class="headerlink" title="自定义缓存策略"></a>自定义缓存策略</h2><p>只要有 URLCache 缓存了数据。如果你觉得服务端提供的缓存策略不合适，你可以指定 URLCache 自己的缓存策略。</p>
 <pre><code class="swift"><span class="type">URLRequest</span>.<span class="type">CachePolicy</span>.returnCacheDataDontLoad
 </code></pre>
-<p>##提醒<br>最后必须提醒一下，我们在测试时经常会踩的坑：测试过程中服务器将响应的内容换了，我们不停的请求数据但是本地内容一直没有更新，因为服务端的缓存策略只给了<code>max-age</code>并没有标记为 <code>no-cache</code>，这个时候需要清理一下缓存。</p>
+<h2 id="提醒"><a href="#提醒" class="headerlink" title="提醒"></a>提醒</h2><p>最后必须提醒一下，我们在测试时经常会踩的坑：测试过程中服务器将响应的内容换了，我们不停的请求数据但是本地内容一直没有更新，因为服务端的缓存策略只给了<code>max-age</code>并没有标记为 <code>no-cache</code>，这个时候需要清理一下缓存。</p>
 <hr>
 <div style="text-align: center"><br>关注公众号（ID：SwiftBetter），进一步探讨主题<br><br><br>每日精选高清题图，可做壁纸<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>
           
