@@ -84,20 +84,23 @@
 
 
 
-<meta name="description" content="《iOS 开发中常用的缓存策略：客户端篇》一文中我们提到 iOS 中 URL 加载系统默认的缓存策略使用当前 URL 的协议中的缓存策略。本文只关注 HTTP 协议中的缓存策略。
-使用 HTTP 头部中的 Cache-Control使用 URLCache 的一个优势在于，系统可以自动的理解 HTTP 头部中的 Cache-Control 字段定义的缓存策略。我们只需要服务端根据 HTTP 协议设置">
+<meta name="description" content="前两篇文章( 《iOS 开发中常用的缓存策略：HTTP 协议篇》、《iOS 开发中常用的缓存策略：验证篇》 )中，我们详细描述了 iOS 的缓存策略。目前网上中文资料对这块的讲解大多有误，本文我们对各种可能的情况做一个验证。
+本地缓存位置缓存存储在 APP 沙盒 Library/Caches 目录下的 Cache.db 目录中。使用模拟器调试时，可以使用下列代码打印出沙盒路径。
+123var pa">
 <meta property="og:type" content="article">
-<meta property="og:title" content="iOS 开发中常用的缓存策略：HTTP 协议篇">
-<meta property="og:url" content="http://swift.diagon.me/2017/01/28/index.html">
+<meta property="og:title" content="iOS 开发中常用的缓存策略：验证篇">
+<meta property="og:url" content="http://swift.diagon.me/2017/01/29/index.html">
 <meta property="og:site_name" content="Swift学徒">
-<meta property="og:description" content="《iOS 开发中常用的缓存策略：客户端篇》一文中我们提到 iOS 中 URL 加载系统默认的缓存策略使用当前 URL 的协议中的缓存策略。本文只关注 HTTP 协议中的缓存策略。
-使用 HTTP 头部中的 Cache-Control使用 URLCache 的一个优势在于，系统可以自动的理解 HTTP 头部中的 Cache-Control 字段定义的缓存策略。我们只需要服务端根据 HTTP 协议设置">
+<meta property="og:description" content="前两篇文章( 《iOS 开发中常用的缓存策略：HTTP 协议篇》、《iOS 开发中常用的缓存策略：验证篇》 )中，我们详细描述了 iOS 的缓存策略。目前网上中文资料对这块的讲解大多有误，本文我们对各种可能的情况做一个验证。
+本地缓存位置缓存存储在 APP 沙盒 Library/Caches 目录下的 Cache.db 目录中。使用模拟器调试时，可以使用下列代码打印出沙盒路径。
+123var pa">
 <meta property="og:image" content="https://vernsu.github.io/images/wxqrcode.jpg">
-<meta property="og:updated_time" content="2017-01-29T06:21:44.000Z">
+<meta property="og:updated_time" content="2017-01-29T07:25:50.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="iOS 开发中常用的缓存策略：HTTP 协议篇">
-<meta name="twitter:description" content="《iOS 开发中常用的缓存策略：客户端篇》一文中我们提到 iOS 中 URL 加载系统默认的缓存策略使用当前 URL 的协议中的缓存策略。本文只关注 HTTP 协议中的缓存策略。
-使用 HTTP 头部中的 Cache-Control使用 URLCache 的一个优势在于，系统可以自动的理解 HTTP 头部中的 Cache-Control 字段定义的缓存策略。我们只需要服务端根据 HTTP 协议设置">
+<meta name="twitter:title" content="iOS 开发中常用的缓存策略：验证篇">
+<meta name="twitter:description" content="前两篇文章( 《iOS 开发中常用的缓存策略：HTTP 协议篇》、《iOS 开发中常用的缓存策略：验证篇》 )中，我们详细描述了 iOS 的缓存策略。目前网上中文资料对这块的讲解大多有误，本文我们对各种可能的情况做一个验证。
+本地缓存位置缓存存储在 APP 沙盒 Library/Caches 目录下的 Cache.db 目录中。使用模拟器调试时，可以使用下列代码打印出沙盒路径。
+123var pa">
 <meta name="twitter:image" content="https://vernsu.github.io/images/wxqrcode.jpg">
 
 
@@ -126,13 +129,13 @@
 
 
 
-  <link rel="canonical" href="http://swift.diagon.me/2017/01/28/"/>
+  <link rel="canonical" href="http://swift.diagon.me/2017/01/29/"/>
 
 
 
 
 
-  <title> iOS 开发中常用的缓存策略：HTTP 协议篇 | Swift学徒 </title>
+  <title> iOS 开发中常用的缓存策略：验证篇 | Swift学徒 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -265,7 +268,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://swift.diagon.me/2017/01/28/">
+  <link itemprop="mainEntityOfPage" href="http://swift.diagon.me/2017/01/29/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="万恶胖为首">
@@ -289,7 +292,7 @@
             
             
               
-                iOS 开发中常用的缓存策略：HTTP 协议篇
+                iOS 开发中常用的缓存策略：验证篇
               
             
           </h1>
@@ -304,8 +307,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-28T00:00:00+08:00">
-                2017-01-28
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-29T00:00:00+08:00">
+                2017-01-29
               </time>
             
 
@@ -340,24 +343,80 @@
       
 
       
-        <p><a href="http://swift.diagon.me/2017/01/27/">《iOS 开发中常用的缓存策略：客户端篇》</a>一文中我们提到 iOS 中 URL 加载系统默认的缓存策略使用当前 URL 的协议中的缓存策略。本文只关注 HTTP 协议中的缓存策略。</p>
-<h2 id="使用-HTTP-头部中的-Cache-Control"><a href="#使用-HTTP-头部中的-Cache-Control" class="headerlink" title="使用 HTTP 头部中的 Cache-Control"></a>使用 HTTP 头部中的 Cache-Control</h2><p>使用 URLCache 的一个优势在于，系统可以自动的理解 HTTP 头部中的 Cache-Control 字段定义的缓存策略。我们只需要服务端根据 HTTP 协议设置 Cache-Control 的内容，URLCache 就知道, 这个缓存应该是什么时候过期了，客户端中的实现不需要写任何代码。</p>
-<p>我们可以使用抓包工具或者在返回体中打印响应头信息:</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> configuration = <span class="type">URLSessionConfiguration</span>.<span class="keyword">default</span></div><div class="line"><span class="keyword">let</span> session = <span class="type">URLSession</span>(configuration: configuration)</div><div class="line"><span class="keyword">let</span> url = <span class="type">URL</span>(string: <span class="string">"https://api.flickr.com/services/feeds/photos_public.gne?format=json&amp;nojsoncallback=1"</span>)!</div><div class="line">        </div><div class="line"><span class="keyword">let</span> task = session.dataTask(with: url) &#123;</div><div class="line">    (data, response, error) <span class="keyword">in</span></div><div class="line">            </div><div class="line">    <span class="keyword">guard</span> <span class="keyword">let</span> data = data <span class="keyword">else</span> &#123; </div><div class="line">    	<span class="built_in">print</span>(error ?? <span class="string">"未知错误"</span>); <span class="keyword">return</span> </div><div class="line">    &#125;</div><div class="line">    <span class="built_in">print</span>((response <span class="keyword">as</span>? <span class="type">HTTPURLResponse</span>)?.allHeaderFields)           </div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>Cache-Control 常见指令有：</p>
-<ul>
-<li><p>max-age=86400 ：表示过期时间。缓存在一天内有效（60 秒 x 60 分 x 24 小时）。</p>
-</li>
-<li><p>no-store ： 表示不允许缓存响应，每个请求必须获取完整的响应。例如：一个包含个人隐私数据或银行数据的响应。每次用户请求该资源时，都会向服务器发送一个请求，每次都会下载完整的响应。</p>
-</li>
-<li><p>no-cache ： 表示必须先与服务器确认返回的响应是否被更改，然后才能使用该响应的缓存来满足后续对同一个网址的请求。因此，如果存在合适的验证方式 (ETag 或者 Last-Modified)，no-cache 会发起往返通信来验证缓存的响应，如果资源未被更改，则使用缓存。如果没有验证机制，则不使用缓存，直接进行网络请求。</p>
-</li>
-</ul>
-<p>关于 Cache-Control 的更多内容请参考 <a href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.9" target="_blank" rel="external">W3C的相关文档</a>。</p>
-<h2 id="自定义缓存策略"><a href="#自定义缓存策略" class="headerlink" title="自定义缓存策略"></a>自定义缓存策略</h2><p>只要有 URLCache 缓存了数据。如果你觉得服务端提供的缓存策略不合适，你可以指定 URLCache 自己的缓存策略。</p>
-<pre><code class="swift"><span class="type">URLRequest</span>.<span class="type">CachePolicy</span>.returnCacheDataDontLoad
-</code></pre>
-<h2 id="提醒"><a href="#提醒" class="headerlink" title="提醒"></a>提醒</h2><p>最后必须提醒一下，我们在测试时经常会踩的坑：测试过程中服务器将响应的内容换了，我们不停的请求数据但是本地内容一直没有更新，因为服务端的缓存策略只给了<code>max-age</code>并没有标记为 <code>no-cache</code>，这个时候需要清理一下缓存。</p>
+        <p>前两篇文章( <a href="http://swift.diagon.me/2017/01/28/">《iOS 开发中常用的缓存策略：HTTP 协议篇》</a>、<a href="http://swift.diagon.me/2017/01/27/">《iOS 开发中常用的缓存策略：验证篇》</a> )中，我们详细描述了 iOS 的缓存策略。目前网上中文资料对这块的讲解大多有误，本文我们对各种可能的情况做一个验证。</p>
+<h2 id="本地缓存位置"><a href="#本地缓存位置" class="headerlink" title="本地缓存位置"></a>本地缓存位置</h2><p>缓存存储在 APP 沙盒 Library/Caches 目录下的 Cache.db 目录中。<br>使用模拟器调试时，可以使用下列代码打印出沙盒路径。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> path = <span class="type">NSSearchPathForDirectoriesInDomains</span>(.libraryDirectory, .userDomainMask, <span class="literal">true</span>)</div><div class="line"><span class="keyword">let</span> pathDocuments = path[<span class="number">0</span>]</div><div class="line"><span class="built_in">print</span>(pathDocuments)</div></pre></td></tr></table></figure>
+<h2 id="验证方式"><a href="#验证方式" class="headerlink" title="验证方式"></a>验证方式</h2><p>使用抓包工具 Charles 制造一个虚拟的响应。使用 Map Local 制造响应体，使用 Rewrite 制造响应头。</p>
+<p>请求代码如下：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> configuration = <span class="type">URLSessionConfiguration</span>.<span class="keyword">default</span></div><div class="line"></div><div class="line"><span class="comment">//configuration.requestCachePolicy = .returnCacheDataDontLoad</span></div><div class="line"></div><div class="line"><span class="keyword">let</span> session = <span class="type">URLSession</span>(configuration: configuration)</div><div class="line"><span class="keyword">let</span> url = <span class="type">URL</span>(string: <span class="string">"http://swift.diagon.me/charles?type=Cache-Control"</span>)!</div><div class="line"><span class="keyword">let</span> task = session.dataTask(with: url) &#123;</div><div class="line">    (data, response, error) <span class="keyword">in</span></div><div class="line">    <span class="built_in">print</span>(<span class="string">"+++++++++++++++++++++++++++++"</span>)</div><div class="line">    <span class="keyword">guard</span> <span class="keyword">let</span> data = data <span class="keyword">else</span> &#123; <span class="built_in">print</span>(error ?? <span class="string">"未知错误"</span>); <span class="keyword">return</span> &#125;</div><div class="line">    <span class="built_in">print</span>((response <span class="keyword">as</span>? <span class="type">HTTPURLResponse</span>)?.allHeaderFields)</div><div class="line">    <span class="built_in">print</span>(<span class="string">"+++++++++++++++++++++++++++++"</span>)</div><div class="line">    <span class="keyword">let</span> result = <span class="type">NSString</span>(data: data, encoding:<span class="type">String</span>.<span class="type">Encoding</span>.utf8.rawValue)    </div><div class="line">    <span class="built_in">print</span>(result)</div><div class="line">&#125;</div><div class="line">task.resume()</div></pre></td></tr></table></figure>
+<h2 id="验证结果"><a href="#验证结果" class="headerlink" title="验证结果"></a>验证结果</h2><table>
+<thead>
+<tr>
+<th>Cache-Control</th>
+<th>本地策略</th>
+<th>是否创建本地缓存</th>
+<th>再次请求是否使用缓存 </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td> 无</td>
+<td>默认</td>
+<td>创建</td>
+<td>不使用缓存</td>
+</tr>
+<tr>
+<td> 无</td>
+<td>RCDEL</td>
+<td>创建</td>
+<td>使用缓存</td>
+</tr>
+<tr>
+<td> max-age=60</td>
+<td>默认</td>
+<td>创建</td>
+<td>在没有过期之前使用缓存。过期之后发出新请求，并更新本地缓存。</td>
+</tr>
+<tr>
+<td> max-age=60</td>
+<td>RCDEL</td>
+<td>创建</td>
+<td>无视max-age，始终使用缓存。</td>
+</tr>
+<tr>
+<td> no-store</td>
+<td>默认</td>
+<td>不创建</td>
+<td>不使用缓存</td>
+</tr>
+<tr>
+<td> no-store</td>
+<td>RCDEL</td>
+<td>不创建。注意，无论本地策略选择了哪种，只要为 no-store，就不会创建本地缓存。</td>
+<td>因为 no-store 的原因，没有缓存，所以无法使用缓存。</td>
+</tr>
+<tr>
+<td> no-cache</td>
+<td>默认</td>
+<td>创建</td>
+<td>资源验证通过时使用缓存，否则，不使用缓存。</td>
+</tr>
+<tr>
+<td> no-cache</td>
+<td>RCDEL</td>
+<td>创建</td>
+<td>使用缓存</td>
+</tr>
+</tbody>
+</table>
+<p>注：表中 RCDEL 指代 returnCacheDataElseLoad</p>
+<h2 id="缓存策略优先级"><a href="#缓存策略优先级" class="headerlink" title="缓存策略优先级"></a>缓存策略优先级</h2><p>我们在<a href="http://swift.diagon.me/2017/01/28/">《iOS 开发中常用的缓存策略：HTTP 协议篇》</a>一文中提到：如果你觉得服务端提供的缓存策略不合适，你可以指定 URLCache 自己的缓存策略。</p>
+<p>但是需要注意，如果 Cache-Control 包含 no-store， 那么 iOS 系统不会在应用沙盒缓存任何响应数据。</p>
+<p>换句话说就是， Cache-Control 是否包含 no-store 决定了是否创建缓存。而是否使用缓存分两种情况：</p>
+<ol>
+<li>本地缓存策略为默认值：useProtocolCachePolicy，使用缓存的方式由Cache-Control决定。</li>
+<li>本地缓存策略为其他值，忽略 Cache-Control 中指定的缓存使用方式，使用缓存的方式由本地缓存策略决定。</li>
+</ol>
 <hr>
 <div style="text-align: center"><br>关注公众号（ID：SwiftBetter），进一步探讨主题<br><br><br>每日精选高清题图，可做壁纸<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>
       
@@ -397,8 +456,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/01/27/" rel="next" title="iOS 开发中常用的缓存策略：客户端篇">
-                <i class="fa fa-chevron-left"></i> iOS 开发中常用的缓存策略：客户端篇
+              <a href="/2017/01/28/" rel="next" title="iOS 开发中常用的缓存策略：HTTP 协议篇">
+                <i class="fa fa-chevron-left"></i> iOS 开发中常用的缓存策略：HTTP 协议篇
               </a>
             
           </div>
@@ -406,10 +465,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/01/29/" rel="prev" title="iOS 开发中常用的缓存策略：验证篇">
-                iOS 开发中常用的缓存策略：验证篇 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -525,7 +580,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#使用-HTTP-头部中的-Cache-Control"><span class="nav-number">1.</span> <span class="nav-text">使用 HTTP 头部中的 Cache-Control</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#自定义缓存策略"><span class="nav-number">2.</span> <span class="nav-text">自定义缓存策略</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#提醒"><span class="nav-number">3.</span> <span class="nav-text">提醒</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#本地缓存位置"><span class="nav-number">1.</span> <span class="nav-text">本地缓存位置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#验证方式"><span class="nav-number">2.</span> <span class="nav-text">验证方式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#验证结果"><span class="nav-number">3.</span> <span class="nav-text">验证结果</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#缓存策略优先级"><span class="nav-number">4.</span> <span class="nav-text">缓存策略优先级</span></a></li></ol></div>
             
 
           </div>
