@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="static,class,protocol,struct,enum," />
+  <meta name="keywords" content="URLCache,缓存,CachedURLResponse," />
 
 
 
@@ -84,27 +84,22 @@
 
 
 
-<meta name="description" content="static 和 class在 Swift 中 Static 和 class 都是表示「类型范围作用域」的关键字。
-在所有类型（class、struct、enum ）中使用 static 修饰都可以表示类方法类与属性（包括存储属性和计算属性）。
-class 是专门用在 calss 类型中修饰类方法和类的计算属性（注意：无法使用 class 修饰存储属性）。
-在 class 类型中 static 和">
+<meta name="description" content="《iOS 开发中 URLCache 的应用》中介绍了 URLCache 的使用方法。本文将进一步讲解 URLCache 更加深层次的用法。 
+CachedURLResponseCachedURLResponse 包含了一个服务端响应 metadata 的 URLResponse 和 一个包含实际存储数据 的 Data。
+存取方法URLCache将 URLRequest/URLSessionData">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Swift 中的 static 和 class 关键字">
-<meta property="og:url" content="http://swift.diagon.me/2017/01/25/index.html">
+<meta property="og:title" content="URLCache 与 CachedURLResponse">
+<meta property="og:url" content="http://swift.diagon.me/2017/01/30/index.html">
 <meta property="og:site_name" content="Swift学徒">
-<meta property="og:description" content="static 和 class在 Swift 中 Static 和 class 都是表示「类型范围作用域」的关键字。
-在所有类型（class、struct、enum ）中使用 static 修饰都可以表示类方法类与属性（包括存储属性和计算属性）。
-class 是专门用在 calss 类型中修饰类方法和类的计算属性（注意：无法使用 class 修饰存储属性）。
-在 class 类型中 static 和">
-<meta property="og:image" content="https://vernsu.github.io/images/wxqrcode.jpg">
-<meta property="og:updated_time" content="2017-01-25T01:46:24.000Z">
+<meta property="og:description" content="《iOS 开发中 URLCache 的应用》中介绍了 URLCache 的使用方法。本文将进一步讲解 URLCache 更加深层次的用法。 
+CachedURLResponseCachedURLResponse 包含了一个服务端响应 metadata 的 URLResponse 和 一个包含实际存储数据 的 Data。
+存取方法URLCache将 URLRequest/URLSessionData">
+<meta property="og:updated_time" content="2017-01-30T14:45:34.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Swift 中的 static 和 class 关键字">
-<meta name="twitter:description" content="static 和 class在 Swift 中 Static 和 class 都是表示「类型范围作用域」的关键字。
-在所有类型（class、struct、enum ）中使用 static 修饰都可以表示类方法类与属性（包括存储属性和计算属性）。
-class 是专门用在 calss 类型中修饰类方法和类的计算属性（注意：无法使用 class 修饰存储属性）。
-在 class 类型中 static 和">
-<meta name="twitter:image" content="https://vernsu.github.io/images/wxqrcode.jpg">
+<meta name="twitter:title" content="URLCache 与 CachedURLResponse">
+<meta name="twitter:description" content="《iOS 开发中 URLCache 的应用》中介绍了 URLCache 的使用方法。本文将进一步讲解 URLCache 更加深层次的用法。 
+CachedURLResponseCachedURLResponse 包含了一个服务端响应 metadata 的 URLResponse 和 一个包含实际存储数据 的 Data。
+存取方法URLCache将 URLRequest/URLSessionData">
 
 
 
@@ -132,13 +127,13 @@ class 是专门用在 calss 类型中修饰类方法和类的计算属性（注�
 
 
 
-  <link rel="canonical" href="http://swift.diagon.me/2017/01/25/"/>
+  <link rel="canonical" href="http://swift.diagon.me/2017/01/30/"/>
 
 
 
 
 
-  <title> Swift 中的 static 和 class 关键字 | Swift学徒 </title>
+  <title> URLCache 与 CachedURLResponse | Swift学徒 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -271,7 +266,7 @@ class 是专门用在 calss 类型中修饰类方法和类的计算属性（注�
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://swift.diagon.me/2017/01/25/">
+  <link itemprop="mainEntityOfPage" href="http://swift.diagon.me/2017/01/30/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="万恶胖为首">
@@ -295,7 +290,7 @@ class 是专门用在 calss 类型中修饰类方法和类的计算属性（注�
             
             
               
-                Swift 中的 static 和 class 关键字
+                URLCache 与 CachedURLResponse
               
             
           </h1>
@@ -310,8 +305,8 @@ class 是专门用在 calss 类型中修饰类方法和类的计算属性（注�
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-25T00:00:00+08:00">
-                2017-01-25
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-30T00:00:00+08:00">
+                2017-01-30
               </time>
             
 
@@ -346,18 +341,20 @@ class 是专门用在 calss 类型中修饰类方法和类的计算属性（注�
       
 
       
-        <h2 id="static-和-class"><a href="#static-和-class" class="headerlink" title="static 和 class"></a>static 和 class</h2><p>在 Swift 中 <code>Static</code> 和 <code>class</code> 都是表示「类型范围作用域」的关键字。</p>
-<p>在所有类型（class、struct、enum ）中使用 <code>static</code> 修饰都可以表示类方法类与属性（包括存储属性和计算属性）。</p>
-<p><code>class</code> 是专门用在 calss 类型中修饰类方法和类的计算属性（注意：无法使用 <code>class</code> 修饰存储属性）。</p>
-<h2 id="在-class-类型中-static-和-class-的区别"><a href="#在-class-类型中-static-和-class-的区别" class="headerlink" title="在 class 类型中 static 和 class 的区别"></a>在 class 类型中 static 和 class 的区别</h2><p>如此说来，在 class 类型中 <code>static</code> 和 <code>class</code> 都可以表示类型范围作用域，那他们之间有什么区别？</p>
-<ol>
-<li><code>class</code> 无法修饰存储属性，而 <code>static</code> 可以。</li>
-<li>使用 <code>static</code> 修饰的类方法和类属性无法在子类中重载。也就是说 <code>static</code> 修饰的类属性和类方法包含了 <code>final</code> 关键字的特性。</li>
-</ol>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span> </span>&#123;</div><div class="line">    <span class="comment">//class var name = "GoodMen" // 编译器提示错误：class stored properties not supported in classes</span></div><div class="line">    </div><div class="line">    <span class="keyword">static</span> <span class="keyword">var</span> name = <span class="string">"GoodMen"</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Student</span>:<span class="title">Person</span></span>&#123;</div><div class="line">    <span class="comment">//static var name = "GoodMen"  // 编译器提示错误：cannot override with a stored property 'name'</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h2 id="ststic-在-Protocol-中的使用"><a href="#ststic-在-Protocol-中的使用" class="headerlink" title="ststic 在 Protocol 中的使用"></a>ststic 在 Protocol 中的使用</h2><p>Swift 中 class，struct，enum 都可以实现某个指定 protocol。在 protocol定义一个类方法或者类计算属性，显而易见，应该使用 <code>static</code> 关键字来修饰。使用 protocol 时，在 struct 和 enum 中仍然使用 <code>static</code>，在 class 类型中 <code>class</code> 和 <code>static</code> 关键字都可以使用。</p>
-<hr>
-<div style="text-align: center"><br>关注公众号（ID：SwiftBetter），进一步探讨主题<br><br><br>每日精选高清题图，可做壁纸<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>
+        <p><a href="http://swift.diagon.me/2017/01/26/">《iOS 开发中 URLCache 的应用》</a>中介绍了 URLCache 的使用方法。本文将进一步讲解 URLCache 更加深层次的用法。 </p>
+<h2 id="CachedURLResponse"><a href="#CachedURLResponse" class="headerlink" title="CachedURLResponse"></a>CachedURLResponse</h2><p>CachedURLResponse 包含了一个服务端响应 metadata 的 URLResponse 和 一个包含实际存储数据 的 Data。</p>
+<h3 id="存取方法"><a href="#存取方法" class="headerlink" title="存取方法"></a>存取方法</h3><p>URLCache将 URLRequest/URLSessionDataTask 和 CachedURLResponse 进行了映射。</p>
+<p>得到和存储缓存对象的方法：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">cachedResponse</span><span class="params">(<span class="keyword">for</span> request: URLRequest)</span></span> -&gt; <span class="type">CachedURLResponse</span>?</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">storeCachedResponse</span><span class="params">(<span class="number">_</span> cachedResponse: CachedURLResponse, <span class="keyword">for</span> request: URLRequest)</span></span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">storeCachedResponse</span><span class="params">(<span class="number">_</span> cachedResponse: CachedURLResponse, <span class="keyword">for</span> dataTask: URLSessionDataTask)</span></span></div></pre></td></tr></table></figure>
+<h3 id="修改缓存数据"><a href="#修改缓存数据" class="headerlink" title="修改缓存数据"></a>修改缓存数据</h3><p>URLSessionDataDelegate 协议中方法可以在数据返回后即将缓存时调用的方法。可以在这个方法里可以对即将缓存的数据进行修改，在代理方法中必须调用 completionHandler，提供要缓存的数据，如果传 nil 则表示不缓存。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">urlSession</span><span class="params">(<span class="number">_</span> session: URLSession, dataTask: URLSessionDataTask, willCacheResponse proposedResponse: CachedURLResponse, completionHandler: @escaping <span class="params">(CachedURLResponse?)</span></span></span> -&gt; <span class="type">Void</span>) &#123;</div><div class="line"></div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<p>同时，这个方法中有说明：<strong>如果一个请求的响应内容的大小超过了 URLCache 中对应硬盘大小的 5%, 它就不会被缓存。</strong></p>
+<p>在 Alamofire 中可以这样写：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="type">Alamofire</span>.<span class="type">Manager</span></div><div class="line">.sharedInstance</div><div class="line">.delegate</div><div class="line">.dataTaskWillCacheResponse = &#123; (session, task, cachedResponse) -&gt; <span class="type">NSCachedURLResponse</span>? <span class="keyword">in</span></div><div class="line">    <span class="keyword">var</span> userInfo = [<span class="type">NSObject</span> : <span class="type">AnyObject</span>]()</div><div class="line">    <span class="comment">// 设置userInfo</span></div><div class="line">    <span class="keyword">return</span> <span class="type">NSCachedURLResponse</span>(response: cachedResponse.response,</div><div class="line">                               data: cachedResponse.data,</div><div class="line">                               userInfo: userInfo,</div><div class="line">                               storagePolicy: cachedResponse.storagePolicy)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="清理缓存"><a href="#清理缓存" class="headerlink" title="清理缓存"></a>清理缓存</h2><p>可以删除全部缓存或者针对某个 URLRequest/URLSessionDataTask 的缓存。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="type">URLCache</span>.shared.removeAllCachedResponses()</div></pre></td></tr></table></figure>
+<h2 id="线程安全"><a href="#线程安全" class="headerlink" title="线程安全"></a>线程安全</h2><p>在 iOS8 之后 URLCache 是线程安全的。尽管 URLCache 实例方法能够安全的被多个执行上下文同时调用，还是要注意有些方法的使用。比如使用 <code>cacheResponse(for:)</code> 和 <code>storeCachedResponse(_:for:)</code> 在同一个 request 中存取响应，不可避免的会出现竞争条件。URLCache的子类必须实现线程安全的方法重载。</p>
+
       
     </div>
 
@@ -380,15 +377,11 @@ class 是专门用在 calss 类型中修饰类方法和类的计算属性（注�
       
         <div class="post-tags">
           
-            <a href="/tags/static/" rel="tag"># static</a>
+            <a href="/tags/URLCache/" rel="tag"># URLCache</a>
           
-            <a href="/tags/class/" rel="tag"># class</a>
+            <a href="/tags/缓存/" rel="tag"># 缓存</a>
           
-            <a href="/tags/protocol/" rel="tag"># protocol</a>
-          
-            <a href="/tags/struct/" rel="tag"># struct</a>
-          
-            <a href="/tags/enum/" rel="tag"># enum</a>
+            <a href="/tags/CachedURLResponse/" rel="tag"># CachedURLResponse</a>
           
         </div>
       
@@ -397,8 +390,8 @@ class 是专门用在 calss 类型中修饰类方法和类的计算属性（注�
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/01/24/" rel="next" title="Swift 中单例的实现">
-                <i class="fa fa-chevron-left"></i> Swift 中单例的实现
+              <a href="/2017/01/29/" rel="next" title="iOS 开发中常用的缓存策略：验证篇">
+                <i class="fa fa-chevron-left"></i> iOS 开发中常用的缓存策略：验证篇
               </a>
             
           </div>
@@ -406,10 +399,6 @@ class 是专门用在 calss 类型中修饰类方法和类的计算属性（注�
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/01/26/" rel="prev" title="iOS 开发中 URLCache 的应用">
-                iOS 开发中 URLCache 的应用 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -525,7 +514,7 @@ class 是专门用在 calss 类型中修饰类方法和类的计算属性（注�
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#static-和-class"><span class="nav-number">1.</span> <span class="nav-text">static 和 class</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#在-class-类型中-static-和-class-的区别"><span class="nav-number">2.</span> <span class="nav-text">在 class 类型中 static 和 class 的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ststic-在-Protocol-中的使用"><span class="nav-number">3.</span> <span class="nav-text">ststic 在 Protocol 中的使用</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#CachedURLResponse"><span class="nav-number">1.</span> <span class="nav-text">CachedURLResponse</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#存取方法"><span class="nav-number">1.1.</span> <span class="nav-text">存取方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#修改缓存数据"><span class="nav-number">1.2.</span> <span class="nav-text">修改缓存数据</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#清理缓存"><span class="nav-number">2.</span> <span class="nav-text">清理缓存</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#线程安全"><span class="nav-number">3.</span> <span class="nav-text">线程安全</span></a></li></ol></div>
             
 
           </div>

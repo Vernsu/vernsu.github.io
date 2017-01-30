@@ -84,23 +84,23 @@
 
 
 
-<meta name="description" content="前两篇文章( 《iOS 开发中常用的缓存策略：HTTP 协议篇》、《iOS 开发中常用的缓存策略：验证篇》 )中，我们详细描述了 iOS 的缓存策略。目前网上中文资料对这块的讲解大多有误，本文我们对各种可能的情况做一个验证。
-本地缓存位置缓存存储在 APP 沙盒 Library/Caches 目录下的 Cache.db 目录中。使用模拟器调试时，可以使用下列代码打印出沙盒路径。
-123var pa">
+<meta name="description" content="前两篇文章( 《iOS 开发中常用的缓存策略：客户端篇》、《iOS 开发中常用的缓存策略：HTTP 协议篇》 )中，我们详细描述了 iOS 的缓存策略。目前网上中文资料对这块的讲解大多有误，本文我们对各种可能的情况做一个验证。
+本地缓存位置缓存存储在 APP 沙盒中 Library/Caches/bundid 目录下的 Cache.db 中。使用模拟器调试时，可以使用下列代码打印出沙盒路径。
+12">
 <meta property="og:type" content="article">
 <meta property="og:title" content="iOS 开发中常用的缓存策略：验证篇">
 <meta property="og:url" content="http://swift.diagon.me/2017/01/29/index.html">
 <meta property="og:site_name" content="Swift学徒">
-<meta property="og:description" content="前两篇文章( 《iOS 开发中常用的缓存策略：HTTP 协议篇》、《iOS 开发中常用的缓存策略：验证篇》 )中，我们详细描述了 iOS 的缓存策略。目前网上中文资料对这块的讲解大多有误，本文我们对各种可能的情况做一个验证。
-本地缓存位置缓存存储在 APP 沙盒 Library/Caches 目录下的 Cache.db 目录中。使用模拟器调试时，可以使用下列代码打印出沙盒路径。
-123var pa">
+<meta property="og:description" content="前两篇文章( 《iOS 开发中常用的缓存策略：客户端篇》、《iOS 开发中常用的缓存策略：HTTP 协议篇》 )中，我们详细描述了 iOS 的缓存策略。目前网上中文资料对这块的讲解大多有误，本文我们对各种可能的情况做一个验证。
+本地缓存位置缓存存储在 APP 沙盒中 Library/Caches/bundid 目录下的 Cache.db 中。使用模拟器调试时，可以使用下列代码打印出沙盒路径。
+12">
 <meta property="og:image" content="https://vernsu.github.io/images/wxqrcode.jpg">
-<meta property="og:updated_time" content="2017-01-29T07:25:50.000Z">
+<meta property="og:updated_time" content="2017-01-30T13:07:34.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="iOS 开发中常用的缓存策略：验证篇">
-<meta name="twitter:description" content="前两篇文章( 《iOS 开发中常用的缓存策略：HTTP 协议篇》、《iOS 开发中常用的缓存策略：验证篇》 )中，我们详细描述了 iOS 的缓存策略。目前网上中文资料对这块的讲解大多有误，本文我们对各种可能的情况做一个验证。
-本地缓存位置缓存存储在 APP 沙盒 Library/Caches 目录下的 Cache.db 目录中。使用模拟器调试时，可以使用下列代码打印出沙盒路径。
-123var pa">
+<meta name="twitter:description" content="前两篇文章( 《iOS 开发中常用的缓存策略：客户端篇》、《iOS 开发中常用的缓存策略：HTTP 协议篇》 )中，我们详细描述了 iOS 的缓存策略。目前网上中文资料对这块的讲解大多有误，本文我们对各种可能的情况做一个验证。
+本地缓存位置缓存存储在 APP 沙盒中 Library/Caches/bundid 目录下的 Cache.db 中。使用模拟器调试时，可以使用下列代码打印出沙盒路径。
+12">
 <meta name="twitter:image" content="https://vernsu.github.io/images/wxqrcode.jpg">
 
 
@@ -343,8 +343,8 @@
       
 
       
-        <p>前两篇文章( <a href="http://swift.diagon.me/2017/01/28/">《iOS 开发中常用的缓存策略：HTTP 协议篇》</a>、<a href="http://swift.diagon.me/2017/01/27/">《iOS 开发中常用的缓存策略：验证篇》</a> )中，我们详细描述了 iOS 的缓存策略。目前网上中文资料对这块的讲解大多有误，本文我们对各种可能的情况做一个验证。</p>
-<h2 id="本地缓存位置"><a href="#本地缓存位置" class="headerlink" title="本地缓存位置"></a>本地缓存位置</h2><p>缓存存储在 APP 沙盒 Library/Caches 目录下的 Cache.db 目录中。<br>使用模拟器调试时，可以使用下列代码打印出沙盒路径。</p>
+        <p>前两篇文章( <a href="http://swift.diagon.me/2017/01/27/">《iOS 开发中常用的缓存策略：客户端篇》</a>、<a href="http://swift.diagon.me/2017/01/28/">《iOS 开发中常用的缓存策略：HTTP 协议篇》</a> )中，我们详细描述了 iOS 的缓存策略。目前网上中文资料对这块的讲解大多有误，本文我们对各种可能的情况做一个验证。</p>
+<h2 id="本地缓存位置"><a href="#本地缓存位置" class="headerlink" title="本地缓存位置"></a>本地缓存位置</h2><p>缓存存储在 APP 沙盒中 Library/Caches/bundid 目录下的 Cache.db 中。<br>使用模拟器调试时，可以使用下列代码打印出沙盒路径。</p>
 <figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> path = <span class="type">NSSearchPathForDirectoriesInDomains</span>(.libraryDirectory, .userDomainMask, <span class="literal">true</span>)</div><div class="line"><span class="keyword">let</span> pathDocuments = path[<span class="number">0</span>]</div><div class="line"><span class="built_in">print</span>(pathDocuments)</div></pre></td></tr></table></figure>
 <h2 id="验证方式"><a href="#验证方式" class="headerlink" title="验证方式"></a>验证方式</h2><p>使用抓包工具 Charles 制造一个虚拟的响应。使用 Map Local 制造响应体，使用 Rewrite 制造响应头。</p>
 <p>请求代码如下：</p>
@@ -381,7 +381,7 @@
 <td> max-age=60</td>
 <td>RCDEL</td>
 <td>创建</td>
-<td>无视max-age，始终使用缓存。</td>
+<td>无视 max-age，始终使用缓存。</td>
 </tr>
 <tr>
 <td> no-store</td>
@@ -414,7 +414,7 @@
 <p>但是需要注意，如果 Cache-Control 包含 no-store， 那么 iOS 系统不会在应用沙盒缓存任何响应数据。</p>
 <p>换句话说就是， Cache-Control 是否包含 no-store 决定了是否创建缓存。而是否使用缓存分两种情况：</p>
 <ol>
-<li>本地缓存策略为默认值：useProtocolCachePolicy，使用缓存的方式由Cache-Control决定。</li>
+<li>本地缓存策略为默认值：useProtocolCachePolicy，使用缓存的方式由 Cache-Control 决定。</li>
 <li>本地缓存策略为其他值，忽略 Cache-Control 中指定的缓存使用方式，使用缓存的方式由本地缓存策略决定。</li>
 </ol>
 <hr>
@@ -465,6 +465,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/01/30/" rel="prev" title="URLCache 与 CachedURLResponse">
+                URLCache 与 CachedURLResponse <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -534,7 +538,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-count">12</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -545,7 +549,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">25</span>
+                <span class="site-state-item-count">26</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
