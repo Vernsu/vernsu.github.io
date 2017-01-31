@@ -105,7 +105,7 @@
 
 使用 HTTP 头部中的 Cache-Control使用 URLCache 的一个优势在于，系统可以自动的理解 HTTP">
 <meta property="og:image" content="https://vernsu.github.io/images/wxqrcode.jpg">
-<meta property="og:updated_time" content="2017-01-30T14:42:10.000Z">
+<meta property="og:updated_time" content="2017-01-31T08:57:11.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="iOS 开发中常用的缓存策略：HTTP 协议篇">
 <meta name="twitter:description" content="《iOS 开发中常用的缓存策略：客户端篇》一文中我们提到 iOS 中 URL 加载系统默认的缓存策略使用当前 URL 的协议中的缓存策略。本文只关注 HTTP 协议中的缓存策略。
@@ -333,6 +333,28 @@
           </span>
 
           
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/网络缓存/" itemprop="url" rel="index">
+                    <span itemprop="name">网络缓存</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -370,11 +392,11 @@
 <figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> configuration = <span class="type">URLSessionConfiguration</span>.<span class="keyword">default</span></div><div class="line"><span class="keyword">let</span> session = <span class="type">URLSession</span>(configuration: configuration)</div><div class="line"><span class="keyword">let</span> url = <span class="type">URL</span>(string: <span class="string">"https://api.flickr.com/services/feeds/photos_public.gne?format=json&amp;nojsoncallback=1"</span>)!</div><div class="line">        </div><div class="line"><span class="keyword">let</span> task = session.dataTask(with: url) &#123;</div><div class="line">    (data, response, error) <span class="keyword">in</span></div><div class="line">            </div><div class="line">    <span class="keyword">guard</span> <span class="keyword">let</span> data = data <span class="keyword">else</span> &#123; </div><div class="line">    	<span class="built_in">print</span>(error ?? <span class="string">"未知错误"</span>); <span class="keyword">return</span> </div><div class="line">    &#125;</div><div class="line">    <span class="built_in">print</span>((response <span class="keyword">as</span>? <span class="type">HTTPURLResponse</span>)?.allHeaderFields)           </div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>Cache-Control 常见指令有：</p>
 <ul>
-<li><p>max-age=86400 ：表示过期时间。缓存在一天内有效（60 秒 x 60 分 x 24 小时）。（缓存过期策略）</p>
+<li><p>max-age=86400 ：表示过期时间。缓存在一天内有效（60 秒 x 60 分 x 24 小时）。</p>
 </li>
-<li><p>no-store ： 表示不允许缓存响应，每个请求必须获取完整的响应。例如：一个包含个人隐私数据或银行数据的响应。每次用户请求该资源时，都会向服务器发送一个请求，每次都会下载完整的响应。（缓存存储策略）</p>
+<li><p>no-store ： 表示不允许缓存响应，每个请求必须获取完整的响应。例如：一个包含个人隐私数据或银行数据的响应。每次用户请求该资源时，都会向服务器发送一个请求，每次都会下载完整的响应。</p>
 </li>
-<li><p>no-cache ： 表示必须先与服务器确认返回的响应是否被更改，然后才能使用该响应的缓存来满足后续对同一个网址的请求。因此，如果存在合适的验证方式 (ETag 或者 Last-Modified)，no-cache 会发起往返通信来验证缓存的响应，如果资源未被更改，则使用缓存。如果没有验证机制，则不使用缓存，直接进行网络请求。（缓存对比策略）</p>
+<li><p>no-cache ： 表示必须先与服务器确认返回的响应是否被更改，然后才能使用该响应的缓存来满足后续对同一个网址的请求。因此，如果存在合适的验证方式 (ETag 或者 Last-Modified)，no-cache 会发起往返通信来验证缓存的响应，如果资源未被更改，则使用缓存。如果没有验证机制，则不使用缓存，直接进行网络请求。</p>
 </li>
 </ul>
 <p>关于 Cache-Control 的更多内容请参考 <a href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.9" target="_blank" rel="external">W3C的相关文档</a>。</p>
@@ -508,18 +530,25 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-count">13</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
           
 
           
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
 
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">26</span>
+                <span class="site-state-item-count">29</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
