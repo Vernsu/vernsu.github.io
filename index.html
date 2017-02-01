@@ -222,16 +222,6 @@
           </a>
         </li>
       
-        
-        <li class="menu-item menu-item-tags">
-          <a href="/tags" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
-            
-            标签
-          </a>
-        </li>
-      
 
       
     </ul>
@@ -251,6 +241,146 @@
           <div id="content" class="content">
             
   <section id="posts" class="posts-expand">
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://swift.diagon.me/2017/02/01/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="万恶胖为首">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.gif">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="Swift学徒">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="Swift学徒" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/02/01/" itemprop="url">
+                  Swift 中的 delegate 设计模式如何使用 weak
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-01T00:00:00+08:00">
+                2017-02-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="delegate-模式"><a href="#delegate-模式" class="headerlink" title="delegate 模式"></a>delegate 模式</h2><p>Delegate 是 Cocoa 框架中的一种常见设计模式，这种模式有利于代码解耦和的，在iOS开发中经常被使用。</p>
+<p>使用 delegate 一般分为4个步骤：</p>
+<ol>
+<li>创建一个 delegate protocol</li>
+<li>声明一个 delegate property</li>
+<li>遵守并实现协议</li>
+<li>调用 delegate</li>
+</ol>
+<p>其中第二步，是新手经常犯错的地方。为了避免循环引用，在声明 delegate property 时，应该声明为 weak 引用。同时使用 weak 也使得 delegate 不存在其值时自动为nil，有效防止因为访问已经被回收的内存导致的 crash。</p>
+<h2 id="Swift-中的-delegate"><a href="#Swift-中的-delegate" class="headerlink" title="Swift 中的 delegate"></a>Swift 中的 delegate</h2><h3 id="weak"><a href="#weak" class="headerlink" title="weak"></a>weak</h3><p>Swift 中 protocol 是可以被 class struct enum 使用的。而 struct, enum 并不通过 ARC 来管理内存，所以不能使用 weak 来修饰 delegate。</p>
+<p>解决办法就是将 protocol 限制为只能被 class 使用。有下面几种做法：</p>
+<h4 id="class-关键字"><a href="#class-关键字" class="headerlink" title="class 关键字"></a>class 关键字</h4><p>申明 protocol 时使用 class 关键字，使得该 protocol 只能适用于 class 类型。</p>
+<p>同时我们要将 delegate 设置为 optional 类型，因为使用 weak 修饰 delegate 可能导致 delegate 变为nil，所以要用optional 类型。否则编译器会报错：<code>‘weak’ variable shoule have optional type ‘…?’</code> 。</p>
+<p>下面为一次完整的使用 delegate 模式代码：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//第一步</span></div><div class="line"><span class="class"><span class="keyword">protocol</span> <span class="title">SwiftDiagonDelegate</span>: <span class="title">class</span></span>&#123;</div><div class="line">    <span class="function"><span class="keyword">func</span> <span class="title">didFinishTask</span><span class="params">(sender:SwiftDiagon)</span></span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">SwiftDiagon</span></span>&#123;</div><div class="line">    <span class="comment">//第二步</span></div><div class="line">    <span class="keyword">weak</span> <span class="keyword">var</span> delegate: <span class="type">SwiftDiagonDelegate</span>?</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">func</span> <span class="title">method</span><span class="params">()</span></span>&#123;</div><div class="line">        <span class="comment">//第四步 使用 optional chaining，当delegate不为nil时才调用方法</span></div><div class="line">        delegate?.didFinishTask(sender: <span class="keyword">self</span>)</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">//第三步</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Viewcontroller</span>:<span class="title">UIViewController</span></span>&#123;</div><div class="line">    </div><div class="line">    <span class="keyword">var</span> swift = <span class="type">SwiftDiagon</span>()</div><div class="line">    </div><div class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">func</span> <span class="title">viewDidLoad</span><span class="params">()</span></span> &#123;</div><div class="line">        <span class="keyword">super</span>.viewDidLoad()</div><div class="line">        swift.delegate = <span class="keyword">self</span></div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">extension</span> <span class="title">Viewcontroller</span>:<span class="title">SwiftDiagonDelegate</span></span>&#123;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">func</span> <span class="title">didFinishTask</span><span class="params">(sender:SwiftDiagon)</span></span>&#123;</div><div class="line">        <span class="comment">// Something</span></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="objc-与-NSObjectProtocol"><a href="#objc-与-NSObjectProtocol" class="headerlink" title="@objc 与 NSObjectProtocol"></a>@objc 与 NSObjectProtocol</h4><p>通过标记为 Objective-c 也可以使得 protocol 只能被 class 使用。因为 Objective-c 中的 protocol 只能被累使用。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">protocol</span> <span class="title">SwiftDiagonDelegate</span> : <span class="title">NSObjectProtocol</span></span>&#123;</div><div class="line">    <span class="function"><span class="keyword">func</span> <span class="title">didFinishTask</span><span class="params">(sender: SwiftDiagon)</span></span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@objc</span> <span class="class"><span class="keyword">protocol</span> <span class="title">SwiftDiagonDelegate</span></span>&#123;</div><div class="line">    <span class="function"><span class="keyword">func</span> <span class="title">didFinishTask</span><span class="params">(sender: SwiftDiagon)</span></span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="可选"><a href="#可选" class="headerlink" title="可选"></a>可选</h3><p>另外一个可能会遇到的问题是 Objective-C 支持 可选的 protocol 方法，而 Swift 中所有协议方法都必须被实现。这个问题我们下篇再聊。 </p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>在纯 Swift 项目中建议用 <code>delegate: class</code> 这样的方式标记 protocol 为只能被 class 使用。因为这种方式直指问题本质。</p>
+<p>另外，这个问题也从另一方面说明我们应该多使用值类型，值类型可以很好的避免循环引用问题。使用值类型时值会被拷贝，所以不会出现这样的内存泄露问题。但是我们又不得不使用 Cocoa 框架。</p>
+<hr>
+<div style="text-align: center"><br>关注公众号（ID：SwiftBetter），进一步探讨主题<br><br><br>每日精选高清题图，可做壁纸<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
     
       
 
@@ -1680,160 +1810,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://swift.diagon.me/2017/01/22/">
-
-  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="万恶胖为首">
-    <meta itemprop="description" content="">
-    <meta itemprop="image" content="/images/avatar.gif">
-  </span>
-
-  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="Swift学徒">
-    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
-      <img style="display:none;" itemprop="url image" alt="Swift学徒" src="">
-    </span>
-  </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/01/22/" itemprop="url">
-                  Swift 中的嵌套类型
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-22T00:00:00+08:00">
-                2017-01-22
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-
-          
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="几种值类型和引用类型的嵌套结构"><a href="#几种值类型和引用类型的嵌套结构" class="headerlink" title="几种值类型和引用类型的嵌套结构"></a>几种值类型和引用类型的嵌套结构</h3><p>我们都知道值类型和引用类型的用法，日常使用时，经常会进行多层嵌套。这里，介绍下四种两级嵌套结构：</p>
-<ul>
-<li>值类型嵌套值类型</li>
-<li>值类型嵌套引用类型</li>
-<li>引用类型嵌套引用类型</li>
-<li>引用类型嵌套值类型</li>
-</ul>
-<p>接下来分析时，使用 struct 代表值类型， class 代表引用类型。并且这里不考虑写时拷贝语义。</p>
-<ul>
-<li><p><code>withUnsafePointer(to:_:)</code> 函数可以用来打印值类型变量的内存地址。</p>
-</li>
-<li><p><code>print(Unmanaged.passUnretained(T).toOpaque())</code>函数打印引用类型内存地址。</p>
-</li>
-</ul>
-<h4 id="1-值类型嵌套值类型"><a href="#1-值类型嵌套值类型" class="headerlink" title="1.值类型嵌套值类型"></a>1.值类型嵌套值类型</h4><figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">InnerStruct</span></span>&#123;</div><div class="line">    <span class="keyword">var</span> value = <span class="number">1024</span></div><div class="line">&#125;</div><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">OuterStruct</span></span>&#123;</div><div class="line">    <span class="keyword">var</span> inner = <span class="type">InnerStruct</span>()</div><div class="line">    <span class="keyword">var</span> value = <span class="number">1024</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">var</span> outer1 = <span class="type">OuterStruct</span>()</div><div class="line"><span class="keyword">var</span> outer2 = outer1</div><div class="line">outer2.value = <span class="number">1000</span></div><div class="line">outer2.inner.value = <span class="number">1000</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">pointer</span><span class="params">()</span></span>&#123;</div><div class="line">    <span class="built_in">print</span>(<span class="string">"outer1.value=<span class="subst">\(outer1.value)</span> outer1.inner.value=<span class="subst">\(outer1.inner.value)</span>"</span>)</div><div class="line">    <span class="built_in">print</span>(<span class="string">"outer2.value=<span class="subst">\(outer2.value)</span> outer2.inner.value=<span class="subst">\(outer2.inner.value)</span>"</span>)</div><div class="line">    <span class="built_in">withUnsafePointer</span>(to: &amp;outer1) &#123; <span class="built_in">print</span>(<span class="string">"outer1: <span class="subst">\($<span class="number">0</span>)</span>"</span>)&#125;</div><div class="line">    <span class="built_in">withUnsafePointer</span>(to: &amp;outer2) &#123; <span class="built_in">print</span>(<span class="string">"outer2: <span class="subst">\($<span class="number">0</span>)</span>"</span>)&#125;</div><div class="line">    <span class="built_in">withUnsafePointer</span>(to: &amp;outer1.inner) &#123; <span class="built_in">print</span>(<span class="string">"outer1.inner: <span class="subst">\($<span class="number">0</span>)</span>"</span>)&#125;</div><div class="line">    <span class="built_in">withUnsafePointer</span>(to: &amp;outer2.inner) &#123; <span class="built_in">print</span>(<span class="string">"outer2.inner: <span class="subst">\($<span class="number">0</span>)</span>"</span>)&#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">pointer()</div></pre></td></tr></table></figure>
-<p>打印结果：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">outer1.value=1024 outer1.inner.value=1024</div><div class="line">outer2.value=1000 outer2.inner.value=1000</div><div class="line">outer1: 0x000000010e549f30</div><div class="line">outer2: 0x000000010e549f40</div><div class="line">outer1.inner: 0x000000010e549f30</div><div class="line">outer2.inner: 0x000000010e549f40</div></pre></td></tr></table></figure>
-<p>结论：值类型嵌套值类型，复制时拷贝了新对象，内部值是外部值的一部分，如果将外部值拷贝到新的空间里，内部值也会被拷贝。两者是独立的存在的实例。</p>
-<h4 id="2-值类型嵌套引用类型"><a href="#2-值类型嵌套引用类型" class="headerlink" title="2.值类型嵌套引用类型"></a>2.值类型嵌套引用类型</h4><figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">InnerClass</span></span>&#123;</div><div class="line">    <span class="keyword">var</span> value = <span class="number">1024</span></div><div class="line">&#125;</div><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">OuterStruct</span></span>&#123;</div><div class="line">    <span class="keyword">var</span> inner = <span class="type">InnerClass</span>()</div><div class="line">    <span class="keyword">var</span> value = <span class="number">1024</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">var</span> outer1 = <span class="type">OuterStruct</span>()</div><div class="line"><span class="keyword">var</span> outer2 = outer1</div><div class="line">outer2.value = <span class="number">1000</span></div><div class="line">outer2.inner.value = <span class="number">1000</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">pointer</span><span class="params">()</span></span>&#123;</div><div class="line">    <span class="built_in">print</span>(<span class="string">"outer1.value=<span class="subst">\(outer1.value)</span> outer1.inner.value=<span class="subst">\(outer1.inner.value)</span>"</span>)</div><div class="line">    <span class="built_in">print</span>(<span class="string">"outer2.value=<span class="subst">\(outer2.value)</span> outer2.inner.value=<span class="subst">\(outer2.inner.value)</span>"</span>)</div><div class="line">    <span class="built_in">withUnsafePointer</span>(to: &amp;outer1) &#123; <span class="built_in">print</span>(<span class="string">"outer1: <span class="subst">\($<span class="number">0</span>)</span>"</span>)&#125;</div><div class="line">    <span class="built_in">withUnsafePointer</span>(to: &amp;outer2) &#123; <span class="built_in">print</span>(<span class="string">"outer2: <span class="subst">\($<span class="number">0</span>)</span>"</span>)&#125;</div><div class="line">    <span class="built_in">print</span>(<span class="string">"outer1.inner: <span class="subst">\(Unmanaged.passUnretained(outer1.inner)</span>.toOpaque())"</span>)</div><div class="line">    <span class="built_in">print</span>(<span class="string">"outer2.inner: <span class="subst">\(Unmanaged.passUnretained(outer2.inner)</span>.toOpaque())"</span>)</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>打印结果：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">outer1.value=1024 outer1.inner.value=1000</div><div class="line">outer2.value=1000 outer2.inner.value=1000</div><div class="line">outer1: 0x000000011667af80</div><div class="line">outer2: 0x000000011667af90</div><div class="line">outer1.inner: 0x000060800003b7a0</div><div class="line">outer2.inner: 0x000060800003b7a0</div></pre></td></tr></table></figure>
-<p>结论：值类型嵌套引用类型，复制时拷贝了新对象。外部值被拷贝到一块新的内存区域，但是内部的引用类型只被拷贝了inner的引用。</p>
-<h4 id="3-引用类型嵌套引用类型"><a href="#3-引用类型嵌套引用类型" class="headerlink" title="3.引用类型嵌套引用类型"></a>3.引用类型嵌套引用类型</h4><figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">InnerClass</span></span>&#123;</div><div class="line">    <span class="keyword">var</span> value = <span class="number">1024</span></div><div class="line">&#125;</div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">OuterClass</span></span>&#123;</div><div class="line">    <span class="keyword">var</span> inner = <span class="type">InnerClass</span>()</div><div class="line">    <span class="keyword">var</span> value = <span class="number">1024</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">var</span> outer1 = <span class="type">OuterClass</span>()</div><div class="line"><span class="keyword">var</span> outer2 = outer1</div><div class="line">outer2.value = <span class="number">1000</span></div><div class="line">outer2.inner.value = <span class="number">1000</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">pointer</span><span class="params">()</span></span>&#123;</div><div class="line">    <span class="built_in">print</span>(<span class="string">"outer1.value=<span class="subst">\(outer1.value)</span> outer1.inner.value=<span class="subst">\(outer1.inner.value)</span>"</span>)</div><div class="line">    <span class="built_in">print</span>(<span class="string">"outer2.value=<span class="subst">\(outer2.value)</span> outer2.inner.value=<span class="subst">\(outer2.inner.value)</span>"</span>)</div><div class="line">    <span class="built_in">print</span>(<span class="string">"outer1: <span class="subst">\(Unmanaged.passUnretained(outer1)</span>.toOpaque())"</span>)</div><div class="line">    <span class="built_in">print</span>(<span class="string">"outer2. <span class="subst">\(Unmanaged.passUnretained(outer2)</span>.toOpaque())"</span>)</div><div class="line">    <span class="built_in">print</span>(<span class="string">"outer1.inner: <span class="subst">\(Unmanaged.passUnretained(outer1.inner)</span>.toOpaque())"</span>)</div><div class="line">    <span class="built_in">print</span>(<span class="string">"outer2.inner: <span class="subst">\(Unmanaged.passUnretained(outer2.inner)</span>.toOpaque())"</span>)</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line">pointer()</div></pre></td></tr></table></figure>
-<p>打印结果：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">outer1.value=1000 outer1.inner.value=1000</div><div class="line">outer2.value=1000 outer2.inner.value=1000</div><div class="line">outer1: 0x0000608000032240</div><div class="line">outer2. 0x0000608000032240</div><div class="line">outer1.inner: 0x0000608000032280</div><div class="line">outer2.inner: 0x0000608000032280</div></pre></td></tr></table></figure>
-<p>结论：引用类型嵌套引用类型，复制时只是拷贝了引用，新变量和原变量指向同一个实例。</p>
-<h4 id="4-引用类型嵌套值类型"><a href="#4-引用类型嵌套值类型" class="headerlink" title="4.引用类型嵌套值类型"></a>4.引用类型嵌套值类型</h4><figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">InnerStruct</span></span>&#123;</div><div class="line">    <span class="keyword">var</span> value = <span class="number">1024</span></div><div class="line">&#125;</div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">OuterClass</span></span>&#123;</div><div class="line">    <span class="keyword">var</span> inner = <span class="type">InnerStruct</span>()</div><div class="line">    <span class="keyword">var</span> value = <span class="number">1024</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">var</span> outer1 = <span class="type">OuterClass</span>()</div><div class="line"><span class="keyword">var</span> outer2 = outer1</div><div class="line">outer2.value = <span class="number">1000</span></div><div class="line">outer2.inner.value = <span class="number">1000</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">pointer</span><span class="params">()</span></span>&#123;</div><div class="line">    <span class="built_in">print</span>(<span class="string">"outer1.value=<span class="subst">\(outer1.value)</span> outer1.inner.value=<span class="subst">\(outer1.inner.value)</span>"</span>)</div><div class="line">    <span class="built_in">print</span>(<span class="string">"outer2.value=<span class="subst">\(outer2.value)</span> outer2.inner.value=<span class="subst">\(outer2.inner.value)</span>"</span>)</div><div class="line"></div><div class="line">    <span class="built_in">withUnsafePointer</span>(to: &amp;outer1.inner) &#123; <span class="built_in">print</span>(<span class="string">"outer1.inner: <span class="subst">\($<span class="number">0</span>)</span>"</span>)&#125;</div><div class="line">    <span class="built_in">withUnsafePointer</span>(to: &amp;outer2.inner) &#123; <span class="built_in">print</span>(<span class="string">"outer2.inner: <span class="subst">\($<span class="number">0</span>)</span>"</span>)&#125;</div><div class="line">    <span class="built_in">print</span>(<span class="string">"outer1: <span class="subst">\(Unmanaged.passUnretained(outer1)</span>.toOpaque())"</span>)</div><div class="line">    <span class="built_in">print</span>(<span class="string">"outer2. <span class="subst">\(Unmanaged.passUnretained(outer2)</span>.toOpaque())"</span>)</div><div class="line"></div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line">pointer()</div></pre></td></tr></table></figure>
-<p>打印结果：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">outer1.value=1000 outer1.inner.value=1000</div><div class="line">outer2.value=1000 outer2.inner.value=1000</div><div class="line">outer1.inner: 0x000060000003f470</div><div class="line">outer2.inner: 0x000060000003f470</div><div class="line">outer1: 0x000060000003f460</div><div class="line">outer2. 0x000060000003f460</div></pre></td></tr></table></figure>
-<p>结论：引用类型嵌套值类型，和引用类型嵌套引用类型一样，复制时只是拷贝了引用，新变量和原变量指向同一个实例。</p>
-<h3 id="开发中常见问题"><a href="#开发中常见问题" class="headerlink" title="开发中常见问题"></a>开发中常见问题</h3><p>Swift 中的 array 是值类型，如果 array 的元素为引用类型，就是我们上面说到的：值类型嵌套引用类型。</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Element</span> </span>&#123;</div><div class="line">    <span class="keyword">var</span> value = <span class="number">1024</span></div><div class="line">    </div><div class="line">&#125;</div><div class="line"><span class="keyword">let</span> e1 = <span class="type">Element</span>()</div><div class="line"><span class="keyword">let</span> e2 = <span class="type">Element</span>()</div><div class="line"><span class="keyword">let</span> e3 = <span class="type">Element</span>()</div><div class="line"></div><div class="line"><span class="keyword">var</span> array1 = [e1,e2,e3]</div><div class="line"><span class="keyword">var</span> array2 = array1</div><div class="line">array2.removeLast()</div><div class="line">array2.first!.value = <span class="number">1000</span></div></pre></td></tr></table></figure>
-<p>此时，array1 中 e1 的 value 值为 1000。</p>
-<p>array1 中包含 e1,e2,e3 三个元素。array2 包含 e1，e2 两个元素。array2  拷贝了 array1 中<strong>元素</strong>的引用，array2 执行 <code>removeLast()</code>时删除了最后一个元素的引用。元素的引用已经被拷贝出来了，array2 删除元素引用并不会影响  array1。但是修改 array1 和 array2 共有的元素本身，会对两者都造成影响。</p>
-<hr>
-<div style="text-align: center"><br>关注公众号（ID：SwiftBetter），进一步探讨主题<br><br><br>每日精选高清题图，可做壁纸<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1881,7 +1857,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-count">14</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -1898,10 +1874,10 @@
 
           
             <div class="site-state-item site-state-tags">
-              <a href="/tags">
-                <span class="site-state-item-count">29</span>
+              
+                <span class="site-state-item-count">33</span>
                 <span class="site-state-item-name">标签</span>
-              </a>
+              
             </div>
           
 
