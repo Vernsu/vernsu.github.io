@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="class,protocol,delegate,weak,循环引用,objc," />
+  <meta name="keywords" content="class,protocol,delegate,weak,循环引用,objc,弱引用," />
 
 
 
@@ -84,7 +84,7 @@
 
 
 
-<meta name="description" content="delegate 模式Delegate 是 Cocoa 框架中的一种常见设计模式，这种模式有利于代码解耦和的，在iOS开发中经常被使用。
+<meta name="description" content="delegate 模式Delegate 是 Cocoa 框架中的一种常见设计模式，这种模式有利于代码解耦合，在iOS开发中经常被使用。
 使用 delegate 一般分为4个步骤：
 
 创建一个 delegate protocol
@@ -92,12 +92,12 @@
 遵守并实现协议
 调用 delegate
 
-其中第二步，是新手经常犯错的地方。为了避免循环引用，在声明 delegate pr">
+其中第二步，是新手经常犯错的地方。为了避免循环引用，在声明 delegate pro">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Swift 中的 delegate 设计模式如何使用 weak">
+<meta property="og:title" content="Swift 中的 delegate 设计模式如何使用 weak 引用">
 <meta property="og:url" content="http://swift.diagon.me/2017/02/01/index.html">
 <meta property="og:site_name" content="Swift学徒">
-<meta property="og:description" content="delegate 模式Delegate 是 Cocoa 框架中的一种常见设计模式，这种模式有利于代码解耦和的，在iOS开发中经常被使用。
+<meta property="og:description" content="delegate 模式Delegate 是 Cocoa 框架中的一种常见设计模式，这种模式有利于代码解耦合，在iOS开发中经常被使用。
 使用 delegate 一般分为4个步骤：
 
 创建一个 delegate protocol
@@ -105,12 +105,12 @@
 遵守并实现协议
 调用 delegate
 
-其中第二步，是新手经常犯错的地方。为了避免循环引用，在声明 delegate pr">
+其中第二步，是新手经常犯错的地方。为了避免循环引用，在声明 delegate pro">
 <meta property="og:image" content="https://vernsu.github.io/images/wxqrcode.jpg">
-<meta property="og:updated_time" content="2017-02-01T13:28:25.000Z">
+<meta property="og:updated_time" content="2017-02-02T07:23:01.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Swift 中的 delegate 设计模式如何使用 weak">
-<meta name="twitter:description" content="delegate 模式Delegate 是 Cocoa 框架中的一种常见设计模式，这种模式有利于代码解耦和的，在iOS开发中经常被使用。
+<meta name="twitter:title" content="Swift 中的 delegate 设计模式如何使用 weak 引用">
+<meta name="twitter:description" content="delegate 模式Delegate 是 Cocoa 框架中的一种常见设计模式，这种模式有利于代码解耦合，在iOS开发中经常被使用。
 使用 delegate 一般分为4个步骤：
 
 创建一个 delegate protocol
@@ -118,7 +118,7 @@
 遵守并实现协议
 调用 delegate
 
-其中第二步，是新手经常犯错的地方。为了避免循环引用，在声明 delegate pr">
+其中第二步，是新手经常犯错的地方。为了避免循环引用，在声明 delegate pro">
 <meta name="twitter:image" content="https://vernsu.github.io/images/wxqrcode.jpg">
 
 
@@ -153,7 +153,7 @@
 
 
 
-  <title> Swift 中的 delegate 设计模式如何使用 weak | Swift学徒 </title>
+  <title> Swift 中的 delegate 设计模式如何使用 weak 引用 | Swift学徒 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -300,7 +300,7 @@
             
             
               
-                Swift 中的 delegate 设计模式如何使用 weak
+                Swift 中的 delegate 设计模式如何使用 weak 引用
               
             
           </h1>
@@ -351,7 +351,7 @@
       
 
       
-        <h2 id="delegate-模式"><a href="#delegate-模式" class="headerlink" title="delegate 模式"></a>delegate 模式</h2><p>Delegate 是 Cocoa 框架中的一种常见设计模式，这种模式有利于代码解耦和的，在iOS开发中经常被使用。</p>
+        <h2 id="delegate-模式"><a href="#delegate-模式" class="headerlink" title="delegate 模式"></a>delegate 模式</h2><p>Delegate 是 Cocoa 框架中的一种常见设计模式，这种模式有利于代码解耦合，在iOS开发中经常被使用。</p>
 <p>使用 delegate 一般分为4个步骤：</p>
 <ol>
 <li>创建一个 delegate protocol</li>
@@ -360,16 +360,18 @@
 <li>调用 delegate</li>
 </ol>
 <p>其中第二步，是新手经常犯错的地方。为了避免循环引用，在声明 delegate property 时，应该声明为 weak 引用。同时使用 weak 也使得 delegate 不存在其值时自动为nil，有效防止因为访问已经被回收的内存导致的 crash。</p>
+<p>第四步实现的注意事项请参考： <a href="http://swift.diagon.me/2017/02/02/">《在 Swift 中的可选协议方法》</a></p>
 <h2 id="Swift-中的-delegate"><a href="#Swift-中的-delegate" class="headerlink" title="Swift 中的 delegate"></a>Swift 中的 delegate</h2><h3 id="weak"><a href="#weak" class="headerlink" title="weak"></a>weak</h3><p>Swift 中 protocol 是可以被 class struct enum 使用的。而 struct, enum 并不通过 ARC 来管理内存，所以不能使用 weak 来修饰 delegate。</p>
 <p>解决办法就是将 protocol 限制为只能被 class 使用。有下面几种做法：</p>
 <h4 id="class-关键字"><a href="#class-关键字" class="headerlink" title="class 关键字"></a>class 关键字</h4><p>申明 protocol 时使用 class 关键字，使得该 protocol 只能适用于 class 类型。</p>
 <p>同时我们要将 delegate 设置为 optional 类型，因为使用 weak 修饰 delegate 可能导致 delegate 变为nil，所以要用optional 类型。否则编译器会报错：<code>‘weak’ variable shoule have optional type ‘…?’</code> 。</p>
 <p>下面为一次完整的使用 delegate 模式代码：</p>
 <figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//第一步</span></div><div class="line"><span class="class"><span class="keyword">protocol</span> <span class="title">SwiftDiagonDelegate</span>: <span class="title">class</span></span>&#123;</div><div class="line">    <span class="function"><span class="keyword">func</span> <span class="title">didFinishTask</span><span class="params">(sender:SwiftDiagon)</span></span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">SwiftDiagon</span></span>&#123;</div><div class="line">    <span class="comment">//第二步</span></div><div class="line">    <span class="keyword">weak</span> <span class="keyword">var</span> delegate: <span class="type">SwiftDiagonDelegate</span>?</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">func</span> <span class="title">method</span><span class="params">()</span></span>&#123;</div><div class="line">        <span class="comment">//第四步 使用 optional chaining，当delegate不为nil时才调用方法</span></div><div class="line">        delegate?.didFinishTask(sender: <span class="keyword">self</span>)</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">//第三步</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Viewcontroller</span>:<span class="title">UIViewController</span></span>&#123;</div><div class="line">    </div><div class="line">    <span class="keyword">var</span> swift = <span class="type">SwiftDiagon</span>()</div><div class="line">    </div><div class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">func</span> <span class="title">viewDidLoad</span><span class="params">()</span></span> &#123;</div><div class="line">        <span class="keyword">super</span>.viewDidLoad()</div><div class="line">        swift.delegate = <span class="keyword">self</span></div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">extension</span> <span class="title">Viewcontroller</span>:<span class="title">SwiftDiagonDelegate</span></span>&#123;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">func</span> <span class="title">didFinishTask</span><span class="params">(sender:SwiftDiagon)</span></span>&#123;</div><div class="line">        <span class="comment">// Something</span></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h4 id="objc-与-NSObjectProtocol"><a href="#objc-与-NSObjectProtocol" class="headerlink" title="@objc 与 NSObjectProtocol"></a>@objc 与 NSObjectProtocol</h4><p>通过标记为 Objective-c 也可以使得 protocol 只能被 class 使用。因为 Objective-c 中的 protocol 只能被累使用。</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">protocol</span> <span class="title">SwiftDiagonDelegate</span> : <span class="title">NSObjectProtocol</span></span>&#123;</div><div class="line">    <span class="function"><span class="keyword">func</span> <span class="title">didFinishTask</span><span class="params">(sender: SwiftDiagon)</span></span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="objc-与-NSObjectProtocol"><a href="#objc-与-NSObjectProtocol" class="headerlink" title="@objc 与 NSObjectProtocol"></a>@objc 与 NSObjectProtocol</h4><p>通过标记为 Objective-c 也可以使得 protocol 只能被 class 使用。因为 Objective-c 中的 protocol 只能被 class 使用。</p>
 <figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@objc</span> <span class="class"><span class="keyword">protocol</span> <span class="title">SwiftDiagonDelegate</span></span>&#123;</div><div class="line">    <span class="function"><span class="keyword">func</span> <span class="title">didFinishTask</span><span class="params">(sender: SwiftDiagon)</span></span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="可选"><a href="#可选" class="headerlink" title="可选"></a>可选</h3><p>另外一个可能会遇到的问题是 Objective-C 支持 可选的 protocol 方法，而 Swift 中所有协议方法都必须被实现。这个问题我们下篇再聊。 </p>
+<p>也可以这样：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">protocol</span> <span class="title">SwiftDiagonDelegate</span> : <span class="title">NSObjectProtocol</span></span>&#123;</div><div class="line">    <span class="function"><span class="keyword">func</span> <span class="title">didFinishTask</span><span class="params">(sender: SwiftDiagon)</span></span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="可选"><a href="#可选" class="headerlink" title="可选"></a>可选</h3><p>另外一个可能会遇到的问题是 Objective-C 支持可选的 protocol 方法，而 Swift 中所有协议方法都必须被实现。关于这个问题请参考： <a href="http://swift.diagon.me/2017/02/02/">《在 Swift 中的可选协议方法》</a></p>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>在纯 Swift 项目中建议用 <code>delegate: class</code> 这样的方式标记 protocol 为只能被 class 使用。因为这种方式直指问题本质。</p>
 <p>另外，这个问题也从另一方面说明我们应该多使用值类型，值类型可以很好的避免循环引用问题。使用值类型时值会被拷贝，所以不会出现这样的内存泄露问题。但是我们又不得不使用 Cocoa 框架。</p>
 <hr>
@@ -408,6 +410,8 @@
           
             <a href="/tags/objc/" rel="tag"># objc</a>
           
+            <a href="/tags/弱引用/" rel="tag"># 弱引用</a>
+          
         </div>
       
 
@@ -424,6 +428,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/02/02/" rel="prev" title="在 Swift 中的可选协议方法">
+                在 Swift 中的可选协议方法 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -493,7 +501,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-count">15</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -511,7 +519,7 @@
           
             <div class="site-state-item site-state-tags">
               
-                <span class="site-state-item-count">33</span>
+                <span class="site-state-item-count">36</span>
                 <span class="site-state-item-name">标签</span>
               
             </div>
