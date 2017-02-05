@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="值类型,引用类型,值语义," />
+  <meta name="keywords" content="class,final,继承,子类," />
 
 
 
@@ -84,32 +84,20 @@
 
 
 
-<meta name="description" content="什么是值语义目标对象由源对象拷贝生成，生成的目标对象与源对象彼此独立，改变互不影响。这就意味着，该对象的类型支持值语义。
-从另一个角度来说，如果一个对象的值，只能由自己修改，则说明这个对象的类型支持值语义。
-值语义的理解在OC中我们会经常这样写：
-1@property(nonatomic,copy) NSString * verifyCode;
-如果我们不这样写会导致什么问题？请看例子：
-1234">
+<meta name="description" content="《Swift 中的 static 和 class 关键字》一文中提及：「使用 static 修饰的类方法和类属性无法在子类中重载。也就是说 static 修饰的类方法和类属性包含了 final 关键字的特性。相当于 final class 。」，本文将详细介绍 final 的作用。
+final 的特性当使用 final 修饰符修饰 class 的方法 属性 下标时，可以防止他们被重写。例如：fin">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Swift 中值语义的实现">
-<meta property="og:url" content="http://swift.diagon.me/2017/01/19/index.html">
+<meta property="og:title" content="Swift 中的 final 修饰符">
+<meta property="og:url" content="http://swift.diagon.me/2017/02/05/index.html">
 <meta property="og:site_name" content="Swift学徒">
-<meta property="og:description" content="什么是值语义目标对象由源对象拷贝生成，生成的目标对象与源对象彼此独立，改变互不影响。这就意味着，该对象的类型支持值语义。
-从另一个角度来说，如果一个对象的值，只能由自己修改，则说明这个对象的类型支持值语义。
-值语义的理解在OC中我们会经常这样写：
-1@property(nonatomic,copy) NSString * verifyCode;
-如果我们不这样写会导致什么问题？请看例子：
-1234">
+<meta property="og:description" content="《Swift 中的 static 和 class 关键字》一文中提及：「使用 static 修饰的类方法和类属性无法在子类中重载。也就是说 static 修饰的类方法和类属性包含了 final 关键字的特性。相当于 final class 。」，本文将详细介绍 final 的作用。
+final 的特性当使用 final 修饰符修饰 class 的方法 属性 下标时，可以防止他们被重写。例如：fin">
 <meta property="og:image" content="https://vernsu.github.io/images/wxqrcode.jpg">
-<meta property="og:updated_time" content="2017-01-24T10:58:36.000Z">
+<meta property="og:updated_time" content="2017-02-04T11:40:34.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Swift 中值语义的实现">
-<meta name="twitter:description" content="什么是值语义目标对象由源对象拷贝生成，生成的目标对象与源对象彼此独立，改变互不影响。这就意味着，该对象的类型支持值语义。
-从另一个角度来说，如果一个对象的值，只能由自己修改，则说明这个对象的类型支持值语义。
-值语义的理解在OC中我们会经常这样写：
-1@property(nonatomic,copy) NSString * verifyCode;
-如果我们不这样写会导致什么问题？请看例子：
-1234">
+<meta name="twitter:title" content="Swift 中的 final 修饰符">
+<meta name="twitter:description" content="《Swift 中的 static 和 class 关键字》一文中提及：「使用 static 修饰的类方法和类属性无法在子类中重载。也就是说 static 修饰的类方法和类属性包含了 final 关键字的特性。相当于 final class 。」，本文将详细介绍 final 的作用。
+final 的特性当使用 final 修饰符修饰 class 的方法 属性 下标时，可以防止他们被重写。例如：fin">
 <meta name="twitter:image" content="https://vernsu.github.io/images/wxqrcode.jpg">
 
 
@@ -138,13 +126,13 @@
 
 
 
-  <link rel="canonical" href="http://swift.diagon.me/2017/01/19/"/>
+  <link rel="canonical" href="http://swift.diagon.me/2017/02/05/"/>
 
 
 
 
 
-  <title> Swift 中值语义的实现 | Swift学徒 </title>
+  <title> Swift 中的 final 修饰符 | Swift学徒 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -267,7 +255,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://swift.diagon.me/2017/01/19/">
+  <link itemprop="mainEntityOfPage" href="http://swift.diagon.me/2017/02/05/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="万恶胖为首">
@@ -291,7 +279,7 @@
             
             
               
-                Swift 中值语义的实现
+                Swift 中的 final 修饰符
               
             
           </h1>
@@ -306,8 +294,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-19T00:00:00+08:00">
-                2017-01-19
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-05T00:00:00+08:00">
+                2017-02-05
               </time>
             
 
@@ -342,39 +330,19 @@
       
 
       
-        <h2 id="什么是值语义"><a href="#什么是值语义" class="headerlink" title="什么是值语义"></a>什么是值语义</h2><p>目标对象由源对象拷贝生成，生成的目标对象与源对象彼此独立，改变互不影响。这就意味着，该对象的类型支持值语义。</p>
-<p>从另一个角度来说，如果一个对象的值，只能由自己修改，则说明这个对象的类型支持值语义。</p>
-<h2 id="值语义的理解"><a href="#值语义的理解" class="headerlink" title="值语义的理解"></a>值语义的理解</h2><p>在OC中我们会经常这样写：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">@property(nonatomic,copy) NSString * verifyCode;</div></pre></td></tr></table></figure>
-<p>如果我们不这样写会导致什么问题？请看例子：</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Person</span> </span>&#123;</div><div class="line">    <span class="keyword">var</span> name: <span class="type">NSString</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">let</span> name = <span class="type">NSMutableString</span>()</div><div class="line">name.appendString(<span class="string">"Bob"</span>)</div><div class="line"><span class="keyword">let</span> bob = <span class="type">Person</span>(name: name)</div><div class="line"></div><div class="line">name.appendString(<span class="string">", Jr."</span>)</div><div class="line"><span class="keyword">let</span> bobjr = <span class="type">Person</span>(name: name)</div><div class="line"></div><div class="line"><span class="built_in">print</span>(bob.name)</div><div class="line"><span class="built_in">print</span>(bobjr.name)</div></pre></td></tr></table></figure>
-<p>打印结果：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Bob, Jr.</div><div class="line">Bob, Jr.</div></pre></td></tr></table></figure>
-<p>原因在于：<code>NSString</code>是引用类型，它本身是不可变的，但是它有一个可变的子类：<code>NSMutableString</code>，导致<code>NSString</code>类型的<code>Property</code>实际上可能是<code>NSMutableString</code>类型。而我们要防止对象的属性被暗中修改。</p>
-<p>同样的，在使用<code>NSURLRequest</code>以及集合类型时都需要进行防御性的拷贝。为此，OC语言为<code>Property</code>提供了一个<code>copy</code>属性。</p>
-<p>很多编程语言中，字符串作为引用类型来实现，因为它们坚持「一切皆对象」的哲学。而值类型和不可变引用类型的区别在使用上很难被察觉。如果你的数据无法被改变，即使是引用类型，也拥有值语义。但是，从性能和内存角度来考虑，防御性拷贝明显不是最优措施。</p>
-<p>Swift 中的<code>String</code>是值类型，符合值语义，不会存在共享引用这个问题。</p>
-<h2 id="Swift中值语义的实现"><a href="#Swift中值语义的实现" class="headerlink" title="Swift中值语义的实现"></a>Swift中值语义的实现</h2><h3 id="Case-1：原始值类型"><a href="#Case-1：原始值类型" class="headerlink" title="Case 1：原始值类型"></a>Case 1：原始值类型</h3><p>Swift 中标准值类型支持值语义，比如：<code>Int</code>，<code>String</code>，<code>Double</code>等。</p>
-<h3 id="Case-2：复合的值类型"><a href="#Case-2：复合的值类型" class="headerlink" title="Case 2：复合的值类型"></a>Case 2：复合的值类型</h3><p>这里遵循一个简单的规则：<strong>如果一个 <code>Struct</code> 的所有 <code>Stored Property</code>  都支持值语义，则该<code>Struct</code>支持值语义</strong>。</p>
-<h3 id="Case-3：引用类型"><a href="#Case-3：引用类型" class="headerlink" title="Case 3：引用类型"></a>Case 3：引用类型</h3><p>引用类型也可以有值语义。</p>
-<p>改变引用类型变量的值有两种方式：</p>
+        <p><a href="http://swift.diagon.me/2017/01/25/">《Swift 中的 static 和 class 关键字》</a>一文中提及：「使用 <code>static</code> 修饰的类方法和类属性无法在子类中重载。也就是说 <code>static</code> 修饰的类方法和类属性包含了 <code>final</code> 关键字的特性。相当于 <code>final class</code> 。」，本文将详细介绍 <code>final</code> 的作用。</p>
+<h3 id="final-的特性"><a href="#final-的特性" class="headerlink" title="final 的特性"></a>final 的特性</h3><p>当使用 <code>final</code> 修饰符修饰 <code>class</code> 的方法 属性 下标时，可以防止他们被重写。例如：<code>final var</code>，<code>final func</code>，<code>final class func</code>，<code>final subscript</code>。</p>
+<p>当你试图重写被 <code>fianl</code> 修饰的东西时，编译时会报错。</p>
+<p>在申明 <code>class</code> 时，在 <code>calss</code> 之前添加 <code>final</code>，可以标记整个类为 <code>final</code>，如果你尝试继承这个类，编译时会报错。</p>
+<p>注意，<code>final</code> 只能修饰 <code>class</code> ，不能用来修饰 <code>struct</code> 和 <code>enum</code>，因为 <code>struct</code> 和 <code>enum</code> 只能遵循协议，无法继承。而协议虽然可以遵循其他协议，但是并不能重写遵循的协议中的成员。</p>
+<h3 id="final-常见用法"><a href="#final-常见用法" class="headerlink" title="final 常见用法"></a>final 常见用法</h3><p><code>final</code> 这一特性，在我们写提供给别人使用的代码时要谨慎思考。不希望被继承和重写有这么几种情况：</p>
 <ol>
-<li>给变量分配另一个实例。</li>
-<li>修改实例自身。</li>
+<li>性能调优。编译器可以从<code>final</code>中获取额外信息，以便于对<code>class</code>或<code>class的成员</code>进行优化。这个优化并不明显，所以只建议的极端性能调优的时候使用。</li>
+<li>类提供了充分并且可靠的功能。一般这样的类是工具类，可能只有类方法而没有实例方法。比如 MD5 工具类。</li>
+<li>子类继承或重载会产生风险。你开发的类库基于某些基本因子，如果基本因子含义被改变，可能会导致功能失效。</li>
 </ol>
-<p>第一种方式是靠变量自身进行修改的，这是被值语义所允许的。而第二种方式可能是由其他变量的修改导致。</p>
-<p>所以，如果要让一个引用类型拥有值语义，必须保证它的内部是不可变的。为了做到这点，需要让所有的 <code>Stored Property</code> 为常量。也就是说，在初始化后不会再被改变。</p>
-<p><code>UIKit</code>中很多地方使用了这种模式。</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> a = <span class="type">UIImage</span>(named:<span class="string">"smile.jpg"</span>)</div><div class="line"><span class="keyword">var</span> b = a</div><div class="line">computeValue(b) <span class="comment">// =&gt; something</span></div><div class="line">doSomething(a)</div><div class="line">computeValue(b) <span class="comment">// =&gt; same thhing</span></div></pre></td></tr></table></figure>
-<p>显而易见，<code>UIImage</code> 是引用类型，但是是不可变的。<code>doSomething(a)</code>不会导致<code>computeValue(b)</code>的返回结果有任何变化。</p>
-<p><code>UIImage</code> 有很多 <code>Property</code>（<code>scale</code>，<code>capInset</code>，<code>renderimgmode</code>等），但是都是只读的，无法修改。所以一个变量没法影响另一个变量。</p>
-<p>注意：如果其中一个<code>Property</code>不是常量，那就破坏了<code>UIImage</code>的值语义。</p>
-<p>Cocoa 中有很多<code>Class</code>定义为不可变就是这个原因：不可变的引用类型拥有值语义。</p>
-<h3 id="Case-4：值类型内嵌套可变的引用类型"><a href="#Case-4：值类型内嵌套可变的引用类型" class="headerlink" title="Case 4：值类型内嵌套可变的引用类型"></a>Case 4：值类型内嵌套可变的引用类型</h3><p>使用一个特殊的技巧可以使这种情况也可以拥有值语义，<code>Swift</code>标准库里大量使用了这种技术。<br>具体的实现请参考 <a href="https://vernsu.github.io/2017/01/20/" target="_blank" rel="external">Swift中值类型内嵌套可变引用类型时值语义的实现</a>。</p>
 <hr>
 <div style="text-align: center"><br>关注公众号（ID：SwiftBetter），进一步探讨主题<br><br><br>每日精选高清题图，可做壁纸<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>
-
-
       
     </div>
 
@@ -397,11 +365,13 @@
       
         <div class="post-tags">
           
-            <a href="/tags/值类型/" rel="tag"># 值类型</a>
+            <a href="/tags/class/" rel="tag"># class</a>
           
-            <a href="/tags/引用类型/" rel="tag"># 引用类型</a>
+            <a href="/tags/final/" rel="tag"># final</a>
           
-            <a href="/tags/值语义/" rel="tag"># 值语义</a>
+            <a href="/tags/继承/" rel="tag"># 继承</a>
+          
+            <a href="/tags/子类/" rel="tag"># 子类</a>
           
         </div>
       
@@ -410,15 +380,15 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2017/02/04/" rel="next" title="Optional Chaining 陷阱">
+                <i class="fa fa-chevron-left"></i> Optional Chaining 陷阱
+              </a>
+            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/01/20/" rel="prev" title="Swift 中值类型内嵌套可变引用类型时值语义的实现">
-                Swift 中值类型内嵌套可变引用类型时值语义的实现 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -541,7 +511,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是值语义"><span class="nav-number">1.</span> <span class="nav-text">什么是值语义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#值语义的理解"><span class="nav-number">2.</span> <span class="nav-text">值语义的理解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Swift中值语义的实现"><span class="nav-number">3.</span> <span class="nav-text">Swift中值语义的实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Case-1：原始值类型"><span class="nav-number">3.1.</span> <span class="nav-text">Case 1：原始值类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Case-2：复合的值类型"><span class="nav-number">3.2.</span> <span class="nav-text">Case 2：复合的值类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Case-3：引用类型"><span class="nav-number">3.3.</span> <span class="nav-text">Case 3：引用类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Case-4：值类型内嵌套可变的引用类型"><span class="nav-number">3.4.</span> <span class="nav-text">Case 4：值类型内嵌套可变的引用类型</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#final-的特性"><span class="nav-number">1.</span> <span class="nav-text">final 的特性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#final-常见用法"><span class="nav-number">2.</span> <span class="nav-text">final 常见用法</span></a></li></ol></div>
             
 
           </div>
