@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="static,class,单例,let," />
+  <meta name="keywords" content="隐式解包,Optional,ImplicitlyUnwrappedOptional," />
 
 
 
@@ -84,24 +84,25 @@
 
 
 
-<meta name="description" content="Objective-C 中单例的实现在 iOS 开发中，单例是常用到的一种设计模式。使用单例通常是为了保证在应用的生命周期里某个类只存在一个实例，方便全局访问，并可以节约系统资源。
-在 Objective-C中，单例经典的写法如下：
-12345678910111213@implementation Manager+ (Manager *)sharedInstance&amp;#123;	static sh">
+<meta name="description" content="隐式解包在 iOS 项目中，如果使用 Storboard 构建界面，经常会遇到这样的代码：
+1@IBOoutlet weak var FaceView: UIView!
+我们知道如果要申明 UIVivew 为 Optional 类型，UIView? 这样写就好了。UIView!是什么意思呢? 其实这是一种特殊的 Optional，在使用时编译器会自动进行解包。这种方式被称，隐式解包。
+我们在类型后">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Swift 中单例的实现">
-<meta property="og:url" content="http://swift.diagon.me/2017/01/24/index.html">
+<meta property="og:title" content="Swift 中 Optional 的隐式解包">
+<meta property="og:url" content="http://swift.diagon.me/2017/02/06/index.html">
 <meta property="og:site_name" content="Swift学徒">
-<meta property="og:description" content="Objective-C 中单例的实现在 iOS 开发中，单例是常用到的一种设计模式。使用单例通常是为了保证在应用的生命周期里某个类只存在一个实例，方便全局访问，并可以节约系统资源。
-在 Objective-C中，单例经典的写法如下：
-12345678910111213@implementation Manager+ (Manager *)sharedInstance&amp;#123;	static sh">
-<meta property="og:image" content="https://vernsu.github.io/images/wxqrcode.jpg">
-<meta property="og:updated_time" content="2017-01-25T01:46:31.000Z">
+<meta property="og:description" content="隐式解包在 iOS 项目中，如果使用 Storboard 构建界面，经常会遇到这样的代码：
+1@IBOoutlet weak var FaceView: UIView!
+我们知道如果要申明 UIVivew 为 Optional 类型，UIView? 这样写就好了。UIView!是什么意思呢? 其实这是一种特殊的 Optional，在使用时编译器会自动进行解包。这种方式被称，隐式解包。
+我们在类型后">
+<meta property="og:updated_time" content="2017-02-05T04:17:09.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Swift 中单例的实现">
-<meta name="twitter:description" content="Objective-C 中单例的实现在 iOS 开发中，单例是常用到的一种设计模式。使用单例通常是为了保证在应用的生命周期里某个类只存在一个实例，方便全局访问，并可以节约系统资源。
-在 Objective-C中，单例经典的写法如下：
-12345678910111213@implementation Manager+ (Manager *)sharedInstance&amp;#123;	static sh">
-<meta name="twitter:image" content="https://vernsu.github.io/images/wxqrcode.jpg">
+<meta name="twitter:title" content="Swift 中 Optional 的隐式解包">
+<meta name="twitter:description" content="隐式解包在 iOS 项目中，如果使用 Storboard 构建界面，经常会遇到这样的代码：
+1@IBOoutlet weak var FaceView: UIView!
+我们知道如果要申明 UIVivew 为 Optional 类型，UIView? 这样写就好了。UIView!是什么意思呢? 其实这是一种特殊的 Optional，在使用时编译器会自动进行解包。这种方式被称，隐式解包。
+我们在类型后">
 
 
 
@@ -129,13 +130,13 @@
 
 
 
-  <link rel="canonical" href="http://swift.diagon.me/2017/01/24/"/>
+  <link rel="canonical" href="http://swift.diagon.me/2017/02/06/"/>
 
 
 
 
 
-  <title> Swift 中单例的实现 | Swift学徒 </title>
+  <title> Swift 中 Optional 的隐式解包 | Swift学徒 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -258,7 +259,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://swift.diagon.me/2017/01/24/">
+  <link itemprop="mainEntityOfPage" href="http://swift.diagon.me/2017/02/06/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="万恶胖为首">
@@ -282,7 +283,7 @@
             
             
               
-                Swift 中单例的实现
+                Swift 中 Optional 的隐式解包
               
             
           </h1>
@@ -297,8 +298,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-24T00:00:00+08:00">
-                2017-01-24
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-06T00:00:00+08:00">
+                2017-02-06
               </time>
             
 
@@ -333,32 +334,19 @@
       
 
       
-        <h2 id="Objective-C-中单例的实现"><a href="#Objective-C-中单例的实现" class="headerlink" title="Objective-C 中单例的实现"></a>Objective-C 中单例的实现</h2><p>在 iOS 开发中，单例是常用到的一种设计模式。使用单例通常是为了保证在应用的生命周期里某个类只存在一个实例，方便全局访问，并可以节约系统资源。</p>
-<p>在 Objective-C中，单例经典的写法如下：</p>
-<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">Manager</span></span></div><div class="line"></div><div class="line"></div><div class="line">+ (Manager *)sharedInstance</div><div class="line">&#123;</div><div class="line">	<span class="keyword">static</span> sharedInstance * Manager = <span class="literal">nil</span>;</div><div class="line">    <span class="comment">// dispatch_once不仅意味着代码仅会被运行一次，而且还是线程安全的</span></div><div class="line">    <span class="keyword">static</span> <span class="built_in">dispatch_once_t</span> onceToken;</div><div class="line">    <span class="built_in">dispatch_once</span>(&amp;onceToken, ^&#123;              </div><div class="line">        sharedInstance = [[Manager alloc] init];</div><div class="line">    &#125;);</div><div class="line">    <span class="keyword">return</span> sharedInstance;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h2 id="使用-Swift-实现单例"><a href="#使用-Swift-实现单例" class="headerlink" title="使用 Swift 实现单例"></a>使用 Swift 实现单例</h2><h3 id="单例要符合的规则"><a href="#单例要符合的规则" class="headerlink" title="单例要符合的规则"></a>单例要符合的规则</h3><p>实现一个单例，通常要满足两个条件</p>
-<ol>
-<li>实例只能被创建一次。</li>
-<li>确保线程安全，防止多个线程同时实例化一个单例对象。</li>
-</ol>
-<h3 id="Swift中更方便的实现方式"><a href="#Swift中更方便的实现方式" class="headerlink" title="Swift中更方便的实现方式"></a>Swift中更方便的实现方式</h3><p><a href="https://developer.apple.com/swift/blog/?id=7" target="_blank" rel="external">Apple Swift 博客</a>中写到到:</p>
-<blockquote>
-<p>全局变量（还有结构体和枚举体的静态成员）的 Lazy 初始化方法会在其被访问的时候调用一次。类似于调用’dispatch_once’以保证其初始化的原子性。这样就有了一种很酷的’单次调用’方式：只声明一个全局变量和私有的初始化方法即可。</p>
-</blockquote>
-<p>也就是说，使用 Swift let 常量就可以保证两点：</p>
-<ol>
-<li>全局常量是惰性初始化的</li>
-<li>这种惰性初始化是线程安全。</li>
-</ol>
-<p>在初始化类变量时，Swift 会将这个初始化包装在一次 <code>swift_once_block_invoke</code> 中，以保证它的唯一性。对于所有的全局变量，Swift都会在底层使用类似 <code>dispatch_once</code>的方式确保只以 lazy 的方式初始化一次。这样我们就可以很简单的实现一个单例：</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Manager</span></span>&#123;   </div><div class="line">    <span class="keyword">static</span> <span class="keyword">let</span> shared = <span class="type">Manager</span>()</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h2 id="更加严格的单例"><a href="#更加严格的单例" class="headerlink" title="更加严格的单例"></a>更加严格的单例</h2><p>如果要让使用者在使用公共实例外，没有能力自行创建实例。只需要用私有的初始化方法覆盖默认的公开私有化方法。</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Manager</span></span>&#123;   </div><div class="line">    <span class="keyword">static</span> <span class="keyword">let</span> shared = <span class="type">Manager</span>()</div><div class="line">    <span class="keyword">private</span> <span class="keyword">init</span>()&#123;&#125;<span class="comment">//这就阻止其他对象使用这个类的默认的'()'初始化方法</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>如果需要让单例在初始化时有额外的操作，可以通过调用Block的方式来实现：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">class Manager &#123;</div><div class="line">    static let shared: Manager = &#123;</div><div class="line">        let instance = Manager()</div><div class="line">        // setup code</div><div class="line">        return instance</div><div class="line">    &#125;()</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<hr>
-<div style="text-align: center"><br>关注公众号（ID：SwiftBetter），进一步探讨主题<br><br><br>每日精选高清题图，可做壁纸<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>
-
+        <h3 id="隐式解包"><a href="#隐式解包" class="headerlink" title="隐式解包"></a>隐式解包</h3><p>在 iOS 项目中，如果使用 Storboard 构建界面，经常会遇到这样的代码：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">@<span class="type">IBOoutlet</span> <span class="keyword">weak</span> <span class="keyword">var</span> <span class="type">FaceView</span>: <span class="type">UIView</span>!</div></pre></td></tr></table></figure>
+<p>我们知道如果要申明 UIVivew 为 Optional 类型，<code>UIView?</code> 这样写就好了。<code>UIView!</code>是什么意思呢? 其实这是一种特殊的 Optional，在使用时编译器会自动进行解包。这种方式被称，隐式解包。</p>
+<p>我们在类型后面加一个叹号<code>！</code>，就告诉编译器这个 Optional 处于隐式解包的状态。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Something</span></span>&#123;</div><div class="line">    <span class="function"><span class="keyword">func</span> <span class="title">method</span><span class="params">()</span></span>&#123;&#125;</div><div class="line">&#125;</div><div class="line"><span class="keyword">var</span> thing: <span class="type">Something</span>! = <span class="type">Something</span>()</div><div class="line">thing!.method()</div><div class="line">thing.method()</div></pre></td></tr></table></figure>
+<p>最后这两行代码是等效的。当然，如果 <code>thing</code> 为 <code>nil</code>，会导致 crash。那么号称类型安全的 Swift 为什么在有了显示的强制解包还要引入这种含蓄的隐藏式的解包写法呢？</p>
+<h3 id="形成原因"><a href="#形成原因" class="headerlink" title="形成原因"></a>形成原因</h3><p>之前在<a href="http://swift.diagon.me/2017/01/23/">《Swift 中为什么要引入 Optional？》</a>文中提到 Objective-C 中哨兵值引发的种种问题，Swift 的解决办法是使用安全的 Optional 类型。但是 Cocoa 框架多年来是由 Objective-C 构造的，不可避免的在很多 API 中携带了 Objective-C 语言的基因。一些 API 的参数和返回值虽然显式声明了具体的类型，但是仍然可能是 nil。如果 Swift 在自动转换过程中全部转换为 Optional，开发者在每次使用时都需要进行 Optional Binding，这是一件痛苦的事情。</p>
+<p>所以，隐式解包这种方式这是对历史的妥协。在未来的一天，历史包袱逐渐消失，隐式解包的概念也会逐渐消亡。</p>
+<p>目前，最常见的隐式解包就是使用 Interface Buider 时生成的 IBOutlet。如果没有连接IB，对 View 的访问会导致 crash。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">@<span class="type">IBOoutlet</span> <span class="keyword">weak</span> <span class="keyword">var</span> <span class="type">FaceView</span>: <span class="type">UIView</span>!</div></pre></td></tr></table></figure>
+<h3 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h3><p>隐式解包并不意味着「这个变量的值不会为 nil 」，而只是一种危险的捷径。</p>
+<p>Swift 是一门进化中的语言 ，Swift 3.0 中废除了隐式解包可选类型(ImplicitlyUnwrappedOptional)，并用 IUO 属性代替。理由就是隐式解包破坏了 Swift 的类型安全设计，所以要减少隐式解包的使用。</p>
+<p>在变量类型后的 <code>!</code> 不再表示是隐式解包可选类型(ImplicitlyUnwrappedOptional)，而是表示是 Optional，并有一个被隐式指定的属性。</p>
 
       
     </div>
@@ -382,13 +370,11 @@
       
         <div class="post-tags">
           
-            <a href="/tags/static/" rel="tag"># static</a>
+            <a href="/tags/隐式解包/" rel="tag"># 隐式解包</a>
           
-            <a href="/tags/class/" rel="tag"># class</a>
+            <a href="/tags/Optional/" rel="tag"># Optional</a>
           
-            <a href="/tags/单例/" rel="tag"># 单例</a>
-          
-            <a href="/tags/let/" rel="tag"># let</a>
+            <a href="/tags/ImplicitlyUnwrappedOptional/" rel="tag"># ImplicitlyUnwrappedOptional</a>
           
         </div>
       
@@ -397,8 +383,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/01/23/" rel="next" title="Swift 中为什么要引入 Optional？">
-                <i class="fa fa-chevron-left"></i> Swift 中为什么要引入 Optional？
+              <a href="/2017/02/05/" rel="next" title="Swift 中的 final 修饰符">
+                <i class="fa fa-chevron-left"></i> Swift 中的 final 修饰符
               </a>
             
           </div>
@@ -406,10 +392,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/01/25/" rel="prev" title="Swift 中的 static 和 class 关键字">
-                Swift 中的 static 和 class 关键字 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -532,7 +514,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Objective-C-中单例的实现"><span class="nav-number">1.</span> <span class="nav-text">Objective-C 中单例的实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用-Swift-实现单例"><span class="nav-number">2.</span> <span class="nav-text">使用 Swift 实现单例</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#单例要符合的规则"><span class="nav-number">2.1.</span> <span class="nav-text">单例要符合的规则</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Swift中更方便的实现方式"><span class="nav-number">2.2.</span> <span class="nav-text">Swift中更方便的实现方式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#更加严格的单例"><span class="nav-number">3.</span> <span class="nav-text">更加严格的单例</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#隐式解包"><span class="nav-number">1.</span> <span class="nav-text">隐式解包</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#形成原因"><span class="nav-number">2.</span> <span class="nav-text">形成原因</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#注意"><span class="nav-number">3.</span> <span class="nav-text">注意</span></a></li></ol></div>
             
 
           </div>
