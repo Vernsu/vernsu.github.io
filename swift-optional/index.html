@@ -1,0 +1,703 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="optional,哨兵值," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="历史原因来自 StackOverflow 一个提问里描述到：
+
+我们有一个员工姓 Null ，我们在查询这家伙的名字时，应用程序被弄崩溃了，肿么办！！！
+
+这个错误的出现可谓历史悠久，源自Tony Hoare在1965年时提出的编程语言设计，而且广泛的被借鉴到其他语言中。Null 在其他语言中有各种各样的名字：NULL、nil、null、None、Nothing、Nil 和 nullptr。更糟糕">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Swift 中为什么要引入 Optional？">
+<meta property="og:url" content="http://swift.diagon.me/swift-optional/index.html">
+<meta property="og:site_name" content="Swift学徒">
+<meta property="og:description" content="历史原因来自 StackOverflow 一个提问里描述到：
+
+我们有一个员工姓 Null ，我们在查询这家伙的名字时，应用程序被弄崩溃了，肿么办！！！
+
+这个错误的出现可谓历史悠久，源自Tony Hoare在1965年时提出的编程语言设计，而且广泛的被借鉴到其他语言中。Null 在其他语言中有各种各样的名字：NULL、nil、null、None、Nothing、Nil 和 nullptr。更糟糕">
+<meta property="og:image" content="https://vernsu.github.io/images/wxqrcode.jpg">
+<meta property="og:updated_time" content="2017-02-06T01:40:33.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Swift 中为什么要引入 Optional？">
+<meta name="twitter:description" content="历史原因来自 StackOverflow 一个提问里描述到：
+
+我们有一个员工姓 Null ，我们在查询这家伙的名字时，应用程序被弄崩溃了，肿么办！！！
+
+这个错误的出现可谓历史悠久，源自Tony Hoare在1965年时提出的编程语言设计，而且广泛的被借鉴到其他语言中。Null 在其他语言中有各种各样的名字：NULL、nil、null、None、Nothing、Nil 和 nullptr。更糟糕">
+<meta name="twitter:image" content="https://vernsu.github.io/images/wxqrcode.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://swift.diagon.me/swift-optional/"/>
+
+
+
+
+
+  <title> Swift 中为什么要引入 Optional？ | Swift学徒 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?2d1b9ca1ddd64ef2206b43ea10ec9d25";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Swift学徒</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <p class="site-subtitle">笨办法学Swift</p>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://swift.diagon.me/swift-optional/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="万恶胖为首">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.gif">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="Swift学徒">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="Swift学徒" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Swift 中为什么要引入 Optional？
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-23T00:00:00+08:00">
+                2017-01-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="历史原因"><a href="#历史原因" class="headerlink" title="历史原因"></a>历史原因</h2><p>来自 StackOverflow 一个<a href="http://stackoverflow.com/questions/4456438/how-to-pass-null-a-real-surname-to-a-soap-web-service-in-actionscript-3" target="_blank" rel="external">提问</a>里描述到：</p>
+<blockquote>
+<p>我们有一个员工姓 Null ，我们在查询这家伙的名字时，应用程序被弄崩溃了，肿么办！！！</p>
+</blockquote>
+<p>这个错误的出现可谓历史悠久，源自<a href="https://en.wikipedia.org/wiki/Tony_Hoare" target="_blank" rel="external">Tony Hoare</a>在1965年时提出的编程语言设计，而且广泛的被借鉴到其他语言中。Null 在其他语言中有各种各样的名字：NULL、nil、null、None、Nothing、Nil 和 nullptr。更糟糕的是，每种语言都有细微的差别。</p>
+<p>Tony Hoare 将这个错误的设计称为 <a href="https://www.infoq.com/presentations/Null-References-The-Billion-Dollar-Mistake-Tony-Hoare" target="_blank" rel="external">billion dollar mistake</a>,他说：</p>
+<blockquote>
+<p>它导致了数不清的错误、漏洞和系统崩溃，可能在之后 40 年中造成了十亿美元的损失。</p>
+</blockquote>
+<h2 id="哨兵值"><a href="#哨兵值" class="headerlink" title="哨兵值"></a>哨兵值</h2><p>Linux 系统中打开一个文件时，有时我们可能会失败：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">int</span> fd = open(<span class="string">"someFile"</span>, O_RDWR); </div><div class="line"><span class="keyword">if</span> (fd != <span class="number">-1</span>) &#123; </div><div class="line">  <span class="comment">// Some file operations here </span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>Linux 使用了一个整数 -1 来表示文件打开错误。</p>
+<p>很多时候用0或者空字符串来代表不存在或没有值。但是有一个问题。0或者空字符串本身也可能是有含义的。</p>
+<p>这种使用了和正常状态同类型的特殊值来表示失败，没有值，不存在的含义，我们通常将这种值就叫做哨兵值。</p>
+<p>很多语言简单的处理了哨兵值，比如 Objective-C 中有 nil概念，但是仅仅只是和0的含义相同。</p>
+<p>在Objective-C中由于调用值为nil的对象的方法是被允许的。我们举一个 nil 造成的 bug：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">NSString</span> * tmp = <span class="literal">nil</span>;</div><div class="line"><span class="keyword">if</span> ([tmp rangeOfString:<span class="string">@"Swift"</span>].location != <span class="built_in">NSNotFound</span>) &#123;</div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"Swift是最好的编程语言"</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>在这个例子中，tmp 中 明明不可能包含关键字，但是「Swift是最好的编程语言」这句话仍然被打印了出来。</p>
+<p>这就是哨兵值惹的祸，这样的问题防不胜防。</p>
+<p>如果一种语言允许任何东西为 null，那么任何东西都可以是 null。换句话说，我们使用任何一个对象都冒着它并不存在的风险，而编译器对这种状态一无所知。</p>
+<h2 id="Swift-中的优雅处理"><a href="#Swift-中的优雅处理" class="headerlink" title="Swift 中的优雅处理"></a>Swift 中的优雅处理</h2><p>Swift 用一个特殊类型 optional 处理一个值可能是 nil 的情况。当你使用 optional时，你必须处理nil的情况。这样就有效解决了解决了哨兵值含糊不清的问题。</p>
+<p>因为，null的问题之所以存在，是因为你可以在没有“检查” null 的情况下，对对象进行了操作。</p>
+<p>Optional 类型的设计让你没法在访问对象前不检查它。这让你没法犯错。</p>
+<p>比如，在 Swift 里面，你可以这样写：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span> <span class="keyword">let</span> content = something &#123;</div><div class="line">  <span class="built_in">print</span>(<span class="string">"找到: "</span> + content)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>假设 something 的类型是String?，它可能包含一个 String，也可能是 nil。使用这种特殊的 if 语法可以检查并访问 something。这个 if 语句跟普通的 if 语句不一样，它的条件并不是一个 Bool，而是一个变量绑定 let content = something。</p>
+<p>这几行代码的含义是：如果 something 是nil，那么整个 if 语句被忽略。如果它不是 nil，那么将 something 的值（unwrap操作） 分配给变量 content ，接下来执行 if 块中的代码。</p>
+<hr>
+<div style="text-align: center"><br>关注公众号（ID：SwiftBetter），进一步探讨主题<br><br><br>每日精选高清题图，可做壁纸<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/optional/" rel="tag"># optional</a>
+          
+            <a href="/tags/哨兵值/" rel="tag"># 哨兵值</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/swift-sturct-class-type/" rel="next" title="Swift 中的嵌套类型">
+                <i class="fa fa-chevron-left"></i> Swift 中的嵌套类型
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/singleton-swift/" rel="prev" title="Swift 中单例的实现">
+                Swift 中单例的实现 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="万恶胖为首" />
+          <p class="site-author-name" itemprop="name">万恶胖为首</p>
+          <p class="site-description motion-element" itemprop="description">笨办法学Swift</p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">46</span>
+                <span class="site-state-item-name">标签</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#历史原因"><span class="nav-number">1.</span> <span class="nav-text">历史原因</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#哨兵值"><span class="nav-number">2.</span> <span class="nav-text">哨兵值</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Swift-中的优雅处理"><span class="nav-number">3.</span> <span class="nav-text">Swift 中的优雅处理</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">万恶胖为首</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+      <!-- UY BEGIN -->
+      <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid="></script>
+      <!-- UY END -->
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>

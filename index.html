@@ -251,7 +251,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://swift.diagon.me/2017/02/06/">
+  <link itemprop="mainEntityOfPage" href="http://swift.diagon.me/optional-IUO/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="万恶胖为首">
@@ -276,7 +276,7 @@
             
               
                 
-                <a class="post-title-link" href="/2017/02/06/" itemprop="url">
+                <a class="post-title-link" href="/optional-IUO/" itemprop="url">
                   Swift 中 Optional 的隐式解包
                 </a>
               
@@ -331,20 +331,21 @@
       
         
           
-            <h3 id="隐式解包"><a href="#隐式解包" class="headerlink" title="隐式解包"></a>隐式解包</h3><p>在 iOS 项目中，如果使用 Storboard 构建界面，经常会遇到这样的代码：</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">@<span class="type">IBOoutlet</span> <span class="keyword">weak</span> <span class="keyword">var</span> <span class="type">FaceView</span>: <span class="type">UIView</span>!</div></pre></td></tr></table></figure>
+            <h3 id="隐式解包"><a href="#隐式解包" class="headerlink" title="隐式解包"></a>隐式解包</h3><p>在 iOS 项目中，如果使用 Interface Buider 构建界面，会生成这样的代码：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">@<span class="type">IBOoutlet</span> <span class="keyword">weak</span> <span class="keyword">var</span> faceView: <span class="type">UIView</span>!</div></pre></td></tr></table></figure>
 <p>我们知道如果要申明 UIVivew 为 Optional 类型，<code>UIView?</code> 这样写就好了。<code>UIView!</code>是什么意思呢? 其实这是一种特殊的 Optional，在使用时编译器会自动进行解包。这种方式被称，隐式解包。</p>
 <p>我们在类型后面加一个叹号<code>！</code>，就告诉编译器这个 Optional 处于隐式解包的状态。</p>
 <figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Something</span></span>&#123;</div><div class="line">    <span class="function"><span class="keyword">func</span> <span class="title">method</span><span class="params">()</span></span>&#123;&#125;</div><div class="line">&#125;</div><div class="line"><span class="keyword">var</span> thing: <span class="type">Something</span>! = <span class="type">Something</span>()</div><div class="line">thing!.method()</div><div class="line">thing.method()</div></pre></td></tr></table></figure>
-<p>最后这两行代码是等效的。当然，如果 <code>thing</code> 为 <code>nil</code>，会导致 crash。那么号称类型安全的 Swift 为什么在有了显示的强制解包还要引入这种含蓄的隐藏式的解包写法呢？</p>
+<p>最后这两行代码是等效的。当然，如果 <code>thing</code> 为 <code>nil</code>，会导致 crash。那么号称类型安全的 Swift 为什么在有了显式的强制解包还要引入这种含蓄的隐式解包写法呢？</p>
 <h3 id="形成原因"><a href="#形成原因" class="headerlink" title="形成原因"></a>形成原因</h3><p>之前在<a href="http://swift.diagon.me/2017/01/23/">《Swift 中为什么要引入 Optional？》</a>文中提到 Objective-C 中哨兵值引发的种种问题，Swift 的解决办法是使用安全的 Optional 类型。但是 Cocoa 框架多年来是由 Objective-C 构造的，不可避免的在很多 API 中携带了 Objective-C 语言的基因。一些 API 的参数和返回值虽然显式声明了具体的类型，但是仍然可能是 nil。如果 Swift 在自动转换过程中全部转换为 Optional，开发者在每次使用时都需要进行 Optional Binding，这是一件痛苦的事情。</p>
 <p>所以，隐式解包这种方式这是对历史的妥协。在未来的一天，历史包袱逐渐消失，隐式解包的概念也会逐渐消亡。</p>
-<p>目前，最常见的隐式解包就是使用 Interface Buider 时生成的 IBOutlet。如果没有连接IB，对 View 的访问会导致 crash。</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">@<span class="type">IBOoutlet</span> <span class="keyword">weak</span> <span class="keyword">var</span> <span class="type">FaceView</span>: <span class="type">UIView</span>!</div></pre></td></tr></table></figure>
+<p>目前，最常见的隐式解包就是文章开头提到的使用 Interface Buider 生成的 IBOutlet。如果没有连接 Interface Buider，使用 faceView 会导致 crash。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">@<span class="type">IBOoutlet</span> <span class="keyword">weak</span> <span class="keyword">var</span> faceView: <span class="type">UIView</span>!</div></pre></td></tr></table></figure>
 <h3 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h3><p>隐式解包并不意味着「这个变量的值不会为 nil 」，而只是一种危险的捷径。</p>
 <p>Swift 是一门进化中的语言 ，Swift 3.0 中废除了隐式解包可选类型(ImplicitlyUnwrappedOptional)，并用 IUO 属性代替。理由就是隐式解包破坏了 Swift 的类型安全设计，所以要减少隐式解包的使用。</p>
 <p>在变量类型后的 <code>!</code> 不再表示是隐式解包可选类型(ImplicitlyUnwrappedOptional)，而是表示是 Optional，并有一个被隐式指定的属性。</p>
-
+<hr>
+<div style="text-align: center"><br>关注公众号（ID：SwiftBetter），进一步探讨主题<br><br><br>每日精选高清题图，可做壁纸<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>
           
         
       
@@ -382,7 +383,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://swift.diagon.me/2017/02/05/">
+  <link itemprop="mainEntityOfPage" href="http://swift.diagon.me/final/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="万恶胖为首">
@@ -407,7 +408,7 @@
             
               
                 
-                <a class="post-title-link" href="/2017/02/05/" itemprop="url">
+                <a class="post-title-link" href="/final/" itemprop="url">
                   Swift 中的 final 修饰符
                 </a>
               
@@ -512,7 +513,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://swift.diagon.me/2017/02/04/">
+  <link itemprop="mainEntityOfPage" href="http://swift.diagon.me/optional-chaining-issue/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="万恶胖为首">
@@ -537,7 +538,7 @@
             
               
                 
-                <a class="post-title-link" href="/2017/02/04/" itemprop="url">
+                <a class="post-title-link" href="/optional-chaining-issue/" itemprop="url">
                   Optional Chaining 陷阱
                 </a>
               
@@ -644,7 +645,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://swift.diagon.me/2017/02/03/">
+  <link itemprop="mainEntityOfPage" href="http://swift.diagon.me/optional-chaining/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="万恶胖为首">
@@ -669,7 +670,7 @@
             
               
                 
-                <a class="post-title-link" href="/2017/02/03/" itemprop="url">
+                <a class="post-title-link" href="/optional-chaining/" itemprop="url">
                   Swift 中的 Optional Chaining
                 </a>
               
@@ -777,7 +778,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://swift.diagon.me/2017/02/02/">
+  <link itemprop="mainEntityOfPage" href="http://swift.diagon.me/protocol-mutable-method/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="万恶胖为首">
@@ -802,7 +803,7 @@
             
               
                 
-                <a class="post-title-link" href="/2017/02/02/" itemprop="url">
+                <a class="post-title-link" href="/protocol-mutable-method/" itemprop="url">
                   Swift 中的可选协议方法
                 </a>
               
@@ -911,7 +912,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://swift.diagon.me/2017/02/01/">
+  <link itemprop="mainEntityOfPage" href="http://swift.diagon.me/delegate-weak/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="万恶胖为首">
@@ -936,7 +937,7 @@
             
               
                 
-                <a class="post-title-link" href="/2017/02/01/" itemprop="url">
+                <a class="post-title-link" href="/delegate-weak/" itemprop="url">
                   Swift 中的 delegate 设计模式如何使用 weak 引用
                 </a>
               
@@ -1053,7 +1054,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://swift.diagon.me/2017/01/31/">
+  <link itemprop="mainEntityOfPage" href="http://swift.diagon.me/last-modified-etag/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="万恶胖为首">
@@ -1078,7 +1079,7 @@
             
               
                 
-                <a class="post-title-link" href="/2017/01/31/" itemprop="url">
+                <a class="post-title-link" href="/last-modified-etag/" itemprop="url">
                   使用 Last-Modified 和 Etag 精确控制缓存失效时机
                 </a>
               
@@ -1202,7 +1203,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://swift.diagon.me/2017/01/30/">
+  <link itemprop="mainEntityOfPage" href="http://swift.diagon.me/urlcache-cachedurlresponse/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="万恶胖为首">
@@ -1227,7 +1228,7 @@
             
               
                 
-                <a class="post-title-link" href="/2017/01/30/" itemprop="url">
+                <a class="post-title-link" href="/urlcache-cachedurlresponse/" itemprop="url">
                   URLCache 与 CachedURLResponse
                 </a>
               
@@ -1356,7 +1357,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://swift.diagon.me/2017/01/29/">
+  <link itemprop="mainEntityOfPage" href="http://swift.diagon.me/urlcache-cache-control/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="万恶胖为首">
@@ -1381,7 +1382,7 @@
             
               
                 
-                <a class="post-title-link" href="/2017/01/29/" itemprop="url">
+                <a class="post-title-link" href="/urlcache-cache-control/" itemprop="url">
                   iOS 开发中常用的缓存策略：验证篇
                 </a>
               
@@ -1571,7 +1572,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://swift.diagon.me/2017/01/28/">
+  <link itemprop="mainEntityOfPage" href="http://swift.diagon.me/urlcache-http/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="万恶胖为首">
@@ -1596,7 +1597,7 @@
             
               
                 
-                <a class="post-title-link" href="/2017/01/28/" itemprop="url">
+                <a class="post-title-link" href="/urlcache-http/" itemprop="url">
                   iOS 开发中常用的缓存策略：HTTP 协议篇
                 </a>
               
@@ -1797,7 +1798,7 @@
           
             <div class="site-state-item site-state-tags">
               
-                <span class="site-state-item-count">45</span>
+                <span class="site-state-item-count">46</span>
                 <span class="site-state-item-name">标签</span>
               
             </div>
