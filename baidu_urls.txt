@@ -1,1 +1,1 @@
-http://swift.diagon.me/protocol-extension/
+http://swift.diagon.me/protocol-member-default/

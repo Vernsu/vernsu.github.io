@@ -84,23 +84,23 @@
 
 
 
-<meta name="description" content="面向协议的编程打破了旧的协议规则，允许让你用协议自身实现协议。
-你可以用下面的语法定义一个 protocol extension：
-123456789101112131415protocol TeamRecord &amp;#123;        var wins: Int &amp;#123; get &amp;#125;        var losses: Int &amp;#123; get &amp;#125;">
+<meta name="description" content="《Swift 中的协议扩展初探》一文中列举了使用协议扩展增加并实现新的成员。由于该 property 只在 protocol extension 声明和实现，而没有在 protocol 自身中声明，所以遵守该 protocol 的类型无需实现该成员。
+现在再考虑另一个例子：
+123456789101112131415protocol TeamRecord &amp;#123;        var win">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Swift 中的协议扩展初探">
-<meta property="og:url" content="http://swift.diagon.me/protocol-extension/index.html">
+<meta property="og:title" content="Swift 中的协议成员的默认实现">
+<meta property="og:url" content="http://swift.diagon.me/protocol-member-default/index.html">
 <meta property="og:site_name" content="Swift学徒">
-<meta property="og:description" content="面向协议的编程打破了旧的协议规则，允许让你用协议自身实现协议。
-你可以用下面的语法定义一个 protocol extension：
-123456789101112131415protocol TeamRecord &amp;#123;        var wins: Int &amp;#123; get &amp;#125;        var losses: Int &amp;#123; get &amp;#125;">
+<meta property="og:description" content="《Swift 中的协议扩展初探》一文中列举了使用协议扩展增加并实现新的成员。由于该 property 只在 protocol extension 声明和实现，而没有在 protocol 自身中声明，所以遵守该 protocol 的类型无需实现该成员。
+现在再考虑另一个例子：
+123456789101112131415protocol TeamRecord &amp;#123;        var win">
 <meta property="og:image" content="https://vernsu.github.io/images/wxqrcode.jpg">
-<meta property="og:updated_time" content="2017-02-08T08:31:50.000Z">
+<meta property="og:updated_time" content="2017-02-08T08:52:05.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Swift 中的协议扩展初探">
-<meta name="twitter:description" content="面向协议的编程打破了旧的协议规则，允许让你用协议自身实现协议。
-你可以用下面的语法定义一个 protocol extension：
-123456789101112131415protocol TeamRecord &amp;#123;        var wins: Int &amp;#123; get &amp;#125;        var losses: Int &amp;#123; get &amp;#125;">
+<meta name="twitter:title" content="Swift 中的协议成员的默认实现">
+<meta name="twitter:description" content="《Swift 中的协议扩展初探》一文中列举了使用协议扩展增加并实现新的成员。由于该 property 只在 protocol extension 声明和实现，而没有在 protocol 自身中声明，所以遵守该 protocol 的类型无需实现该成员。
+现在再考虑另一个例子：
+123456789101112131415protocol TeamRecord &amp;#123;        var win">
 <meta name="twitter:image" content="https://vernsu.github.io/images/wxqrcode.jpg">
 
 
@@ -129,13 +129,13 @@
 
 
 
-  <link rel="canonical" href="http://swift.diagon.me/protocol-extension/"/>
+  <link rel="canonical" href="http://swift.diagon.me/protocol-member-default/"/>
 
 
 
 
 
-  <title> Swift 中的协议扩展初探 | Swift学徒 </title>
+  <title> Swift 中的协议成员的默认实现 | Swift学徒 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -258,7 +258,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://swift.diagon.me/protocol-extension/">
+  <link itemprop="mainEntityOfPage" href="http://swift.diagon.me/protocol-member-default/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="万恶胖为首">
@@ -282,7 +282,7 @@
             
             
               
-                Swift 中的协议扩展初探
+                Swift 中的协议成员的默认实现
               
             
           </h1>
@@ -297,8 +297,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-07T00:00:00+08:00">
-                2017-02-07
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-08T00:00:00+08:00">
+                2017-02-08
               </time>
             
 
@@ -333,17 +333,21 @@
       
 
       
-        <p>面向协议的编程打破了旧的协议规则，允许让你用<strong>协议自身实现协议</strong>。</p>
-<p>你可以用下面的语法定义一个 protocol extension：</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">protocol</span> <span class="title">TeamRecord</span> </span>&#123;</div><div class="line">    </div><div class="line">    <span class="keyword">var</span> wins: <span class="type">Int</span> &#123; <span class="keyword">get</span> &#125;</div><div class="line">    </div><div class="line">    <span class="keyword">var</span> losses: <span class="type">Int</span> &#123; <span class="keyword">get</span> &#125;</div><div class="line">    </div><div class="line">    <span class="keyword">var</span> winningPercentage: <span class="type">Double</span> &#123; <span class="keyword">get</span> &#125;</div><div class="line">&#125;</div><div class="line"><span class="class"><span class="keyword">extension</span> <span class="title">TeamRecord</span> </span>&#123;</div><div class="line">    </div><div class="line">    <span class="keyword">var</span> gamesPlayed: <span class="type">Int</span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">return</span> wins + losses</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>这里 protocol extension 和 protocol 的不同是：extension 包括了成员的实现。 </p>
-<p>我们可以在 protocol extension 中使用 protocol 的成员，因为遵守 TemRecord 协议时，必定实现了 TemRecord 的成员。</p>
-<p>现在我们写一个 struct，可以直接使用 gamesPlayed，而不需要重新实现它。</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">BaseballRecord</span>: <span class="title">TeamRecord</span> </span>&#123;</div><div class="line">    </div><div class="line">    <span class="keyword">var</span> wins: <span class="type">Int</span></div><div class="line">    <span class="keyword">var</span> losses: <span class="type">Int</span></div><div class="line">    </div><div class="line">    <span class="keyword">var</span> winningPercentage: <span class="type">Double</span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">return</span> <span class="type">Double</span>(wins) / (<span class="type">Double</span>(wins) + <span class="type">Double</span>(losses))</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">let</span> sanFranciscoSwifts = <span class="type">BaseballRecord</span>(wins: <span class="number">10</span>, losses:<span class="number">5</span>)</div><div class="line"></div><div class="line">sanFranciscoSwifts.gamesPlayed <span class="comment">// 15</span></div></pre></td></tr></table></figure>
-<p>无奈滞留在机场，先写这么多。</p>
-<p>关于协议扩展更多内容参见：<a href="http://swift.diagon.me/protocol-extension/">《Swift 中的协议成员的默认实现》</a></p>
+        <p><a href="http://swift.diagon.me/protocol-extension/">《Swift 中的协议扩展初探》</a>一文中列举了使用协议扩展增加并实现新的成员。由于该 property 只在 protocol extension 声明和实现，而没有在 protocol 自身中声明，所以遵守该 protocol 的类型无需实现该成员。</p>
+<p>现在再考虑另一个例子：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">protocol</span> <span class="title">TeamRecord</span> </span>&#123;</div><div class="line">    </div><div class="line">    <span class="keyword">var</span> wins: <span class="type">Int</span> &#123; <span class="keyword">get</span> &#125;</div><div class="line">    </div><div class="line">    <span class="keyword">var</span> losses: <span class="type">Int</span> &#123; <span class="keyword">get</span> &#125;</div><div class="line">    </div><div class="line">    <span class="keyword">var</span> winningPercentage: <span class="type">Double</span> &#123; <span class="keyword">get</span> &#125;</div><div class="line">&#125;</div><div class="line"><span class="class"><span class="keyword">extension</span> <span class="title">TeamRecord</span> </span>&#123;</div><div class="line">    </div><div class="line">    <span class="keyword">var</span> winningPercentage: <span class="type">Double</span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">return</span> <span class="type">Double</span>(wins) / (<span class="type">Double</span>(wins) + <span class="type">Double</span>(losses))</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这个例子和之前的 protocol extension 不同之处在于，winningPercentage 是 TeamRecord protocol 已经声明了的成员。</p>
+<p>在 protocol extension 中实现 protoxol 声明的成员，就创建了一个该成员的默认实现。此时遵守协议的类型可以不实现该成员 ，而使用其默认实现。</p>
+<p>这就是<a href="http://swift.diagon.me/protocol-mutable-method/">《Swift 中的可选协议方法》</a>的理论基础了。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">BasketballRecord</span>: <span class="title">TeamRecord</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">var</span> wins: <span class="type">Int</span></div><div class="line">    </div><div class="line">    <span class="keyword">var</span> losses: <span class="type">Int</span></div><div class="line">    </div><div class="line">    <span class="keyword">let</span> seasonLength = <span class="number">82</span></div><div class="line">&#125;</div><div class="line"><span class="keyword">let</span> minneapolisFunctors = <span class="type">BasketballRecord</span>(wins: <span class="number">60</span>, losses: <span class="number">22</span>)</div><div class="line">minneapolisFunctors.winningPercentage</div></pre></td></tr></table></figure>
+<p>需要不同的实现时，只需要简单的写下不同的实现即可：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">HockeyRecord</span>: <span class="title">TeamRecord</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">var</span> wins: <span class="type">Int</span></div><div class="line">    </div><div class="line">    <span class="keyword">var</span> losses: <span class="type">Int</span></div><div class="line">    </div><div class="line">    <span class="keyword">var</span> ties: <span class="type">Int</span></div><div class="line">    </div><div class="line">    <span class="keyword">var</span> winningPercentage: <span class="type">Double</span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">return</span> <span class="type">Double</span>(wins) / (<span class="type">Double</span>(wins) + <span class="type">Double</span>(losses) + <span class="type">Double</span>(ties))</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">let</span> chicagoOptionals = <span class="type">BasketballRecord</span>(wins: <span class="number">10</span>, losses: <span class="number">6</span>)</div><div class="line"><span class="keyword">let</span> phoenixStridables = <span class="type">HockeyRecord</span>(wins: <span class="number">8</span>, losses: <span class="number">7</span>, ties: <span class="number">1</span></div><div class="line">)</div><div class="line"></div><div class="line">chicagoOptionals.winningPercentage <span class="comment">// 10 / (10 + 6) == .625</span></div><div class="line">phoenixStridables.winningPercentage <span class="comment">// 8 / (8 + 7 + 1) == .500</span></div></pre></td></tr></table></figure>
 <hr>
 <div style="text-align: center"><br>关注公众号（ID：SwiftBetter），进一步探讨主题<br><br><br>每日精选高清题图，可做壁纸<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>
+
+
+
+
       
     </div>
 
@@ -379,8 +383,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/optional-IUO/" rel="next" title="Swift 中 Optional 的隐式解包">
-                <i class="fa fa-chevron-left"></i> Swift 中 Optional 的隐式解包
+              <a href="/protocol-extension/" rel="next" title="Swift 中的协议扩展初探">
+                <i class="fa fa-chevron-left"></i> Swift 中的协议扩展初探
               </a>
             
           </div>
@@ -388,10 +392,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/protocol-member-default/" rel="prev" title="Swift 中的协议成员的默认实现">
-                Swift 中的协议成员的默认实现 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>

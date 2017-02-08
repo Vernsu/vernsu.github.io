@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="protocol,extension,协议扩展," />
+  <meta name="keywords" content="Hexo, NexT" />
 
 
 
@@ -84,24 +84,15 @@
 
 
 
-<meta name="description" content="面向协议的编程打破了旧的协议规则，允许让你用协议自身实现协议。
-你可以用下面的语法定义一个 protocol extension：
-123456789101112131415protocol TeamRecord &amp;#123;        var wins: Int &amp;#123; get &amp;#125;        var losses: Int &amp;#123; get &amp;#125;">
-<meta property="og:type" content="article">
-<meta property="og:title" content="Swift 中的协议扩展初探">
-<meta property="og:url" content="http://swift.diagon.me/protocol-extension/index.html">
+<meta name="description" content="笨办法学Swift">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Swift学徒">
+<meta property="og:url" content="http://swift.diagon.me/page/3/index.html">
 <meta property="og:site_name" content="Swift学徒">
-<meta property="og:description" content="面向协议的编程打破了旧的协议规则，允许让你用协议自身实现协议。
-你可以用下面的语法定义一个 protocol extension：
-123456789101112131415protocol TeamRecord &amp;#123;        var wins: Int &amp;#123; get &amp;#125;        var losses: Int &amp;#123; get &amp;#125;">
-<meta property="og:image" content="https://vernsu.github.io/images/wxqrcode.jpg">
-<meta property="og:updated_time" content="2017-02-08T08:31:50.000Z">
+<meta property="og:description" content="笨办法学Swift">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Swift 中的协议扩展初探">
-<meta name="twitter:description" content="面向协议的编程打破了旧的协议规则，允许让你用协议自身实现协议。
-你可以用下面的语法定义一个 protocol extension：
-123456789101112131415protocol TeamRecord &amp;#123;        var wins: Int &amp;#123; get &amp;#125;        var losses: Int &amp;#123; get &amp;#125;">
-<meta name="twitter:image" content="https://vernsu.github.io/images/wxqrcode.jpg">
+<meta name="twitter:title" content="Swift学徒">
+<meta name="twitter:description" content="笨办法学Swift">
 
 
 
@@ -129,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://swift.diagon.me/protocol-extension/"/>
+  <link rel="canonical" href="http://swift.diagon.me/page/3/"/>
 
 
 
 
 
-  <title> Swift 中的协议扩展初探 | Swift学徒 </title>
+  <title> Swift学徒 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -166,7 +157,9 @@
     
   
 
-  <div class="container one-collumn sidebar-position-left page-post-detail ">
+  <div class="container one-collumn sidebar-position-left 
+   page-home 
+ ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -247,9 +240,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-
-  <div id="posts" class="posts-expand">
+  <section id="posts" class="posts-expand">
     
+      
 
   
 
@@ -258,7 +251,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://swift.diagon.me/protocol-extension/">
+  <link itemprop="mainEntityOfPage" href="http://swift.diagon.me/value-semantic/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="万恶胖为首">
@@ -282,7 +275,10 @@
             
             
               
-                Swift 中的协议扩展初探
+                
+                <a class="post-title-link" href="/value-semantic/" itemprop="url">
+                  Swift 中值语义的实现
+                </a>
               
             
           </h1>
@@ -297,8 +293,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-07T00:00:00+08:00">
-                2017-02-07
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-19T00:00:00+08:00">
+                2017-01-19
               </time>
             
 
@@ -333,81 +329,76 @@
       
 
       
-        <p>面向协议的编程打破了旧的协议规则，允许让你用<strong>协议自身实现协议</strong>。</p>
-<p>你可以用下面的语法定义一个 protocol extension：</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">protocol</span> <span class="title">TeamRecord</span> </span>&#123;</div><div class="line">    </div><div class="line">    <span class="keyword">var</span> wins: <span class="type">Int</span> &#123; <span class="keyword">get</span> &#125;</div><div class="line">    </div><div class="line">    <span class="keyword">var</span> losses: <span class="type">Int</span> &#123; <span class="keyword">get</span> &#125;</div><div class="line">    </div><div class="line">    <span class="keyword">var</span> winningPercentage: <span class="type">Double</span> &#123; <span class="keyword">get</span> &#125;</div><div class="line">&#125;</div><div class="line"><span class="class"><span class="keyword">extension</span> <span class="title">TeamRecord</span> </span>&#123;</div><div class="line">    </div><div class="line">    <span class="keyword">var</span> gamesPlayed: <span class="type">Int</span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">return</span> wins + losses</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>这里 protocol extension 和 protocol 的不同是：extension 包括了成员的实现。 </p>
-<p>我们可以在 protocol extension 中使用 protocol 的成员，因为遵守 TemRecord 协议时，必定实现了 TemRecord 的成员。</p>
-<p>现在我们写一个 struct，可以直接使用 gamesPlayed，而不需要重新实现它。</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">BaseballRecord</span>: <span class="title">TeamRecord</span> </span>&#123;</div><div class="line">    </div><div class="line">    <span class="keyword">var</span> wins: <span class="type">Int</span></div><div class="line">    <span class="keyword">var</span> losses: <span class="type">Int</span></div><div class="line">    </div><div class="line">    <span class="keyword">var</span> winningPercentage: <span class="type">Double</span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">return</span> <span class="type">Double</span>(wins) / (<span class="type">Double</span>(wins) + <span class="type">Double</span>(losses))</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">let</span> sanFranciscoSwifts = <span class="type">BaseballRecord</span>(wins: <span class="number">10</span>, losses:<span class="number">5</span>)</div><div class="line"></div><div class="line">sanFranciscoSwifts.gamesPlayed <span class="comment">// 15</span></div></pre></td></tr></table></figure>
-<p>无奈滞留在机场，先写这么多。</p>
-<p>关于协议扩展更多内容参见：<a href="http://swift.diagon.me/protocol-extension/">《Swift 中的协议成员的默认实现》</a></p>
+        
+          
+            <h2 id="什么是值语义"><a href="#什么是值语义" class="headerlink" title="什么是值语义"></a>什么是值语义</h2><p>目标对象由源对象拷贝生成，生成的目标对象与源对象彼此独立，改变互不影响。这就意味着，该对象的类型支持值语义。</p>
+<p>从另一个角度来说，如果一个对象的值，只能由自己修改，则说明这个对象的类型支持值语义。</p>
+<h2 id="值语义的理解"><a href="#值语义的理解" class="headerlink" title="值语义的理解"></a>值语义的理解</h2><p>在OC中我们会经常这样写：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">@property(nonatomic,copy) NSString * verifyCode;</div></pre></td></tr></table></figure>
+<p>如果我们不这样写会导致什么问题？请看例子：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Person</span> </span>&#123;</div><div class="line">    <span class="keyword">var</span> name: <span class="type">NSString</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">let</span> name = <span class="type">NSMutableString</span>()</div><div class="line">name.appendString(<span class="string">"Bob"</span>)</div><div class="line"><span class="keyword">let</span> bob = <span class="type">Person</span>(name: name)</div><div class="line"></div><div class="line">name.appendString(<span class="string">", Jr."</span>)</div><div class="line"><span class="keyword">let</span> bobjr = <span class="type">Person</span>(name: name)</div><div class="line"></div><div class="line"><span class="built_in">print</span>(bob.name)</div><div class="line"><span class="built_in">print</span>(bobjr.name)</div></pre></td></tr></table></figure>
+<p>打印结果：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Bob, Jr.</div><div class="line">Bob, Jr.</div></pre></td></tr></table></figure>
+<p>原因在于：<code>NSString</code>是引用类型，它本身是不可变的，但是它有一个可变的子类：<code>NSMutableString</code>，导致<code>NSString</code>类型的<code>Property</code>实际上可能是<code>NSMutableString</code>类型。而我们要防止对象的属性被暗中修改。</p>
+<p>同样的，在使用<code>NSURLRequest</code>以及集合类型时都需要进行防御性的拷贝。为此，OC语言为<code>Property</code>提供了一个<code>copy</code>属性。</p>
+<p>很多编程语言中，字符串作为引用类型来实现，因为它们坚持「一切皆对象」的哲学。而值类型和不可变引用类型的区别在使用上很难被察觉。如果你的数据无法被改变，即使是引用类型，也拥有值语义。但是，从性能和内存角度来考虑，防御性拷贝明显不是最优措施。</p>
+<p>Swift 中的<code>String</code>是值类型，符合值语义，不会存在共享引用这个问题。</p>
+<h2 id="Swift中值语义的实现"><a href="#Swift中值语义的实现" class="headerlink" title="Swift中值语义的实现"></a>Swift中值语义的实现</h2><h3 id="Case-1：原始值类型"><a href="#Case-1：原始值类型" class="headerlink" title="Case 1：原始值类型"></a>Case 1：原始值类型</h3><p>Swift 中标准值类型支持值语义，比如：<code>Int</code>，<code>String</code>，<code>Double</code>等。</p>
+<h3 id="Case-2：复合的值类型"><a href="#Case-2：复合的值类型" class="headerlink" title="Case 2：复合的值类型"></a>Case 2：复合的值类型</h3><p>这里遵循一个简单的规则：<strong>如果一个 <code>Struct</code> 的所有 <code>Stored Property</code>  都支持值语义，则该<code>Struct</code>支持值语义</strong>。</p>
+<h3 id="Case-3：引用类型"><a href="#Case-3：引用类型" class="headerlink" title="Case 3：引用类型"></a>Case 3：引用类型</h3><p>引用类型也可以有值语义。</p>
+<p>改变引用类型变量的值有两种方式：</p>
+<ol>
+<li>给变量分配另一个实例。</li>
+<li>修改实例自身。</li>
+</ol>
+<p>第一种方式是靠变量自身进行修改的，这是被值语义所允许的。而第二种方式可能是由其他变量的修改导致。</p>
+<p>所以，如果要让一个引用类型拥有值语义，必须保证它的内部是不可变的。为了做到这点，需要让所有的 <code>Stored Property</code> 为常量。也就是说，在初始化后不会再被改变。</p>
+<p><code>UIKit</code>中很多地方使用了这种模式。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> a = <span class="type">UIImage</span>(named:<span class="string">"smile.jpg"</span>)</div><div class="line"><span class="keyword">var</span> b = a</div><div class="line">computeValue(b) <span class="comment">// =&gt; something</span></div><div class="line">doSomething(a)</div><div class="line">computeValue(b) <span class="comment">// =&gt; same thhing</span></div></pre></td></tr></table></figure>
+<p>显而易见，<code>UIImage</code> 是引用类型，但是是不可变的。<code>doSomething(a)</code>不会导致<code>computeValue(b)</code>的返回结果有任何变化。</p>
+<p><code>UIImage</code> 有很多 <code>Property</code>（<code>scale</code>，<code>capInset</code>，<code>renderimgmode</code>等），但是都是只读的，无法修改。所以一个变量没法影响另一个变量。</p>
+<p>注意：如果其中一个<code>Property</code>不是常量，那就破坏了<code>UIImage</code>的值语义。</p>
+<p>Cocoa 中有很多<code>Class</code>定义为不可变就是这个原因：不可变的引用类型拥有值语义。</p>
+<h3 id="Case-4：值类型内嵌套可变的引用类型"><a href="#Case-4：值类型内嵌套可变的引用类型" class="headerlink" title="Case 4：值类型内嵌套可变的引用类型"></a>Case 4：值类型内嵌套可变的引用类型</h3><p>使用一个特殊的技巧可以使这种情况也可以拥有值语义，<code>Swift</code>标准库里大量使用了这种技术。<br>具体的实现请参考 <a href="http://swift.diagon.me/value-semantic-advanced/">《Swift中值类型内嵌套可变引用类型时值语义的实现》</a>。</p>
 <hr>
 <div style="text-align: center"><br>关注公众号（ID：SwiftBetter），进一步探讨主题<br><br><br>每日精选高清题图，可做壁纸<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>
+
+
+          
+        
       
     </div>
 
     <div>
       
-        
-
-      
     </div>
 
     <div>
-      
-        
-
       
     </div>
 
 
     <footer class="post-footer">
       
-        <div class="post-tags">
-          
-            <a href="/tags/protocol/" rel="tag"># protocol</a>
-          
-            <a href="/tags/extension/" rel="tag"># extension</a>
-          
-            <a href="/tags/协议扩展/" rel="tag"># 协议扩展</a>
-          
-        </div>
+
       
 
       
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/optional-IUO/" rel="next" title="Swift 中 Optional 的隐式解包">
-                <i class="fa fa-chevron-left"></i> Swift 中 Optional 的隐式解包
-              </a>
-            
-          </div>
-
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/protocol-member-default/" rel="prev" title="Swift 中的协议成员的默认实现">
-                Swift 中的协议成员的默认实现 <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
       
-
-      
+        <div class="post-eof"></div>
       
     </footer>
   </article>
 
 
+    
+  </section>
 
-    <div class="post-spread">
-      
-    </div>
-  </div>
+  
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span>
+  </nav>
+
 
           
           </div>
@@ -415,10 +406,6 @@
 
 
           
-  <div class="comments" id="comments">
-    
-  </div>
-
 
         </div>
         
@@ -594,10 +581,6 @@
   
 
   
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
-
-
 
   
 
@@ -629,10 +612,6 @@
 
   
 
-  
-      <!-- UY BEGIN -->
-      <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid="></script>
-      <!-- UY END -->
   
 
 
