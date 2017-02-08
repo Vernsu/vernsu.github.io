@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Optional Chaining,可选链,Optional," />
+  <meta name="keywords" content="Optional Chaining,Optional,可选链," />
 
 
 
@@ -95,7 +95,7 @@
 给 Residence 类增加方法：
 123func printNumberOfRooms() &amp;#123;    print(&quot;The number of rooms is \(numberOfRooms)&quot;)&amp;">
 <meta property="og:image" content="https://vernsu.github.io/images/wxqrcode.jpg">
-<meta property="og:updated_time" content="2017-02-06T01:33:50.000Z">
+<meta property="og:updated_time" content="2017-02-08T07:36:10.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Optional Chaining 陷阱">
 <meta name="twitter:description" content="《Swift 中的 Optional Chaining》讲述了 Optional Chaining（可选链） 的基本用法和需要注意的问题。这篇文章我们深入探索一下更多可能会面临的问题。
@@ -333,11 +333,11 @@
       
 
       
-        <p><a href="http://swift.diagon.me/2017/02/03/">《Swift 中的 Optional Chaining》</a>讲述了 <code>Optional Chaining</code>（可选链） 的基本用法和需要注意的问题。这篇文章我们深入探索一下更多可能会面临的问题。</p>
+        <p><a href="http://swift.diagon.me/optional-chaining/">《Swift 中的 Optional Chaining》</a>讲述了 <code>Optional Chaining</code>（可选链） 的基本用法和需要注意的问题。这篇文章我们深入探索一下更多可能会面临的问题。</p>
 <p>给 <code>Residence</code> 类增加方法：</p>
 <figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">printNumberOfRooms</span><span class="params">()</span></span> &#123;</div><div class="line">    <span class="built_in">print</span>(<span class="string">"The number of rooms is <span class="subst">\(numberOfRooms)</span>"</span>)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>这个方法没有返回值。实际上没有返回值的方法依然返回了值，一个特殊的 <code>Void</code>值。它其实是一个空的元组，可以写成<code>()</code>。</p>
-<p>根据<a href="http://swift.diagon.me/2017/02/03/">《Swift 中的 Optional Chaining》</a>指出的原则，如果在 <code>Optional Chaining</code> 调用这个方法，返回的类型应该是  <code>Void?</code>而不是 <code>Void</code>。</p>
+<p>根据<a href="http://swift.diagon.me/optional-chaining/">《Swift 中的 Optional Chaining》</a>指出的原则，如果在 <code>Optional Chaining</code> 调用这个方法，返回的类型应该是  <code>Void?</code>而不是 <code>Void</code>。</p>
 <p>因此，我们可以使用 <code>if</code> 语句来判断是否能成功够调用 <code>printNumberOfRooms</code>。通过判断返回值是否为 <code>nil</code> 可以判断调用是否成功。</p>
 <figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span> john.residence?.printNumberOfRooms() != <span class="literal">nil</span> &#123;</div><div class="line">    <span class="built_in">print</span>(<span class="string">"It was possible to print the number of rooms."</span>)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>同样的，我们可以判断通过 <code>Optional Chaining</code> 为属性赋值是否成功。通过可选链给属性复制会返回 <code>Void?</code>，通过判断返回值是否为 <code>nil</code> 就知道赋值是否成功。</p>
@@ -372,9 +372,9 @@
           
             <a href="/tags/Optional-Chaining/" rel="tag"># Optional Chaining</a>
           
-            <a href="/tags/可选链/" rel="tag"># 可选链</a>
-          
             <a href="/tags/Optional/" rel="tag"># Optional</a>
+          
+            <a href="/tags/可选链/" rel="tag"># 可选链</a>
           
         </div>
       

@@ -353,7 +353,7 @@
       
         
           
-            <p><a href="http://swift.diagon.me/2017/01/27/">《iOS 开发中常用的缓存策略：客户端篇》</a>一文中我们提到 iOS 中 URL 加载系统默认的缓存策略使用当前 URL 的协议中的缓存策略。本文只关注 HTTP 协议中的缓存策略。</p>
+            <p><a href="http://swift.diagon.me/urlcache-cachePolicy/">《iOS 开发中常用的缓存策略：客户端篇》</a>一文中我们提到 iOS 中 URL 加载系统默认的缓存策略使用当前 URL 的协议中的缓存策略。本文只关注 HTTP 协议中的缓存策略。</p>
 <p>实际上 HTTP 协议中的缓存策略可以分为三部分：</p>
 <ol>
 <li>缓存存储策略</li>
@@ -523,13 +523,13 @@
       
         
           
-            <h2 id="几种客户端缓存策略"><a href="#几种客户端缓存策略" class="headerlink" title="几种客户端缓存策略"></a>几种客户端缓存策略</h2><p>我们在<a href="http://swift.diagon.me/2017/01/26/">《iOS 开发中 URLCache 的应用》</a>一文中讨论了 URLCache 的构建。</p>
+            <h2 id="几种客户端缓存策略"><a href="#几种客户端缓存策略" class="headerlink" title="几种客户端缓存策略"></a>几种客户端缓存策略</h2><p>我们在<a href="http://swift.diagon.me/urlcache-condiguration/">《iOS 开发中 URLCache 的应用》</a>一文中讨论了 URLCache 的构建。</p>
 <p>使用 URLCache 的最大好处在于可以指定缓存策略。缓存策略由请求（客户端）和响应（服务端）分别指定。几种客户端缓存策略：</p>
 <h3 id="reloadIgnoringLocalCacheData"><a href="#reloadIgnoringLocalCacheData" class="headerlink" title="reloadIgnoringLocalCacheData"></a>reloadIgnoringLocalCacheData</h3><p>忽略缓存，必须进行网络请求。</p>
 <h3 id="returnCacheDataElseLoad"><a href="#returnCacheDataElseLoad" class="headerlink" title="returnCacheDataElseLoad"></a>returnCacheDataElseLoad</h3><p>尝试读取本地缓存，如果没有本地缓存数据，才会去请求网络。这个策略有一个重大的缺陷：无法控制缓存过期时间。</p>
 <h3 id="requestReturnCacheDataDontLoad"><a href="#requestReturnCacheDataDontLoad" class="headerlink" title="requestReturnCacheDataDontLoad"></a>requestReturnCacheDataDontLoad</h3><p>只读本地缓存，无论如何也不进行网络请求（也就是离线模式）。</p>
 <h3 id="useProtocolCachePolicy"><a href="#useProtocolCachePolicy" class="headerlink" title="useProtocolCachePolicy"></a>useProtocolCachePolicy</h3><p>默认的缓存策略，使用当前 URL 的协议中的缓存策略。</p>
-<p>对于 HTTP 协议来说，URLCache 根据响应头来执行缓存策略。服务器可以在返回的响应头中加入 Cache-Control 字段来告诉客户端应该执行的缓存行为。具体的实现<a href="http://swift.diagon.me/2017/01/28/">《iOS 开发中常用的缓存策略：HTTP篇》</a>中会详细介绍。</p>
+<p>对于 HTTP 协议来说，URLCache 根据响应头来执行缓存策略。服务器可以在返回的响应头中加入 Cache-Control 字段来告诉客户端应该执行的缓存行为。具体的实现<a href="http://swift.diagon.me/urlcache-http/">《iOS 开发中常用的缓存策略：HTTP篇》</a>中会详细介绍。</p>
 <h2 id="CachePolicy-使用时机"><a href="#CachePolicy-使用时机" class="headerlink" title="CachePolicy 使用时机"></a>CachePolicy 使用时机</h2><p>可以在两个地方设置 CachePolicy ：</p>
 <ul>
 <li>为每个 URLRequest 设置单个请求的 cachePolicy:<code>request.cachePolicy = .returnCacheDataDontLoad</code></li>
@@ -826,7 +826,7 @@
 <h2 id="在-class-类型中-static-和-class-的区别"><a href="#在-class-类型中-static-和-class-的区别" class="headerlink" title="在 class 类型中 static 和 class 的区别"></a>在 class 类型中 static 和 class 的区别</h2><p>如此说来，在 class 类型中 <code>static</code> 和 <code>class</code> 都可以表示类型范围作用域，那他们之间有什么区别？</p>
 <ol>
 <li><code>class</code> 无法修饰存储属性，而 <code>static</code> 可以。</li>
-<li>使用 <code>static</code> 修饰的类方法和类属性无法在子类中重载。也就是说 <code>static</code> 修饰的类方法和类属性包含了 <code>final</code> 关键字的特性。相当于 <code>final class</code> 。关于 <code>final</code> 的更多特性请参考<a href="http://swift.diagon.me/2017/02/04/">《Swift 中的 final 修饰符》</a>。</li>
+<li>使用 <code>static</code> 修饰的类方法和类属性无法在子类中重载。也就是说 <code>static</code> 修饰的类方法和类属性包含了 <code>final</code> 关键字的特性。相当于 <code>final class</code> 。关于 <code>final</code> 的更多特性请参考<a href="http://swift.diagon.me/final/">《Swift 中的 final 修饰符》</a>。</li>
 </ol>
 <figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span> </span>&#123;</div><div class="line">    <span class="comment">//class var name = "GoodMen" // 编译器提示错误：class stored properties not supported in classes</span></div><div class="line">    </div><div class="line">    <span class="keyword">static</span> <span class="keyword">var</span> name = <span class="string">"GoodMen"</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Student</span>:<span class="title">Person</span></span>&#123;</div><div class="line">    <span class="comment">//static var name = "GoodMen"  // 编译器提示错误：cannot override with a stored property 'name'</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <h2 id="ststic-在-Protocol-中的使用"><a href="#ststic-在-Protocol-中的使用" class="headerlink" title="ststic 在 Protocol 中的使用"></a>ststic 在 Protocol 中的使用</h2><p>Swift 中 class，struct，enum 都可以实现某个指定 protocol。在 protocol定义一个类方法或者类计算属性，显而易见，应该使用 <code>static</code> 关键字来修饰。使用 protocol 时，在 struct 和 enum 中仍然使用 <code>static</code>，在 class 类型中 <code>class</code> 和 <code>static</code> 关键字都可以使用。</p>
@@ -1408,7 +1408,7 @@
 <figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> <span class="built_in">c</span>: [<span class="type">Int</span>] = [ ... ]</div><div class="line"><span class="keyword">var</span> d = <span class="built_in">c</span>        <span class="comment">//这里没有拷贝</span></div><div class="line">d.append(<span class="number">2</span>)      <span class="comment">//这里 *有* 拷贝</span></div></pre></td></tr></table></figure>
 <h2 id="进一步优化写时复制"><a href="#进一步优化写时复制" class="headerlink" title="进一步优化写时复制"></a>进一步优化写时复制</h2><p>在 Swift 中对于简单的值类型，比如Int、Double、CGPoint等，它们的拷贝时间是个常数。而对于可扩展的数据结构，为了效率考虑，会使用写时复制技术。</p>
 <p>Swift官方文档中推荐开发者在实现比较大的数据结构时实现写时复制语义。</p>
-<p>之前我们在<a href="https://vernsu.github.io/2017/01/20/" target="_blank" rel="external">《值类型内嵌套可变引用类型时值语义的实现》</a>一文中所举的例子已经详细说明了如何自己实现写时复制。如果 backing storeage 非常大，需要实现 COW 语义来优化，那么当然值得更进一步的优化。</p>
+<p>之前我们在<a href="http://swift.diagon.me/value-semantic-advanced/">《Swift 中值类型内嵌套可变引用类型时值语义的实现》</a>一文中所举的例子已经详细说明了如何自己实现写时复制。如果 backing storeage 非常大，需要实现 COW 语义来优化，那么当然值得更进一步的优化。</p>
 <p>Swift 标准库提供可一个函数 <code>isKnownUniquelyReferenced</code> ，用来检查某个实例是不是唯一的引用，如果是，说明该实例没有被共享，我们可以直接修改当前的实例，如果不是，说明实例被共享，这时对它进行更改就需要先复制。</p>
 <p>我们利用这个函数优化一下之前的例子：</p>
 <figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">PaintingPlan</span> // 值类型</span></div><div class="line">&#123;</div><div class="line"></div><div class="line">  <span class="comment">// 私有的引用类型, for "deep storage"</span></div><div class="line">  <span class="keyword">private</span> <span class="keyword">var</span> bucket = <span class="type">Bucket</span>(color: .blue)</div><div class="line"></div><div class="line">  <span class="keyword">var</span> bucketColor: <span class="type">Color</span> &#123;</div><div class="line">    <span class="keyword">get</span> &#123;</div><div class="line">      <span class="keyword">return</span> bucket.color</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">set</span> &#123;</div><div class="line">      <span class="comment">//优化</span></div><div class="line">      <span class="keyword">if</span> isKnownUniquelyReferenced(&amp;bucket) &#123;</div><div class="line">        bucket.color = bucketColor</div><div class="line">      &#125; <span class="keyword">else</span> &#123;</div><div class="line">        bucket = <span class="type">Bucket</span>(color: newValue)</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
@@ -1549,7 +1549,7 @@
 <p>我们直接改变 bucket 试试</p>
 <figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">artPlan.bucket.color <span class="comment">// =&gt; blue</span></div><div class="line">housePlan.bucket = <span class="type">Bucket</span>(color:.green)</div><div class="line">artPlan.bucket.color <span class="comment">// =&gt; blue OK!</span></div></pre></td></tr></table></figure>
 <p>这个时候好像没有任何问题。因为进行拷贝操作时，我们拷贝了bucket的引用，上面这几行代码中，我们并没有对该引用实例做修改，而是直接将引用指向了另外一个实例。</p>
-<p>更多嵌套结构参见：<a href="http://swift.diagon.me/2017/01/22/">Swift 中的嵌套类型</a></p>
+<p>更多嵌套结构参见：<a href="http://swift.diagon.me/swift-sturct-class-type/">《Swift 中的嵌套类型》</a></p>
 <h2 id="值语义的实现"><a href="#值语义的实现" class="headerlink" title="值语义的实现"></a>值语义的实现</h2><h3 id="修复值语义"><a href="#修复值语义" class="headerlink" title="修复值语义"></a>修复值语义</h3><p>首先，我们意识到，值语义的定义是相对于存取级别的。一个类型可能会对它的客户代码提供值语义，而对它内部的私有成员不提供值语义。</p>
 <p>所以，保留混合类型值语义的技巧在于：<strong>让客户无法改变内部的引用类型</strong>。上面这个例子中，我们让可变引用类型私有，<strong>提供一个可以控制读写的接口</strong>。</p>
 <figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">PaintingPlan</span> // 值类型</span></div><div class="line">&#123;</div><div class="line">  <span class="comment">// 一个私有引用类型, for "deep storage"</span></div><div class="line">  <span class="keyword">private</span> <span class="keyword">var</span> bucket = <span class="type">Bucket</span>(color: .blue)</div><div class="line">  </div><div class="line">  <span class="comment">// 一个伪装的值类型，使用了 deep storage</span></div><div class="line">  <span class="keyword">var</span> bucketColor: <span class="type">Color</span> &#123;</div><div class="line">    <span class="keyword">get</span> &#123;</div><div class="line">      <span class="keyword">return</span> bucket.color</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">set</span> &#123;</div><div class="line">    <span class="comment">//注意，这里我们做了控制，让 bucket 只能指向了一个新的实例，而不能修改之前指向的实例，使得它拥有值语义。</span></div><div class="line">      bucket = <span class="type">Bucket</span>(color: newValue)</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">var</span> artPlan = <span class="type">PaintingPlan</span>()</div><div class="line"><span class="keyword">var</span> housePlan = artPlan</div><div class="line"></div><div class="line">housePlan.bucketColor = <span class="type">Color</span>.green</div><div class="line">artPlan.bucketColor <span class="comment">// blue！</span></div></pre></td></tr></table></figure>
@@ -1561,7 +1561,7 @@
 <p>Swift 标准库中大量使用了这种技术。Swift中很多值类型并不是原始的值类型，但是混合类型提供了值语义。</p>
 <p>这样做的好处在于提高性能。想象一个，如果 backing storeage 非常大，实例可以共用相同的 backing storeage， 这样可以节约拷贝占用的内存和计算力。</p>
 <p>但是一旦你使用变量修改实例，为了不影响别的变量，系统会拷贝 backing storeage 。这样可以推迟内存占用和计算力消耗直到必须拷贝时。</p>
-<p>这个例子还可以进一步的优化，详细介绍参考<a href="https://vernsu.github.io/2017/01/21/" target="_blank" rel="external">写时复制（COW）在 Swift 中的应用</a>。</p>
+<p>这个例子还可以进一步的优化，详细介绍参考<a href="http://swift.diagon.me/copy-on-write/">《写时复制（COW）在 Swift 中的应用》</a>。</p>
 <hr>
 <div style="text-align: center"><br>关注公众号（ID：SwiftBetter），进一步探讨主题<br><br><br>每日精选高清题图，可做壁纸<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>
 
@@ -1711,7 +1711,7 @@
 <p><code>UIImage</code> 有很多 <code>Property</code>（<code>scale</code>，<code>capInset</code>，<code>renderimgmode</code>等），但是都是只读的，无法修改。所以一个变量没法影响另一个变量。</p>
 <p>注意：如果其中一个<code>Property</code>不是常量，那就破坏了<code>UIImage</code>的值语义。</p>
 <p>Cocoa 中有很多<code>Class</code>定义为不可变就是这个原因：不可变的引用类型拥有值语义。</p>
-<h3 id="Case-4：值类型内嵌套可变的引用类型"><a href="#Case-4：值类型内嵌套可变的引用类型" class="headerlink" title="Case 4：值类型内嵌套可变的引用类型"></a>Case 4：值类型内嵌套可变的引用类型</h3><p>使用一个特殊的技巧可以使这种情况也可以拥有值语义，<code>Swift</code>标准库里大量使用了这种技术。<br>具体的实现请参考 <a href="https://vernsu.github.io/2017/01/20/" target="_blank" rel="external">Swift中值类型内嵌套可变引用类型时值语义的实现</a>。</p>
+<h3 id="Case-4：值类型内嵌套可变的引用类型"><a href="#Case-4：值类型内嵌套可变的引用类型" class="headerlink" title="Case 4：值类型内嵌套可变的引用类型"></a>Case 4：值类型内嵌套可变的引用类型</h3><p>使用一个特殊的技巧可以使这种情况也可以拥有值语义，<code>Swift</code>标准库里大量使用了这种技术。<br>具体的实现请参考 <a href="http://swift.diagon.me/value-semantic-advanced/">《Swift中值类型内嵌套可变引用类型时值语义的实现》</a>。</p>
 <hr>
 <div style="text-align: center"><br>关注公众号（ID：SwiftBetter），进一步探讨主题<br><br><br>每日精选高清题图，可做壁纸<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>
 

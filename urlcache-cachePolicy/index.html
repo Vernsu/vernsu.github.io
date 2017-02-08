@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="缓存策略,URLCache,网络缓存,CachePolicy," />
+  <meta name="keywords" content="URLCache,网络缓存,缓存策略,CachePolicy," />
 
 
 
@@ -97,7 +97,7 @@ returnCacheDataElseLoad尝试读取本地缓存，如果没有本地">
 reloadIgnoringLocalCacheData忽略缓存，必须进行网络请求。
 returnCacheDataElseLoad尝试读取本地缓存，如果没有本地">
 <meta property="og:image" content="https://vernsu.github.io/images/wxqrcode.jpg">
-<meta property="og:updated_time" content="2017-02-06T01:38:38.000Z">
+<meta property="og:updated_time" content="2017-02-08T07:33:11.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="iOS 开发中常用的缓存策略：客户端篇">
 <meta name="twitter:description" content="几种客户端缓存策略我们在《iOS 开发中 URLCache 的应用》一文中讨论了 URLCache 的构建。
@@ -358,13 +358,13 @@ returnCacheDataElseLoad尝试读取本地缓存，如果没有本地">
       
 
       
-        <h2 id="几种客户端缓存策略"><a href="#几种客户端缓存策略" class="headerlink" title="几种客户端缓存策略"></a>几种客户端缓存策略</h2><p>我们在<a href="http://swift.diagon.me/2017/01/26/">《iOS 开发中 URLCache 的应用》</a>一文中讨论了 URLCache 的构建。</p>
+        <h2 id="几种客户端缓存策略"><a href="#几种客户端缓存策略" class="headerlink" title="几种客户端缓存策略"></a>几种客户端缓存策略</h2><p>我们在<a href="http://swift.diagon.me/urlcache-condiguration/">《iOS 开发中 URLCache 的应用》</a>一文中讨论了 URLCache 的构建。</p>
 <p>使用 URLCache 的最大好处在于可以指定缓存策略。缓存策略由请求（客户端）和响应（服务端）分别指定。几种客户端缓存策略：</p>
 <h3 id="reloadIgnoringLocalCacheData"><a href="#reloadIgnoringLocalCacheData" class="headerlink" title="reloadIgnoringLocalCacheData"></a>reloadIgnoringLocalCacheData</h3><p>忽略缓存，必须进行网络请求。</p>
 <h3 id="returnCacheDataElseLoad"><a href="#returnCacheDataElseLoad" class="headerlink" title="returnCacheDataElseLoad"></a>returnCacheDataElseLoad</h3><p>尝试读取本地缓存，如果没有本地缓存数据，才会去请求网络。这个策略有一个重大的缺陷：无法控制缓存过期时间。</p>
 <h3 id="requestReturnCacheDataDontLoad"><a href="#requestReturnCacheDataDontLoad" class="headerlink" title="requestReturnCacheDataDontLoad"></a>requestReturnCacheDataDontLoad</h3><p>只读本地缓存，无论如何也不进行网络请求（也就是离线模式）。</p>
 <h3 id="useProtocolCachePolicy"><a href="#useProtocolCachePolicy" class="headerlink" title="useProtocolCachePolicy"></a>useProtocolCachePolicy</h3><p>默认的缓存策略，使用当前 URL 的协议中的缓存策略。</p>
-<p>对于 HTTP 协议来说，URLCache 根据响应头来执行缓存策略。服务器可以在返回的响应头中加入 Cache-Control 字段来告诉客户端应该执行的缓存行为。具体的实现<a href="http://swift.diagon.me/2017/01/28/">《iOS 开发中常用的缓存策略：HTTP篇》</a>中会详细介绍。</p>
+<p>对于 HTTP 协议来说，URLCache 根据响应头来执行缓存策略。服务器可以在返回的响应头中加入 Cache-Control 字段来告诉客户端应该执行的缓存行为。具体的实现<a href="http://swift.diagon.me/urlcache-http/">《iOS 开发中常用的缓存策略：HTTP篇》</a>中会详细介绍。</p>
 <h2 id="CachePolicy-使用时机"><a href="#CachePolicy-使用时机" class="headerlink" title="CachePolicy 使用时机"></a>CachePolicy 使用时机</h2><p>可以在两个地方设置 CachePolicy ：</p>
 <ul>
 <li>为每个 URLRequest 设置单个请求的 cachePolicy:<code>request.cachePolicy = .returnCacheDataDontLoad</code></li>
@@ -396,11 +396,11 @@ returnCacheDataElseLoad尝试读取本地缓存，如果没有本地">
       
         <div class="post-tags">
           
-            <a href="/tags/缓存策略/" rel="tag"># 缓存策略</a>
-          
             <a href="/tags/URLCache/" rel="tag"># URLCache</a>
           
             <a href="/tags/网络缓存/" rel="tag"># 网络缓存</a>
+          
+            <a href="/tags/缓存策略/" rel="tag"># 缓存策略</a>
           
             <a href="/tags/CachePolicy/" rel="tag"># CachePolicy</a>
           

@@ -88,16 +88,16 @@
 你可以用下面的语法定义一个 protocol extension：
 12345678910111213141516protocol TeamRecord &amp;#123; 	var wins: Int &amp;#123; get &amp;#125; 	var losses: Int &amp;#123; get &amp;#125; 	var winningPerc">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Swift 中协议扩展">
+<meta property="og:title" content="Swift 中的协议扩展">
 <meta property="og:url" content="http://swift.diagon.me/protocol-extension/index.html">
 <meta property="og:site_name" content="Swift学徒">
 <meta property="og:description" content="面向协议的编程打破了旧的协议规则，允许让你用协议自身实现协议。
 你可以用下面的语法定义一个 protocol extension：
 12345678910111213141516protocol TeamRecord &amp;#123; 	var wins: Int &amp;#123; get &amp;#125; 	var losses: Int &amp;#123; get &amp;#125; 	var winningPerc">
 <meta property="og:image" content="https://vernsu.github.io/images/wxqrcode.jpg">
-<meta property="og:updated_time" content="2017-02-06T15:57:11.000Z">
+<meta property="og:updated_time" content="2017-02-08T07:36:44.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Swift 中协议扩展">
+<meta name="twitter:title" content="Swift 中的协议扩展">
 <meta name="twitter:description" content="面向协议的编程打破了旧的协议规则，允许让你用协议自身实现协议。
 你可以用下面的语法定义一个 protocol extension：
 12345678910111213141516protocol TeamRecord &amp;#123; 	var wins: Int &amp;#123; get &amp;#125; 	var losses: Int &amp;#123; get &amp;#125; 	var winningPerc">
@@ -135,7 +135,7 @@
 
 
 
-  <title> Swift 中协议扩展 | Swift学徒 </title>
+  <title> Swift 中的协议扩展 | Swift学徒 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -282,7 +282,7 @@
             
             
               
-                Swift 中协议扩展
+                Swift 中的协议扩展
               
             
           </h1>
@@ -340,7 +340,9 @@
 <p>我们可以在 protocol extension 中使用 protocol 的成员，因为遵守 TemRecord 协议时，必定实现了 TemRecord 的成员。</p>
 <p>现在我们写一个 struct，可以直接使用 gamesPlayed，而不需要重新实现它。</p>
 <figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">BaseballRecord</span>: <span class="title">TeamRecord</span> </span>&#123;</div><div class="line"> </div><div class="line">	<span class="keyword">var</span> wins: <span class="type">Int</span></div><div class="line">	<span class="keyword">var</span> losses: <span class="type">Int</span></div><div class="line"></div><div class="line">	<span class="keyword">var</span> winningPercentage: <span class="type">Double</span></div><div class="line">	&#123;</div><div class="line">   		<span class="keyword">return</span> <span class="type">Double</span>(wins) / (<span class="type">Double</span>(wins) + <span class="type">Double</span>(losses))</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">let</span> sanFranciscoSwifts = <span class="type">BaseballRecord</span>(wins: <span class="number">10</span>, losses:<span class="number">5</span>)sanFranciscoSwifts.gamesPlayed <span class="comment">// 15</span></div></pre></td></tr></table></figure>
-<h2 id="无奈滞留在机场，先写这么多。"><a href="#无奈滞留在机场，先写这么多。" class="headerlink" title="无奈滞留在机场，先写这么多。"></a>无奈滞留在机场，先写这么多。</h2><div style="text-align: center"><br>关注公众号（ID：SwiftBetter），进一步探讨主题<br><br><br>每日精选高清题图，可做壁纸<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>
+<p>无奈滞留在机场，先写这么多。</p>
+<hr>
+<div style="text-align: center"><br>关注公众号（ID：SwiftBetter），进一步探讨主题<br><br><br>每日精选高清题图，可做壁纸<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>
       
     </div>
 
@@ -431,17 +433,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview sidebar-panel">
+      <section class="site-overview sidebar-panel sidebar-panel-active">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.gif"
@@ -497,22 +490,6 @@
 
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#无奈滞留在机场，先写这么多。"><span class="nav-number">1.</span> <span class="nav-text">无奈滞留在机场，先写这么多。</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
     </div>

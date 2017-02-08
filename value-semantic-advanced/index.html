@@ -93,7 +93,7 @@
 <meta property="og:description" content="简单的嵌套结构当一个值类型内嵌套一个可变引用类型拷贝时，引用类型作为 property 是引用的，拷贝所得的实例中 peoperty 和原实例中的 property 是同一个。举个例子：
 12345678910111213141516171819enum Color&amp;#123;    case blue    case green&amp;#125;class Bucket &amp;#123;    var c">
 <meta property="og:image" content="https://vernsu.github.io/images/wxqrcode.jpg">
-<meta property="og:updated_time" content="2017-02-06T01:42:49.000Z">
+<meta property="og:updated_time" content="2017-02-08T07:30:58.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Swift 中值类型内嵌套可变引用类型时值语义的实现">
 <meta name="twitter:description" content="简单的嵌套结构当一个值类型内嵌套一个可变引用类型拷贝时，引用类型作为 property 是引用的，拷贝所得的实例中 peoperty 和原实例中的 property 是同一个。举个例子：
@@ -338,7 +338,7 @@
 <p>我们直接改变 bucket 试试</p>
 <figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">artPlan.bucket.color <span class="comment">// =&gt; blue</span></div><div class="line">housePlan.bucket = <span class="type">Bucket</span>(color:.green)</div><div class="line">artPlan.bucket.color <span class="comment">// =&gt; blue OK!</span></div></pre></td></tr></table></figure>
 <p>这个时候好像没有任何问题。因为进行拷贝操作时，我们拷贝了bucket的引用，上面这几行代码中，我们并没有对该引用实例做修改，而是直接将引用指向了另外一个实例。</p>
-<p>更多嵌套结构参见：<a href="http://swift.diagon.me/2017/01/22/">Swift 中的嵌套类型</a></p>
+<p>更多嵌套结构参见：<a href="http://swift.diagon.me/swift-sturct-class-type/">《Swift 中的嵌套类型》</a></p>
 <h2 id="值语义的实现"><a href="#值语义的实现" class="headerlink" title="值语义的实现"></a>值语义的实现</h2><h3 id="修复值语义"><a href="#修复值语义" class="headerlink" title="修复值语义"></a>修复值语义</h3><p>首先，我们意识到，值语义的定义是相对于存取级别的。一个类型可能会对它的客户代码提供值语义，而对它内部的私有成员不提供值语义。</p>
 <p>所以，保留混合类型值语义的技巧在于：<strong>让客户无法改变内部的引用类型</strong>。上面这个例子中，我们让可变引用类型私有，<strong>提供一个可以控制读写的接口</strong>。</p>
 <figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">PaintingPlan</span> // 值类型</span></div><div class="line">&#123;</div><div class="line">  <span class="comment">// 一个私有引用类型, for "deep storage"</span></div><div class="line">  <span class="keyword">private</span> <span class="keyword">var</span> bucket = <span class="type">Bucket</span>(color: .blue)</div><div class="line">  </div><div class="line">  <span class="comment">// 一个伪装的值类型，使用了 deep storage</span></div><div class="line">  <span class="keyword">var</span> bucketColor: <span class="type">Color</span> &#123;</div><div class="line">    <span class="keyword">get</span> &#123;</div><div class="line">      <span class="keyword">return</span> bucket.color</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">set</span> &#123;</div><div class="line">    <span class="comment">//注意，这里我们做了控制，让 bucket 只能指向了一个新的实例，而不能修改之前指向的实例，使得它拥有值语义。</span></div><div class="line">      bucket = <span class="type">Bucket</span>(color: newValue)</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">var</span> artPlan = <span class="type">PaintingPlan</span>()</div><div class="line"><span class="keyword">var</span> housePlan = artPlan</div><div class="line"></div><div class="line">housePlan.bucketColor = <span class="type">Color</span>.green</div><div class="line">artPlan.bucketColor <span class="comment">// blue！</span></div></pre></td></tr></table></figure>
@@ -350,7 +350,7 @@
 <p>Swift 标准库中大量使用了这种技术。Swift中很多值类型并不是原始的值类型，但是混合类型提供了值语义。</p>
 <p>这样做的好处在于提高性能。想象一个，如果 backing storeage 非常大，实例可以共用相同的 backing storeage， 这样可以节约拷贝占用的内存和计算力。</p>
 <p>但是一旦你使用变量修改实例，为了不影响别的变量，系统会拷贝 backing storeage 。这样可以推迟内存占用和计算力消耗直到必须拷贝时。</p>
-<p>这个例子还可以进一步的优化，详细介绍参考<a href="https://vernsu.github.io/2017/01/21/" target="_blank" rel="external">写时复制（COW）在 Swift 中的应用</a>。</p>
+<p>这个例子还可以进一步的优化，详细介绍参考<a href="http://swift.diagon.me/copy-on-write/">《写时复制（COW）在 Swift 中的应用》</a>。</p>
 <hr>
 <div style="text-align: center"><br>关注公众号（ID：SwiftBetter），进一步探讨主题<br><br><br>每日精选高清题图，可做壁纸<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>
 

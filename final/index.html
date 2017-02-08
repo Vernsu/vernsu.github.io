@@ -93,7 +93,7 @@ final 的特性当使用 final 修饰符修饰 class 的方法 属性 下标时�
 <meta property="og:description" content="《Swift 中的 static 和 class 关键字》一文中提及：「使用 static 修饰的类方法和类属性无法在子类中重载。也就是说 static 修饰的类方法和类属性包含了 final 关键字的特性。相当于 final class 。」，本文将详细介绍 final 的作用。
 final 的特性当使用 final 修饰符修饰 class 的方法 属性 下标时，可以防止他们被重写。例如：fin">
 <meta property="og:image" content="https://vernsu.github.io/images/wxqrcode.jpg">
-<meta property="og:updated_time" content="2017-02-06T01:32:49.000Z">
+<meta property="og:updated_time" content="2017-02-08T07:36:25.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Swift 中的 final 修饰符">
 <meta name="twitter:description" content="《Swift 中的 static 和 class 关键字》一文中提及：「使用 static 修饰的类方法和类属性无法在子类中重载。也就是说 static 修饰的类方法和类属性包含了 final 关键字的特性。相当于 final class 。」，本文将详细介绍 final 的作用。
@@ -330,7 +330,7 @@ final 的特性当使用 final 修饰符修饰 class 的方法 属性 下标时�
       
 
       
-        <p><a href="http://swift.diagon.me/2017/01/25/">《Swift 中的 static 和 class 关键字》</a>一文中提及：「使用 <code>static</code> 修饰的类方法和类属性无法在子类中重载。也就是说 <code>static</code> 修饰的类方法和类属性包含了 <code>final</code> 关键字的特性。相当于 <code>final class</code> 。」，本文将详细介绍 <code>final</code> 的作用。</p>
+        <p><a href="http://swift.diagon.me/static-class/">《Swift 中的 static 和 class 关键字》</a>一文中提及：「使用 <code>static</code> 修饰的类方法和类属性无法在子类中重载。也就是说 <code>static</code> 修饰的类方法和类属性包含了 <code>final</code> 关键字的特性。相当于 <code>final class</code> 。」，本文将详细介绍 <code>final</code> 的作用。</p>
 <h3 id="final-的特性"><a href="#final-的特性" class="headerlink" title="final 的特性"></a>final 的特性</h3><p>当使用 <code>final</code> 修饰符修饰 <code>class</code> 的方法 属性 下标时，可以防止他们被重写。例如：<code>final var</code>，<code>final func</code>，<code>final class func</code>，<code>final subscript</code>。</p>
 <p>当你试图重写被 <code>fianl</code> 修饰的东西时，编译时会报错。</p>
 <p>在申明 <code>class</code> 时，在 <code>calss</code> 之前添加 <code>final</code>，可以标记整个类为 <code>final</code>，如果你尝试继承这个类，编译时会报错。</p>
