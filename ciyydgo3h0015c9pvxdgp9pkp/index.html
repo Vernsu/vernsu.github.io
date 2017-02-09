@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="static,class,protocol,struct,enum," />
+  <meta name="keywords" content="Hexo, NexT" />
 
 
 
@@ -84,26 +84,32 @@
 
 
 
-<meta name="description" content="static 和 class在 Swift 中 Static 和 class 都是表示「类型范围作用域」的关键字。
-在所有类型（class、struct、enum ）中使用 static 修饰都可以表示类方法类与属性（包括存储属性和计算属性）。
-class 是专门用在 calss 类型中修饰类方法和类的计算属性（注意：无法使用 class 修饰存储属性）。
-在 class 类型中 static 和">
+<meta name="description" content="title:Swift 中的协议扩展派发date: 2017-02-09id: protocol-extension-dispathingtags:
+- protocol
+- 协议扩展
+- 派发
+
+当遵循 protocol 的类型重新定义了 protocol 中没有但 protocol extension 中定义的 method 或者 property 时，static dispatching">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Swift 中的 static 和 class 关键字">
-<meta property="og:url" content="http://swift.diagon.me/static-class/index.html">
+<meta property="og:title" content="Swift学徒">
+<meta property="og:url" content="http://swift.diagon.me/ciyydgo3h0015c9pvxdgp9pkp/index.html">
 <meta property="og:site_name" content="Swift学徒">
-<meta property="og:description" content="static 和 class在 Swift 中 Static 和 class 都是表示「类型范围作用域」的关键字。
-在所有类型（class、struct、enum ）中使用 static 修饰都可以表示类方法类与属性（包括存储属性和计算属性）。
-class 是专门用在 calss 类型中修饰类方法和类的计算属性（注意：无法使用 class 修饰存储属性）。
-在 class 类型中 static 和">
+<meta property="og:description" content="title:Swift 中的协议扩展派发date: 2017-02-09id: protocol-extension-dispathingtags:
+- protocol
+- 协议扩展
+- 派发
+
+当遵循 protocol 的类型重新定义了 protocol 中没有但 protocol extension 中定义的 method 或者 property 时，static dispatching">
 <meta property="og:image" content="https://vernsu.github.io/images/wxqrcode.jpg">
-<meta property="og:updated_time" content="2017-02-08T07:32:26.000Z">
+<meta property="og:updated_time" content="2017-02-09T12:39:57.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Swift 中的 static 和 class 关键字">
-<meta name="twitter:description" content="static 和 class在 Swift 中 Static 和 class 都是表示「类型范围作用域」的关键字。
-在所有类型（class、struct、enum ）中使用 static 修饰都可以表示类方法类与属性（包括存储属性和计算属性）。
-class 是专门用在 calss 类型中修饰类方法和类的计算属性（注意：无法使用 class 修饰存储属性）。
-在 class 类型中 static 和">
+<meta name="twitter:title" content="Swift学徒">
+<meta name="twitter:description" content="title:Swift 中的协议扩展派发date: 2017-02-09id: protocol-extension-dispathingtags:
+- protocol
+- 协议扩展
+- 派发
+
+当遵循 protocol 的类型重新定义了 protocol 中没有但 protocol extension 中定义的 method 或者 property 时，static dispatching">
 <meta name="twitter:image" content="https://vernsu.github.io/images/wxqrcode.jpg">
 
 
@@ -132,13 +138,13 @@ class 是专门用在 calss 类型中修饰类方法和类的计算属性（注�
 
 
 
-  <link rel="canonical" href="http://swift.diagon.me/static-class/"/>
+  <link rel="canonical" href="http://swift.diagon.me/ciyydgo3h0015c9pvxdgp9pkp/"/>
 
 
 
 
 
-  <title> Swift 中的 static 和 class 关键字 | Swift学徒 </title>
+  <title>  | Swift学徒 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -261,7 +267,7 @@ class 是专门用在 calss 类型中修饰类方法和类的计算属性（注�
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://swift.diagon.me/static-class/">
+  <link itemprop="mainEntityOfPage" href="http://swift.diagon.me/ciyydgo3h0015c9pvxdgp9pkp/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="万恶胖为首">
@@ -285,7 +291,7 @@ class 是专门用在 calss 类型中修饰类方法和类的计算属性（注�
             
             
               
-                Swift 中的 static 和 class 关键字
+                
               
             
           </h1>
@@ -300,8 +306,8 @@ class 是专门用在 calss 类型中修饰类方法和类的计算属性（注�
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-25T00:00:00+08:00">
-                2017-01-25
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-09T20:27:05+08:00">
+                2017-02-09
               </time>
             
 
@@ -336,16 +342,26 @@ class 是专门用在 calss 类型中修饰类方法和类的计算属性（注�
       
 
       
-        <h2 id="static-和-class"><a href="#static-和-class" class="headerlink" title="static 和 class"></a>static 和 class</h2><p>在 Swift 中 <code>Static</code> 和 <code>class</code> 都是表示「类型范围作用域」的关键字。</p>
-<p>在所有类型（class、struct、enum ）中使用 <code>static</code> 修饰都可以表示类方法类与属性（包括存储属性和计算属性）。</p>
-<p><code>class</code> 是专门用在 calss 类型中修饰类方法和类的计算属性（注意：无法使用 <code>class</code> 修饰存储属性）。</p>
-<h2 id="在-class-类型中-static-和-class-的区别"><a href="#在-class-类型中-static-和-class-的区别" class="headerlink" title="在 class 类型中 static 和 class 的区别"></a>在 class 类型中 static 和 class 的区别</h2><p>如此说来，在 class 类型中 <code>static</code> 和 <code>class</code> 都可以表示类型范围作用域，那他们之间有什么区别？</p>
-<ol>
-<li><code>class</code> 无法修饰存储属性，而 <code>static</code> 可以。</li>
-<li>使用 <code>static</code> 修饰的类方法和类属性无法在子类中重载。也就是说 <code>static</code> 修饰的类方法和类属性包含了 <code>final</code> 关键字的特性。相当于 <code>final class</code> 。关于 <code>final</code> 的更多特性请参考<a href="http://swift.diagon.me/final/">《Swift 中的 final 修饰符》</a>。</li>
-</ol>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span> </span>&#123;</div><div class="line">    <span class="comment">//class var name = "GoodMen" // 编译器提示错误：class stored properties not supported in classes</span></div><div class="line">    </div><div class="line">    <span class="keyword">static</span> <span class="keyword">var</span> name = <span class="string">"GoodMen"</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Student</span>:<span class="title">Person</span></span>&#123;</div><div class="line">    <span class="comment">//static var name = "GoodMen"  // 编译器提示错误：cannot override with a stored property 'name'</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h2 id="ststic-在-Protocol-中的使用"><a href="#ststic-在-Protocol-中的使用" class="headerlink" title="ststic 在 Protocol 中的使用"></a>ststic 在 Protocol 中的使用</h2><p>Swift 中 class，struct，enum 都可以实现某个指定 protocol。在 protocol定义一个类方法或者类计算属性，显而易见，应该使用 <code>static</code> 关键字来修饰。使用 protocol 时，在 struct 和 enum 中仍然使用 <code>static</code>，在 class 类型中 <code>class</code> 和 <code>static</code> 关键字都可以使用。</p>
+        <hr>
+<p>title:Swift 中的协议扩展派发<br>date: 2017-02-09<br>id: protocol-extension-dispathing<br>tags:</p>
+<pre><code>- protocol
+- 协议扩展
+- 派发
+</code></pre><hr>
+<p>当遵循 protocol 的类型重新定义了 protocol 中没有但 protocol extension 中定义的 method 或者 property 时，static dispatching 将会执行。这就意味了，property 或者 method 的实现依赖于变量或者常量的声明的类型，而不是实例实际的类型。</p>
+<p>定义了一个协议：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">protocol</span> <span class="title">WinLoss</span> </span>&#123;</div><div class="line">    </div><div class="line">    <span class="keyword">var</span> wins: <span class="type">Int</span> &#123; <span class="keyword">get</span>&#125;</div><div class="line">    </div><div class="line">    <span class="keyword">var</span> losses: <span class="type">Int</span> &#123; <span class="keyword">get</span>&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>该协议有一个 extension:</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">extension</span> <span class="title">WinLoss</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">var</span> winningPercentage: <span class="type">Double</span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">return</span> <span class="type">Double</span>(wins) / (<span class="type">Double</span>(wins) + <span class="type">Double</span>(losses))</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>有一个遵循该协议的类型:</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">CricketRecord</span>: <span class="title">WinLoss</span></span></div><div class="line">&#123;</div><div class="line">    </div><div class="line">    <span class="keyword">var</span> wins: <span class="type">Int</span></div><div class="line">    </div><div class="line">    <span class="keyword">var</span> losses: <span class="type">Int</span></div><div class="line">    </div><div class="line">    <span class="keyword">var</span> draws: <span class="type">Int</span></div><div class="line">    </div><div class="line">    <span class="keyword">var</span> winningPercentage: <span class="type">Double</span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">return</span> <span class="type">Double</span>(wins) / (<span class="type">Double</span>(wins) + <span class="type">Double</span>(losses) + <span class="type">Double</span>(draws))</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>观察：<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> miamiTuples = <span class="type">CricketRecord</span>(wins: <span class="number">8</span>, losses: <span class="number">7</span>, draws: <span class="number">1</span>)</div><div class="line"><span class="keyword">let</span> winLoss: <span class="type">WinLoss</span> = miamiTuples</div><div class="line"></div><div class="line">miamiTuples.winningPercentage <span class="comment">// .5执行struct实现的</span></div><div class="line">winLoss.winningPercentage <span class="comment">// .53 !!!执行extension实现的类型</span></div></pre></td></tr></table></figure></p>
+<p>即使 miamiTuples 和 winLoss 包含的是相同的实例，结果也不同。因为 static dispatching 是根据声明类型来选择实现的。miamiTuples 是 CricketRecord 类型的，  winLoss 是 WinLoss 类型的。</p>
+<p>注意，这种情况只出现在 protocol 自身没有该成员的情况下，如果</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">protocol</span> <span class="title">WinLoss</span> </span>&#123;</div><div class="line">    </div><div class="line">    <span class="keyword">var</span> wins: <span class="type">Int</span> &#123; <span class="keyword">get</span>&#125;</div><div class="line">    </div><div class="line">    <span class="keyword">var</span> losses: <span class="type">Int</span> &#123; <span class="keyword">get</span>&#125;</div><div class="line">    </div><div class="line">    <span class="keyword">var</span> winningPercentage: <span class="type">Double</span> &#123; <span class="keyword">get</span>&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>则</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">miamiTuples.winningPercentage <span class="comment">// .5</span></div><div class="line">winLoss.winningPercentage <span class="comment">// .5</span></div></pre></td></tr></table></figure>
+<p>这里是 dynamic dispatching。依赖于实际的类型，而不是声明的类型。</p>
 <hr>
 <div style="text-align: center"><br>关注公众号（ID：SwiftBetter），进一步探讨主题<br><br><br>每日精选高清题图，可做壁纸<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>
       
@@ -368,27 +384,13 @@ class 是专门用在 calss 类型中修饰类方法和类的计算属性（注�
 
     <footer class="post-footer">
       
-        <div class="post-tags">
-          
-            <a href="/tags/static/" rel="tag"># static</a>
-          
-            <a href="/tags/class/" rel="tag"># class</a>
-          
-            <a href="/tags/protocol/" rel="tag"># protocol</a>
-          
-            <a href="/tags/struct/" rel="tag"># struct</a>
-          
-            <a href="/tags/enum/" rel="tag"># enum</a>
-          
-        </div>
-      
 
       
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/singleton-swift/" rel="next" title="Swift 中单例的实现">
-                <i class="fa fa-chevron-left"></i> Swift 中单例的实现
+              <a href="/protocol-member-default/" rel="next" title="Swift 中的协议成员的默认实现">
+                <i class="fa fa-chevron-left"></i> Swift 中的协议成员的默认实现
               </a>
             
           </div>
@@ -396,10 +398,6 @@ class 是专门用在 calss 类型中修饰类方法和类的计算属性（注�
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/urlcache-condiguration/" rel="prev" title="iOS 开发中 URLCache 的应用">
-                iOS 开发中 URLCache 的应用 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -446,17 +444,8 @@ class 是专门用在 calss 类型中修饰类方法和类的计算属性（注�
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview sidebar-panel">
+      <section class="site-overview sidebar-panel sidebar-panel-active">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.gif"
@@ -512,22 +501,6 @@ class 是专门用在 calss 类型中修饰类方法和类的计算属性（注�
 
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#static-和-class"><span class="nav-number">1.</span> <span class="nav-text">static 和 class</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#在-class-类型中-static-和-class-的区别"><span class="nav-number">2.</span> <span class="nav-text">在 class 类型中 static 和 class 的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ststic-在-Protocol-中的使用"><span class="nav-number">3.</span> <span class="nav-text">ststic 在 Protocol 中的使用</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
     </div>
