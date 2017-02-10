@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="离屏渲染,圆角,性能优化," />
 
 
 
@@ -84,32 +84,38 @@
 
 
 
-<meta name="description" content="title: Swift 中的协议扩展派发date: 2017-02-09id: protocol-extension-dispathingtags:
-- protocol
-- 协议扩展
-- 派发
+<meta name="description" content="CPU 渲染图形的生成一般是由 GPU 负责，而 GPU 屏幕渲染有以下两种方式：
 
-当遵循 protocol 的类型重新定义了 protocol 中没有但 protocol extension 中定义的 method 或者 property 时，static dispatching">
+On-Screen Rendering：当前屏幕渲染，意思是 GPU 的渲染操作是在当前用于显示的屏幕缓冲区进行的。缓冲大小受限，一些复杂的操作可能无法完成。
+
+Off-Screen Rendering：离屏渲染，意思是 GPU 的渲染操作是在当前用于显示的屏幕缓冲区之外新开辟的一个缓冲区进行的。
+
+
+离屏渲染引">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Swift学徒">
-<meta property="og:url" content="http://swift.diagon.me/ciyydrfx9001bj1pvzlzxdpux/index.html">
+<meta property="og:title" content="iOS 开发中的离屏渲染问题">
+<meta property="og:url" content="http://swift.diagon.me/off-screen-rendering/index.html">
 <meta property="og:site_name" content="Swift学徒">
-<meta property="og:description" content="title: Swift 中的协议扩展派发date: 2017-02-09id: protocol-extension-dispathingtags:
-- protocol
-- 协议扩展
-- 派发
+<meta property="og:description" content="CPU 渲染图形的生成一般是由 GPU 负责，而 GPU 屏幕渲染有以下两种方式：
 
-当遵循 protocol 的类型重新定义了 protocol 中没有但 protocol extension 中定义的 method 或者 property 时，static dispatching">
+On-Screen Rendering：当前屏幕渲染，意思是 GPU 的渲染操作是在当前用于显示的屏幕缓冲区进行的。缓冲大小受限，一些复杂的操作可能无法完成。
+
+Off-Screen Rendering：离屏渲染，意思是 GPU 的渲染操作是在当前用于显示的屏幕缓冲区之外新开辟的一个缓冲区进行的。
+
+
+离屏渲染引">
 <meta property="og:image" content="https://vernsu.github.io/images/wxqrcode.jpg">
-<meta property="og:updated_time" content="2017-02-09T12:48:26.000Z">
+<meta property="og:updated_time" content="2017-02-10T06:46:31.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Swift学徒">
-<meta name="twitter:description" content="title: Swift 中的协议扩展派发date: 2017-02-09id: protocol-extension-dispathingtags:
-- protocol
-- 协议扩展
-- 派发
+<meta name="twitter:title" content="iOS 开发中的离屏渲染问题">
+<meta name="twitter:description" content="CPU 渲染图形的生成一般是由 GPU 负责，而 GPU 屏幕渲染有以下两种方式：
 
-当遵循 protocol 的类型重新定义了 protocol 中没有但 protocol extension 中定义的 method 或者 property 时，static dispatching">
+On-Screen Rendering：当前屏幕渲染，意思是 GPU 的渲染操作是在当前用于显示的屏幕缓冲区进行的。缓冲大小受限，一些复杂的操作可能无法完成。
+
+Off-Screen Rendering：离屏渲染，意思是 GPU 的渲染操作是在当前用于显示的屏幕缓冲区之外新开辟的一个缓冲区进行的。
+
+
+离屏渲染引">
 <meta name="twitter:image" content="https://vernsu.github.io/images/wxqrcode.jpg">
 
 
@@ -138,13 +144,13 @@
 
 
 
-  <link rel="canonical" href="http://swift.diagon.me/ciyydrfx9001bj1pvzlzxdpux/"/>
+  <link rel="canonical" href="http://swift.diagon.me/off-screen-rendering/"/>
 
 
 
 
 
-  <title>  | Swift学徒 </title>
+  <title> iOS 开发中的离屏渲染问题 | Swift学徒 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -267,7 +273,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://swift.diagon.me/ciyydrfx9001bj1pvzlzxdpux/">
+  <link itemprop="mainEntityOfPage" href="http://swift.diagon.me/off-screen-rendering/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="万恶胖为首">
@@ -291,7 +297,7 @@
             
             
               
-                
+                iOS 开发中的离屏渲染问题
               
             
           </h1>
@@ -306,8 +312,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-09T20:27:05+08:00">
-                2017-02-09
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-10T00:00:00+08:00">
+                2017-02-10
               </time>
             
 
@@ -342,26 +348,30 @@
       
 
       
-        <hr>
-<p>title: Swift 中的协议扩展派发<br>date: 2017-02-09<br>id: protocol-extension-dispathing<br>tags:</p>
-<pre><code>- protocol
-- 协议扩展
-- 派发
-</code></pre><hr>
-<p>当遵循 protocol 的类型重新定义了 protocol 中没有但 protocol extension 中定义的 method 或者 property 时，static dispatching 将会执行。这就意味了，property 或者 method 的实现依赖于变量或者常量的声明的类型，而不是实例实际的类型。</p>
-<p>定义了一个协议：</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">protocol</span> <span class="title">WinLoss</span> </span>&#123;</div><div class="line">    </div><div class="line">    <span class="keyword">var</span> wins: <span class="type">Int</span> &#123; <span class="keyword">get</span>&#125;</div><div class="line">    </div><div class="line">    <span class="keyword">var</span> losses: <span class="type">Int</span> &#123; <span class="keyword">get</span>&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>该协议有一个 extension:</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">extension</span> <span class="title">WinLoss</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">var</span> winningPercentage: <span class="type">Double</span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">return</span> <span class="type">Double</span>(wins) / (<span class="type">Double</span>(wins) + <span class="type">Double</span>(losses))</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>有一个遵循该协议的类型:</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">CricketRecord</span>: <span class="title">WinLoss</span></span></div><div class="line">&#123;</div><div class="line">    </div><div class="line">    <span class="keyword">var</span> wins: <span class="type">Int</span></div><div class="line">    </div><div class="line">    <span class="keyword">var</span> losses: <span class="type">Int</span></div><div class="line">    </div><div class="line">    <span class="keyword">var</span> draws: <span class="type">Int</span></div><div class="line">    </div><div class="line">    <span class="keyword">var</span> winningPercentage: <span class="type">Double</span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">return</span> <span class="type">Double</span>(wins) / (<span class="type">Double</span>(wins) + <span class="type">Double</span>(losses) + <span class="type">Double</span>(draws))</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>观察：<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> miamiTuples = <span class="type">CricketRecord</span>(wins: <span class="number">8</span>, losses: <span class="number">7</span>, draws: <span class="number">1</span>)</div><div class="line"><span class="keyword">let</span> winLoss: <span class="type">WinLoss</span> = miamiTuples</div><div class="line"></div><div class="line">miamiTuples.winningPercentage <span class="comment">// .5执行struct实现的</span></div><div class="line">winLoss.winningPercentage <span class="comment">// .53 !!!执行extension实现的类型</span></div></pre></td></tr></table></figure></p>
-<p>即使 miamiTuples 和 winLoss 包含的是相同的实例，结果也不同。因为 static dispatching 是根据声明类型来选择实现的。miamiTuples 是 CricketRecord 类型的，  winLoss 是 WinLoss 类型的。</p>
-<p>注意，这种情况只出现在 protocol 自身没有该成员的情况下，如果</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">protocol</span> <span class="title">WinLoss</span> </span>&#123;</div><div class="line">    </div><div class="line">    <span class="keyword">var</span> wins: <span class="type">Int</span> &#123; <span class="keyword">get</span>&#125;</div><div class="line">    </div><div class="line">    <span class="keyword">var</span> losses: <span class="type">Int</span> &#123; <span class="keyword">get</span>&#125;</div><div class="line">    </div><div class="line">    <span class="keyword">var</span> winningPercentage: <span class="type">Double</span> &#123; <span class="keyword">get</span>&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>则</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">miamiTuples.winningPercentage <span class="comment">// .5</span></div><div class="line">winLoss.winningPercentage <span class="comment">// .5</span></div></pre></td></tr></table></figure>
-<p>这里是 dynamic dispatching。依赖于实际的类型，而不是声明的类型。</p>
+        <h2 id="CPU-渲染"><a href="#CPU-渲染" class="headerlink" title="CPU 渲染"></a>CPU 渲染</h2><p>图形的生成一般是由 GPU 负责，而 GPU 屏幕渲染有以下两种方式：</p>
+<ul>
+<li><p>On-Screen Rendering：当前屏幕渲染，意思是 GPU 的渲染操作是在当前用于显示的屏幕缓冲区进行的。缓冲大小受限，一些复杂的操作可能无法完成。</p>
+</li>
+<li><p>Off-Screen Rendering：离屏渲染，意思是 GPU 的渲染操作是在当前用于显示的屏幕缓冲区之外新开辟的一个缓冲区进行的。</p>
+</li>
+</ul>
+<h2 id="离屏渲染引发的性能问题"><a href="#离屏渲染引发的性能问题" class="headerlink" title="离屏渲染引发的性能问题"></a>离屏渲染引发的性能问题</h2><p>大量的离屏渲染会引发性能问题，离屏渲染过程中的两个操作的代价很高：</p>
+<ol>
+<li>创建新缓冲区。</li>
+<li>上下文切换。离屏渲染过程中需要先从 On-Screen 切换到 Off-Screen，在渲染完成后，需要将渲染结果从 Off-screen 切换到 On-screen。</li>
+</ol>
+<p>GPU 会为每一帧（1/60s）重复合成所有的图层，上下文切换发生在每一帧中。</p>
+<h2 id="导致离屏渲染的因素"><a href="#导致离屏渲染的因素" class="headerlink" title="导致离屏渲染的因素"></a>导致离屏渲染的因素</h2><p>当图层属性的混合体被指定为在没有预合成之前不能直接在屏幕中绘制时，会唤起离屏渲染。</p>
+<p>图层的以下属性会导致离屏渲染：</p>
+<ul>
+<li>圆角 cornerRadius 和 maskToBounds 一起使用时</li>
+<li>遮罩/蒙版 masks</li>
+<li>阴影 shadows</li>
+</ul>
+<p>因为上面所说原因，一般情况下应该避免离屏渲染。应当尽量避免使用 layer 的 border、corner、shadow、mask 等技术。</p>
+<h2 id="使用-Instruments-检测性能"><a href="#使用-Instruments-检测性能" class="headerlink" title="使用 Instruments 检测性能"></a>使用 Instruments 检测性能</h2><p>Instruments 的 Core Animation 工具里有检测离屏渲染的选项：<code>Color Offscreen-Rendered Yellow</code>, 开启后会将已经被渲染到屏幕外缓冲区的区域表示为黄色。</p>
+<p>这个工具的使用在 WWDC 中讲过：<a href="https://developer.apple.com/videos/play/wwdc2011/121/" target="_blank" rel="external">WWDC 2011: Understanding UIKit Rendering</a>、<a href="https://developer.apple.com/videos/play/wwdc2014/419/" target="_blank" rel="external">WWDC 2014: Advanced Graphics and Animations for iOS Apps </a></p>
+<p>据说 iOS9 之后的 UIImageView 使用 png 图片设置圆角时被苹果优化，不会触发离屏渲染了。</p>
 <hr>
 <div style="text-align: center"><br>关注公众号（ID：SwiftBetter），进一步探讨主题<br><br><br>每日精选高清题图，可做壁纸<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>
       
@@ -384,13 +394,23 @@
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/离屏渲染/" rel="tag"># 离屏渲染</a>
+          
+            <a href="/tags/圆角/" rel="tag"># 圆角</a>
+          
+            <a href="/tags/性能优化/" rel="tag"># 性能优化</a>
+          
+        </div>
+      
 
       
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/protocol-member-default/" rel="next" title="Swift 中的协议成员的默认实现">
-                <i class="fa fa-chevron-left"></i> Swift 中的协议成员的默认实现
+              <a href="/protocol-extension-dispathing/" rel="next" title="Swift 中的协议扩展派发">
+                <i class="fa fa-chevron-left"></i> Swift 中的协议扩展派发
               </a>
             
           </div>
@@ -444,8 +464,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.gif"
@@ -458,7 +487,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">22</span>
+                <span class="site-state-item-count">23</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -476,7 +505,7 @@
           
             <div class="site-state-item site-state-tags">
               
-                <span class="site-state-item-count">47</span>
+                <span class="site-state-item-count">51</span>
                 <span class="site-state-item-name">标签</span>
               
             </div>
@@ -501,6 +530,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#CPU-渲染"><span class="nav-number">1.</span> <span class="nav-text">CPU 渲染</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#离屏渲染引发的性能问题"><span class="nav-number">2.</span> <span class="nav-text">离屏渲染引发的性能问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#导致离屏渲染的因素"><span class="nav-number">3.</span> <span class="nav-text">导致离屏渲染的因素</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用-Instruments-检测性能"><span class="nav-number">4.</span> <span class="nav-text">使用 Instruments 检测性能</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
     </div>

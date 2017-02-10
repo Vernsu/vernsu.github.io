@@ -84,22 +84,22 @@
 
 
 
-<meta name="description" content="当遵循 protocol 的类型重新定义了 protocol 中没有但 protocol extension 中定义的 method 或者 property 时，static dispatching 将会执行。这就意味了，property 或者 method 的实现依赖于变量或者常量的声明的类型，而不是实例实际的类型。
-定义了一个协议：
+<meta name="description" content="当遵循 protocol 的类型重新定义了 protocol 中没有但 protocol extension 中定义的 method 或 property 时，static dispatching 将会执行。这就意味着，property 或 method 的实现依赖于变量或常量声明的类型，而不是实例实际的类型。
+定义一个协议：
 123456protocol WinLoss &amp;#123;">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Swift 中的协议扩展派发">
 <meta property="og:url" content="http://swift.diagon.me/protocol-extension-dispathing/index.html">
 <meta property="og:site_name" content="Swift学徒">
-<meta property="og:description" content="当遵循 protocol 的类型重新定义了 protocol 中没有但 protocol extension 中定义的 method 或者 property 时，static dispatching 将会执行。这就意味了，property 或者 method 的实现依赖于变量或者常量的声明的类型，而不是实例实际的类型。
-定义了一个协议：
+<meta property="og:description" content="当遵循 protocol 的类型重新定义了 protocol 中没有但 protocol extension 中定义的 method 或 property 时，static dispatching 将会执行。这就意味着，property 或 method 的实现依赖于变量或常量声明的类型，而不是实例实际的类型。
+定义一个协议：
 123456protocol WinLoss &amp;#123;">
 <meta property="og:image" content="https://vernsu.github.io/images/wxqrcode.jpg">
-<meta property="og:updated_time" content="2017-02-09T12:49:47.000Z">
+<meta property="og:updated_time" content="2017-02-09T14:08:26.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Swift 中的协议扩展派发">
-<meta name="twitter:description" content="当遵循 protocol 的类型重新定义了 protocol 中没有但 protocol extension 中定义的 method 或者 property 时，static dispatching 将会执行。这就意味了，property 或者 method 的实现依赖于变量或者常量的声明的类型，而不是实例实际的类型。
-定义了一个协议：
+<meta name="twitter:description" content="当遵循 protocol 的类型重新定义了 protocol 中没有但 protocol extension 中定义的 method 或 property 时，static dispatching 将会执行。这就意味着，property 或 method 的实现依赖于变量或常量声明的类型，而不是实例实际的类型。
+定义一个协议：
 123456protocol WinLoss &amp;#123;">
 <meta name="twitter:image" content="https://vernsu.github.io/images/wxqrcode.jpg">
 
@@ -333,17 +333,18 @@
       
 
       
-        <p>当遵循 protocol 的类型重新定义了 protocol 中没有但 protocol extension 中定义的 method 或者 property 时，static dispatching 将会执行。这就意味了，property 或者 method 的实现依赖于变量或者常量的声明的类型，而不是实例实际的类型。</p>
-<p>定义了一个协议：</p>
+        <p>当遵循 protocol 的类型重新定义了 protocol 中没有但 protocol extension 中定义的 method 或 property 时，static dispatching 将会执行。这就意味着，property 或 method 的实现依赖于变量或常量声明的类型，而不是实例实际的类型。</p>
+<p>定义一个协议：</p>
 <figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">protocol</span> <span class="title">WinLoss</span> </span>&#123;</div><div class="line">    </div><div class="line">    <span class="keyword">var</span> wins: <span class="type">Int</span> &#123; <span class="keyword">get</span>&#125;</div><div class="line">    </div><div class="line">    <span class="keyword">var</span> losses: <span class="type">Int</span> &#123; <span class="keyword">get</span>&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>该协议有一个 extension:</p>
 <figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">extension</span> <span class="title">WinLoss</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">var</span> winningPercentage: <span class="type">Double</span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">return</span> <span class="type">Double</span>(wins) / (<span class="type">Double</span>(wins) + <span class="type">Double</span>(losses))</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>有一个遵循该协议的类型:</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">CricketRecord</span>: <span class="title">WinLoss</span></span></div><div class="line">&#123;</div><div class="line">    </div><div class="line">    <span class="keyword">var</span> wins: <span class="type">Int</span></div><div class="line">    </div><div class="line">    <span class="keyword">var</span> losses: <span class="type">Int</span></div><div class="line">    </div><div class="line">    <span class="keyword">var</span> draws: <span class="type">Int</span></div><div class="line">    </div><div class="line">    <span class="keyword">var</span> winningPercentage: <span class="type">Double</span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">return</span> <span class="type">Double</span>(wins) / (<span class="type">Double</span>(wins) + <span class="type">Double</span>(losses) + <span class="type">Double</span>(draws))</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>观察：<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> miamiTuples = <span class="type">CricketRecord</span>(wins: <span class="number">8</span>, losses: <span class="number">7</span>, draws: <span class="number">1</span>)</div><div class="line"><span class="keyword">let</span> winLoss: <span class="type">WinLoss</span> = miamiTuples</div><div class="line"></div><div class="line">miamiTuples.winningPercentage <span class="comment">// .5执行struct实现的</span></div><div class="line">winLoss.winningPercentage <span class="comment">// .53 !!!执行extension实现的类型</span></div></pre></td></tr></table></figure></p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">CricketRecord</span>: <span class="title">WinLoss</span></span></div><div class="line">&#123;    </div><div class="line">    <span class="keyword">var</span> wins: <span class="type">Int</span></div><div class="line">    </div><div class="line">    <span class="keyword">var</span> losses: <span class="type">Int</span></div><div class="line">    </div><div class="line">    <span class="keyword">var</span> draws: <span class="type">Int</span></div><div class="line">    </div><div class="line">    <span class="keyword">var</span> winningPercentage: <span class="type">Double</span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">return</span> <span class="type">Double</span>(wins) / (<span class="type">Double</span>(wins) + <span class="type">Double</span>(losses) + <span class="type">Double</span>(draws))</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>观察：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> miamiTuples = <span class="type">CricketRecord</span>(wins: <span class="number">8</span>, losses: <span class="number">7</span>, draws: <span class="number">1</span>)</div><div class="line"><span class="keyword">let</span> winLoss: <span class="type">WinLoss</span> = miamiTuples</div><div class="line"></div><div class="line">miamiTuples.winningPercentage <span class="comment">// .5 执行 struct 的实现</span></div><div class="line">winLoss.winningPercentage <span class="comment">// .53 !!!执行 extension 的实现</span></div></pre></td></tr></table></figure>
 <p>即使 miamiTuples 和 winLoss 包含的是相同的实例，结果也不同。因为 static dispatching 是根据声明类型来选择实现的。miamiTuples 是 CricketRecord 类型的，  winLoss 是 WinLoss 类型的。</p>
 <p>注意，这种情况只出现在 protocol 自身没有该成员的情况下，如果</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">protocol</span> <span class="title">WinLoss</span> </span>&#123;</div><div class="line">    </div><div class="line">    <span class="keyword">var</span> wins: <span class="type">Int</span> &#123; <span class="keyword">get</span>&#125;</div><div class="line">    </div><div class="line">    <span class="keyword">var</span> losses: <span class="type">Int</span> &#123; <span class="keyword">get</span>&#125;</div><div class="line">    </div><div class="line">    <span class="keyword">var</span> winningPercentage: <span class="type">Double</span> &#123; <span class="keyword">get</span>&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">protocol</span> <span class="title">WinLoss</span></span></div><div class="line">&#123;    </div><div class="line">    <span class="keyword">var</span> wins: <span class="type">Int</span> &#123; <span class="keyword">get</span>&#125;</div><div class="line">    </div><div class="line">    <span class="keyword">var</span> losses: <span class="type">Int</span> &#123; <span class="keyword">get</span>&#125;</div><div class="line">    </div><div class="line">    <span class="keyword">var</span> winningPercentage: <span class="type">Double</span> &#123; <span class="keyword">get</span>&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>则</p>
 <figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">miamiTuples.winningPercentage <span class="comment">// .5</span></div><div class="line">winLoss.winningPercentage <span class="comment">// .5</span></div></pre></td></tr></table></figure>
 <p>这里是 dynamic dispatching。依赖于实际的类型，而不是声明的类型。</p>
@@ -393,6 +394,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/off-screen-rendering/" rel="prev" title="iOS 开发中的离屏渲染问题">
+                iOS 开发中的离屏渲染问题 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -453,7 +458,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">22</span>
+                <span class="site-state-item-count">23</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -471,7 +476,7 @@
           
             <div class="site-state-item site-state-tags">
               
-                <span class="site-state-item-count">48</span>
+                <span class="site-state-item-count">51</span>
                 <span class="site-state-item-name">标签</span>
               
             </div>

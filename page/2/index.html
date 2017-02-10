@@ -251,6 +251,155 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://swift.diagon.me/last-modified-etag/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="万恶胖为首">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.gif">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="Swift学徒">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="Swift学徒" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/last-modified-etag/" itemprop="url">
+                  使用 Last-Modified 和 Etag 精确控制缓存失效时机
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-31T00:00:00+08:00">
+                2017-01-31
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/网络缓存/" itemprop="url" rel="index">
+                    <span itemprop="name">网络缓存</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><a href="http://swift.diagon.me/urlcache-http/">《iOS 开发中常用的缓存策略：HTTP 协议篇》</a> 一文中说到 Cache-control 含有 no-cache 时需要进一步验证缓存有效性。一般使用的验证机制有 Last-Modified 和 ETag。</p>
+<h2 id="Last-Modified"><a href="#Last-Modified" class="headerlink" title="Last-Modified"></a>Last-Modified</h2><p>Last-Modified 在服务器返回的响应头中，标识资源的最后修改时间。相对应的客户端的请求头中有 If-Modified-Since ，标识客户端所记录的，资源的最后修改时间，值为最后一次请求时返回的 Last-Modified 字段的值。</p>
+<p>第一次请求某一个URL时，服务器端的返回状态会是200，内容是你请求的资源，同时响应头中含有 Last-Modified ，格式类似这样：<code>Last-Modified: Fri, 12 May 2006 18:53:33 GMT</code> 。客户端第二次请求此 URL 时，根据 HTTP 协议的规定，客户端向服务器传送 If-Modified-Since 报头，格式类似这样： <code>If-Modified-Since: Fri, 12 May 2006 18:53:33 GMT</code> 。如果服务端的资源没有变化，则自动返回304状态码 <code>Not Changed</code>，内容为空，客户端就直接使用本地的缓存。当服务器端代码发生改变或者重启服务器时，则重新发出资源，返回和第一次请求时类似。这样就可以保证不向客户端重复发出资源，也保证当服务器有变化时，客户端能够得到最新的资源。</p>
+<h2 id="ETag"><a href="#ETag" class="headerlink" title="ETag"></a>ETag</h2><p>Etag 在服务器返回的响应头中，是资源的唯一标识符。相对应的客户端的请求头中有 If-None-Match ，标识客户端所记录的，资源的唯一标识符，值为最后一次请求时返回的 Etag 字段的值。</p>
+<p>第一次请求某一个URL时，服务器端的返回状态会是200，内容是你请求的资源，同时响应头中含有 Etag ，格式类似这样：<code>Etag：&quot;50b1c1d4f775c61:df3&quot;</code> 。客户端第二次请求此 URL 时，根据 HTTP 协议的规定，客户端向服务器传送 If-None-Match: 报头，格式类似这样： <code>If-None-Match: &quot;50b1c1d4f775c61:df3&quot;</code>。如果服务端的资源没有变化，则自动返回304状态码 <code>Not Changed</code>，与Last-Modified一样。</p>
+<h2 id="客户端处理"><a href="#客户端处理" class="headerlink" title="客户端处理"></a>客户端处理</h2><p>若缓存策略为默认的，iOS 系统会自动的处理 Last-Modified 和 ETag 并使用缓存。</p>
+<p>如果想自己用代码处理 Last-Modified 和 ETag，那么缓存策略则必须使用  <code>NSURLRequestReloadIgnoringCacheData</code>，忽略缓存，每次都要向服务端进行校验。然后再用代码判断是否使用缓存。</p>
+<p>另外如果更新频率较高，比如微博消息列表、一般的处理方式是添加一个接口，客户端将本地缓存的最后一条数据的的时间戳或 id 传给服务端，然后服务端返回新增的数据，没有新数据则返回 nil 或 304。</p>
+<hr>
+<div style="text-align: center"><br>关注公众号（ID：SwiftBetter），进一步探讨主题<br><br><br>每日精选高清题图，可做壁纸<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
   <link itemprop="mainEntityOfPage" href="http://swift.diagon.me/urlcache-cachedurlresponse/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1675,152 +1824,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://swift.diagon.me/copy-on-write/">
-
-  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="万恶胖为首">
-    <meta itemprop="description" content="">
-    <meta itemprop="image" content="/images/avatar.gif">
-  </span>
-
-  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="Swift学徒">
-    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
-      <img style="display:none;" itemprop="url image" alt="Swift学徒" src="">
-    </span>
-  </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/copy-on-write/" itemprop="url">
-                  写时复制（COW）在 Swift 中的应用
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-21T00:00:00+08:00">
-                2017-01-21
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-
-          
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>注：本文结尾处有吐槽。</p>
-<h2 id="引子"><a href="#引子" class="headerlink" title="引子"></a>引子</h2><p>王垠老师在 <a href="http://www.yinwang.org/blog-cn/2016/06/06/swift" target="_blank" rel="external">《Swift 语言的设计错误》</a>一文中指出 array 这种大型数据结构，不应该采用值类型。而应该使用引用类型，将 array 拆分为可变和不可变的两个类。因为值类型的复制代价很大。</p>
-<p>王垠老师写到「由于这个原因，没有任何其它现代语言（Java，C#，……）把 array 作为 value type。」看到这句话时，我第一反应是：这是在黑最好的编程语言 PHP不属于「现代语言」（笑），要知道 PHP 中的数组就是 value type。</p>
-<h2 id="Swift-中-array-的实现"><a href="#Swift-中-array-的实现" class="headerlink" title="Swift 中 array 的实现"></a>Swift 中 array 的实现</h2><p>Swift 语言中的 array 是一个 struct 类型。在具体的实现时，采用了 copy-on-write （写时复制）。</p>
-<p>具体来说就是：</p>
-<blockquote>
-<p>array 这个 struct 中存储了指向这个 array 真正 storage 的 reference， 而 array 这个 struct 只是其内部 storage 的一个 owner。</p>
-<p>当多个 owner 同时指向这个 storage，其中任意一个 owner 要修改这个 storage 内部的内容时， 就会先复制这个 storage 的内容， 再在复制出来的 storage 内进行真正的修改。</p>
-</blockquote>
-<p>在很多情况下，通过保持容器的引用而不是执行深度拷贝能够节省不必要的内存占用和计算力。如果容器的引用计数大于1并且容器被改变时，就会拷贝底层容器实现。例如下面的情况，当 d 被分配给 c 时不进行拷贝，但当 d 的结构要被改变时，那么 d 就会被拷贝，然后 2 被附加到 d ：</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> <span class="built_in">c</span>: [<span class="type">Int</span>] = [ ... ]</div><div class="line"><span class="keyword">var</span> d = <span class="built_in">c</span>        <span class="comment">//这里没有拷贝</span></div><div class="line">d.append(<span class="number">2</span>)      <span class="comment">//这里 *有* 拷贝</span></div></pre></td></tr></table></figure>
-<h2 id="进一步优化写时复制"><a href="#进一步优化写时复制" class="headerlink" title="进一步优化写时复制"></a>进一步优化写时复制</h2><p>在 Swift 中对于简单的值类型，比如Int、Double、CGPoint等，它们的拷贝时间是个常数。而对于可扩展的数据结构，为了效率考虑，会使用写时复制技术。</p>
-<p>Swift官方文档中推荐开发者在实现比较大的数据结构时实现写时复制语义。</p>
-<p>之前我们在<a href="http://swift.diagon.me/value-semantic-advanced/">《Swift 中值类型内嵌套可变引用类型时值语义的实现》</a>一文中所举的例子已经详细说明了如何自己实现写时复制。如果 backing storeage 非常大，需要实现 COW 语义来优化，那么当然值得更进一步的优化。</p>
-<p>Swift 标准库提供可一个函数 <code>isKnownUniquelyReferenced</code> ，用来检查某个实例是不是唯一的引用，如果是，说明该实例没有被共享，我们可以直接修改当前的实例，如果不是，说明实例被共享，这时对它进行更改就需要先复制。</p>
-<p>我们利用这个函数优化一下之前的例子：</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">PaintingPlan</span> // 值类型</span></div><div class="line">&#123;</div><div class="line"></div><div class="line">  <span class="comment">// 私有的引用类型, for "deep storage"</span></div><div class="line">  <span class="keyword">private</span> <span class="keyword">var</span> bucket = <span class="type">Bucket</span>(color: .blue)</div><div class="line"></div><div class="line">  <span class="keyword">var</span> bucketColor: <span class="type">Color</span> &#123;</div><div class="line">    <span class="keyword">get</span> &#123;</div><div class="line">      <span class="keyword">return</span> bucket.color</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">set</span> &#123;</div><div class="line">      <span class="comment">//优化</span></div><div class="line">      <span class="keyword">if</span> isKnownUniquelyReferenced(&amp;bucket) &#123;</div><div class="line">        bucket.color = bucketColor</div><div class="line">      &#125; <span class="keyword">else</span> &#123;</div><div class="line">        bucket = <span class="type">Bucket</span>(color: newValue)</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>Swift 标准库中大量使用了这种技术。</p>
-<h2 id="吐槽"><a href="#吐槽" class="headerlink" title="吐槽"></a>吐槽</h2><h3 id="吐槽-1"><a href="#吐槽-1" class="headerlink" title="吐槽 1"></a>吐槽 1</h3><p>王垠老师在<a href="http://www.yinwang.org/blog-cn/2016/06/08/java-value-type" target="_blank" rel="external">《Java 有值类型吗？》</a>中表示他理解的值类型和你们想的值类型不一样。</p>
-<p>意思就是，世界上有两种值类型：</p>
-<ol>
-<li>王垠的值类型 </li>
-<li>其他人理解的值类型。</li>
-</ol>
-<h3 id="吐槽-2"><a href="#吐槽-2" class="headerlink" title="吐槽 2"></a>吐槽 2</h3><p>某人：「王垠不管说什么，一定是错的。如果你觉得王垠说的有点道理，那一定是你错了。」</p>
-<p>王垠：「你说的很有道理。」</p>
-<hr>
-<div style="text-align: center"><br>关注公众号（ID：SwiftBetter），进一步探讨主题<br><br><br>每日精选高清题图，可做壁纸<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1868,7 +1871,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">22</span>
+                <span class="site-state-item-count">23</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -1886,7 +1889,7 @@
           
             <div class="site-state-item site-state-tags">
               
-                <span class="site-state-item-count">48</span>
+                <span class="site-state-item-count">51</span>
                 <span class="site-state-item-name">标签</span>
               
             </div>

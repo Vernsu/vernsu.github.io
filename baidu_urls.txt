@@ -1,1 +1,1 @@
-http://swift.diagon.me/protocol-extension-dispathing/
+http://swift.diagon.me/off-screen-rendering/
