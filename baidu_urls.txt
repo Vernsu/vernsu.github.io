@@ -1,1 +1,1 @@
-http://swift.diagon.me/off-screen-rendering/
+http://swift.diagon.me/cornerRadius/

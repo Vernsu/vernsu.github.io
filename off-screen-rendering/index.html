@@ -105,7 +105,7 @@ Off-Screen Rendering：离屏渲染，意思是 GPU 的渲染操作是在当前�
 
 离屏渲染引">
 <meta property="og:image" content="https://vernsu.github.io/images/wxqrcode.jpg">
-<meta property="og:updated_time" content="2017-02-10T06:46:31.000Z">
+<meta property="og:updated_time" content="2017-02-10T14:28:54.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="iOS 开发中的离屏渲染问题">
 <meta name="twitter:description" content="CPU 渲染图形的生成一般是由 GPU 负责，而 GPU 屏幕渲染有以下两种方式：
@@ -349,29 +349,31 @@ Off-Screen Rendering：离屏渲染，意思是 GPU 的渲染操作是在当前�
 
       
         <h2 id="CPU-渲染"><a href="#CPU-渲染" class="headerlink" title="CPU 渲染"></a>CPU 渲染</h2><p>图形的生成一般是由 GPU 负责，而 GPU 屏幕渲染有以下两种方式：</p>
-<ul>
+<ol>
 <li><p>On-Screen Rendering：当前屏幕渲染，意思是 GPU 的渲染操作是在当前用于显示的屏幕缓冲区进行的。缓冲大小受限，一些复杂的操作可能无法完成。</p>
 </li>
 <li><p>Off-Screen Rendering：离屏渲染，意思是 GPU 的渲染操作是在当前用于显示的屏幕缓冲区之外新开辟的一个缓冲区进行的。</p>
 </li>
-</ul>
+</ol>
 <h2 id="离屏渲染引发的性能问题"><a href="#离屏渲染引发的性能问题" class="headerlink" title="离屏渲染引发的性能问题"></a>离屏渲染引发的性能问题</h2><p>大量的离屏渲染会引发性能问题，离屏渲染过程中的两个操作的代价很高：</p>
 <ol>
 <li>创建新缓冲区。</li>
+</ol>
+<ol>
 <li>上下文切换。离屏渲染过程中需要先从 On-Screen 切换到 Off-Screen，在渲染完成后，需要将渲染结果从 Off-screen 切换到 On-screen。</li>
 </ol>
 <p>GPU 会为每一帧（1/60s）重复合成所有的图层，上下文切换发生在每一帧中。</p>
-<h2 id="导致离屏渲染的因素"><a href="#导致离屏渲染的因素" class="headerlink" title="导致离屏渲染的因素"></a>导致离屏渲染的因素</h2><p>当图层属性的混合体被指定为在没有预合成之前不能直接在屏幕中绘制时，会唤起离屏渲染。</p>
+<h2 id="导致离屏渲染的因素"><a href="#导致离屏渲染的因素" class="headerlink" title="导致离屏渲染的因素"></a>导致离屏渲染的因素</h2><p>当图层属性的混合体被指定为在没有预合成之前不能直接在屏幕中绘制时，会触发离屏渲染。</p>
 <p>图层的以下属性会导致离屏渲染：</p>
 <ul>
 <li>圆角 cornerRadius 和 maskToBounds 一起使用时</li>
 <li>遮罩/蒙版 masks</li>
 <li>阴影 shadows</li>
 </ul>
-<p>因为上面所说原因，一般情况下应该避免离屏渲染。应当尽量避免使用 layer 的 border、corner、shadow、mask 等技术。</p>
-<h2 id="使用-Instruments-检测性能"><a href="#使用-Instruments-检测性能" class="headerlink" title="使用 Instruments 检测性能"></a>使用 Instruments 检测性能</h2><p>Instruments 的 Core Animation 工具里有检测离屏渲染的选项：<code>Color Offscreen-Rendered Yellow</code>, 开启后会将已经被渲染到屏幕外缓冲区的区域表示为黄色。</p>
-<p>这个工具的使用在 WWDC 中讲过：<a href="https://developer.apple.com/videos/play/wwdc2011/121/" target="_blank" rel="external">WWDC 2011: Understanding UIKit Rendering</a>、<a href="https://developer.apple.com/videos/play/wwdc2014/419/" target="_blank" rel="external">WWDC 2014: Advanced Graphics and Animations for iOS Apps </a></p>
-<p>据说 iOS9 之后的 UIImageView 使用 png 图片设置圆角时被苹果优化，不会触发离屏渲染了。</p>
+<p>因为上面所说原因，一般情况下应该避免离屏渲染。尽量避免使用 layer 的 border、corner、shadow、mask 等。</p>
+<h2 id="使用-Instruments-监测性能"><a href="#使用-Instruments-监测性能" class="headerlink" title="使用 Instruments 监测性能"></a>使用 Instruments 监测性能</h2><p>Instruments 的 Core Animation 工具里有检测离屏渲染的选项：<code>Color Offscreen-Rendered Yellow</code>, 开启后会将离屏渲染的区域标识为黄色。</p>
+<p>这个工具的使用在 WWDC 中讲到过：<a href="https://developer.apple.com/videos/play/wwdc2011/121/" target="_blank" rel="external">WWDC 2011: Understanding UIKit Rendering</a>、<a href="https://developer.apple.com/videos/play/wwdc2014/419/" target="_blank" rel="external">WWDC 2014: Advanced Graphics and Animations for iOS Apps </a>。</p>
+<p>注意这个工具只能在真机上调试时使用，如果想在模拟器上查看离屏渲染区域可以选择：模拟器菜单 - Debug - Color Offscreen-Rendered。</p>
 <hr>
 <div style="text-align: center"><br>关注公众号（ID：SwiftBetter），进一步探讨主题<br><br><br>每日精选高清题图，可做壁纸<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>
       
@@ -418,6 +420,10 @@ Off-Screen Rendering：离屏渲染，意思是 GPU 的渲染操作是在当前�
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/cornerRadius/" rel="prev" title="iOS 中视图圆角性能优化">
+                iOS 中视图圆角性能优化 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -487,7 +493,7 @@ Off-Screen Rendering：离屏渲染，意思是 GPU 的渲染操作是在当前�
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">23</span>
+                <span class="site-state-item-count">24</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -505,7 +511,7 @@ Off-Screen Rendering：离屏渲染，意思是 GPU 的渲染操作是在当前�
           
             <div class="site-state-item site-state-tags">
               
-                <span class="site-state-item-count">51</span>
+                <span class="site-state-item-count">52</span>
                 <span class="site-state-item-name">标签</span>
               
             </div>
@@ -540,7 +546,7 @@ Off-Screen Rendering：离屏渲染，意思是 GPU 的渲染操作是在当前�
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#CPU-渲染"><span class="nav-number">1.</span> <span class="nav-text">CPU 渲染</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#离屏渲染引发的性能问题"><span class="nav-number">2.</span> <span class="nav-text">离屏渲染引发的性能问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#导致离屏渲染的因素"><span class="nav-number">3.</span> <span class="nav-text">导致离屏渲染的因素</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用-Instruments-检测性能"><span class="nav-number">4.</span> <span class="nav-text">使用 Instruments 检测性能</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#CPU-渲染"><span class="nav-number">1.</span> <span class="nav-text">CPU 渲染</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#离屏渲染引发的性能问题"><span class="nav-number">2.</span> <span class="nav-text">离屏渲染引发的性能问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#导致离屏渲染的因素"><span class="nav-number">3.</span> <span class="nav-text">导致离屏渲染的因素</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用-Instruments-监测性能"><span class="nav-number">4.</span> <span class="nav-text">使用 Instruments 监测性能</span></a></li></ol></div>
             
 
           </div>

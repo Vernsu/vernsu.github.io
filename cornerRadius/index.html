@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="optional,哨兵值," />
+  <meta name="keywords" content="离屏渲染,圆角,性能," />
 
 
 
@@ -84,29 +84,23 @@
 
 
 
-<meta name="description" content="历史原因来自 StackOverflow 一个提问里描述到：
-
-我们有一个员工姓 Null ，我们在查询这家伙的名字时，应用程序被弄崩溃了，肿么办！！！
-
-这个错误的出现可谓历史悠久，源自Tony Hoare在1965年时提出的编程语言设计，而且广泛的被借鉴到其他语言中。Null 在其他语言中有各种各样的名字：NULL、nil、null、None、Nothing、Nil 和 nullptr。更糟糕">
+<meta name="description" content="在《iOS 开发中的离屏渲染问题》中提到，大量的离屏渲染会造成性能问题。在 TableView 中使用 cornerRadius 和 maskToBounds 共同设置 View 的圆角是最常见的引发离屏渲染性能问题的场景。
+为视图设置圆角时触发离屏渲染12cell.view.layer.cornerRadius = 15cell.view.layer.masksToBounds = true
+c">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Swift 中为什么要引入 Optional？">
-<meta property="og:url" content="http://swift.diagon.me/swift-optional/index.html">
+<meta property="og:title" content="iOS 中视图圆角性能优化">
+<meta property="og:url" content="http://swift.diagon.me/cornerRadius/index.html">
 <meta property="og:site_name" content="Swift学徒">
-<meta property="og:description" content="历史原因来自 StackOverflow 一个提问里描述到：
-
-我们有一个员工姓 Null ，我们在查询这家伙的名字时，应用程序被弄崩溃了，肿么办！！！
-
-这个错误的出现可谓历史悠久，源自Tony Hoare在1965年时提出的编程语言设计，而且广泛的被借鉴到其他语言中。Null 在其他语言中有各种各样的名字：NULL、nil、null、None、Nothing、Nil 和 nullptr。更糟糕">
+<meta property="og:description" content="在《iOS 开发中的离屏渲染问题》中提到，大量的离屏渲染会造成性能问题。在 TableView 中使用 cornerRadius 和 maskToBounds 共同设置 View 的圆角是最常见的引发离屏渲染性能问题的场景。
+为视图设置圆角时触发离屏渲染12cell.view.layer.cornerRadius = 15cell.view.layer.masksToBounds = true
+c">
 <meta property="og:image" content="https://vernsu.github.io/images/wxqrcode.jpg">
-<meta property="og:updated_time" content="2017-02-06T01:40:33.000Z">
+<meta property="og:updated_time" content="2017-02-10T14:35:22.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Swift 中为什么要引入 Optional？">
-<meta name="twitter:description" content="历史原因来自 StackOverflow 一个提问里描述到：
-
-我们有一个员工姓 Null ，我们在查询这家伙的名字时，应用程序被弄崩溃了，肿么办！！！
-
-这个错误的出现可谓历史悠久，源自Tony Hoare在1965年时提出的编程语言设计，而且广泛的被借鉴到其他语言中。Null 在其他语言中有各种各样的名字：NULL、nil、null、None、Nothing、Nil 和 nullptr。更糟糕">
+<meta name="twitter:title" content="iOS 中视图圆角性能优化">
+<meta name="twitter:description" content="在《iOS 开发中的离屏渲染问题》中提到，大量的离屏渲染会造成性能问题。在 TableView 中使用 cornerRadius 和 maskToBounds 共同设置 View 的圆角是最常见的引发离屏渲染性能问题的场景。
+为视图设置圆角时触发离屏渲染12cell.view.layer.cornerRadius = 15cell.view.layer.masksToBounds = true
+c">
 <meta name="twitter:image" content="https://vernsu.github.io/images/wxqrcode.jpg">
 
 
@@ -135,13 +129,13 @@
 
 
 
-  <link rel="canonical" href="http://swift.diagon.me/swift-optional/"/>
+  <link rel="canonical" href="http://swift.diagon.me/cornerRadius/"/>
 
 
 
 
 
-  <title> Swift 中为什么要引入 Optional？ | Swift学徒 </title>
+  <title> iOS 中视图圆角性能优化 | Swift学徒 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -264,7 +258,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://swift.diagon.me/swift-optional/">
+  <link itemprop="mainEntityOfPage" href="http://swift.diagon.me/cornerRadius/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="万恶胖为首">
@@ -288,7 +282,7 @@
             
             
               
-                Swift 中为什么要引入 Optional？
+                iOS 中视图圆角性能优化
               
             
           </h1>
@@ -303,8 +297,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-23T00:00:00+08:00">
-                2017-01-23
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-11T00:00:00+08:00">
+                2017-02-11
               </time>
             
 
@@ -339,37 +333,15 @@
       
 
       
-        <h2 id="历史原因"><a href="#历史原因" class="headerlink" title="历史原因"></a>历史原因</h2><p>来自 StackOverflow 一个<a href="http://stackoverflow.com/questions/4456438/how-to-pass-null-a-real-surname-to-a-soap-web-service-in-actionscript-3" target="_blank" rel="external">提问</a>里描述到：</p>
-<blockquote>
-<p>我们有一个员工姓 Null ，我们在查询这家伙的名字时，应用程序被弄崩溃了，肿么办！！！</p>
-</blockquote>
-<p>这个错误的出现可谓历史悠久，源自<a href="https://en.wikipedia.org/wiki/Tony_Hoare" target="_blank" rel="external">Tony Hoare</a>在1965年时提出的编程语言设计，而且广泛的被借鉴到其他语言中。Null 在其他语言中有各种各样的名字：NULL、nil、null、None、Nothing、Nil 和 nullptr。更糟糕的是，每种语言都有细微的差别。</p>
-<p>Tony Hoare 将这个错误的设计称为 <a href="https://www.infoq.com/presentations/Null-References-The-Billion-Dollar-Mistake-Tony-Hoare" target="_blank" rel="external">billion dollar mistake</a>,他说：</p>
-<blockquote>
-<p>它导致了数不清的错误、漏洞和系统崩溃，可能在之后 40 年中造成了十亿美元的损失。</p>
-</blockquote>
-<h2 id="哨兵值"><a href="#哨兵值" class="headerlink" title="哨兵值"></a>哨兵值</h2><p>Linux 系统中打开一个文件时，有时我们可能会失败：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">int</span> fd = open(<span class="string">"someFile"</span>, O_RDWR); </div><div class="line"><span class="keyword">if</span> (fd != <span class="number">-1</span>) &#123; </div><div class="line">  <span class="comment">// Some file operations here </span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>Linux 使用了一个整数 -1 来表示文件打开错误。</p>
-<p>很多时候用0或者空字符串来代表不存在或没有值。但是有一个问题。0或者空字符串本身也可能是有含义的。</p>
-<p>这种使用了和正常状态同类型的特殊值来表示失败，没有值，不存在的含义，我们通常将这种值就叫做哨兵值。</p>
-<p>很多语言简单的处理了哨兵值，比如 Objective-C 中有 nil概念，但是仅仅只是和0的含义相同。</p>
-<p>在Objective-C中由于调用值为nil的对象的方法是被允许的。我们举一个 nil 造成的 bug：</p>
-<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">NSString</span> * tmp = <span class="literal">nil</span>;</div><div class="line"><span class="keyword">if</span> ([tmp rangeOfString:<span class="string">@"Swift"</span>].location != <span class="built_in">NSNotFound</span>) &#123;</div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"Swift是最好的编程语言"</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>在这个例子中，tmp 中 明明不可能包含关键字，但是「Swift是最好的编程语言」这句话仍然被打印了出来。</p>
-<p>这就是哨兵值惹的祸，这样的问题防不胜防。</p>
-<p>如果一种语言允许任何东西为 null，那么任何东西都可以是 null。换句话说，我们使用任何一个对象都冒着它并不存在的风险，而编译器对这种状态一无所知。</p>
-<h2 id="Swift-中的优雅处理"><a href="#Swift-中的优雅处理" class="headerlink" title="Swift 中的优雅处理"></a>Swift 中的优雅处理</h2><p>Swift 用一个特殊类型 optional 处理一个值可能是 nil 的情况。当你使用 optional时，你必须处理nil的情况。这样就有效解决了解决了哨兵值含糊不清的问题。</p>
-<p>因为，null的问题之所以存在，是因为你可以在没有“检查” null 的情况下，对对象进行了操作。</p>
-<p>Optional 类型的设计让你没法在访问对象前不检查它。这让你没法犯错。</p>
-<p>比如，在 Swift 里面，你可以这样写：</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span> <span class="keyword">let</span> content = something &#123;</div><div class="line">  <span class="built_in">print</span>(<span class="string">"找到: "</span> + content)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>假设 something 的类型是String?，它可能包含一个 String，也可能是 nil。使用这种特殊的 if 语法可以检查并访问 something。这个 if 语句跟普通的 if 语句不一样，它的条件并不是一个 Bool，而是一个变量绑定 let content = something。</p>
-<p>这几行代码的含义是：如果 something 是nil，那么整个 if 语句被忽略。如果它不是 nil，那么将 something 的值（unwrap操作） 分配给变量 content ，接下来执行 if 块中的代码。</p>
+        <p>在<a href="http://swift.diagon.me/off-screen-rendering/">《iOS 开发中的离屏渲染问题》</a>中提到，大量的离屏渲染会造成性能问题。在 TableView 中使用 cornerRadius 和 maskToBounds 共同设置 View 的圆角是最常见的引发离屏渲染性能问题的场景。</p>
+<h2 id="为视图设置圆角时触发离屏渲染"><a href="#为视图设置圆角时触发离屏渲染" class="headerlink" title="为视图设置圆角时触发离屏渲染"></a>为视图设置圆角时触发离屏渲染</h2><figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">cell.view.layer.cornerRadius = <span class="number">15</span></div><div class="line">cell.view.layer.masksToBounds = <span class="literal">true</span></div></pre></td></tr></table></figure>
+<p>cornerRadius 和 maskToBounds 分别独立使用的时候不会有性能问题，但是当他们结合在一起，就触发了离屏渲染。</p>
+<p>注：在iOS9 之后的系统中 UIImageView 使用 png 图片设置圆角时被苹果优化，不会触发离屏渲染。但是其他类型的视图设置圆角依然会触发离屏渲染。</p>
+<h2 id="CAShapeLayer"><a href="#CAShapeLayer" class="headerlink" title="CAShapeLayer"></a>CAShapeLayer</h2><p>可以使用 UIBezierPath 的构造器 <code>init(roundedRect rect: CGRect, cornerRadius: CGFloat)</code> 产生圆角，避免离屏渲染。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> blueLayer = <span class="type">CAShapeLayer</span>()</div><div class="line">blueLayer.frame = <span class="type">CGRect</span>(x: <span class="number">50</span>, y: <span class="number">50</span>, width: <span class="number">100</span>, height: <span class="number">100</span>)</div><div class="line">blueLayer.fillColor = <span class="type">UIColor</span>.blue.cgColor</div><div class="line"></div><div class="line">blueLayer.path = <span class="type">UIBezierPath</span>.<span class="keyword">init</span>(roundedRect: <span class="type">CGRect</span>(x:<span class="number">0</span>, y:<span class="number">0</span>, width:<span class="number">100</span>, height:<span class="number">100</span>) , cornerRadius: <span class="number">20</span>).cgPath</div><div class="line"></div><div class="line"><span class="keyword">self</span>.view.layer.addSublayer(blueLayer)</div></pre></td></tr></table></figure>
+<h2 id="使用-Core-Graphics-绘制圆角"><a href="#使用-Core-Graphics-绘制圆角" class="headerlink" title="使用 Core Graphics 绘制圆角"></a>使用 Core Graphics 绘制圆角</h2><p>在对 UIView 绘制圆角的时候，可以采用 Core Graphics 的方式进行绘制，不会触发离屏渲染，性能也相对来说比较好一些。</p>
 <hr>
 <div style="text-align: center"><br>关注公众号（ID：SwiftBetter），进一步探讨主题<br><br><br>每日精选高清题图，可做壁纸<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>
-
-
       
     </div>
 
@@ -392,9 +364,11 @@
       
         <div class="post-tags">
           
-            <a href="/tags/optional/" rel="tag"># optional</a>
+            <a href="/tags/离屏渲染/" rel="tag"># 离屏渲染</a>
           
-            <a href="/tags/哨兵值/" rel="tag"># 哨兵值</a>
+            <a href="/tags/圆角/" rel="tag"># 圆角</a>
+          
+            <a href="/tags/性能/" rel="tag"># 性能</a>
           
         </div>
       
@@ -403,8 +377,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/swift-sturct-class-type/" rel="next" title="Swift 中的嵌套类型">
-                <i class="fa fa-chevron-left"></i> Swift 中的嵌套类型
+              <a href="/off-screen-rendering/" rel="next" title="iOS 开发中的离屏渲染问题">
+                <i class="fa fa-chevron-left"></i> iOS 开发中的离屏渲染问题
               </a>
             
           </div>
@@ -412,10 +386,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/singleton-swift/" rel="prev" title="Swift 中单例的实现">
-                Swift 中单例的实现 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -538,7 +508,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#历史原因"><span class="nav-number">1.</span> <span class="nav-text">历史原因</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#哨兵值"><span class="nav-number">2.</span> <span class="nav-text">哨兵值</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Swift-中的优雅处理"><span class="nav-number">3.</span> <span class="nav-text">Swift 中的优雅处理</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#为视图设置圆角时触发离屏渲染"><span class="nav-number">1.</span> <span class="nav-text">为视图设置圆角时触发离屏渲染</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CAShapeLayer"><span class="nav-number">2.</span> <span class="nav-text">CAShapeLayer</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用-Core-Graphics-绘制圆角"><span class="nav-number">3.</span> <span class="nav-text">使用 Core Graphics 绘制圆角</span></a></li></ol></div>
             
 
           </div>
