@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="离屏渲染,圆角,性能," />
+  <meta name="keywords" content="性能优化,离屏渲染,圆角," />
 
 
 
@@ -88,16 +88,16 @@
 为视图设置圆角时触发离屏渲染12cell.view.layer.cornerRadius = 15cell.view.layer.masksToBounds = true
 c">
 <meta property="og:type" content="article">
-<meta property="og:title" content="iOS 中视图圆角性能优化">
+<meta property="og:title" content="iOS 性能优化之视图圆角">
 <meta property="og:url" content="http://swift.diagon.me/cornerRadius/index.html">
 <meta property="og:site_name" content="Swift学徒">
 <meta property="og:description" content="在《iOS 开发中的离屏渲染问题》中提到，大量的离屏渲染会造成性能问题。在 TableView 中使用 cornerRadius 和 maskToBounds 共同设置 View 的圆角是最常见的引发离屏渲染性能问题的场景。
 为视图设置圆角时触发离屏渲染12cell.view.layer.cornerRadius = 15cell.view.layer.masksToBounds = true
 c">
 <meta property="og:image" content="https://vernsu.github.io/images/wxqrcode.jpg">
-<meta property="og:updated_time" content="2017-02-10T14:35:22.000Z">
+<meta property="og:updated_time" content="2017-02-11T05:00:14.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="iOS 中视图圆角性能优化">
+<meta name="twitter:title" content="iOS 性能优化之视图圆角">
 <meta name="twitter:description" content="在《iOS 开发中的离屏渲染问题》中提到，大量的离屏渲染会造成性能问题。在 TableView 中使用 cornerRadius 和 maskToBounds 共同设置 View 的圆角是最常见的引发离屏渲染性能问题的场景。
 为视图设置圆角时触发离屏渲染12cell.view.layer.cornerRadius = 15cell.view.layer.masksToBounds = true
 c">
@@ -135,7 +135,7 @@ c">
 
 
 
-  <title> iOS 中视图圆角性能优化 | Swift学徒 </title>
+  <title> iOS 性能优化之视图圆角 | Swift学徒 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -282,7 +282,7 @@ c">
             
             
               
-                iOS 中视图圆角性能优化
+                iOS 性能优化之视图圆角
               
             
           </h1>
@@ -336,10 +336,12 @@ c">
         <p>在<a href="http://swift.diagon.me/off-screen-rendering/">《iOS 开发中的离屏渲染问题》</a>中提到，大量的离屏渲染会造成性能问题。在 TableView 中使用 cornerRadius 和 maskToBounds 共同设置 View 的圆角是最常见的引发离屏渲染性能问题的场景。</p>
 <h2 id="为视图设置圆角时触发离屏渲染"><a href="#为视图设置圆角时触发离屏渲染" class="headerlink" title="为视图设置圆角时触发离屏渲染"></a>为视图设置圆角时触发离屏渲染</h2><figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">cell.view.layer.cornerRadius = <span class="number">15</span></div><div class="line">cell.view.layer.masksToBounds = <span class="literal">true</span></div></pre></td></tr></table></figure>
 <p>cornerRadius 和 maskToBounds 分别独立使用的时候不会有性能问题，但是当他们结合在一起，就触发了离屏渲染。</p>
-<p>注：在iOS9 之后的系统中 UIImageView 使用 png 图片设置圆角时被苹果优化，不会触发离屏渲染。但是其他类型的视图设置圆角依然会触发离屏渲染。</p>
+<p>注：在iOS9 之后的系统中 UIImageView 使用 png 图片设置圆角时被苹果优化，不会触发离屏渲染。contents 为空的视图如 UIView 也不会触发离屏渲染。但是其他类型的视图（如UILabel，UIButton）通过这种方式设置圆角依然会触发离屏渲染。</p>
 <h2 id="CAShapeLayer"><a href="#CAShapeLayer" class="headerlink" title="CAShapeLayer"></a>CAShapeLayer</h2><p>可以使用 UIBezierPath 的构造器 <code>init(roundedRect rect: CGRect, cornerRadius: CGFloat)</code> 产生圆角，避免离屏渲染。</p>
 <figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> blueLayer = <span class="type">CAShapeLayer</span>()</div><div class="line">blueLayer.frame = <span class="type">CGRect</span>(x: <span class="number">50</span>, y: <span class="number">50</span>, width: <span class="number">100</span>, height: <span class="number">100</span>)</div><div class="line">blueLayer.fillColor = <span class="type">UIColor</span>.blue.cgColor</div><div class="line"></div><div class="line">blueLayer.path = <span class="type">UIBezierPath</span>.<span class="keyword">init</span>(roundedRect: <span class="type">CGRect</span>(x:<span class="number">0</span>, y:<span class="number">0</span>, width:<span class="number">100</span>, height:<span class="number">100</span>) , cornerRadius: <span class="number">20</span>).cgPath</div><div class="line"></div><div class="line"><span class="keyword">self</span>.view.layer.addSublayer(blueLayer)</div></pre></td></tr></table></figure>
-<h2 id="使用-Core-Graphics-绘制圆角"><a href="#使用-Core-Graphics-绘制圆角" class="headerlink" title="使用 Core Graphics 绘制圆角"></a>使用 Core Graphics 绘制圆角</h2><p>在对 UIView 绘制圆角的时候，可以采用 Core Graphics 的方式进行绘制，不会触发离屏渲染，性能也相对来说比较好一些。</p>
+<h2 id="使用-Core-Graphics-绘制圆角"><a href="#使用-Core-Graphics-绘制圆角" class="headerlink" title="使用 Core Graphics 绘制圆角"></a>使用 Core Graphics 绘制圆角</h2><p>在对视图绘制圆角的时候，为了避免离屏渲染，可以通过 Core Graphics 将视图重新绘制为一张带圆角的图片。</p>
+<p>注意：如果我们重写了 drawRect 方法，并且使用 Core Graphics 进行绘制作，就涉及到了 CPU 渲染。整个渲染过程由 CPU 完成，渲染得到的 bitmap 最后再交由 GPU 用于显示。</p>
+<h2 id="光栅化"><a href="#光栅化" class="headerlink" title="光栅化"></a>光栅化</h2><p>对于视图圆角的性能优化，还有一种方式，请参考<a href="http://swift.diagon.me/shouldRasterize/">《iOS 性能优化之光栅化》</a>。</p>
 <hr>
 <div style="text-align: center"><br>关注公众号（ID：SwiftBetter），进一步探讨主题<br><br><br>每日精选高清题图，可做壁纸<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>
       
@@ -364,11 +366,11 @@ c">
       
         <div class="post-tags">
           
+            <a href="/tags/性能优化/" rel="tag"># 性能优化</a>
+          
             <a href="/tags/离屏渲染/" rel="tag"># 离屏渲染</a>
           
             <a href="/tags/圆角/" rel="tag"># 圆角</a>
-          
-            <a href="/tags/性能/" rel="tag"># 性能</a>
           
         </div>
       
@@ -377,8 +379,8 @@ c">
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/off-screen-rendering/" rel="next" title="iOS 开发中的离屏渲染问题">
-                <i class="fa fa-chevron-left"></i> iOS 开发中的离屏渲染问题
+              <a href="/off-screen-rendering/" rel="next" title="iOS 性能优化之离屏渲染">
+                <i class="fa fa-chevron-left"></i> iOS 性能优化之离屏渲染
               </a>
             
           </div>
@@ -386,6 +388,10 @@ c">
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/shouldRasterize/" rel="prev" title="iOS 性能优化之光栅化">
+                iOS 性能优化之光栅化 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -455,7 +461,7 @@ c">
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">24</span>
+                <span class="site-state-item-count">25</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -508,7 +514,7 @@ c">
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#为视图设置圆角时触发离屏渲染"><span class="nav-number">1.</span> <span class="nav-text">为视图设置圆角时触发离屏渲染</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CAShapeLayer"><span class="nav-number">2.</span> <span class="nav-text">CAShapeLayer</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用-Core-Graphics-绘制圆角"><span class="nav-number">3.</span> <span class="nav-text">使用 Core Graphics 绘制圆角</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#为视图设置圆角时触发离屏渲染"><span class="nav-number">1.</span> <span class="nav-text">为视图设置圆角时触发离屏渲染</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CAShapeLayer"><span class="nav-number">2.</span> <span class="nav-text">CAShapeLayer</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用-Core-Graphics-绘制圆角"><span class="nav-number">3.</span> <span class="nav-text">使用 Core Graphics 绘制圆角</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#光栅化"><span class="nav-number">4.</span> <span class="nav-text">光栅化</span></a></li></ol></div>
             
 
           </div>

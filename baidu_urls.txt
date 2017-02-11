@@ -1,1 +1,1 @@
-http://swift.diagon.me/cornerRadius/
+http://swift.diagon.me/shouldRasterize/
