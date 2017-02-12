@@ -1,1 +1,1 @@
-http://swift.diagon.me/shouldRasterize/
+http://swift.diagon.me/Alamofire-Moya-TargetType/

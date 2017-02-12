@@ -251,6 +251,146 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://swift.diagon.me/Alamofire-Moya-TargetType/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="万恶胖为首">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.gif">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="Swift学徒">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="Swift学徒" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/Alamofire-Moya-TargetType/" itemprop="url">
+                  Moya：基于 Alamofire 的网络抽象层
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-13T00:00:00+08:00">
+                2017-02-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="什么是-Moya"><a href="#什么是-Moya" class="headerlink" title="什么是 Moya"></a>什么是 Moya</h2><p>在 iOS 开发中，除了使用 AFNetworking/Alamofire 这样的针对 <code>URLSession</code> 抽象的网络库之外，我们还需要创建诸如 “APIManager” 或 “NetworkModel” 这样详细的网络抽象层。</p>
+<p><a href="https://github.com/Moya/Moya" target="_blank" rel="external">Moya</a> 就是这种网络抽象层的集大成者，URLs、参数等等的配置通通都可以由 Moya 来搞定。</p>
+<p>Moya 建立在 Alamofire 之上，全面的覆盖了 Alamofire 的功能。在项目中，我们所有的网络操作都基于 Moya，不会再接触 Alamofire。</p>
+<h2 id="Moya-特性"><a href="#Moya-特性" class="headerlink" title="Moya 特性"></a>Moya 特性</h2><p>&gt;</p>
+<ul>
+<li>Compile-time checking for correct API endpoint accesses.</li>
+<li>Lets you define a clear usage of different endpoints with associated enum values.</li>
+<li>Treats test stubs as first-class citizens so unit testing is super-easy.</li>
+</ul>
+<h2 id="Moya-基本用法"><a href="#Moya-基本用法" class="headerlink" title="Moya 基本用法"></a>Moya 基本用法</h2><p>首先，使用 enum 根据接口文档建立 API targets。这里我们用查询一个 github 用户的 profile 和 repoditory 来举例。</p>
+<p>创建一个叫 GitHubAPI.swift 的新文件，使用一个 enum 来明确每一个请求。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">enum</span> <span class="title">GitHub</span> </span>&#123;</div><div class="line">    <span class="keyword">case</span> userProfile(<span class="type">String</span>)</div><div class="line">    <span class="keyword">case</span> userRepositories(<span class="type">String</span>)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这个枚举用来在编译时确保你提供了每一个 target 的具体实现。要使用 Moya，这个 enum 必须遵守 TargetType 协议。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">extension</span> <span class="title">GitHub</span>: <span class="title">TargetType</span> </span>&#123;</div><div class="line">    <span class="keyword">public</span> <span class="keyword">var</span> baseURL: <span class="type">URL</span> &#123; <span class="keyword">return</span> <span class="type">URL</span>(string: <span class="string">"https://api.github.com"</span>)! &#125;</div><div class="line">    <span class="keyword">public</span> <span class="keyword">var</span> path: <span class="type">String</span> &#123;</div><div class="line">        <span class="keyword">switch</span> <span class="keyword">self</span> &#123;</div><div class="line">        <span class="keyword">case</span> .userProfile(<span class="keyword">let</span> name):</div><div class="line">            <span class="keyword">return</span> <span class="string">"/users/<span class="subst">\(name.urlEscaped)</span>"</span></div><div class="line">        <span class="keyword">case</span> .userRepositories(<span class="keyword">let</span> name):</div><div class="line">            <span class="keyword">return</span> <span class="string">"/users/<span class="subst">\(name.urlEscaped)</span>/repos"</span></div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">public</span> <span class="keyword">var</span> method: <span class="type">Moya</span>.<span class="type">Method</span> &#123;</div><div class="line">        <span class="keyword">return</span> .<span class="keyword">get</span></div><div class="line">    &#125;</div><div class="line">    <span class="keyword">public</span> <span class="keyword">var</span> parameters: [<span class="type">String</span>: <span class="type">Any</span>]? &#123;</div><div class="line">        <span class="keyword">switch</span> <span class="keyword">self</span> &#123;</div><div class="line">        <span class="keyword">case</span> .userRepositories(<span class="number">_</span>):</div><div class="line">            <span class="keyword">return</span> [<span class="string">"sort"</span>: <span class="string">"pushed"</span>]</div><div class="line">        <span class="keyword">default</span>:</div><div class="line">            <span class="keyword">return</span> <span class="literal">nil</span></div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">public</span> <span class="keyword">var</span> parameterEncoding: <span class="type">ParameterEncoding</span> &#123;</div><div class="line">        <span class="keyword">return</span> <span class="type">URLEncoding</span>.<span class="keyword">default</span></div><div class="line">    &#125;</div><div class="line">    <span class="keyword">public</span> <span class="keyword">var</span> task: <span class="type">Task</span> &#123;</div><div class="line">        <span class="keyword">return</span> .request</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">public</span> <span class="keyword">var</span> sampleData: <span class="type">Data</span> &#123;</div><div class="line">        <span class="keyword">switch</span> <span class="keyword">self</span> &#123;</div><div class="line">        <span class="keyword">case</span> .userProfile(<span class="keyword">let</span> name):</div><div class="line">            <span class="keyword">return</span> <span class="string">"&#123;\"login\": \"<span class="subst">\(name)</span>\", \"id\": 100&#125;"</span>.data(using: <span class="type">String</span>.<span class="type">Encoding</span>.utf8)!</div><div class="line">        <span class="keyword">case</span> .userRepositories(<span class="number">_</span>):</div><div class="line">            <span class="keyword">return</span> <span class="string">"[&#123;\"name\": \"Repo Name\"&#125;]"</span>.data(using: <span class="type">String</span>.<span class="type">Encoding</span>.utf8)!</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>其中我们依次配置了 BaseUrl，路径，请求方式，参数，参数编码，类型， sampleData。其中 sampleData 是单元测试的的模拟数据。很不幸，或者说很幸运，协议中除了 validate 外，都是必须要实现的，容不得你偷懒。</p>
+<p>当 enum 实现了 TargetType 协议，意味着 enum 中的每个 case 都成为了一个完整的 endpoint。所谓 endpint 就是指构成一个完整请求的信息。</p>
+<p>接下来，我们只需要使用 Moya 提供的 MoyaProvider 发起请求。在 GithubAPI.swift 中声明一个全局的 Provider：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> <span class="type">GitHubProvider</span> = <span class="type">MoyaProvider</span>&lt;<span class="type">GitHub</span>&gt;()</div></pre></td></tr></table></figure>
+<p>然后在需要的地方发起请求：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="type">GitHubProvider</span>.request(.userRepositories(<span class="string">"SwiftBetter"</span>)) &#123; result <span class="keyword">in</span></div><div class="line">    <span class="keyword">switch</span> result &#123;</div><div class="line">    <span class="keyword">case</span> <span class="keyword">let</span> .success(response):</div><div class="line">        <span class="comment">//doSomething</span></div><div class="line">    <span class="keyword">case</span> <span class="keyword">let</span> .failure(error):</div><div class="line">        <span class="comment">//doSomething</span></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>更详细的写法请参考：<a href="https://github.com/Moya/Moya/blob/master/docs/Examples/Basic.md" target="_blank" rel="external">Moya基本用法文档</a>，更丰富的 Demo 请参考 <a href="https://github.com/artsy/eidolon/blob/master/Kiosk/App/Networking/ArtsyAPI.swift" target="_blank" rel="external">ArtsyAPI</a>。</p>
+<hr>
+<div style="text-align: center"><br>关注公众号（ID：SwiftBetter），进一步探讨主题<br><br><br>每日精选高清题图，可做壁纸<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
   <link itemprop="mainEntityOfPage" href="http://swift.diagon.me/shouldRasterize/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1632,161 +1772,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://swift.diagon.me/optional-chaining/">
-
-  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="万恶胖为首">
-    <meta itemprop="description" content="">
-    <meta itemprop="image" content="/images/avatar.gif">
-  </span>
-
-  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="Swift学徒">
-    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
-      <img style="display:none;" itemprop="url image" alt="Swift学徒" src="">
-    </span>
-  </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/optional-chaining/" itemprop="url">
-                  Swift 中的 Optional Chaining
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-03T00:00:00+08:00">
-                2017-02-03
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Optional/" itemprop="url" rel="index">
-                    <span itemprop="name">Optional</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-
-          
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="Optional-Chaining-的基本用法"><a href="#Optional-Chaining-的基本用法" class="headerlink" title="Optional Chaining 的基本用法"></a>Optional Chaining 的基本用法</h3><p><code>Optional Chaining</code> (可选链) 中任何一个节点为 <code>nil</code> 时，则整个链条失效，返回 nil。因此，即使链条最后的属性、方法、下标调用返回的结果不是 <code>Optional</code> 类型的，整个链条返回的结果也是 <code>Optional</code> 类型的。</p>
-<p>换而言之，<code>Optional Chaining</code> 会将原本返回的结果包装为 <code>Optional</code>。一个原本返回 <code>Int</code> 的方法会返回 <code>Int？</code>。</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span> </span>&#123;</div><div class="line">    <span class="keyword">var</span> residence: <span class="type">Residence</span>?</div><div class="line">&#125;</div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Residence</span> </span>&#123;</div><div class="line">    <span class="keyword">var</span> numberOfRooms = <span class="number">1</span></div><div class="line">    <span class="keyword">var</span> colorForFirstRoom:<span class="type">String</span>?</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">func</span> <span class="title">roomName</span><span class="params">()</span></span> -&gt; <span class="type">String</span>?&#123;</div><div class="line">    	<span class="keyword">return</span> <span class="string">"name"</span></div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"><span class="keyword">let</span> john = <span class="type">Person</span>()</div><div class="line"><span class="comment">//john.residence = Residence()</span></div><div class="line"></div><div class="line"><span class="keyword">let</span> roomCount = john.residence?.numberOfRooms</div></pre></td></tr></table></figure>
-<p>虽然 numberOfRooms 的类型是 <code>Int</code>，但此时得到的 roomCount 的类型是 <code>Int?</code>。与此类似，调用返回值为 <code>Int</code> 类型的方法时，最终得到的结果是 <code>Int?</code>。</p>
-<p>如果要在方法的返回值上进行可选链式调用，在方法的圆括号后面加上问号即可:</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> roomCount = john.residence?.roomName()?.hasPrefix(<span class="string">"name"</span>)</div></pre></td></tr></table></figure>
-<p><strong>在实际使用时 Optional Chaining  经常和 Optional Binding 一起使用</strong>：</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span> <span class="keyword">let</span> roomCount = john.residence?.numberOfRooms &#123;</div><div class="line">    <span class="built_in">print</span>(<span class="string">"John's residence has <span class="subst">\(roomCount)</span> room(s)."</span>)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>另外还可以直接使用 <code>Optional Chaining</code> 设定属性：</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">john.residence?.colorForFirstRoom = <span class="string">"Red"</span></div></pre></td></tr></table></figure>
-<p>在这个例子中如果等号左侧的链条调用失败，等号右侧的代码不会被执行。</p>
-<h3 id="访问-Optional-类型下标"><a href="#访问-Optional-类型下标" class="headerlink" title="访问 Optional 类型下标"></a>访问 Optional 类型下标</h3><figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> testScores = [<span class="string">"Dave"</span>: [<span class="number">86</span>, <span class="number">82</span>, <span class="number">84</span>], <span class="string">"Bev"</span>: [<span class="number">79</span>, <span class="number">94</span>, <span class="number">81</span>]]</div><div class="line">testScores[<span class="string">"Dave"</span>]?[<span class="number">0</span>] = <span class="number">91</span></div><div class="line">testScores[<span class="string">"Bev"</span>]?[<span class="number">0</span>] += <span class="number">1</span></div><div class="line">testScores[<span class="string">"Brian"</span>]?[<span class="number">0</span>] = <span class="number">72</span></div></pre></td></tr></table></figure>
-<p>“Dave” 数组现在是 [91, 82, 84]，”Bev” 数组现在是 [80, 94, 81]，testScores字典中没有”Brian”这个键，所以第三个调用失败。</p>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>记住一句话:使用 <code>Optional Chaining</code> 所得到的东西一定是 <code>Optional</code>类型的。</p>
-<hr>
-<div style="text-align: center"><br>关注公众号（ID：SwiftBetter），进一步探讨主题<br><br><br>每日精选高清题图，可做壁纸<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1834,7 +1819,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">25</span>
+                <span class="site-state-item-count">26</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -1852,7 +1837,7 @@
           
             <div class="site-state-item site-state-tags">
               
-                <span class="site-state-item-count">52</span>
+                <span class="site-state-item-count">58</span>
                 <span class="site-state-item-name">标签</span>
               
             </div>
