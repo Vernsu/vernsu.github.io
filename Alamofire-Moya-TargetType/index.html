@@ -84,23 +84,23 @@
 
 
 
-<meta name="description" content="什么是 Moya在 iOS 开发中，除了使用 AFNetworking/Alamofire 这样的针对 URLSession 抽象的网络库之外，我们还需要创建诸如 “APIManager” 或 “NetworkModel” 这样详细的网络抽象层。
+<meta name="description" content="什么是 Moya在 iOS 开发中，除了使用 AFNetworking/Alamofire 这样的针对 URLSession 抽象的网络库之外，我们还需要创建诸如  “APIManager”  或  “NetworkModel”  这样详细的网络抽象层。
 Moya 就是这种网络抽象层的集大成者，URLs、参数等等的配置通通都可以由 Moya 来搞定。
-Moya 建立在 Alamofire 之上，全面的覆盖">
+Moya 建立在 Alamofire 之上，全">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Moya：基于 Alamofire 的网络抽象层">
 <meta property="og:url" content="http://swift.diagon.me/Alamofire-Moya-TargetType/index.html">
 <meta property="og:site_name" content="Swift学徒">
-<meta property="og:description" content="什么是 Moya在 iOS 开发中，除了使用 AFNetworking/Alamofire 这样的针对 URLSession 抽象的网络库之外，我们还需要创建诸如 “APIManager” 或 “NetworkModel” 这样详细的网络抽象层。
+<meta property="og:description" content="什么是 Moya在 iOS 开发中，除了使用 AFNetworking/Alamofire 这样的针对 URLSession 抽象的网络库之外，我们还需要创建诸如  “APIManager”  或  “NetworkModel”  这样详细的网络抽象层。
 Moya 就是这种网络抽象层的集大成者，URLs、参数等等的配置通通都可以由 Moya 来搞定。
-Moya 建立在 Alamofire 之上，全面的覆盖">
+Moya 建立在 Alamofire 之上，全">
 <meta property="og:image" content="https://vernsu.github.io/images/wxqrcode.jpg">
-<meta property="og:updated_time" content="2017-02-12T05:29:56.000Z">
+<meta property="og:updated_time" content="2017-02-12T05:36:59.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Moya：基于 Alamofire 的网络抽象层">
-<meta name="twitter:description" content="什么是 Moya在 iOS 开发中，除了使用 AFNetworking/Alamofire 这样的针对 URLSession 抽象的网络库之外，我们还需要创建诸如 “APIManager” 或 “NetworkModel” 这样详细的网络抽象层。
+<meta name="twitter:description" content="什么是 Moya在 iOS 开发中，除了使用 AFNetworking/Alamofire 这样的针对 URLSession 抽象的网络库之外，我们还需要创建诸如  “APIManager”  或  “NetworkModel”  这样详细的网络抽象层。
 Moya 就是这种网络抽象层的集大成者，URLs、参数等等的配置通通都可以由 Moya 来搞定。
-Moya 建立在 Alamofire 之上，全面的覆盖">
+Moya 建立在 Alamofire 之上，全">
 <meta name="twitter:image" content="https://vernsu.github.io/images/wxqrcode.jpg">
 
 
@@ -333,14 +333,13 @@ Moya 建立在 Alamofire 之上，全面的覆盖">
       
 
       
-        <h2 id="什么是-Moya"><a href="#什么是-Moya" class="headerlink" title="什么是 Moya"></a>什么是 Moya</h2><p>在 iOS 开发中，除了使用 AFNetworking/Alamofire 这样的针对 <code>URLSession</code> 抽象的网络库之外，我们还需要创建诸如 “APIManager” 或 “NetworkModel” 这样详细的网络抽象层。</p>
+        <h2 id="什么是-Moya"><a href="#什么是-Moya" class="headerlink" title="什么是 Moya"></a>什么是 Moya</h2><p>在 iOS 开发中，除了使用 AFNetworking/Alamofire 这样的针对 <code>URLSession</code> 抽象的网络库之外，我们还需要创建诸如  “APIManager”  或  “NetworkModel”  这样详细的网络抽象层。</p>
 <p><a href="https://github.com/Moya/Moya" target="_blank" rel="external">Moya</a> 就是这种网络抽象层的集大成者，URLs、参数等等的配置通通都可以由 Moya 来搞定。</p>
 <p>Moya 建立在 Alamofire 之上，全面的覆盖了 Alamofire 的功能。在项目中，我们所有的网络操作都基于 Moya，不会再接触 Alamofire。</p>
-<h2 id="Moya-特性"><a href="#Moya-特性" class="headerlink" title="Moya 特性"></a>Moya 特性</h2><p>&gt;</p>
-<ul>
-<li>Compile-time checking for correct API endpoint accesses.</li>
-<li>Lets you define a clear usage of different endpoints with associated enum values.</li>
-<li>Treats test stubs as first-class citizens so unit testing is super-easy.</li>
+<h2 id="Moya-特性"><a href="#Moya-特性" class="headerlink" title="Moya 特性"></a>Moya 特性</h2><ul>
+<li>编译时检查 API endpoint 的可用性。</li>
+<li>通过关联枚举值对不同 endpoint 定义清晰的用法。</li>
+<li>单元测试很容易。将测试作为一等公民来对待。</li>
 </ul>
 <h2 id="Moya-基本用法"><a href="#Moya-基本用法" class="headerlink" title="Moya 基本用法"></a>Moya 基本用法</h2><p>首先，使用 enum 根据接口文档建立 API targets。这里我们用查询一个 github 用户的 profile 和 repoditory 来举例。</p>
 <p>创建一个叫 GitHubAPI.swift 的新文件，使用一个 enum 来明确每一个请求。</p>
