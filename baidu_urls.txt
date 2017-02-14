@@ -1,1 +1,1 @@
-http://swift.diagon.me/Alamofire-Moya-TargetType/
+http://swift.diagon.me/swift-Rxswift-Observer-Observable-DisposeBag/
