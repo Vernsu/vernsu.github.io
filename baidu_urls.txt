@@ -1,1 +1,1 @@
-http://swift.diagon.me/swift-Rxswift-Observer-Observable-DisposeBag/
+http://swift.diagon.me/swift-RxSwift-Observer-Observable-DisposeBag/
