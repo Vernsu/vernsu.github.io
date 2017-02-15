@@ -1,1 +1,1 @@
-http://swift.diagon.me/RxSwift-Observer-Observable-DisposeBag/
+http://swift.diagon.me/RxSwift-Getting-Started/
