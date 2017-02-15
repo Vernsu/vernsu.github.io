@@ -85,22 +85,25 @@
 
 
 <meta name="description" content="本文翻译改编自 ray 的《Getting Started With RxSwift and RxCocoa》。
-响应式编程在面向对象时代，这样的事情是必要的：你用各种方式来监听程序的变化，但是当变化发生时你是得必须主动的告诉系统。
-如果当变化发生时，代码能自动响应更新，岂不是更爽？这就是响应式编程(reactive programming)的思想:你的程序可以自主的对底层数据的变化做出响应，而不">
+本教程的初始工程Chocotastic可以在这里获取。
+这是一个购买巧克力的 APP，主要页面是一个巧克力商品列表，该页面右上角有购物车按钮，购物车按钮会显示当前已加入购物车的商品数量。
+非响应式我们需要有一个updateCartButton()方法，它用来更新购物车按钮上的显示数量。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Swift 开发中的响应式编程：RxSwift 初探">
-<meta property="og:url" content="http://swift.diagon.me/RxSwift-Observer-Observable-DisposeBag/index.html">
+<meta property="og:title" content="RxSwift 的基本使用">
+<meta property="og:url" content="http://swift.diagon.me/RxSwift-Getting-Started/index.html">
 <meta property="og:site_name" content="Swift学徒">
 <meta property="og:description" content="本文翻译改编自 ray 的《Getting Started With RxSwift and RxCocoa》。
-响应式编程在面向对象时代，这样的事情是必要的：你用各种方式来监听程序的变化，但是当变化发生时你是得必须主动的告诉系统。
-如果当变化发生时，代码能自动响应更新，岂不是更爽？这就是响应式编程(reactive programming)的思想:你的程序可以自主的对底层数据的变化做出响应，而不">
+本教程的初始工程Chocotastic可以在这里获取。
+这是一个购买巧克力的 APP，主要页面是一个巧克力商品列表，该页面右上角有购物车按钮，购物车按钮会显示当前已加入购物车的商品数量。
+非响应式我们需要有一个updateCartButton()方法，它用来更新购物车按钮上的显示数量。">
 <meta property="og:image" content="https://vernsu.github.io/images/wxqrcode.jpg">
-<meta property="og:updated_time" content="2017-02-15T02:48:39.000Z">
+<meta property="og:updated_time" content="2017-02-15T03:50:34.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Swift 开发中的响应式编程：RxSwift 初探">
+<meta name="twitter:title" content="RxSwift 的基本使用">
 <meta name="twitter:description" content="本文翻译改编自 ray 的《Getting Started With RxSwift and RxCocoa》。
-响应式编程在面向对象时代，这样的事情是必要的：你用各种方式来监听程序的变化，但是当变化发生时你是得必须主动的告诉系统。
-如果当变化发生时，代码能自动响应更新，岂不是更爽？这就是响应式编程(reactive programming)的思想:你的程序可以自主的对底层数据的变化做出响应，而不">
+本教程的初始工程Chocotastic可以在这里获取。
+这是一个购买巧克力的 APP，主要页面是一个巧克力商品列表，该页面右上角有购物车按钮，购物车按钮会显示当前已加入购物车的商品数量。
+非响应式我们需要有一个updateCartButton()方法，它用来更新购物车按钮上的显示数量。">
 <meta name="twitter:image" content="https://vernsu.github.io/images/wxqrcode.jpg">
 
 
@@ -129,13 +132,13 @@
 
 
 
-  <link rel="canonical" href="http://swift.diagon.me/RxSwift-Observer-Observable-DisposeBag/"/>
+  <link rel="canonical" href="http://swift.diagon.me/RxSwift-Getting-Started/"/>
 
 
 
 
 
-  <title> Swift 开发中的响应式编程：RxSwift 初探 | Swift学徒 </title>
+  <title> RxSwift 的基本使用 | Swift学徒 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -258,7 +261,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://swift.diagon.me/RxSwift-Observer-Observable-DisposeBag/">
+  <link itemprop="mainEntityOfPage" href="http://swift.diagon.me/RxSwift-Getting-Started/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="万恶胖为首">
@@ -282,7 +285,7 @@
             
             
               
-                Swift 开发中的响应式编程：RxSwift 初探
+                RxSwift 的基本使用
               
             
           </h1>
@@ -334,22 +337,55 @@
 
       
         <p>本文翻译改编自 <a href="https://www.raywenderlich.com" target="_blank" rel="external">ray</a> 的<a href="https://www.raywenderlich.com/138547/getting-started-with-rxswift-and-rxcocoa" target="_blank" rel="external">《Getting Started With RxSwift and RxCocoa》</a>。</p>
-<h2 id="响应式编程"><a href="#响应式编程" class="headerlink" title="响应式编程"></a>响应式编程</h2><p>在面向对象时代，这样的事情是必要的：你用各种方式来监听程序的变化，但是当变化发生时你是得必须主动的告诉系统。</p>
-<p>如果当变化发生时，代码能自动响应更新，岂不是更爽？这就是响应式编程(reactive programming)的思想:你的程序可以自主的对底层数据的变化做出响应，而不需要你再去通知它。这让你可以聚焦于处理的逻辑，而不用维护具体的状态。</p>
-<p>Swift 中可以使用 KVO,重载 setter, didSet方法来实现这种操作。但是这些方法不怎么好用。我们可以使用一个响应式编程框架：RxSwift，来更好的实现。</p>
-<h2 id="RxSwift-基本概念"><a href="#RxSwift-基本概念" class="headerlink" title="RxSwift 基本概念"></a>RxSwift 基本概念</h2><p>RxSwift 是 <a href="http://reactivex.io/" target="_blank" rel="external">ReactiveX</a>针对 Swift 的实现。</p>
-<h3 id="Observables-和-Observers"><a href="#Observables-和-Observers" class="headerlink" title="Observables 和 Observers"></a>Observables 和 Observers</h3><p>两个基本概念：Observable和Observer。</p>
+<p>本教程的初始工程Chocotastic可以在<a href="https://koenig-media.raywenderlich.com/uploads/2016/10/Chocotastic-starter-s3-rxs-3b1.zip" target="_blank" rel="external">这里</a>获取。</p>
+<p>这是一个购买巧克力的 APP，主要页面是一个巧克力商品列表，该页面右上角有购物车按钮，购物车按钮会显示当前已加入购物车的商品数量。</p>
+<h2 id="非响应式"><a href="#非响应式" class="headerlink" title="非响应式"></a>非响应式</h2><p>我们需要有一个<code>updateCartButton()</code>方法，它用来更新购物车按钮上的显示数量。这个方法在两个地方被调用：</p>
 <ul>
-<li><code>Observable</code>是发出变化通知的对象。</li>
-<li><code>Observer</code>是监听<code>Observable</code>的对象。当<code>Observable</code>变化时，<code>Observer</code>会收到通知。</li>
+<li>在<code>viewWillAppear(_:)</code>中，即视图将要显示时，需要显示之前加入购物车的巧克力数量。</li>
+<li>在<code>tableView(_:didSelectRowAt:)</code>中，即新添加一个巧克力到购物车后。</li>
 </ul>
-<p>可以有多个<code>Observer</code>监听同一个<code>Observable</code>。当<code>Observable</code>发生变化时，会通知它所有的<code>Observer</code>。</p>
-<h3 id="DisposeBag"><a href="#DisposeBag" class="headerlink" title="DisposeBag"></a>DisposeBag</h3><p><code>DisposeBag</code>是用来处理 ARC 和内存管理的。 <code>DisposeBag</code>是<code>Observer</code> 对象的一个虚拟包，当<code>Observer</code>的父对象被释放时，这个虚拟包会被丢弃。</p>
-<p>当带有<code>DisposeBag</code>属性的对象的 <code>deinit()</code>方法被调用时，<code>DisposeBag</code>会清空，并且每一个用完即丢弃(disposable)的<code>Observer</code> 会自动取消对观察内容的监听。这可以让 ARC 正常的回收内存。</p>
-<p>如果没有<code>DisposeBag</code>，会有两种后果：要么<code>Observer</code>会产生一个 <code>retain cycle</code>，将无限期的进行监听；要么<code>Observer</code>被意外释放，导致程序崩溃。</p>
-<p>所以在设置<code>Observable</code>对象时，将其添加到<code>DisposeBag</code>中。</p>
+<p>这些都是以命令的方式来修改数值：即调用方法来更新数值。也就是说，你必须跟踪你要改变某个值的位置，在该出调用更新方法。</p>
+<h2 id="使用-RxSwift-响应式跟新数值"><a href="#使用-RxSwift-响应式跟新数值" class="headerlink" title="使用 RxSwift 响应式跟新数值"></a>使用 RxSwift 响应式跟新数值</h2><h3 id="Variable"><a href="#Variable" class="headerlink" title="Variable"></a>Variable</h3><p>购物车在项目是以单例<code>ShoppingCart.sharedCart</code>的形式存在。打开ShoppingCart.swift文件，单例中有一个变量：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> chocolates = [<span class="type">Chocolate</span>]()</div></pre></td></tr></table></figure>
+<p>此时，巧克力内容的变更不会被观察到。你可以在它的定义中添加一个didSet闭包，但只有在整个数组被更新才会被调用，数组的元素被更新时不会被调用。</p>
+<p>RxSwift有一个解决方案。使用下面这行代码来替代变量的创建：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> chocolates: <span class="type">Variable</span>&lt;[<span class="type">Chocolate</span>]&gt; = <span class="type">Variable</span>([])</div></pre></td></tr></table></figure>
+<p>在这里我们不是将 <code>chocolates</code> 设置为<code>Chocolate</code>对象的数组，而将其定义为一个 RxSwift 的 <code>Variable</code>对象，其中泛型类型指定为<code>Chocolate</code>数组。</p>
+<p><code>Variable</code>是一个类，所以它使用引用语义。即<code>chocolates</code>引用了一个<code>Variable</code>实例。</p>
+<p><code>Variable</code>对象有一个<code>value</code>属性。<code>Chocolate</code>对象数组就被存储在 <code>value</code> 中。</p>
+<p><code>Variable</code>的膜法来自于它的<code>asObservable()</code>方法。你可以添加一个<code>Observer</code>来观察这个值。当值发生变化时，<code>Observer</code>会让你知道，并作出响应。</p>
+<p>使用<code>Variable</code>和正常使用巧克力对象数组有一个不同，即当你需要访问/更新<code>Chocolates</code>数组中元素时，你必须通过 <code>value</code>属性，而不能直接使用它。</p>
+<p>好了，修正编译器的提示错误。<br>将：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">return</span> chocolates.<span class="built_in">reduce</span>(<span class="number">0</span>) &#123;</div></pre></td></tr></table></figure>
+<p>改为：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">return</span> chocolates.value.<span class="built_in">reduce</span>(<span class="number">0</span>) &#123;</div></pre></td></tr></table></figure>
+<p>将：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">guard</span> chocolates.<span class="built_in">count</span> &gt; <span class="number">0</span> <span class="keyword">else</span> &#123;</div></pre></td></tr></table></figure>
+<p>改为：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">guard</span> chocolates.value.<span class="built_in">count</span> &gt; <span class="number">0</span> <span class="keyword">else</span> &#123;</div></pre></td></tr></table></figure>
+<h3 id="响应式"><a href="#响应式" class="headerlink" title="响应式"></a>响应式</h3><p>在 <code>ChocolatesOfTheWorldViewController.swift</code>文件并添加以下属性：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> disposeBag = <span class="type">DisposeBag</span>()</div></pre></td></tr></table></figure>
+<p>这里创建了一个<code>DisposeBag</code>对象，用于确保设置的<code>Observer</code>在<code>deinit()</code>中被清理掉。</p>
+<p>在 //MARK: Rx Setup 注释下面添加以下代码：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//MARK: Rx Setup</span></div><div class="line"> </div><div class="line"><span class="keyword">private</span> <span class="function"><span class="keyword">func</span> <span class="title">setupCartObserver</span><span class="params">()</span></span> &#123;</div><div class="line">  <span class="comment">//1</span></div><div class="line">  <span class="type">ShoppingCart</span>.sharedCart.chocolates.asObservable()</div><div class="line">    .subscribe(onNext: &#123; <span class="comment">//2</span></div><div class="line">      chocolates <span class="keyword">in</span></div><div class="line">      <span class="keyword">self</span>.cartButton.title = <span class="string">"<span class="subst">\(chocolates.<span class="built_in">count</span>)</span> \u&#123;1f36b&#125;"</span></div><div class="line">    &#125;)</div><div class="line">    .addDisposableTo(disposeBag) <span class="comment">//3</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这样就设置了一个响应式的 <code>Observer</code> 来自动更新购物车按钮。<code>RxSwift</code>大量使用链式函数，这意味着每一个函数都接受前一个函数的结果。</p>
+<p>解释一下发生的事情：</p>
+<ul>
+<li><p>首先，把购物车的chocolates变量作为一个<code>Observable</code>；</p>
+</li>
+<li><p>在这个<code>Observable</code>上调用<code>subscribe(onNext:)</code>方法，以监听<code>Observable</code>的值的变化。<code>subscribe(onNext:)</code>接受一个闭包作为参数，在每次值改变时，会执行这个闭包。闭包的传入参数是<code>Observable</code>的新值。你将会接受到变更通知，直到你取消订阅或者你的订阅被丢弃。从这个方法得到的是一个实现了<code>Disposable</code>的<code>Observer</code>对象；</p>
+</li>
+<li><p>将上一步得到的<code>Observer</code>对象添加到<code>disposeBag</code>中，以确保在订阅对象被释放时你的订阅被丢弃。</p>
+</li>
+<li><p>最后，删除命令式的<code>updateCartButton()</code>方法。以及<code>viewWillAppear(_:)``tableView(_:didSelectRowAt:)</code>中<code>updateCartButton()</code>的调用。</p>
+</li>
+</ul>
+<p>在<code>viewDidLoad()</code>里面添加一行代码，调用这个监听行为：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">setupCartObserver()</div></pre></td></tr></table></figure>
+<p>大功告成，购物车按钮可以自动更新了。</p>
 <hr>
 <div style="text-align: center"><br>关注公众号（ID：SwiftBetter），进一步探讨主题<br><br><br>每日精选高清题图，可做壁纸<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>
+
       
     </div>
 
@@ -387,8 +423,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/RxSwift-Getting-Started/" rel="next" title="RxSwift 的基本使用">
-                <i class="fa fa-chevron-left"></i> RxSwift 的基本使用
+              <a href="/Alamofire-Moya-TargetType/" rel="next" title="Moya：基于 Alamofire 的网络抽象层">
+                <i class="fa fa-chevron-left"></i> Moya：基于 Alamofire 的网络抽象层
               </a>
             
           </div>
@@ -396,6 +432,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/RxSwift-Observer-Observable-DisposeBag/" rel="prev" title="Swift 开发中的响应式编程：RxSwift 初探">
+                Swift 开发中的响应式编程：RxSwift 初探 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -518,7 +558,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#响应式编程"><span class="nav-number">1.</span> <span class="nav-text">响应式编程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RxSwift-基本概念"><span class="nav-number">2.</span> <span class="nav-text">RxSwift 基本概念</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Observables-和-Observers"><span class="nav-number">2.1.</span> <span class="nav-text">Observables 和 Observers</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DisposeBag"><span class="nav-number">2.2.</span> <span class="nav-text">DisposeBag</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#非响应式"><span class="nav-number">1.</span> <span class="nav-text">非响应式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用-RxSwift-响应式跟新数值"><span class="nav-number">2.</span> <span class="nav-text">使用 RxSwift 响应式跟新数值</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Variable"><span class="nav-number">2.1.</span> <span class="nav-text">Variable</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#响应式"><span class="nav-number">2.2.</span> <span class="nav-text">响应式</span></a></li></ol></li></ol></div>
             
 
           </div>
