@@ -8,8 +8,52 @@
     <atom:link href="/rss.xml" rel="self" type="application/rss+xml"/>
     
     <description>笨办法学Swift</description>
-    <pubDate>Thu, 16 Feb 2017 05:28:14 GMT</pubDate>
+    <pubDate>Thu, 16 Feb 2017 06:58:16 GMT</pubDate>
     <generator>http://hexo.io/</generator>
+    
+    <item>
+      <title>Hexo 博客框架添加 RSS 订阅</title>
+      <link>http://swift.diagon.me/Hexo-RSS-Next-XML-feed-UTF-8/</link>
+      <guid>http://swift.diagon.me/Hexo-RSS-Next-XML-feed-UTF-8/</guid>
+      <pubDate>Wed, 15 Feb 2017 16:00:00 GMT</pubDate>
+      <description>
+      
+        &lt;p&gt;抽空给博客增加了 &lt;a href=&quot;http://swift.diagon.me/rss.xml&quot;&gt;RSS&lt;/a&gt; 功能。&lt;/p&gt;
+&lt;h2 id=&quot;基本步骤&quot;&gt;&lt;a href=&quot;#基本步骤&quot; class=&quot;headerlink&quot; title=&quot;基本步骤&quot;&gt;&lt;/a&gt;基本步骤&lt;
+      
+      </description>
+      
+      <content:encoded><![CDATA[<p>抽空给博客增加了 <a href="http://swift.diagon.me/rss.xml">RSS</a> 功能。</p>
+<h2 id="基本步骤"><a href="#基本步骤" class="headerlink" title="基本步骤"></a>基本步骤</h2><h3 id="安装-RSS-插件"><a href="#安装-RSS-插件" class="headerlink" title="安装 RSS 插件"></a>安装 RSS 插件</h3><p>在 blog 根目录下执行命令安装 RSS 插件: <a href="https://github.com/hexojs/hexo-generator-feed/" target="_blank" rel="external">hexo-generator-feed</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm install hexo-generator-feed --save</div></pre></td></tr></table></figure>
+<h3 id="配置-RSS-插件"><a href="#配置-RSS-插件" class="headerlink" title="配置 RSS 插件"></a>配置 RSS 插件</h3><p>编辑 Hexo 的配置文件 <code>_config.yml</code>，添加以下代码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">#RSS 订阅插件</div><div class="line">plugin:</div><div class="line">- hexo-generator-feed</div><div class="line">#RSS 插件配置</div><div class="line">feed:</div><div class="line">  type: rss2</div><div class="line">  path: rss.xml</div><div class="line">  limit: 20</div><div class="line">  hub:</div><div class="line">  content: true</div></pre></td></tr></table></figure>
+<h3 id="主题开启-RSS-支持"><a href="#主题开启-RSS-支持" class="headerlink" title="主题开启 RSS 支持"></a>主题开启 RSS 支持</h3><p><a href="https://github.com/iissnan/hexo-theme-next" target="_blank" rel="external">NexT</a> 主题，默认开启 RSS。其它主题请参考主题文档。</p>
+<h3 id="生成-RSS"><a href="#生成-RSS" class="headerlink" title="生成 RSS"></a>生成 RSS</h3><p>执行 <code>hexo clean &amp;&amp; hexo g &amp;&amp; hexo d</code> 重新生成博客文件并完成部署即可。 </p>
+<h2 id="填坑"><a href="#填坑" class="headerlink" title="填坑"></a>填坑</h2><p>一切进行的这么的自然和谐，然而打开 RSS 页面的时候，What？</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">This page contains the following errors:</div><div class="line">error on line 98 at column 35: Input is not proper UTF-8, indicate encoding !</div><div class="line">Bytes: 0x01 0xE9 0x92 0x88</div><div class="line">Below is a rendering of the page up to the first error.</div></pre></td></tr></table></figure>
+<p>Google 了一番，很多中文用户都遇到了这个问题，但是并没有找到解决方案。</p>
+<p>根据错误提示，用编辑器打开 <code>public</code> 目录下 的<code>rss.xml</code> 或 <code>atom.xml</code>。找到第98行35列，是这样的内容:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;content type=&quot;html&quot;&gt;&lt;![CDATA[&lt;p&gt;</div></pre></td></tr></table></figure>
+<p>继续 Google，找到了十四年前的一篇文章 <a href="https://coderanch.com/t/124970/Invalid-Character-CDATA" target="_blank" rel="external">Invalid Character inside CDATA</a>，大意就是 CDATA 里面的文本不能超出 UTF-8 字符集。</p>
+<p>既然找到问题了，就有办法解决了。</p>
+<ol>
+<li><p>接着看错误信息，<code>Bytes</code> 这行，意思是在 <code>xml</code> 文件里有几个 <code>0x01</code> 字符。</p>
+</li>
+<li><p>编辑器打开 XML 文件，通过查找功能的正则匹配 <code>\x01</code>，果然找到了几个特殊字符。</p>
+</li>
+<li><p>然后打开对应文章的<code>.md</code>文档，找到相应的的位置，替换出问题的字符。</p>
+</li>
+<li><p>重新生成 rss.xml 并部署。</p>
+</li>
+<li><p>搞定。</p>
+</li>
+</ol>
+<p>然而，为什么会出现这种问题并不得而知。产生这个问题的原因可能是 Hexo 或者 Next 主题的 bug。</p>
+]]></content:encoded>
+      
+      <comments>http://swift.diagon.me/Hexo-RSS-Next-XML-feed-UTF-8/#disqus_thread</comments>
+    </item>
     
     <item>
       <title>RxSwift 的基本使用</title>
@@ -718,37 +762,6 @@
 <div style="text-align: center"><br>关注公众号（ID：SwiftBetter），进一步探讨主题<br><br><br>每日精选高清题图，可做壁纸<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>]]></content:encoded>
       
       <comments>http://swift.diagon.me/urlcache-http/#disqus_thread</comments>
-    </item>
-    
-    <item>
-      <title>iOS 开发中常用的缓存策略：客户端篇</title>
-      <link>http://swift.diagon.me/urlcache-cachePolicy/</link>
-      <guid>http://swift.diagon.me/urlcache-cachePolicy/</guid>
-      <pubDate>Thu, 26 Jan 2017 16:00:00 GMT</pubDate>
-      <description>
-      
-        &lt;h2 id=&quot;几种客户端缓存策略&quot;&gt;&lt;a href=&quot;#几种客户端缓存策略&quot; class=&quot;headerlink&quot; title=&quot;几种客户端缓存策略&quot;&gt;&lt;/a&gt;几种客户端缓存策略&lt;/h2&gt;&lt;p&gt;我们在&lt;a href=&quot;http://swift.diagon.me/urlcach
-      
-      </description>
-      
-      <content:encoded><![CDATA[<h2 id="几种客户端缓存策略"><a href="#几种客户端缓存策略" class="headerlink" title="几种客户端缓存策略"></a>几种客户端缓存策略</h2><p>我们在<a href="http://swift.diagon.me/urlcache-condiguration/">《iOS 开发中 URLCache 的应用》</a>一文中讨论了 URLCache 的构建。</p>
-<p>使用 URLCache 的最大好处在于可以指定缓存策略。缓存策略由请求（客户端）和响应（服务端）分别指定。几种客户端缓存策略：</p>
-<h3 id="reloadIgnoringLocalCacheData"><a href="#reloadIgnoringLocalCacheData" class="headerlink" title="reloadIgnoringLocalCacheData"></a>reloadIgnoringLocalCacheData</h3><p>忽略缓存，必须进行网络请求。</p>
-<h3 id="returnCacheDataElseLoad"><a href="#returnCacheDataElseLoad" class="headerlink" title="returnCacheDataElseLoad"></a>returnCacheDataElseLoad</h3><p>尝试读取本地缓存，如果没有本地缓存数据，才会去请求网络。这个策略有一个重大的缺陷：无法控制缓存过期时间。</p>
-<h3 id="requestReturnCacheDataDontLoad"><a href="#requestReturnCacheDataDontLoad" class="headerlink" title="requestReturnCacheDataDontLoad"></a>requestReturnCacheDataDontLoad</h3><p>只读本地缓存，无论如何也不进行网络请求（也就是离线模式）。</p>
-<h3 id="useProtocolCachePolicy"><a href="#useProtocolCachePolicy" class="headerlink" title="useProtocolCachePolicy"></a>useProtocolCachePolicy</h3><p>默认的缓存策略，使用当前 URL 的协议中的缓存策略。</p>
-<p>对于 HTTP 协议来说，URLCache 根据响应头来执行缓存策略。服务器可以在返回的响应头中加入 Cache-Control 字段来告诉客户端应该执行的缓存行为。具体的实现<a href="http://swift.diagon.me/urlcache-http/">《iOS 开发中常用的缓存策略：HTTP篇》</a>中会详细介绍。</p>
-<h2 id="CachePolicy-使用时机"><a href="#CachePolicy-使用时机" class="headerlink" title="CachePolicy 使用时机"></a>CachePolicy 使用时机</h2><p>可以在两个地方设置 CachePolicy ：</p>
-<ul>
-<li>为每个 URLRequest 设置单个请求的 cachePolicy:<code>request.cachePolicy = .returnCacheDataDontLoad</code></li>
-<li>为每个 URLSessionConfiguration 设置 cachePolicy，该策略被 configuration 的 Session 下所有的请求共享:<code>configuration.requestCachePolicy = .returnCacheDataDontLoad</code></li>
-</ul>
-<p>另外需要注意，URLCache 只能缓存 GET 请求, 无法缓存POST请求。因为 response是通过 URL+Parameters 为 key 存储的。从数学的角度来讲，GET 的结果是 幂等  的，就好像字典里的 key 与 value 就是幂等的，而 POST 不幂等。从这个意义上说，一个文件的资源链接，也是 GET 请求。</p>
-<hr>
-<div style="text-align: center"><br>关注公众号（ID：SwiftBetter），进一步探讨主题<br><br><br>每日精选高清题图，可做壁纸<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>
-]]></content:encoded>
-      
-      <comments>http://swift.diagon.me/urlcache-cachePolicy/#disqus_thread</comments>
     </item>
     
   </channel>
