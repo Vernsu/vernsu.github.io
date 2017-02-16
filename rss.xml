@@ -8,8 +8,43 @@
     <atom:link href="/rss.xml" rel="self" type="application/rss+xml"/>
     
     <description>笨办法学Swift</description>
-    <pubDate>Thu, 16 Feb 2017 06:58:16 GMT</pubDate>
+    <pubDate>Thu, 16 Feb 2017 12:18:44 GMT</pubDate>
     <generator>http://hexo.io/</generator>
+    
+    <item>
+      <title>iOS[Swift] 中 XML 解析与 RSS 阅读器的制作</title>
+      <link>http://swift.diagon.me/Swift-XML-XMLParser-RSS/</link>
+      <guid>http://swift.diagon.me/Swift-XML-XMLParser-RSS/</guid>
+      <pubDate>Thu, 16 Feb 2017 16:00:00 GMT</pubDate>
+      <description>
+      
+        &lt;p&gt;为了实践本文，抽时间给博客添加了 &lt;a href=&quot;http://swift.diagon.me/rss.xml&quot;&gt;RSS 订阅&lt;/a&gt;，中间还遇到了&lt;a href=&quot;http://swift.diagon.me/Hexo-RSS-Next-XML-feed-UTF-8/&quot;
+      
+      </description>
+      
+      <content:encoded><![CDATA[<p>为了实践本文，抽时间给博客添加了 <a href="http://swift.diagon.me/rss.xml">RSS 订阅</a>，中间还遇到了<a href="http://swift.diagon.me/Hexo-RSS-Next-XML-feed-UTF-8/">各种问题</a>。 </p>
+<h2 id="XML-解析"><a href="#XML-解析" class="headerlink" title="XML 解析"></a>XML 解析</h2><h3 id="XMLParser"><a href="#XMLParser" class="headerlink" title="XMLParser"></a>XMLParser</h3><p>XML 跟 JSON 一样，也是常用的的数据格式。苹果提供了 <code>XMLParser</code>类用来解析 XML 文档。</p>
+<p><code>XMLParser</code>常用的两个方法，分别用来初始化和开始解析操作。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">init</span>(data: <span class="type">Data</span>)</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">parse</span><span class="params">()</span></span></div></pre></td></tr></table></figure>
+<h3 id="XMLParserDelegate"><a href="#XMLParserDelegate" class="headerlink" title="XMLParserDelegate"></a>XMLParserDelegate</h3><p>对 XML 的解析实际上是实现 <code>XMLParserDelegate</code> 中的几个方法。<code>XMLParserDelegate</code>方法都是可选的。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 开始解析时调用</span></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">parserDidStartDocument</span><span class="params">(XMLParser)</span></span></div><div class="line"></div><div class="line"><span class="comment">// 遇到一个开始标签时调用</span></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">parser</span><span class="params">(XMLParser, didStartElement: String, namespaceURI: String?, qualifiedName: String?, attributes: [String : String] = [:])</span></span></div><div class="line"></div><div class="line"><span class="comment">// 遇到字符串时调用</span></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">parser</span><span class="params">(XMLParser, foundCharacters: String)</span></span></div><div class="line"></div><div class="line"><span class="comment">// 遇到结束标签时调用</span></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">parser</span><span class="params">(XMLParser, didEndElement: String, namespaceURI: String?, qualifiedName: String?)</span></span></div><div class="line"></div><div class="line"><span class="comment">// 成功完成解析时调用</span></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">parserDidEndDocument</span><span class="params">(XMLParser)</span></span></div></pre></td></tr></table></figure>
+<h2 id="解析-RSS"><a href="#解析-RSS" class="headerlink" title="解析 RSS"></a>解析 RSS</h2><h3 id="解析过程分析"><a href="#解析过程分析" class="headerlink" title="解析过程分析"></a>解析过程分析</h3><p>RSS 是一种内容分享格式规范，通常使用 XML 格式实现。观察本博客的<a href="http://swift.diagon.me/rss.xml">RSS</a>。发现每篇日志都包含在一个<code>&lt;item&gt;</code>闭合标签中，而一篇日志的三个要素，标题、日期、内容分别使用的标签为<code>&lt;title&gt;</code>,<code>&lt;pubDate&gt;</code>,<code>&lt;description&gt;</code>。我们在解析 XML 时保存这三块内容即可。</p>
+<p>首先我们声明几个 property 存储当前的内容。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> currentElement = <span class="string">""</span> </div><div class="line"><span class="keyword">var</span> currentTitle = <span class="string">""</span></div><div class="line"><span class="keyword">var</span> currentDescription = <span class="string">""</span></div><div class="line"><span class="keyword">var</span> currentPubDate = <span class="string">""</span></div></pre></td></tr></table></figure>
+<p>当<code>elementName</code>是 <code>&quot;item&quot;</code>时，说明接下来要解析该<code>&lt;item&gt;</code>包含的内容，即一篇独立的文章。这时候我们将标题、日期、内容 property 设置为空字符串。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">parser</span><span class="params">(<span class="number">_</span> parser: XMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [String : String] = [:])</span></span> &#123;</div><div class="line"></div><div class="line">  currentElement = elementName</div><div class="line">  </div><div class="line">  <span class="keyword">if</span> currentElement == <span class="string">"item"</span> &#123;</div><div class="line">    currentTitle = <span class="string">""</span></div><div class="line">    currentDescription = <span class="string">""</span></div><div class="line">    currentPubDate = <span class="string">""</span></div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>接下来每遇到一个字符，将该字符追加到相应的 property 中。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">parser</span><span class="params">(<span class="number">_</span> parser: XMLParser, foundCharacters string: String)</span></span> &#123;</div><div class="line">  <span class="comment">/// Note: current string may only contain part of info.</span></div><div class="line">  <span class="keyword">switch</span> currentElement &#123;</div><div class="line">  <span class="keyword">case</span> <span class="string">"title"</span>:</div><div class="line">    currentTitle += string</div><div class="line">  <span class="keyword">case</span> <span class="string">"description"</span>:</div><div class="line">    currentDescription += string</div><div class="line">  <span class="keyword">case</span> <span class="string">"pubDate"</span>:</div><div class="line">    currentPubDate += string</div><div class="line">  <span class="keyword">default</span>:</div><div class="line">    <span class="keyword">break</span></div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><code>item</code>标签结束时生成该篇文章的 model，存入数组容器。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">  <span class="keyword">var</span> rssItems = [(title: <span class="type">String</span>, description: <span class="type">String</span>, pubDate: <span class="type">String</span>)]()</div><div class="line"></div><div class="line">  <span class="function"><span class="keyword">func</span> <span class="title">parser</span><span class="params">(<span class="number">_</span> parser: XMLParser, didEndElement elementName: String, namespaceURI: String?, qualifiedName qName: String?)</span></span> &#123;</div><div class="line">    <span class="keyword">if</span> elementName == <span class="string">"item"</span> &#123;</div><div class="line">      <span class="keyword">let</span> rssItem = (title: currentTitle, description: currentDescription, pubDate: currentPubDate)</div><div class="line">      rssItems.append(rssItem)</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">```  </div><div class="line"></div><div class="line">解析结束后更新 <span class="type">UI</span>：</div><div class="line"></div><div class="line">```swift</div><div class="line">  <span class="function"><span class="keyword">func</span> <span class="title">parserDidEndDocument</span><span class="params">(<span class="number">_</span> parser: XMLParser)</span></span> &#123;</div><div class="line">  	<span class="comment">//跟新 UI</span></div><div class="line">  &#125;</div></pre></td></tr></table></figure>
+<p>如遇解析错误，打印出来方便调试。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">parser</span><span class="params">(<span class="number">_</span> parser: XMLParser, parseErrorOccurred parseError: Error)</span></span> &#123;</div><div class="line">  <span class="built_in">print</span>(parseError.localizedDescription)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="DEMO"><a href="#DEMO" class="headerlink" title="DEMO"></a>DEMO</h3><p>完整的项目代码点<a href="https://github.com/Vernsu/SwiftBlogDemo" target="_blank" rel="external">这里(Github)</a>下载。</p>
+<hr>
+<div style="text-align: center"><br>关注公众号（ID：SwiftBetter），进一步探讨主题<br><br><br>每日精选高清题图，可做壁纸<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>]]></content:encoded>
+      
+      <comments>http://swift.diagon.me/Swift-XML-XMLParser-RSS/#disqus_thread</comments>
+    </item>
     
     <item>
       <title>Hexo 博客框架添加 RSS 订阅</title>
@@ -49,8 +84,10 @@
 <li><p>搞定。</p>
 </li>
 </ol>
+<p>点击这里查看生成的 <a href="http://swift.diagon.me/rss.xml">RSS</a>。</p>
 <p>然而，为什么会出现这种问题并不得而知。产生这个问题的原因可能是 Hexo 或者 Next 主题的 bug。</p>
-]]></content:encoded>
+<hr>
+<div style="text-align: center"><br>关注公众号（ID：SwiftBetter），进一步探讨主题<br><br><br>每日精选高清题图，可做壁纸<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>]]></content:encoded>
       
       <comments>http://swift.diagon.me/Hexo-RSS-Next-XML-feed-UTF-8/#disqus_thread</comments>
     </item>
@@ -716,52 +753,6 @@
 <div style="text-align: center"><br>关注公众号（ID：SwiftBetter），进一步探讨主题<br><br><br>每日精选高清题图，可做壁纸<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>]]></content:encoded>
       
       <comments>http://swift.diagon.me/urlcache-cache-control/#disqus_thread</comments>
-    </item>
-    
-    <item>
-      <title>iOS 开发中常用的缓存策略：HTTP 协议篇</title>
-      <link>http://swift.diagon.me/urlcache-http/</link>
-      <guid>http://swift.diagon.me/urlcache-http/</guid>
-      <pubDate>Fri, 27 Jan 2017 16:00:00 GMT</pubDate>
-      <description>
-      
-        &lt;p&gt;&lt;a href=&quot;http://swift.diagon.me/urlcache-cachePolicy/&quot;&gt;《iOS 开发中常用的缓存策略：客户端篇》&lt;/a&gt;一文中我们提到 iOS 中 URL 加载系统默认的缓存策略使用当前 URL 的协议中的缓存策略。本文只关注 HTT
-      
-      </description>
-      
-      <content:encoded><![CDATA[<p><a href="http://swift.diagon.me/urlcache-cachePolicy/">《iOS 开发中常用的缓存策略：客户端篇》</a>一文中我们提到 iOS 中 URL 加载系统默认的缓存策略使用当前 URL 的协议中的缓存策略。本文只关注 HTTP 协议中的缓存策略。</p>
-<p>实际上 HTTP 协议中的缓存策略可以分为三部分：</p>
-<ol>
-<li>缓存存储策略</li>
-<li>缓存过期策略</li>
-<li>缓存对比策略</li>
-</ol>
-<h2 id="使用-HTTP-头部中的-Cache-Control"><a href="#使用-HTTP-头部中的-Cache-Control" class="headerlink" title="使用 HTTP 头部中的 Cache-Control"></a>使用 HTTP 头部中的 Cache-Control</h2><p>使用 URLCache 的一个优势在于，系统可以自动的理解 HTTP 头部中的 Cache-Control 字段定义的缓存策略。我们只需要服务端根据 HTTP 协议设置 Cache-Control 的内容，URLCache 就知道, 这个缓存应该是什么时候过期了，客户端中的实现不需要写任何代码。</p>
-<p>我们可以使用抓包工具或者在返回体中打印响应头信息:</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> configuration = <span class="type">URLSessionConfiguration</span>.<span class="keyword">default</span></div><div class="line"><span class="keyword">let</span> session = <span class="type">URLSession</span>(configuration: configuration)</div><div class="line"><span class="keyword">let</span> url = <span class="type">URL</span>(string: <span class="string">"https://api.flickr.com/services/feeds/photos_public.gne?format=json&amp;nojsoncallback=1"</span>)!</div><div class="line">        </div><div class="line"><span class="keyword">let</span> task = session.dataTask(with: url) &#123;</div><div class="line">    (data, response, error) <span class="keyword">in</span></div><div class="line">            </div><div class="line">    <span class="keyword">guard</span> <span class="keyword">let</span> data = data <span class="keyword">else</span> &#123; </div><div class="line">    	<span class="built_in">print</span>(error ?? <span class="string">"未知错误"</span>); <span class="keyword">return</span> </div><div class="line">    &#125;</div><div class="line">    <span class="built_in">print</span>((response <span class="keyword">as</span>? <span class="type">HTTPURLResponse</span>)?.allHeaderFields)           </div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>Cache-Control 常见指令有：</p>
-<ul>
-<li><p>max-age=86400 ：表示过期时间。缓存在一天内有效（60 秒 x 60 分 x 24 小时）。</p>
-</li>
-<li><p>no-store ： 表示不允许缓存响应，每个请求必须获取完整的响应。例如：一个包含个人隐私数据或银行数据的响应。每次用户请求该资源时，都会向服务器发送一个请求，每次都会下载完整的响应。</p>
-</li>
-<li><p>no-cache ： 表示必须先与服务器确认返回的响应是否被更改，然后才能使用该响应的缓存来满足后续对同一个网址的请求。因此，如果存在合适的验证方式 (ETag 或者 Last-Modified)，no-cache 会发起往返通信来验证缓存的响应，如果资源未被更改，则使用缓存。如果没有验证机制，则不使用缓存，直接进行网络请求。</p>
-</li>
-</ul>
-<p>关于 Cache-Control 的更多内容请参考 <a href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.9" target="_blank" rel="external">W3C的相关文档</a>。</p>
-<h2 id="自定义缓存策略"><a href="#自定义缓存策略" class="headerlink" title="自定义缓存策略"></a>自定义缓存策略</h2><p>只要有 URLCache 缓存了数据。如果你觉得服务端提供的缓存策略不合适，你可以指定 URLCache 自己的缓存策略。</p>
-<pre><code class="swift"><span class="type">URLRequest</span>.<span class="type">CachePolicy</span>.returnCacheDataDontLoad
-</code></pre>
-<h2 id="提醒"><a href="#提醒" class="headerlink" title="提醒"></a>提醒</h2><ol>
-<li><p>最后必须提醒一下，我们在测试时经常会踩的坑：测试过程中服务器将响应的内容换了，我们不停的请求数据但是本地内容一直没有更新，因为服务端的缓存策略只给了<code>max-age</code>并没有标记为 <code>no-cache</code>，这个时候需要清理一下缓存。</p>
-</li>
-<li><p>如果一个请求的响应头中有 Transfer-Encoding: Chunked, 那 URLCache 也不会缓存。</p>
-</li>
-</ol>
-<hr>
-<div style="text-align: center"><br>关注公众号（ID：SwiftBetter），进一步探讨主题<br><br><br>每日精选高清题图，可做壁纸<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>]]></content:encoded>
-      
-      <comments>http://swift.diagon.me/urlcache-http/#disqus_thread</comments>
     </item>
     
   </channel>

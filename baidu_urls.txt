@@ -1,1 +1,1 @@
-http://swift.diagon.me/Hexo-RSS-Next-XML-feed-UTF-8/
+http://swift.diagon.me/Swift-XML-XMLParser-RSS/
