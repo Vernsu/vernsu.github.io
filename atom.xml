@@ -209,13 +209,13 @@
       <category term="性能优化" scheme="http://swift.diagon.me/categories/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/"/>
     
     
-      <category term="离屏渲染" scheme="http://swift.diagon.me/tags/%E7%A6%BB%E5%B1%8F%E6%B8%B2%E6%9F%93/"/>
-    
-      <category term="圆角" scheme="http://swift.diagon.me/tags/%E5%9C%86%E8%A7%92/"/>
+      <category term="光栅化" scheme="http://swift.diagon.me/tags/%E5%85%89%E6%A0%85%E5%8C%96/"/>
     
       <category term="性能优化" scheme="http://swift.diagon.me/tags/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/"/>
     
-      <category term="光栅化" scheme="http://swift.diagon.me/tags/%E5%85%89%E6%A0%85%E5%8C%96/"/>
+      <category term="离屏渲染" scheme="http://swift.diagon.me/tags/%E7%A6%BB%E5%B1%8F%E6%B8%B2%E6%9F%93/"/>
+    
+      <category term="圆角" scheme="http://swift.diagon.me/tags/%E5%9C%86%E8%A7%92/"/>
     
   </entry>
   
@@ -247,11 +247,11 @@
       <category term="性能优化" scheme="http://swift.diagon.me/categories/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/"/>
     
     
+      <category term="性能优化" scheme="http://swift.diagon.me/tags/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/"/>
+    
       <category term="离屏渲染" scheme="http://swift.diagon.me/tags/%E7%A6%BB%E5%B1%8F%E6%B8%B2%E6%9F%93/"/>
     
       <category term="圆角" scheme="http://swift.diagon.me/tags/%E5%9C%86%E8%A7%92/"/>
-    
-      <category term="性能优化" scheme="http://swift.diagon.me/tags/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/"/>
     
   </entry>
   
@@ -303,11 +303,11 @@
       <category term="性能优化" scheme="http://swift.diagon.me/categories/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/"/>
     
     
+      <category term="性能优化" scheme="http://swift.diagon.me/tags/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/"/>
+    
       <category term="离屏渲染" scheme="http://swift.diagon.me/tags/%E7%A6%BB%E5%B1%8F%E6%B8%B2%E6%9F%93/"/>
     
       <category term="圆角" scheme="http://swift.diagon.me/tags/%E5%9C%86%E8%A7%92/"/>
-    
-      <category term="性能优化" scheme="http://swift.diagon.me/tags/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/"/>
     
   </entry>
   
@@ -468,9 +468,9 @@
       <category term="Optional" scheme="http://swift.diagon.me/categories/Optional/"/>
     
     
-      <category term="隐式解包" scheme="http://swift.diagon.me/tags/%E9%9A%90%E5%BC%8F%E8%A7%A3%E5%8C%85/"/>
-    
       <category term="Optional" scheme="http://swift.diagon.me/tags/Optional/"/>
+    
+      <category term="隐式解包" scheme="http://swift.diagon.me/tags/%E9%9A%90%E5%BC%8F%E8%A7%A3%E5%8C%85/"/>
     
       <category term="ImplicitlyUnwrappedOptional" scheme="http://swift.diagon.me/tags/ImplicitlyUnwrappedOptional/"/>
     
@@ -550,11 +550,11 @@
       <category term="Optional" scheme="http://swift.diagon.me/categories/Optional/"/>
     
     
-      <category term="Optional" scheme="http://swift.diagon.me/tags/Optional/"/>
-    
       <category term="Optional Chaining" scheme="http://swift.diagon.me/tags/Optional-Chaining/"/>
     
       <category term="可选链" scheme="http://swift.diagon.me/tags/%E5%8F%AF%E9%80%89%E9%93%BE/"/>
+    
+      <category term="Optional" scheme="http://swift.diagon.me/tags/Optional/"/>
     
   </entry>
   
@@ -591,11 +591,11 @@
       <category term="Optional" scheme="http://swift.diagon.me/categories/Optional/"/>
     
     
+      <category term="Optiional" scheme="http://swift.diagon.me/tags/Optiional/"/>
+    
       <category term="Optional Chaining" scheme="http://swift.diagon.me/tags/Optional-Chaining/"/>
     
       <category term="可选链" scheme="http://swift.diagon.me/tags/%E5%8F%AF%E9%80%89%E9%93%BE/"/>
-    
-      <category term="Optiional" scheme="http://swift.diagon.me/tags/Optiional/"/>
     
   </entry>
   
