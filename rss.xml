@@ -1,28 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom">
-  <title>Swift学徒</title>
-  <subtitle>笨办法学Swift</subtitle>
-  <link href="/atom.xml" rel="self"/>
-  
-  <link href="http://swift.diagon.me/"/>
-  <updated>2017-02-16T05:28:14.000Z</updated>
-  <id>http://swift.diagon.me/</id>
-  
-  <author>
-    <name>万恶胖为首</name>
+<rss version="2.0"
+  xmlns:atom="http://www.w3.org/2005/Atom"
+  xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Swift学徒</title>
+    <link>http://swift.diagon.me/</link>
+    <atom:link href="/rss.xml" rel="self" type="application/rss+xml"/>
     
-  </author>
-  
-  <generator uri="http://hexo.io/">Hexo</generator>
-  
-  <entry>
-    <title>RxSwift 的基本使用</title>
-    <link href="http://swift.diagon.me/RxSwift-Getting-Started/"/>
-    <id>http://swift.diagon.me/RxSwift-Getting-Started/</id>
-    <published>2017-02-14T16:00:00.000Z</published>
-    <updated>2017-02-16T05:28:14.000Z</updated>
+    <description>笨办法学Swift</description>
+    <pubDate>Thu, 16 Feb 2017 05:28:14 GMT</pubDate>
+    <generator>http://hexo.io/</generator>
     
-    <content type="html"><![CDATA[<p>本文翻译改编自 <a href="https://www.raywenderlich.com" target="_blank" rel="external">ray</a> 的<a href="https://www.raywenderlich.com/138547/getting-started-with-rxswift-and-rxcocoa" target="_blank" rel="external">《Getting Started With RxSwift and RxCocoa》</a>。</p>
+    <item>
+      <title>RxSwift 的基本使用</title>
+      <link>http://swift.diagon.me/RxSwift-Getting-Started/</link>
+      <guid>http://swift.diagon.me/RxSwift-Getting-Started/</guid>
+      <pubDate>Tue, 14 Feb 2017 16:00:00 GMT</pubDate>
+      <description>
+      
+        &lt;p&gt;本文翻译改编自 &lt;a href=&quot;https://www.raywenderlich.com&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;ray&lt;/a&gt; 的&lt;a href=&quot;https://www.raywenderlich.com/138547/get
+      
+      </description>
+      
+      <content:encoded><![CDATA[<p>本文翻译改编自 <a href="https://www.raywenderlich.com" target="_blank" rel="external">ray</a> 的<a href="https://www.raywenderlich.com/138547/getting-started-with-rxswift-and-rxcocoa" target="_blank" rel="external">《Getting Started With RxSwift and RxCocoa》</a>。</p>
 <p>本教程的初始工程Chocotastic可以在<a href="https://koenig-media.raywenderlich.com/uploads/2016/10/Chocotastic-starter-s3-rxs-3b1.zip" target="_blank" rel="external">这里</a>获取。</p>
 <p>这是一个购买巧克力的 APP，主要页面是一个巧克力商品列表，该页面右上角有购物车按钮，购物车按钮会显示当前已加入购物车的商品数量。</p>
 <h2 id="非响应式"><a href="#非响应式" class="headerlink" title="非响应式"></a>非响应式</h2><p>我们需要有一个<code>updateCartButton()</code>方法，它用来更新购物车按钮上的显示数量。这个方法在两个地方被调用：</p>
@@ -71,33 +71,23 @@
 <p>大功告成，购物车按钮可以自动更新了。</p>
 <hr>
 <div style="text-align: center"><br>关注公众号（ID：SwiftBetter），进一步探讨主题<br><br><br>每日精选高清题图，可做壁纸<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>
-]]></content>
+]]></content:encoded>
+      
+      <comments>http://swift.diagon.me/RxSwift-Getting-Started/#disqus_thread</comments>
+    </item>
     
-    <summary type="html">
-    
-      &lt;p&gt;本文翻译改编自 &lt;a href=&quot;https://www.raywenderlich.com&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;ray&lt;/a&gt; 的&lt;a href=&quot;https://www.raywenderlich.com/138547/get
-    
-    </summary>
-    
-    
-      <category term="RxSwift" scheme="http://swift.diagon.me/tags/RxSwift/"/>
-    
-      <category term="响应式编程" scheme="http://swift.diagon.me/tags/%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B/"/>
-    
-      <category term="reactive programming" scheme="http://swift.diagon.me/tags/reactive-programming/"/>
-    
-      <category term="ReactiveCocoa" scheme="http://swift.diagon.me/tags/ReactiveCocoa/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Swift 开发中的响应式编程：RxSwift 初探</title>
-    <link href="http://swift.diagon.me/RxSwift-Observer-Observable-DisposeBag/"/>
-    <id>http://swift.diagon.me/RxSwift-Observer-Observable-DisposeBag/</id>
-    <published>2017-02-13T16:00:00.000Z</published>
-    <updated>2017-02-16T05:54:02.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>本文翻译改编自 <a href="https://www.raywenderlich.com" target="_blank" rel="external">ray</a> 的<a href="https://www.raywenderlich.com/138547/getting-started-with-rxswift-and-rxcocoa" target="_blank" rel="external">《Getting Started With RxSwift and RxCocoa》</a>。</p>
+    <item>
+      <title>Swift 开发中的响应式编程：RxSwift 初探</title>
+      <link>http://swift.diagon.me/RxSwift-Observer-Observable-DisposeBag/</link>
+      <guid>http://swift.diagon.me/RxSwift-Observer-Observable-DisposeBag/</guid>
+      <pubDate>Mon, 13 Feb 2017 16:00:00 GMT</pubDate>
+      <description>
+      
+        &lt;p&gt;本文翻译改编自 &lt;a href=&quot;https://www.raywenderlich.com&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;ray&lt;/a&gt; 的&lt;a href=&quot;https://www.raywenderlich.com/138547/get
+      
+      </description>
+      
+      <content:encoded><![CDATA[<p>本文翻译改编自 <a href="https://www.raywenderlich.com" target="_blank" rel="external">ray</a> 的<a href="https://www.raywenderlich.com/138547/getting-started-with-rxswift-and-rxcocoa" target="_blank" rel="external">《Getting Started With RxSwift and RxCocoa》</a>。</p>
 <h2 id="响应式编程"><a href="#响应式编程" class="headerlink" title="响应式编程"></a>响应式编程</h2><p>在面向对象时代，这样的事情是必要的：你用各种方式来监听程序的变化，但是当变化发生时你是得必须主动的告诉系统。</p>
 <p>如果当变化发生时，代码能自动响应更新，岂不是更爽？这就是响应式编程(reactive programming)的思想:你的程序可以自主的对底层数据的变化做出响应，而不需要你再去通知它。这让你可以聚焦于处理的逻辑，而不用维护具体的状态。</p>
 <p>Swift 中可以使用 KVO,重载 setter, didSet方法来实现这种操作。但是这些方法不怎么好用。我们可以使用一个响应式编程框架：RxSwift，来更好的实现。</p>
@@ -113,33 +103,23 @@
 <p>如果没有<code>DisposeBag</code>，会有两种后果：要么<code>Observer</code>会产生一个 <code>retain cycle</code>，将无限期的进行监听；要么<code>Observer</code>被意外释放，导致程序崩溃。</p>
 <p>所以在设置<code>Observable</code>对象时，将其添加到<code>DisposeBag</code>中。</p>
 <hr>
-<div style="text-align: center"><br>关注公众号（ID：SwiftBetter），进一步探讨主题<br><br><br>每日精选高清题图，可做壁纸<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>]]></content>
+<div style="text-align: center"><br>关注公众号（ID：SwiftBetter），进一步探讨主题<br><br><br>每日精选高清题图，可做壁纸<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>]]></content:encoded>
+      
+      <comments>http://swift.diagon.me/RxSwift-Observer-Observable-DisposeBag/#disqus_thread</comments>
+    </item>
     
-    <summary type="html">
-    
-      &lt;p&gt;本文翻译改编自 &lt;a href=&quot;https://www.raywenderlich.com&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;ray&lt;/a&gt; 的&lt;a href=&quot;https://www.raywenderlich.com/138547/get
-    
-    </summary>
-    
-    
-      <category term="RxSwift" scheme="http://swift.diagon.me/tags/RxSwift/"/>
-    
-      <category term="响应式编程" scheme="http://swift.diagon.me/tags/%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B/"/>
-    
-      <category term="reactive programming" scheme="http://swift.diagon.me/tags/reactive-programming/"/>
-    
-      <category term="ReactiveCocoa" scheme="http://swift.diagon.me/tags/ReactiveCocoa/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Moya：基于 Alamofire 的网络抽象层</title>
-    <link href="http://swift.diagon.me/Alamofire-Moya-TargetType/"/>
-    <id>http://swift.diagon.me/Alamofire-Moya-TargetType/</id>
-    <published>2017-02-12T16:00:00.000Z</published>
-    <updated>2017-02-12T11:12:35.000Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="什么是-Moya"><a href="#什么是-Moya" class="headerlink" title="什么是 Moya"></a>什么是 Moya</h2><p>在 iOS 开发中，除了使用 AFNetworking/Alamofire 这样的针对 <code>URLSession</code> 抽象的网络库之外，我们还需要创建诸如  “APIManager”  或  “NetworkModel”  这样详细的网络抽象层。</p>
+    <item>
+      <title>Moya：基于 Alamofire 的网络抽象层</title>
+      <link>http://swift.diagon.me/Alamofire-Moya-TargetType/</link>
+      <guid>http://swift.diagon.me/Alamofire-Moya-TargetType/</guid>
+      <pubDate>Sun, 12 Feb 2017 16:00:00 GMT</pubDate>
+      <description>
+      
+        &lt;h2 id=&quot;什么是-Moya&quot;&gt;&lt;a href=&quot;#什么是-Moya&quot; class=&quot;headerlink&quot; title=&quot;什么是 Moya&quot;&gt;&lt;/a&gt;什么是 Moya&lt;/h2&gt;&lt;p&gt;在 iOS 开发中，除了使用 AFNetworking/Alamofire 这样的针对 &lt;c
+      
+      </description>
+      
+      <content:encoded><![CDATA[<h2 id="什么是-Moya"><a href="#什么是-Moya" class="headerlink" title="什么是 Moya"></a>什么是 Moya</h2><p>在 iOS 开发中，除了使用 AFNetworking/Alamofire 这样的针对 <code>URLSession</code> 抽象的网络库之外，我们还需要创建诸如  “APIManager”  或  “NetworkModel”  这样详细的网络抽象层。</p>
 <p><a href="https://github.com/Moya/Moya" target="_blank" rel="external">Moya</a> 就是这种网络抽象层的集大成者，URLs、参数等等的配置通通都可以由 Moya 来搞定。</p>
 <p>Moya 建立在 Alamofire 之上，全面的覆盖了 Alamofire 的功能。在项目中，我们所有的网络操作都基于 Moya，不会再接触 Alamofire。</p>
 <h2 id="Moya-特性"><a href="#Moya-特性" class="headerlink" title="Moya 特性"></a>Moya 特性</h2><ul>
@@ -160,33 +140,23 @@
 <figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="type">GitHubProvider</span>.request(.userRepositories(<span class="string">"apple"</span>)) &#123; result <span class="keyword">in</span></div><div class="line">    <span class="keyword">switch</span> result &#123;</div><div class="line">    <span class="keyword">case</span> <span class="keyword">let</span> .success(response):</div><div class="line">        <span class="comment">//doSomething</span></div><div class="line">    <span class="keyword">case</span> <span class="keyword">let</span> .failure(error):</div><div class="line">        <span class="comment">//doSomething</span></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>更详细的写法请参考：<a href="https://github.com/Moya/Moya/blob/master/docs/Examples/Basic.md" target="_blank" rel="external">Moya 基本用法文档</a>，更丰富的 Demo 请参考 <a href="https://github.com/artsy/eidolon/blob/master/Kiosk/App/Networking/ArtsyAPI.swift" target="_blank" rel="external">ArtsyAPI</a>。</p>
 <hr>
-<div style="text-align: center"><br>关注公众号（ID：SwiftBetter），进一步探讨主题<br><br><br>每日精选高清题图，可做壁纸<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>]]></content>
+<div style="text-align: center"><br>关注公众号（ID：SwiftBetter），进一步探讨主题<br><br><br>每日精选高清题图，可做壁纸<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>]]></content:encoded>
+      
+      <comments>http://swift.diagon.me/Alamofire-Moya-TargetType/#disqus_thread</comments>
+    </item>
     
-    <summary type="html">
-    
-      &lt;h2 id=&quot;什么是-Moya&quot;&gt;&lt;a href=&quot;#什么是-Moya&quot; class=&quot;headerlink&quot; title=&quot;什么是 Moya&quot;&gt;&lt;/a&gt;什么是 Moya&lt;/h2&gt;&lt;p&gt;在 iOS 开发中，除了使用 AFNetworking/Alamofire 这样的针对 &lt;c
-    
-    </summary>
-    
-    
-      <category term="Alamofire" scheme="http://swift.diagon.me/tags/Alamofire/"/>
-    
-      <category term="Moya" scheme="http://swift.diagon.me/tags/Moya/"/>
-    
-      <category term="网络层" scheme="http://swift.diagon.me/tags/%E7%BD%91%E7%BB%9C%E5%B1%82/"/>
-    
-      <category term="架构" scheme="http://swift.diagon.me/tags/%E6%9E%B6%E6%9E%84/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>iOS 性能优化之光栅化</title>
-    <link href="http://swift.diagon.me/shouldRasterize/"/>
-    <id>http://swift.diagon.me/shouldRasterize/</id>
-    <published>2017-02-11T16:00:00.000Z</published>
-    <updated>2017-02-12T01:58:19.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>在<a href="http://swift.diagon.me/off-screen-rendering/">《iOS 开发中的离屏渲染问题》</a>一文中提到，离屏渲染通常发生在 GPU 中。一个 tableView 中有大量带圆角的视图，当 tableView 快速滑动时，可以看到 GPU 已经被占满，而 CPU 占用量很少。这时界面仍然能正常滑动，但平均帧数会降到很低。为了避免这种情况，可以尝试开启光栅化（CALayer.shouldRasterize ），但这会把原本 GPU 离屏渲染的操作转嫁到 CPU 上去。</p>
+    <item>
+      <title>iOS 性能优化之光栅化</title>
+      <link>http://swift.diagon.me/shouldRasterize/</link>
+      <guid>http://swift.diagon.me/shouldRasterize/</guid>
+      <pubDate>Sat, 11 Feb 2017 16:00:00 GMT</pubDate>
+      <description>
+      
+        &lt;p&gt;在&lt;a href=&quot;http://swift.diagon.me/off-screen-rendering/&quot;&gt;《iOS 开发中的离屏渲染问题》&lt;/a&gt;一文中提到，离屏渲染通常发生在 GPU 中。一个 tableView 中有大量带圆角的视图，当 tableView 快速滑
+      
+      </description>
+      
+      <content:encoded><![CDATA[<p>在<a href="http://swift.diagon.me/off-screen-rendering/">《iOS 开发中的离屏渲染问题》</a>一文中提到，离屏渲染通常发生在 GPU 中。一个 tableView 中有大量带圆角的视图，当 tableView 快速滑动时，可以看到 GPU 已经被占满，而 CPU 占用量很少。这时界面仍然能正常滑动，但平均帧数会降到很低。为了避免这种情况，可以尝试开启光栅化（CALayer.shouldRasterize ），但这会把原本 GPU 离屏渲染的操作转嫁到 CPU 上去。</p>
 <h2 id="光栅化"><a href="#光栅化" class="headerlink" title="光栅化"></a>光栅化</h2><p><a href="http://swift.diagon.me/off-screen-rendering/">《iOS 开发中的离屏渲染问题》</a>中提到的 GPU 离屏渲染是自动触发的，而开启光栅化，是手动启动离屏渲染，并且将离屏渲染的工作交由 CPU 处理。</p>
 <p>开启光栅化会将图层渲染为一个屏幕之外的位图(bitmap)，然后将这个位图缓存起来。图层有复杂的视觉效果，这样做就会比重绘所有帧划划算的多。但是光栅化原始图像需要时间，而且还会消耗额外的内存。</p>
 <p>当我们使用得当，光栅化可以提供很大的性能优势，但是一定要避免用在内容是动态变化的图层上，不然它缓存方面的优势就会丧失，而且会让性能变的更糟。</p>
@@ -198,35 +168,23 @@
 <h2 id="使用-Instruments-监测性能"><a href="#使用-Instruments-监测性能" class="headerlink" title="使用 Instruments 监测性能"></a>使用 Instruments 监测性能</h2><p>Instruments 的 Core Animation 工具里有检测光栅化是否正确使用的选项：<code>Color Hits Green and Misses Red</code>，如果开启了光栅化，渲染结果会被缓存，如果图层是绿色，就表示有渲染缓存可用；如果是红色，就表示无渲染缓存可用，缓存会被重复创建，这就可能导致性能问题。</p>
 <p>注意：这个工具只能在真机上调试时使用。</p>
 <hr>
-<div style="text-align: center"><br>关注公众号（ID：SwiftBetter），进一步探讨主题<br><br><br>每日精选高清题图，可做壁纸<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>]]></content>
+<div style="text-align: center"><br>关注公众号（ID：SwiftBetter），进一步探讨主题<br><br><br>每日精选高清题图，可做壁纸<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>]]></content:encoded>
+      
+      <comments>http://swift.diagon.me/shouldRasterize/#disqus_thread</comments>
+    </item>
     
-    <summary type="html">
-    
-      &lt;p&gt;在&lt;a href=&quot;http://swift.diagon.me/off-screen-rendering/&quot;&gt;《iOS 开发中的离屏渲染问题》&lt;/a&gt;一文中提到，离屏渲染通常发生在 GPU 中。一个 tableView 中有大量带圆角的视图，当 tableView 快速滑
-    
-    </summary>
-    
-      <category term="性能优化" scheme="http://swift.diagon.me/categories/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/"/>
-    
-    
-      <category term="离屏渲染" scheme="http://swift.diagon.me/tags/%E7%A6%BB%E5%B1%8F%E6%B8%B2%E6%9F%93/"/>
-    
-      <category term="圆角" scheme="http://swift.diagon.me/tags/%E5%9C%86%E8%A7%92/"/>
-    
-      <category term="性能优化" scheme="http://swift.diagon.me/tags/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/"/>
-    
-      <category term="光栅化" scheme="http://swift.diagon.me/tags/%E5%85%89%E6%A0%85%E5%8C%96/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>iOS 性能优化之视图圆角</title>
-    <link href="http://swift.diagon.me/cornerRadius/"/>
-    <id>http://swift.diagon.me/cornerRadius/</id>
-    <published>2017-02-10T16:00:00.000Z</published>
-    <updated>2017-02-12T01:58:27.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>在<a href="http://swift.diagon.me/off-screen-rendering/">《iOS 开发中的离屏渲染问题》</a>中提到，大量的离屏渲染会造成性能问题。在 TableView 中使用 cornerRadius 和 maskToBounds 共同设置 View 的圆角是最常见的引发离屏渲染性能问题的场景。</p>
+    <item>
+      <title>iOS 性能优化之视图圆角</title>
+      <link>http://swift.diagon.me/cornerRadius/</link>
+      <guid>http://swift.diagon.me/cornerRadius/</guid>
+      <pubDate>Fri, 10 Feb 2017 16:00:00 GMT</pubDate>
+      <description>
+      
+        &lt;p&gt;在&lt;a href=&quot;http://swift.diagon.me/off-screen-rendering/&quot;&gt;《iOS 开发中的离屏渲染问题》&lt;/a&gt;中提到，大量的离屏渲染会造成性能问题。在 TableView 中使用 cornerRadius 和 maskToBound
+      
+      </description>
+      
+      <content:encoded><![CDATA[<p>在<a href="http://swift.diagon.me/off-screen-rendering/">《iOS 开发中的离屏渲染问题》</a>中提到，大量的离屏渲染会造成性能问题。在 TableView 中使用 cornerRadius 和 maskToBounds 共同设置 View 的圆角是最常见的引发离屏渲染性能问题的场景。</p>
 <h2 id="为视图设置圆角时触发离屏渲染"><a href="#为视图设置圆角时触发离屏渲染" class="headerlink" title="为视图设置圆角时触发离屏渲染"></a>为视图设置圆角时触发离屏渲染</h2><figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">cell.view.layer.cornerRadius = <span class="number">15</span></div><div class="line">cell.view.layer.masksToBounds = <span class="literal">true</span></div></pre></td></tr></table></figure>
 <p>cornerRadius 和 maskToBounds 分别独立使用的时候不会有性能问题，但是当他们结合在一起，就触发了离屏渲染。</p>
 <p>注：在iOS9 之后的系统中 UIImageView 使用 png 图片设置圆角时被苹果优化，不会触发离屏渲染。contents 为空的视图如 UIView 也不会触发离屏渲染。但是其他类型的视图（如UILabel，UIButton）通过这种方式设置圆角依然会触发离屏渲染。</p>
@@ -236,33 +194,25 @@
 <p>注意：如果我们重写了 drawRect 方法，并且使用 Core Graphics 进行绘制作，就涉及到了 CPU 渲染。整个渲染过程由 CPU 完成，渲染得到的 bitmap 最后再交由 GPU 用于显示。</p>
 <h2 id="光栅化"><a href="#光栅化" class="headerlink" title="光栅化"></a>光栅化</h2><p>对于视图圆角的性能优化，还有一种方式，请参考<a href="http://swift.diagon.me/shouldRasterize/">《iOS 性能优化之光栅化》</a>。</p>
 <hr>
-<div style="text-align: center"><br>关注公众号（ID：SwiftBetter），进一步探讨主题<br><br><br>每日精选高清题图，可做壁纸<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>]]></content>
+<div style="text-align: center"><br>关注公众号（ID：SwiftBetter），进一步探讨主题<br><br><br>每日精选高清题图，可做壁纸<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>]]></content:encoded>
+      
+      <comments>http://swift.diagon.me/cornerRadius/#disqus_thread</comments>
+    </item>
     
-    <summary type="html">
-    
-      &lt;p&gt;在&lt;a href=&quot;http://swift.diagon.me/off-screen-rendering/&quot;&gt;《iOS 开发中的离屏渲染问题》&lt;/a&gt;中提到，大量的离屏渲染会造成性能问题。在 TableView 中使用 cornerRadius 和 maskToBound
-    
-    </summary>
-    
-      <category term="性能优化" scheme="http://swift.diagon.me/categories/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/"/>
-    
-    
-      <category term="离屏渲染" scheme="http://swift.diagon.me/tags/%E7%A6%BB%E5%B1%8F%E6%B8%B2%E6%9F%93/"/>
-    
-      <category term="圆角" scheme="http://swift.diagon.me/tags/%E5%9C%86%E8%A7%92/"/>
-    
-      <category term="性能优化" scheme="http://swift.diagon.me/tags/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>iOS 性能优化之离屏渲染</title>
-    <link href="http://swift.diagon.me/off-screen-rendering/"/>
-    <id>http://swift.diagon.me/off-screen-rendering/</id>
-    <published>2017-02-09T16:00:00.000Z</published>
-    <updated>2017-02-16T05:44:37.000Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="GPU-渲染"><a href="#GPU-渲染" class="headerlink" title="GPU 渲染"></a>GPU 渲染</h2><p>图形的生成一般是由 GPU 负责，而 GPU 屏幕渲染有以下两种方式：</p>
+    <item>
+      <title>iOS 性能优化之离屏渲染</title>
+      <link>http://swift.diagon.me/off-screen-rendering/</link>
+      <guid>http://swift.diagon.me/off-screen-rendering/</guid>
+      <pubDate>Thu, 09 Feb 2017 16:00:00 GMT</pubDate>
+      <description>
+      
+        &lt;h2 id=&quot;GPU-渲染&quot;&gt;&lt;a href=&quot;#GPU-渲染&quot; class=&quot;headerlink&quot; title=&quot;GPU 渲染&quot;&gt;&lt;/a&gt;GPU 渲染&lt;/h2&gt;&lt;p&gt;图形的生成一般是由 GPU 负责，而 GPU 屏幕渲染有以下两种方式：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;On
+      
+      </description>
+      
+      <content:encoded><![CDATA[<h2 id="GPU-渲染"><a href="#GPU-渲染" class="headerlink" title="GPU 渲染"></a>GPU 渲染</h2><p>图形的生成一般是由 GPU 负责，而 GPU 屏幕渲染有以下两种方式：</p>
 <ol>
 <li><p>On-Screen Rendering：当前屏幕渲染，意思是 GPU 的渲染操作是在当前用于显示的屏幕缓冲区进行的。缓冲大小受限，一些复杂的操作可能无法完成。</p>
 </li>
@@ -290,35 +240,23 @@
 <p>注意这个工具只能在真机上调试时使用，如果想在模拟器上查看离屏渲染区域可以选择：模拟器菜单 - Debug - Color Offscreen-Rendered。</p>
 <h2 id="CPU-渲染"><a href="#CPU-渲染" class="headerlink" title="CPU 渲染"></a>CPU 渲染</h2><p>本文探讨了 GPU 的离屏渲染，关于 CPU 渲染请参考<a href="http://swift.diagon.me/shouldRasterize/">《iOS 性能优化之光栅化》</a>。</p>
 <hr>
-<div style="text-align: center"><br>关注公众号（ID：SwiftBetter），进一步探讨主题<br><br><br>每日精选高清题图，可做壁纸<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>]]></content>
+<div style="text-align: center"><br>关注公众号（ID：SwiftBetter），进一步探讨主题<br><br><br>每日精选高清题图，可做壁纸<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>]]></content:encoded>
+      
+      <comments>http://swift.diagon.me/off-screen-rendering/#disqus_thread</comments>
+    </item>
     
-    <summary type="html">
-    
-      &lt;h2 id=&quot;GPU-渲染&quot;&gt;&lt;a href=&quot;#GPU-渲染&quot; class=&quot;headerlink&quot; title=&quot;GPU 渲染&quot;&gt;&lt;/a&gt;GPU 渲染&lt;/h2&gt;&lt;p&gt;图形的生成一般是由 GPU 负责，而 GPU 屏幕渲染有以下两种方式：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;&lt;p&gt;On
-    
-    </summary>
-    
-      <category term="性能优化" scheme="http://swift.diagon.me/categories/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/"/>
-    
-    
-      <category term="离屏渲染" scheme="http://swift.diagon.me/tags/%E7%A6%BB%E5%B1%8F%E6%B8%B2%E6%9F%93/"/>
-    
-      <category term="圆角" scheme="http://swift.diagon.me/tags/%E5%9C%86%E8%A7%92/"/>
-    
-      <category term="性能优化" scheme="http://swift.diagon.me/tags/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Swift 中的协议扩展派发</title>
-    <link href="http://swift.diagon.me/protocol-extension-dispathing/"/>
-    <id>http://swift.diagon.me/protocol-extension-dispathing/</id>
-    <published>2017-02-08T16:00:00.000Z</published>
-    <updated>2017-02-12T02:06:02.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>当遵循 protocol 的类型重新定义了 protocol 中没有但 protocol extension 中定义的 method 或 property 时，static dispatching 将会执行。这就意味着，property 或 method 的实现依赖于变量或常量声明的类型，而不是实例实际的类型。</p>
+    <item>
+      <title>Swift 中的协议扩展派发</title>
+      <link>http://swift.diagon.me/protocol-extension-dispathing/</link>
+      <guid>http://swift.diagon.me/protocol-extension-dispathing/</guid>
+      <pubDate>Wed, 08 Feb 2017 16:00:00 GMT</pubDate>
+      <description>
+      
+        &lt;p&gt;当遵循 protocol 的类型重新定义了 protocol 中没有但 protocol extension 中定义的 method 或 property 时，static dispatching 将会执行。这就意味着，property 或 method 的实现依赖于变量或
+      
+      </description>
+      
+      <content:encoded><![CDATA[<p>当遵循 protocol 的类型重新定义了 protocol 中没有但 protocol extension 中定义的 method 或 property 时，static dispatching 将会执行。这就意味着，property 或 method 的实现依赖于变量或常量声明的类型，而不是实例实际的类型。</p>
 <p>定义一个协议：</p>
 <figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">protocol</span> <span class="title">WinLoss</span> </span>&#123;</div><div class="line">    </div><div class="line">    <span class="keyword">var</span> wins: <span class="type">Int</span> &#123; <span class="keyword">get</span>&#125;</div><div class="line">    </div><div class="line">    <span class="keyword">var</span> losses: <span class="type">Int</span> &#123; <span class="keyword">get</span>&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>该协议有一个 extension:</p>
@@ -334,37 +272,23 @@
 <figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">miamiTuples.winningPercentage <span class="comment">// .5</span></div><div class="line">winLoss.winningPercentage <span class="comment">// .5</span></div></pre></td></tr></table></figure>
 <p>这里是 dynamic dispatching。依赖于实际的类型，而不是声明的类型。</p>
 <hr>
-<div style="text-align: center"><br>关注公众号（ID：SwiftBetter），进一步探讨主题<br><br><br>每日精选高清题图，可做壁纸<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>]]></content>
+<div style="text-align: center"><br>关注公众号（ID：SwiftBetter），进一步探讨主题<br><br><br>每日精选高清题图，可做壁纸<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>]]></content:encoded>
+      
+      <comments>http://swift.diagon.me/protocol-extension-dispathing/#disqus_thread</comments>
+    </item>
     
-    <summary type="html">
-    
-      &lt;p&gt;当遵循 protocol 的类型重新定义了 protocol 中没有但 protocol extension 中定义的 method 或 property 时，static dispatching 将会执行。这就意味着，property 或 method 的实现依赖于变量或
-    
-    </summary>
-    
-      <category term="协议" scheme="http://swift.diagon.me/categories/%E5%8D%8F%E8%AE%AE/"/>
-    
-    
-      <category term="protocol" scheme="http://swift.diagon.me/tags/protocol/"/>
-    
-      <category term="协议扩展" scheme="http://swift.diagon.me/tags/%E5%8D%8F%E8%AE%AE%E6%89%A9%E5%B1%95/"/>
-    
-      <category term="派发" scheme="http://swift.diagon.me/tags/%E6%B4%BE%E5%8F%91/"/>
-    
-      <category term="静态派发" scheme="http://swift.diagon.me/tags/%E9%9D%99%E6%80%81%E6%B4%BE%E5%8F%91/"/>
-    
-      <category term="动态派发" scheme="http://swift.diagon.me/tags/%E5%8A%A8%E6%80%81%E6%B4%BE%E5%8F%91/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Swift 中的协议成员的默认实现</title>
-    <link href="http://swift.diagon.me/protocol-member-default/"/>
-    <id>http://swift.diagon.me/protocol-member-default/</id>
-    <published>2017-02-07T16:00:00.000Z</published>
-    <updated>2017-02-12T01:59:58.000Z</updated>
-    
-    <content type="html"><![CDATA[<p><a href="http://swift.diagon.me/protocol-extension/">《Swift 中的协议扩展初探》</a>一文中列举了使用协议扩展增加并实现新的成员。由于该 property 只在 protocol extension 声明和实现，而没有在 protocol 自身中声明，所以遵守该 protocol 的类型无需实现该成员。</p>
+    <item>
+      <title>Swift 中的协议成员的默认实现</title>
+      <link>http://swift.diagon.me/protocol-member-default/</link>
+      <guid>http://swift.diagon.me/protocol-member-default/</guid>
+      <pubDate>Tue, 07 Feb 2017 16:00:00 GMT</pubDate>
+      <description>
+      
+        &lt;p&gt;&lt;a href=&quot;http://swift.diagon.me/protocol-extension/&quot;&gt;《Swift 中的协议扩展初探》&lt;/a&gt;一文中列举了使用协议扩展增加并实现新的成员。由于该 property 只在 protocol extension 声明和实现，而
+      
+      </description>
+      
+      <content:encoded><![CDATA[<p><a href="http://swift.diagon.me/protocol-extension/">《Swift 中的协议扩展初探》</a>一文中列举了使用协议扩展增加并实现新的成员。由于该 property 只在 protocol extension 声明和实现，而没有在 protocol 自身中声明，所以遵守该 protocol 的类型无需实现该成员。</p>
 <p>现在再考虑另一个例子：</p>
 <figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">protocol</span> <span class="title">TeamRecord</span> </span>&#123;</div><div class="line">    </div><div class="line">    <span class="keyword">var</span> wins: <span class="type">Int</span> &#123; <span class="keyword">get</span> &#125;</div><div class="line">    </div><div class="line">    <span class="keyword">var</span> losses: <span class="type">Int</span> &#123; <span class="keyword">get</span> &#125;</div><div class="line">    </div><div class="line">    <span class="keyword">var</span> winningPercentage: <span class="type">Double</span> &#123; <span class="keyword">get</span> &#125;</div><div class="line">&#125;</div><div class="line"><span class="class"><span class="keyword">extension</span> <span class="title">TeamRecord</span> </span>&#123;</div><div class="line">    </div><div class="line">    <span class="keyword">var</span> winningPercentage: <span class="type">Double</span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">return</span> <span class="type">Double</span>(wins) / (<span class="type">Double</span>(wins) + <span class="type">Double</span>(losses))</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>这个例子和之前的 protocol extension 不同之处在于，winningPercentage 是 TeamRecord protocol 已经声明了的成员。</p>
@@ -378,33 +302,25 @@
 
 
 
-]]></content>
+]]></content:encoded>
+      
+      <comments>http://swift.diagon.me/protocol-member-default/#disqus_thread</comments>
+    </item>
     
-    <summary type="html">
-    
-      &lt;p&gt;&lt;a href=&quot;http://swift.diagon.me/protocol-extension/&quot;&gt;《Swift 中的协议扩展初探》&lt;/a&gt;一文中列举了使用协议扩展增加并实现新的成员。由于该 property 只在 protocol extension 声明和实现，而
-    
-    </summary>
-    
-      <category term="协议" scheme="http://swift.diagon.me/categories/%E5%8D%8F%E8%AE%AE/"/>
-    
-    
-      <category term="protocol" scheme="http://swift.diagon.me/tags/protocol/"/>
-    
-      <category term="extension" scheme="http://swift.diagon.me/tags/extension/"/>
-    
-      <category term="协议扩展" scheme="http://swift.diagon.me/tags/%E5%8D%8F%E8%AE%AE%E6%89%A9%E5%B1%95/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Swift 中的协议扩展初探</title>
-    <link href="http://swift.diagon.me/protocol-extension/"/>
-    <id>http://swift.diagon.me/protocol-extension/</id>
-    <published>2017-02-06T16:00:00.000Z</published>
-    <updated>2017-02-12T01:59:51.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>面向协议的编程打破了旧的协议规则，允许让你用<strong>协议自身实现协议</strong>。</p>
+    <item>
+      <title>Swift 中的协议扩展初探</title>
+      <link>http://swift.diagon.me/protocol-extension/</link>
+      <guid>http://swift.diagon.me/protocol-extension/</guid>
+      <pubDate>Mon, 06 Feb 2017 16:00:00 GMT</pubDate>
+      <description>
+      
+        &lt;p&gt;面向协议的编程打破了旧的协议规则，允许让你用&lt;strong&gt;协议自身实现协议&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;你可以用下面的语法定义一个 protocol extension：&lt;/p&gt;
+&lt;figure class=&quot;highlight swift&quot;&gt;&lt;table&gt;&lt;tr&gt;
+      
+      </description>
+      
+      <content:encoded><![CDATA[<p>面向协议的编程打破了旧的协议规则，允许让你用<strong>协议自身实现协议</strong>。</p>
 <p>你可以用下面的语法定义一个 protocol extension：</p>
 <figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">protocol</span> <span class="title">TeamRecord</span> </span>&#123;</div><div class="line">    </div><div class="line">    <span class="keyword">var</span> wins: <span class="type">Int</span> &#123; <span class="keyword">get</span> &#125;</div><div class="line">    </div><div class="line">    <span class="keyword">var</span> losses: <span class="type">Int</span> &#123; <span class="keyword">get</span> &#125;</div><div class="line">    </div><div class="line">    <span class="keyword">var</span> winningPercentage: <span class="type">Double</span> &#123; <span class="keyword">get</span> &#125;</div><div class="line">&#125;</div><div class="line"><span class="class"><span class="keyword">extension</span> <span class="title">TeamRecord</span> </span>&#123;</div><div class="line">    </div><div class="line">    <span class="keyword">var</span> gamesPlayed: <span class="type">Int</span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">return</span> wins + losses</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>这里 protocol extension 和 protocol 的不同是：extension 包括了成员的实现。 </p>
@@ -414,35 +330,24 @@
 <p>无奈滞留在机场，先写这么多。</p>
 <p>关于协议扩展更多内容参见：<a href="http://swift.diagon.me/protocol-extension/">《Swift 中的协议成员的默认实现》</a></p>
 <hr>
-<div style="text-align: center"><br>关注公众号（ID：SwiftBetter），进一步探讨主题<br><br><br>每日精选高清题图，可做壁纸<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>]]></content>
+<div style="text-align: center"><br>关注公众号（ID：SwiftBetter），进一步探讨主题<br><br><br>每日精选高清题图，可做壁纸<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>]]></content:encoded>
+      
+      <comments>http://swift.diagon.me/protocol-extension/#disqus_thread</comments>
+    </item>
     
-    <summary type="html">
-    
-      &lt;p&gt;面向协议的编程打破了旧的协议规则，允许让你用&lt;strong&gt;协议自身实现协议&lt;/strong&gt;。&lt;/p&gt;
-&lt;p&gt;你可以用下面的语法定义一个 protocol extension：&lt;/p&gt;
-&lt;figure class=&quot;highlight swift&quot;&gt;&lt;table&gt;&lt;tr&gt;
-    
-    </summary>
-    
-      <category term="协议" scheme="http://swift.diagon.me/categories/%E5%8D%8F%E8%AE%AE/"/>
-    
-    
-      <category term="protocol" scheme="http://swift.diagon.me/tags/protocol/"/>
-    
-      <category term="extension" scheme="http://swift.diagon.me/tags/extension/"/>
-    
-      <category term="协议扩展" scheme="http://swift.diagon.me/tags/%E5%8D%8F%E8%AE%AE%E6%89%A9%E5%B1%95/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Swift 中 Optional 的隐式解包</title>
-    <link href="http://swift.diagon.me/optional-IUO/"/>
-    <id>http://swift.diagon.me/optional-IUO/</id>
-    <published>2017-02-05T16:00:00.000Z</published>
-    <updated>2017-02-12T02:03:18.000Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="隐式解包"><a href="#隐式解包" class="headerlink" title="隐式解包"></a>隐式解包</h3><p>在 iOS 项目中，如果使用 Interface Buider 构建界面，会生成这样的代码：</p>
+    <item>
+      <title>Swift 中 Optional 的隐式解包</title>
+      <link>http://swift.diagon.me/optional-IUO/</link>
+      <guid>http://swift.diagon.me/optional-IUO/</guid>
+      <pubDate>Sun, 05 Feb 2017 16:00:00 GMT</pubDate>
+      <description>
+      
+        &lt;h3 id=&quot;隐式解包&quot;&gt;&lt;a href=&quot;#隐式解包&quot; class=&quot;headerlink&quot; title=&quot;隐式解包&quot;&gt;&lt;/a&gt;隐式解包&lt;/h3&gt;&lt;p&gt;在 iOS 项目中，如果使用 Interface Buider 构建界面，会生成这样的代码：&lt;/p&gt;
+&lt;figure cla
+      
+      </description>
+      
+      <content:encoded><![CDATA[<h3 id="隐式解包"><a href="#隐式解包" class="headerlink" title="隐式解包"></a>隐式解包</h3><p>在 iOS 项目中，如果使用 Interface Buider 构建界面，会生成这样的代码：</p>
 <figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">@<span class="type">IBOoutlet</span> <span class="keyword">weak</span> <span class="keyword">var</span> faceView: <span class="type">UIView</span>!</div></pre></td></tr></table></figure>
 <p>我们知道如果要申明 UIVivew 为 Optional 类型，<code>UIView?</code> 这样写就好了。<code>UIView!</code>是什么意思呢? 其实这是一种特殊的 Optional，在使用时编译器会自动进行解包。这种方式被称，隐式解包。</p>
 <p>我们在类型后面加一个叹号<code>！</code>，就告诉编译器这个 Optional 处于隐式解包的状态。</p>
@@ -456,36 +361,23 @@
 <p>Swift 是一门进化中的语言 ，Swift 3.0 中废除了隐式解包可选类型(ImplicitlyUnwrappedOptional)，并用 IUO 属性代替。理由就是隐式解包破坏了 Swift 的类型安全设计，所以要减少隐式解包的使用。</p>
 <p>在变量类型后的 <code>!</code> 不再表示是隐式解包可选类型(ImplicitlyUnwrappedOptional)，而是表示是 Optional，并有一个被隐式指定的属性。</p>
 <hr>
-<div style="text-align: center"><br>关注公众号（ID：SwiftBetter），进一步探讨主题<br><br><br>每日精选高清题图，可做壁纸<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>]]></content>
+<div style="text-align: center"><br>关注公众号（ID：SwiftBetter），进一步探讨主题<br><br><br>每日精选高清题图，可做壁纸<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>]]></content:encoded>
+      
+      <comments>http://swift.diagon.me/optional-IUO/#disqus_thread</comments>
+    </item>
     
-    <summary type="html">
-    
-      &lt;h3 id=&quot;隐式解包&quot;&gt;&lt;a href=&quot;#隐式解包&quot; class=&quot;headerlink&quot; title=&quot;隐式解包&quot;&gt;&lt;/a&gt;隐式解包&lt;/h3&gt;&lt;p&gt;在 iOS 项目中，如果使用 Interface Buider 构建界面，会生成这样的代码：&lt;/p&gt;
-&lt;figure cla
-    
-    </summary>
-    
-      <category term="Optional" scheme="http://swift.diagon.me/categories/Optional/"/>
-    
-    
-      <category term="Optional" scheme="http://swift.diagon.me/tags/Optional/"/>
-    
-      <category term="隐式解包" scheme="http://swift.diagon.me/tags/%E9%9A%90%E5%BC%8F%E8%A7%A3%E5%8C%85/"/>
-    
-      <category term="ImplicitlyUnwrappedOptional" scheme="http://swift.diagon.me/tags/ImplicitlyUnwrappedOptional/"/>
-    
-      <category term="感叹号" scheme="http://swift.diagon.me/tags/%E6%84%9F%E5%8F%B9%E5%8F%B7/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Swift 中的 final 修饰符</title>
-    <link href="http://swift.diagon.me/final/"/>
-    <id>http://swift.diagon.me/final/</id>
-    <published>2017-02-04T16:00:00.000Z</published>
-    <updated>2017-02-12T02:02:37.000Z</updated>
-    
-    <content type="html"><![CDATA[<p><a href="http://swift.diagon.me/static-class/">《Swift 中的 static 和 class 关键字》</a>一文中提及：「使用 <code>static</code> 修饰的类方法和类属性无法在子类中重载。也就是说 <code>static</code> 修饰的类方法和类属性包含了 <code>final</code> 关键字的特性。相当于 <code>final class</code> 。」，本文将详细介绍 <code>final</code> 的作用。</p>
+    <item>
+      <title>Swift 中的 final 修饰符</title>
+      <link>http://swift.diagon.me/final/</link>
+      <guid>http://swift.diagon.me/final/</guid>
+      <pubDate>Sat, 04 Feb 2017 16:00:00 GMT</pubDate>
+      <description>
+      
+        &lt;p&gt;&lt;a href=&quot;http://swift.diagon.me/static-class/&quot;&gt;《Swift 中的 static 和 class 关键字》&lt;/a&gt;一文中提及：「使用 &lt;code&gt;static&lt;/code&gt; 修饰的类方法和类属性无法在子类中重载。也就是说 &lt;co
+      
+      </description>
+      
+      <content:encoded><![CDATA[<p><a href="http://swift.diagon.me/static-class/">《Swift 中的 static 和 class 关键字》</a>一文中提及：「使用 <code>static</code> 修饰的类方法和类属性无法在子类中重载。也就是说 <code>static</code> 修饰的类方法和类属性包含了 <code>final</code> 关键字的特性。相当于 <code>final class</code> 。」，本文将详细介绍 <code>final</code> 的作用。</p>
 <h3 id="final-的特性"><a href="#final-的特性" class="headerlink" title="final 的特性"></a>final 的特性</h3><p>当使用 <code>final</code> 修饰符修饰 <code>class</code> 的方法 属性 下标时，可以防止他们被重写。例如：<code>final var</code>，<code>final func</code>，<code>final class func</code>，<code>final subscript</code>。</p>
 <p>当你试图重写被 <code>fianl</code> 修饰的东西时，编译时会报错。</p>
 <p>在申明 <code>class</code> 时，在 <code>calss</code> 之前添加 <code>final</code>，可以标记整个类为 <code>final</code>，如果你尝试继承这个类，编译时会报错。</p>
@@ -497,35 +389,23 @@
 <li>子类继承或重载会产生风险。你开发的类库基于某些基本因子，如果基本因子含义被改变，可能会导致功能失效。</li>
 </ol>
 <hr>
-<div style="text-align: center"><br>关注公众号（ID：SwiftBetter），进一步探讨主题<br><br><br>每日精选高清题图，可做壁纸<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>]]></content>
+<div style="text-align: center"><br>关注公众号（ID：SwiftBetter），进一步探讨主题<br><br><br>每日精选高清题图，可做壁纸<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>]]></content:encoded>
+      
+      <comments>http://swift.diagon.me/final/#disqus_thread</comments>
+    </item>
     
-    <summary type="html">
-    
-      &lt;p&gt;&lt;a href=&quot;http://swift.diagon.me/static-class/&quot;&gt;《Swift 中的 static 和 class 关键字》&lt;/a&gt;一文中提及：「使用 &lt;code&gt;static&lt;/code&gt; 修饰的类方法和类属性无法在子类中重载。也就是说 &lt;co
-    
-    </summary>
-    
-      <category term="修饰符" scheme="http://swift.diagon.me/categories/%E4%BF%AE%E9%A5%B0%E7%AC%A6/"/>
-    
-    
-      <category term="class" scheme="http://swift.diagon.me/tags/class/"/>
-    
-      <category term="final" scheme="http://swift.diagon.me/tags/final/"/>
-    
-      <category term="继承" scheme="http://swift.diagon.me/tags/%E7%BB%A7%E6%89%BF/"/>
-    
-      <category term="子类" scheme="http://swift.diagon.me/tags/%E5%AD%90%E7%B1%BB/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Optional Chaining 陷阱</title>
-    <link href="http://swift.diagon.me/optional-chaining-issue/"/>
-    <id>http://swift.diagon.me/optional-chaining-issue/</id>
-    <published>2017-02-03T16:00:00.000Z</published>
-    <updated>2017-02-12T02:01:49.000Z</updated>
-    
-    <content type="html"><![CDATA[<p><a href="http://swift.diagon.me/optional-chaining/">《Swift 中的 Optional Chaining》</a>讲述了 <code>Optional Chaining</code>（可选链） 的基本用法和需要注意的问题。这篇文章我们深入探索一下更多可能会面临的问题。</p>
+    <item>
+      <title>Optional Chaining 陷阱</title>
+      <link>http://swift.diagon.me/optional-chaining-issue/</link>
+      <guid>http://swift.diagon.me/optional-chaining-issue/</guid>
+      <pubDate>Fri, 03 Feb 2017 16:00:00 GMT</pubDate>
+      <description>
+      
+        &lt;p&gt;&lt;a href=&quot;http://swift.diagon.me/optional-chaining/&quot;&gt;《Swift 中的 Optional Chaining》&lt;/a&gt;讲述了 &lt;code&gt;Optional Chaining&lt;/code&gt;（可选链） 的基本用法和需要注意的问题
+      
+      </description>
+      
+      <content:encoded><![CDATA[<p><a href="http://swift.diagon.me/optional-chaining/">《Swift 中的 Optional Chaining》</a>讲述了 <code>Optional Chaining</code>（可选链） 的基本用法和需要注意的问题。这篇文章我们深入探索一下更多可能会面临的问题。</p>
 <p>给 <code>Residence</code> 类增加方法：</p>
 <figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">printNumberOfRooms</span><span class="params">()</span></span> &#123;</div><div class="line">    <span class="built_in">print</span>(<span class="string">"The number of rooms is <span class="subst">\(numberOfRooms)</span>"</span>)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>这个方法没有返回值。实际上没有返回值的方法依然返回了值，一个特殊的 <code>Void</code>值。它其实是一个空的元组，可以写成<code>()</code>。</p>
@@ -539,33 +419,23 @@
 <p><code>residence</code> 存在时，<code>result</code>为一个空的元组<code>()</code>，即 <code>Void</code>。</p>
 <hr>
 <div style="text-align: center"><br>关注公众号（ID：SwiftBetter），进一步探讨主题<br><br><br>每日精选高清题图，可做壁纸<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>
-]]></content>
+]]></content:encoded>
+      
+      <comments>http://swift.diagon.me/optional-chaining-issue/#disqus_thread</comments>
+    </item>
     
-    <summary type="html">
-    
-      &lt;p&gt;&lt;a href=&quot;http://swift.diagon.me/optional-chaining/&quot;&gt;《Swift 中的 Optional Chaining》&lt;/a&gt;讲述了 &lt;code&gt;Optional Chaining&lt;/code&gt;（可选链） 的基本用法和需要注意的问题
-    
-    </summary>
-    
-      <category term="Optional" scheme="http://swift.diagon.me/categories/Optional/"/>
-    
-    
-      <category term="Optional Chaining" scheme="http://swift.diagon.me/tags/Optional-Chaining/"/>
-    
-      <category term="可选链" scheme="http://swift.diagon.me/tags/%E5%8F%AF%E9%80%89%E9%93%BE/"/>
-    
-      <category term="Optional" scheme="http://swift.diagon.me/tags/Optional/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Swift 中的 Optional Chaining</title>
-    <link href="http://swift.diagon.me/optional-chaining/"/>
-    <id>http://swift.diagon.me/optional-chaining/</id>
-    <published>2017-02-02T16:00:00.000Z</published>
-    <updated>2017-02-12T02:01:42.000Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="Optional-Chaining-的基本用法"><a href="#Optional-Chaining-的基本用法" class="headerlink" title="Optional Chaining 的基本用法"></a>Optional Chaining 的基本用法</h3><p><code>Optional Chaining</code> (可选链) 中任何一个节点为 <code>nil</code> 时，则整个链条失效，返回 nil。因此，即使链条最后的属性、方法、下标调用返回的结果不是 <code>Optional</code> 类型的，整个链条返回的结果也是 <code>Optional</code> 类型的。</p>
+    <item>
+      <title>Swift 中的 Optional Chaining</title>
+      <link>http://swift.diagon.me/optional-chaining/</link>
+      <guid>http://swift.diagon.me/optional-chaining/</guid>
+      <pubDate>Thu, 02 Feb 2017 16:00:00 GMT</pubDate>
+      <description>
+      
+        &lt;h3 id=&quot;Optional-Chaining-的基本用法&quot;&gt;&lt;a href=&quot;#Optional-Chaining-的基本用法&quot; class=&quot;headerlink&quot; title=&quot;Optional Chaining 的基本用法&quot;&gt;&lt;/a&gt;Optional Chaining
+      
+      </description>
+      
+      <content:encoded><![CDATA[<h3 id="Optional-Chaining-的基本用法"><a href="#Optional-Chaining-的基本用法" class="headerlink" title="Optional Chaining 的基本用法"></a>Optional Chaining 的基本用法</h3><p><code>Optional Chaining</code> (可选链) 中任何一个节点为 <code>nil</code> 时，则整个链条失效，返回 nil。因此，即使链条最后的属性、方法、下标调用返回的结果不是 <code>Optional</code> 类型的，整个链条返回的结果也是 <code>Optional</code> 类型的。</p>
 <p>换而言之，<code>Optional Chaining</code> 会将原本返回的结果包装为 <code>Optional</code>。一个原本返回 <code>Int</code> 的方法会返回 <code>Int？</code>。</p>
 <figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span> </span>&#123;</div><div class="line">    <span class="keyword">var</span> residence: <span class="type">Residence</span>?</div><div class="line">&#125;</div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Residence</span> </span>&#123;</div><div class="line">    <span class="keyword">var</span> numberOfRooms = <span class="number">1</span></div><div class="line">    <span class="keyword">var</span> colorForFirstRoom:<span class="type">String</span>?</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">func</span> <span class="title">roomName</span><span class="params">()</span></span> -&gt; <span class="type">String</span>?&#123;</div><div class="line">    	<span class="keyword">return</span> <span class="string">"name"</span></div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"><span class="keyword">let</span> john = <span class="type">Person</span>()</div><div class="line"><span class="comment">//john.residence = Residence()</span></div><div class="line"></div><div class="line"><span class="keyword">let</span> roomCount = john.residence?.numberOfRooms</div></pre></td></tr></table></figure>
 <p>虽然 numberOfRooms 的类型是 <code>Int</code>，但此时得到的 roomCount 的类型是 <code>Int?</code>。与此类似，调用返回值为 <code>Int</code> 类型的方法时，最终得到的结果是 <code>Int?</code>。</p>
@@ -580,33 +450,23 @@
 <p>“Dave” 数组现在是 [91, 82, 84]，”Bev” 数组现在是 [80, 94, 81]，testScores字典中没有”Brian”这个键，所以第三个调用失败。</p>
 <h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>记住一句话:使用 <code>Optional Chaining</code> 所得到的东西一定是 <code>Optional</code>类型的。</p>
 <hr>
-<div style="text-align: center"><br>关注公众号（ID：SwiftBetter），进一步探讨主题<br><br><br>每日精选高清题图，可做壁纸<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>]]></content>
+<div style="text-align: center"><br>关注公众号（ID：SwiftBetter），进一步探讨主题<br><br><br>每日精选高清题图，可做壁纸<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>]]></content:encoded>
+      
+      <comments>http://swift.diagon.me/optional-chaining/#disqus_thread</comments>
+    </item>
     
-    <summary type="html">
-    
-      &lt;h3 id=&quot;Optional-Chaining-的基本用法&quot;&gt;&lt;a href=&quot;#Optional-Chaining-的基本用法&quot; class=&quot;headerlink&quot; title=&quot;Optional Chaining 的基本用法&quot;&gt;&lt;/a&gt;Optional Chaining
-    
-    </summary>
-    
-      <category term="Optional" scheme="http://swift.diagon.me/categories/Optional/"/>
-    
-    
-      <category term="Optiional" scheme="http://swift.diagon.me/tags/Optiional/"/>
-    
-      <category term="Optional Chaining" scheme="http://swift.diagon.me/tags/Optional-Chaining/"/>
-    
-      <category term="可选链" scheme="http://swift.diagon.me/tags/%E5%8F%AF%E9%80%89%E9%93%BE/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Swift 中的可选协议方法</title>
-    <link href="http://swift.diagon.me/protocol-mutable-method/"/>
-    <id>http://swift.diagon.me/protocol-mutable-method/</id>
-    <published>2017-02-01T16:00:00.000Z</published>
-    <updated>2017-02-12T01:59:36.000Z</updated>
-    
-    <content type="html"><![CDATA[<p><a href="http://swift.diagon.me/delegate-weak/">《Swift 中的 delegate 设计模式如何使用 weak 引用》</a>一文中还留有一个小尾巴。Cocoa 框架中大量使用了 delegate 设计模式，很多 delegate 方法都是可选的。而 Swift 中的  protocol 中的协议方法必须被实现，否则编译器会报错。</p>
+    <item>
+      <title>Swift 中的可选协议方法</title>
+      <link>http://swift.diagon.me/protocol-mutable-method/</link>
+      <guid>http://swift.diagon.me/protocol-mutable-method/</guid>
+      <pubDate>Wed, 01 Feb 2017 16:00:00 GMT</pubDate>
+      <description>
+      
+        &lt;p&gt;&lt;a href=&quot;http://swift.diagon.me/delegate-weak/&quot;&gt;《Swift 中的 delegate 设计模式如何使用 weak 引用》&lt;/a&gt;一文中还留有一个小尾巴。Cocoa 框架中大量使用了 delegate 设计模式，很多 deleg
+      
+      </description>
+      
+      <content:encoded><![CDATA[<p><a href="http://swift.diagon.me/delegate-weak/">《Swift 中的 delegate 设计模式如何使用 weak 引用》</a>一文中还留有一个小尾巴。Cocoa 框架中大量使用了 delegate 设计模式，很多 delegate 方法都是可选的。而 Swift 中的  protocol 中的协议方法必须被实现，否则编译器会报错。</p>
 <h2 id="协议可选方法的实现"><a href="#协议可选方法的实现" class="headerlink" title="协议可选方法的实现"></a>协议可选方法的实现</h2><h3 id="NSObjectProtocol-与-objc"><a href="#NSObjectProtocol-与-objc" class="headerlink" title="NSObjectProtocol 与 @objc"></a>NSObjectProtocol 与 @objc</h3><p>我们最常使用的 <code>UITableViewDataSource</code> 中，除了 <code>numberOfRowsInSection</code> 和 <code>cellForRowAtindexPath</code> 两个必须实现的方法，其他方法都是可选方法。     </p>
 <p>以下为 Cocoa 框架对协议可选方法的实现：</p>
 <figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">protocol</span> <span class="title">UITableViewDataSource</span> : <span class="title">NSObjectProtocol</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">func</span> <span class="title">tableView</span><span class="params">(<span class="number">_</span> tableView: UITableView, numberOfRowsInSection section: Int)</span></span> -&gt; <span class="type">Int</span></div><div class="line"></div><div class="line">    <span class="keyword">optional</span> <span class="keyword">public</span> <span class="function"><span class="keyword">func</span> <span class="title">numberOfSections</span><span class="params">(<span class="keyword">in</span> tableView: UITableView)</span></span> -&gt; <span class="type">Int</span>  </div><div class="line">&#125;</div></pre></td></tr></table></figure>
@@ -622,35 +482,23 @@
 <p>而使用协议扩展实现协议可选方法，因为可选方法实际上已经被实现了，所以只需要这样写：</p>
 <figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">delegate?.optionalMethod()</div></pre></td></tr></table></figure>
 <hr>
-<div style="text-align: center"><br>关注公众号（ID：SwiftBetter），进一步探讨主题<br><br><br>每日精选高清题图，可做壁纸<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>]]></content>
+<div style="text-align: center"><br>关注公众号（ID：SwiftBetter），进一步探讨主题<br><br><br>每日精选高清题图，可做壁纸<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>]]></content:encoded>
+      
+      <comments>http://swift.diagon.me/protocol-mutable-method/#disqus_thread</comments>
+    </item>
     
-    <summary type="html">
-    
-      &lt;p&gt;&lt;a href=&quot;http://swift.diagon.me/delegate-weak/&quot;&gt;《Swift 中的 delegate 设计模式如何使用 weak 引用》&lt;/a&gt;一文中还留有一个小尾巴。Cocoa 框架中大量使用了 delegate 设计模式，很多 deleg
-    
-    </summary>
-    
-      <category term="协议" scheme="http://swift.diagon.me/categories/%E5%8D%8F%E8%AE%AE/"/>
-    
-    
-      <category term="protocol" scheme="http://swift.diagon.me/tags/protocol/"/>
-    
-      <category term="objc" scheme="http://swift.diagon.me/tags/objc/"/>
-    
-      <category term="extension" scheme="http://swift.diagon.me/tags/extension/"/>
-    
-      <category term="可选协议" scheme="http://swift.diagon.me/tags/%E5%8F%AF%E9%80%89%E5%8D%8F%E8%AE%AE/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Swift 中 delegate 设计模式使用 weak 避免循环引用</title>
-    <link href="http://swift.diagon.me/delegate-weak/"/>
-    <id>http://swift.diagon.me/delegate-weak/</id>
-    <published>2017-01-31T16:00:00.000Z</published>
-    <updated>2017-02-14T01:01:07.000Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="delegate-模式"><a href="#delegate-模式" class="headerlink" title="delegate 模式"></a>delegate 模式</h2><p>Delegate 是 Cocoa 框架中的一种常见设计模式，这种模式有利于代码解耦合，在iOS开发中经常被使用。</p>
+    <item>
+      <title>Swift 中 delegate 设计模式使用 weak 避免循环引用</title>
+      <link>http://swift.diagon.me/delegate-weak/</link>
+      <guid>http://swift.diagon.me/delegate-weak/</guid>
+      <pubDate>Tue, 31 Jan 2017 16:00:00 GMT</pubDate>
+      <description>
+      
+        &lt;h2 id=&quot;delegate-模式&quot;&gt;&lt;a href=&quot;#delegate-模式&quot; class=&quot;headerlink&quot; title=&quot;delegate 模式&quot;&gt;&lt;/a&gt;delegate 模式&lt;/h2&gt;&lt;p&gt;Delegate 是 Cocoa 框架中的一种常见设计模式，这种模式
+      
+      </description>
+      
+      <content:encoded><![CDATA[<h2 id="delegate-模式"><a href="#delegate-模式" class="headerlink" title="delegate 模式"></a>delegate 模式</h2><p>Delegate 是 Cocoa 框架中的一种常见设计模式，这种模式有利于代码解耦合，在iOS开发中经常被使用。</p>
 <p>使用 delegate 一般分为4个步骤：</p>
 <ol>
 <li>创建一个 delegate protocol</li>
@@ -674,41 +522,23 @@
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>在纯 Swift 项目中建议用 <code>delegate: class</code> 这样的方式标记 protocol 为只能被 class 使用。因为这种方式直指问题本质。</p>
 <p>另外，这个问题也从另一方面说明我们应该多使用值类型，值类型可以很好的避免循环引用问题。使用值类型时值会被拷贝，所以不会出现这样的内存泄露问题。但是我们又不得不使用 Cocoa 框架。</p>
 <hr>
-<div style="text-align: center"><br>关注公众号（ID：SwiftBetter），进一步探讨主题<br><br><br>每日精选高清题图，可做壁纸<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>]]></content>
+<div style="text-align: center"><br>关注公众号（ID：SwiftBetter），进一步探讨主题<br><br><br>每日精选高清题图，可做壁纸<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>]]></content:encoded>
+      
+      <comments>http://swift.diagon.me/delegate-weak/#disqus_thread</comments>
+    </item>
     
-    <summary type="html">
-    
-      &lt;h2 id=&quot;delegate-模式&quot;&gt;&lt;a href=&quot;#delegate-模式&quot; class=&quot;headerlink&quot; title=&quot;delegate 模式&quot;&gt;&lt;/a&gt;delegate 模式&lt;/h2&gt;&lt;p&gt;Delegate 是 Cocoa 框架中的一种常见设计模式，这种模式
-    
-    </summary>
-    
-      <category term="协议" scheme="http://swift.diagon.me/categories/%E5%8D%8F%E8%AE%AE/"/>
-    
-    
-      <category term="class" scheme="http://swift.diagon.me/tags/class/"/>
-    
-      <category term="protocol" scheme="http://swift.diagon.me/tags/protocol/"/>
-    
-      <category term="objc" scheme="http://swift.diagon.me/tags/objc/"/>
-    
-      <category term="delegate" scheme="http://swift.diagon.me/tags/delegate/"/>
-    
-      <category term="weak" scheme="http://swift.diagon.me/tags/weak/"/>
-    
-      <category term="循环引用" scheme="http://swift.diagon.me/tags/%E5%BE%AA%E7%8E%AF%E5%BC%95%E7%94%A8/"/>
-    
-      <category term="弱引用" scheme="http://swift.diagon.me/tags/%E5%BC%B1%E5%BC%95%E7%94%A8/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>使用 Last-Modified 和 Etag 精确控制缓存失效时机</title>
-    <link href="http://swift.diagon.me/last-modified-etag/"/>
-    <id>http://swift.diagon.me/last-modified-etag/</id>
-    <published>2017-01-30T16:00:00.000Z</published>
-    <updated>2017-02-08T07:34:48.000Z</updated>
-    
-    <content type="html"><![CDATA[<p><a href="http://swift.diagon.me/urlcache-http/">《iOS 开发中常用的缓存策略：HTTP 协议篇》</a> 一文中说到 Cache-control 含有 no-cache 时需要进一步验证缓存有效性。一般使用的验证机制有 Last-Modified 和 ETag。</p>
+    <item>
+      <title>使用 Last-Modified 和 Etag 精确控制缓存失效时机</title>
+      <link>http://swift.diagon.me/last-modified-etag/</link>
+      <guid>http://swift.diagon.me/last-modified-etag/</guid>
+      <pubDate>Mon, 30 Jan 2017 16:00:00 GMT</pubDate>
+      <description>
+      
+        &lt;p&gt;&lt;a href=&quot;http://swift.diagon.me/urlcache-http/&quot;&gt;《iOS 开发中常用的缓存策略：HTTP 协议篇》&lt;/a&gt; 一文中说到 Cache-control 含有 no-cache 时需要进一步验证缓存有效性。一般使用的验证机制有 La
+      
+      </description>
+      
+      <content:encoded><![CDATA[<p><a href="http://swift.diagon.me/urlcache-http/">《iOS 开发中常用的缓存策略：HTTP 协议篇》</a> 一文中说到 Cache-control 含有 no-cache 时需要进一步验证缓存有效性。一般使用的验证机制有 Last-Modified 和 ETag。</p>
 <h2 id="Last-Modified"><a href="#Last-Modified" class="headerlink" title="Last-Modified"></a>Last-Modified</h2><p>Last-Modified 在服务器返回的响应头中，标识资源的最后修改时间。相对应的客户端的请求头中有 If-Modified-Since ，标识客户端所记录的，资源的最后修改时间，值为最后一次请求时返回的 Last-Modified 字段的值。</p>
 <p>第一次请求某一个URL时，服务器端的返回状态会是200，内容是你请求的资源，同时响应头中含有 Last-Modified ，格式类似这样：<code>Last-Modified: Fri, 12 May 2006 18:53:33 GMT</code> 。客户端第二次请求此 URL 时，根据 HTTP 协议的规定，客户端向服务器传送 If-Modified-Since 报头，格式类似这样： <code>If-Modified-Since: Fri, 12 May 2006 18:53:33 GMT</code> 。如果服务端的资源没有变化，则自动返回304状态码 <code>Not Changed</code>，内容为空，客户端就直接使用本地的缓存。当服务器端代码发生改变或者重启服务器时，则重新发出资源，返回和第一次请求时类似。这样就可以保证不向客户端重复发出资源，也保证当服务器有变化时，客户端能够得到最新的资源。</p>
 <h2 id="ETag"><a href="#ETag" class="headerlink" title="ETag"></a>ETag</h2><p>Etag 在服务器返回的响应头中，是资源的唯一标识符。相对应的客户端的请求头中有 If-None-Match ，标识客户端所记录的，资源的唯一标识符，值为最后一次请求时返回的 Etag 字段的值。</p>
@@ -717,35 +547,24 @@
 <p>如果想自己用代码处理 Last-Modified 和 ETag，那么缓存策略则必须使用  <code>NSURLRequestReloadIgnoringCacheData</code>，忽略缓存，每次都要向服务端进行校验。然后再用代码判断是否使用缓存。</p>
 <p>另外如果更新频率较高，比如微博消息列表、一般的处理方式是添加一个接口，客户端将本地缓存的最后一条数据的的时间戳或 id 传给服务端，然后服务端返回新增的数据，没有新数据则返回 nil 或 304。</p>
 <hr>
-<div style="text-align: center"><br>关注公众号（ID：SwiftBetter），进一步探讨主题<br><br><br>每日精选高清题图，可做壁纸<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>]]></content>
+<div style="text-align: center"><br>关注公众号（ID：SwiftBetter），进一步探讨主题<br><br><br>每日精选高清题图，可做壁纸<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>]]></content:encoded>
+      
+      <comments>http://swift.diagon.me/last-modified-etag/#disqus_thread</comments>
+    </item>
     
-    <summary type="html">
-    
-      &lt;p&gt;&lt;a href=&quot;http://swift.diagon.me/urlcache-http/&quot;&gt;《iOS 开发中常用的缓存策略：HTTP 协议篇》&lt;/a&gt; 一文中说到 Cache-control 含有 no-cache 时需要进一步验证缓存有效性。一般使用的验证机制有 La
-    
-    </summary>
-    
-      <category term="网络缓存" scheme="http://swift.diagon.me/categories/%E7%BD%91%E7%BB%9C%E7%BC%93%E5%AD%98/"/>
-    
-    
-      <category term="网络缓存" scheme="http://swift.diagon.me/tags/%E7%BD%91%E7%BB%9C%E7%BC%93%E5%AD%98/"/>
-    
-      <category term="no-cache" scheme="http://swift.diagon.me/tags/no-cache/"/>
-    
-      <category term="Last-Modified" scheme="http://swift.diagon.me/tags/Last-Modified/"/>
-    
-      <category term="ETag" scheme="http://swift.diagon.me/tags/ETag/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>URLCache 与 CachedURLResponse</title>
-    <link href="http://swift.diagon.me/urlcache-cachedurlresponse/"/>
-    <id>http://swift.diagon.me/urlcache-cachedurlresponse/</id>
-    <published>2017-01-29T16:00:00.000Z</published>
-    <updated>2017-02-08T07:34:35.000Z</updated>
-    
-    <content type="html"><![CDATA[<p><a href="http://swift.diagon.me/urlcache-condiguration/">《iOS 开发中 URLCache 的应用》</a>中介绍了 URLCache 的使用方法。本文将进一步讲解 URLCache 更加深层次的用法。 </p>
+    <item>
+      <title>URLCache 与 CachedURLResponse</title>
+      <link>http://swift.diagon.me/urlcache-cachedurlresponse/</link>
+      <guid>http://swift.diagon.me/urlcache-cachedurlresponse/</guid>
+      <pubDate>Sun, 29 Jan 2017 16:00:00 GMT</pubDate>
+      <description>
+      
+        &lt;p&gt;&lt;a href=&quot;http://swift.diagon.me/urlcache-condiguration/&quot;&gt;《iOS 开发中 URLCache 的应用》&lt;/a&gt;中介绍了 URLCache 的使用方法。本文将进一步讲解 URLCache 更加深层次的用法。 &lt;/p&gt;
+&lt;
+      
+      </description>
+      
+      <content:encoded><![CDATA[<p><a href="http://swift.diagon.me/urlcache-condiguration/">《iOS 开发中 URLCache 的应用》</a>中介绍了 URLCache 的使用方法。本文将进一步讲解 URLCache 更加深层次的用法。 </p>
 <h2 id="CachedURLResponse"><a href="#CachedURLResponse" class="headerlink" title="CachedURLResponse"></a>CachedURLResponse</h2><p>CachedURLResponse 包含了一个服务端响应 metadata 的 URLResponse 和 一个包含实际存储数据 的 Data。</p>
 <h3 id="存取方法"><a href="#存取方法" class="headerlink" title="存取方法"></a>存取方法</h3><p>URLCache将 URLRequest/URLSessionDataTask 和 CachedURLResponse 进行了映射。</p>
 <p>得到和存储缓存对象的方法：</p>
@@ -759,34 +578,23 @@
 <figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="type">URLCache</span>.shared.removeAllCachedResponses()</div></pre></td></tr></table></figure>
 <h2 id="线程安全"><a href="#线程安全" class="headerlink" title="线程安全"></a>线程安全</h2><p>在 iOS8 之后 URLCache 是线程安全的。尽管 URLCache 实例方法能够安全的被多个执行上下文同时调用，还是要注意有些方法的使用。比如使用 <code>cacheResponse(for:)</code> 和 <code>storeCachedResponse(_:for:)</code> 在同一个 request 中存取响应，不可避免的会出现竞争条件。URLCache的子类必须实现线程安全的方法重载。</p>
 <hr>
-<div style="text-align: center"><br>关注公众号（ID：SwiftBetter），进一步探讨主题<br><br><br>每日精选高清题图，可做壁纸<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>]]></content>
+<div style="text-align: center"><br>关注公众号（ID：SwiftBetter），进一步探讨主题<br><br><br>每日精选高清题图，可做壁纸<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>]]></content:encoded>
+      
+      <comments>http://swift.diagon.me/urlcache-cachedurlresponse/#disqus_thread</comments>
+    </item>
     
-    <summary type="html">
-    
-      &lt;p&gt;&lt;a href=&quot;http://swift.diagon.me/urlcache-condiguration/&quot;&gt;《iOS 开发中 URLCache 的应用》&lt;/a&gt;中介绍了 URLCache 的使用方法。本文将进一步讲解 URLCache 更加深层次的用法。 &lt;/p&gt;
-&lt;
-    
-    </summary>
-    
-      <category term="网络缓存" scheme="http://swift.diagon.me/categories/%E7%BD%91%E7%BB%9C%E7%BC%93%E5%AD%98/"/>
-    
-    
-      <category term="URLCache" scheme="http://swift.diagon.me/tags/URLCache/"/>
-    
-      <category term="缓存" scheme="http://swift.diagon.me/tags/%E7%BC%93%E5%AD%98/"/>
-    
-      <category term="CachedURLResponse" scheme="http://swift.diagon.me/tags/CachedURLResponse/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>iOS 开发中常用的缓存策略：验证篇</title>
-    <link href="http://swift.diagon.me/urlcache-cache-control/"/>
-    <id>http://swift.diagon.me/urlcache-cache-control/</id>
-    <published>2017-01-28T16:00:00.000Z</published>
-    <updated>2017-02-08T07:34:10.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>前两篇文章( <a href="http://swift.diagon.me/urlcache-cache-control/">《iOS 开发中常用的缓存策略：客户端篇》</a>、<a href="http://swift.diagon.me/urlcache-http/">《iOS 开发中常用的缓存策略：HTTP 协议篇》</a> )中，我们详细描述了 iOS 的缓存策略。目前网上中文资料对这块的讲解大多有误，本文我们对各种可能的情况做一个验证。</p>
+    <item>
+      <title>iOS 开发中常用的缓存策略：验证篇</title>
+      <link>http://swift.diagon.me/urlcache-cache-control/</link>
+      <guid>http://swift.diagon.me/urlcache-cache-control/</guid>
+      <pubDate>Sat, 28 Jan 2017 16:00:00 GMT</pubDate>
+      <description>
+      
+        &lt;p&gt;前两篇文章( &lt;a href=&quot;http://swift.diagon.me/urlcache-cache-control/&quot;&gt;《iOS 开发中常用的缓存策略：客户端篇》&lt;/a&gt;、&lt;a href=&quot;http://swift.diagon.me/urlcache-http/&quot;
+      
+      </description>
+      
+      <content:encoded><![CDATA[<p>前两篇文章( <a href="http://swift.diagon.me/urlcache-cache-control/">《iOS 开发中常用的缓存策略：客户端篇》</a>、<a href="http://swift.diagon.me/urlcache-http/">《iOS 开发中常用的缓存策略：HTTP 协议篇》</a> )中，我们详细描述了 iOS 的缓存策略。目前网上中文资料对这块的讲解大多有误，本文我们对各种可能的情况做一个验证。</p>
 <h2 id="本地缓存位置"><a href="#本地缓存位置" class="headerlink" title="本地缓存位置"></a>本地缓存位置</h2><p>缓存存储在 APP 沙盒中 Library/Caches/bundid 目录下的 Cache.db 中。<br>使用模拟器调试时，可以使用下列代码打印出沙盒路径。</p>
 <figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> path = <span class="type">NSSearchPathForDirectoriesInDomains</span>(.libraryDirectory, .userDomainMask, <span class="literal">true</span>)</div><div class="line"><span class="keyword">let</span> pathDocuments = path[<span class="number">0</span>]</div><div class="line"><span class="built_in">print</span>(pathDocuments)</div></pre></td></tr></table></figure>
 <h2 id="验证方式"><a href="#验证方式" class="headerlink" title="验证方式"></a>验证方式</h2><p>使用抓包工具 Charles 制造一个虚拟的响应。使用 Map Local 制造响应体，使用 Rewrite 制造响应头。</p>
@@ -861,35 +669,23 @@
 <li>本地缓存策略为其他值，忽略 Cache-Control 中指定的缓存使用方式，使用缓存的方式由本地缓存策略决定。</li>
 </ol>
 <hr>
-<div style="text-align: center"><br>关注公众号（ID：SwiftBetter），进一步探讨主题<br><br><br>每日精选高清题图，可做壁纸<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>]]></content>
+<div style="text-align: center"><br>关注公众号（ID：SwiftBetter），进一步探讨主题<br><br><br>每日精选高清题图，可做壁纸<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>]]></content:encoded>
+      
+      <comments>http://swift.diagon.me/urlcache-cache-control/#disqus_thread</comments>
+    </item>
     
-    <summary type="html">
-    
-      &lt;p&gt;前两篇文章( &lt;a href=&quot;http://swift.diagon.me/urlcache-cache-control/&quot;&gt;《iOS 开发中常用的缓存策略：客户端篇》&lt;/a&gt;、&lt;a href=&quot;http://swift.diagon.me/urlcache-http/&quot;
-    
-    </summary>
-    
-      <category term="网络缓存" scheme="http://swift.diagon.me/categories/%E7%BD%91%E7%BB%9C%E7%BC%93%E5%AD%98/"/>
-    
-    
-      <category term="缓存策略" scheme="http://swift.diagon.me/tags/%E7%BC%93%E5%AD%98%E7%AD%96%E7%95%A5/"/>
-    
-      <category term="CachePlicy" scheme="http://swift.diagon.me/tags/CachePlicy/"/>
-    
-      <category term="HTTP" scheme="http://swift.diagon.me/tags/HTTP/"/>
-    
-      <category term="Cache-Control" scheme="http://swift.diagon.me/tags/Cache-Control/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>iOS 开发中常用的缓存策略：HTTP 协议篇</title>
-    <link href="http://swift.diagon.me/urlcache-http/"/>
-    <id>http://swift.diagon.me/urlcache-http/</id>
-    <published>2017-01-27T16:00:00.000Z</published>
-    <updated>2017-02-08T07:33:27.000Z</updated>
-    
-    <content type="html"><![CDATA[<p><a href="http://swift.diagon.me/urlcache-cachePolicy/">《iOS 开发中常用的缓存策略：客户端篇》</a>一文中我们提到 iOS 中 URL 加载系统默认的缓存策略使用当前 URL 的协议中的缓存策略。本文只关注 HTTP 协议中的缓存策略。</p>
+    <item>
+      <title>iOS 开发中常用的缓存策略：HTTP 协议篇</title>
+      <link>http://swift.diagon.me/urlcache-http/</link>
+      <guid>http://swift.diagon.me/urlcache-http/</guid>
+      <pubDate>Fri, 27 Jan 2017 16:00:00 GMT</pubDate>
+      <description>
+      
+        &lt;p&gt;&lt;a href=&quot;http://swift.diagon.me/urlcache-cachePolicy/&quot;&gt;《iOS 开发中常用的缓存策略：客户端篇》&lt;/a&gt;一文中我们提到 iOS 中 URL 加载系统默认的缓存策略使用当前 URL 的协议中的缓存策略。本文只关注 HTT
+      
+      </description>
+      
+      <content:encoded><![CDATA[<p><a href="http://swift.diagon.me/urlcache-cachePolicy/">《iOS 开发中常用的缓存策略：客户端篇》</a>一文中我们提到 iOS 中 URL 加载系统默认的缓存策略使用当前 URL 的协议中的缓存策略。本文只关注 HTTP 协议中的缓存策略。</p>
 <p>实际上 HTTP 协议中的缓存策略可以分为三部分：</p>
 <ol>
 <li>缓存存储策略</li>
@@ -919,35 +715,23 @@
 </li>
 </ol>
 <hr>
-<div style="text-align: center"><br>关注公众号（ID：SwiftBetter），进一步探讨主题<br><br><br>每日精选高清题图，可做壁纸<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>]]></content>
+<div style="text-align: center"><br>关注公众号（ID：SwiftBetter），进一步探讨主题<br><br><br>每日精选高清题图，可做壁纸<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>]]></content:encoded>
+      
+      <comments>http://swift.diagon.me/urlcache-http/#disqus_thread</comments>
+    </item>
     
-    <summary type="html">
-    
-      &lt;p&gt;&lt;a href=&quot;http://swift.diagon.me/urlcache-cachePolicy/&quot;&gt;《iOS 开发中常用的缓存策略：客户端篇》&lt;/a&gt;一文中我们提到 iOS 中 URL 加载系统默认的缓存策略使用当前 URL 的协议中的缓存策略。本文只关注 HTT
-    
-    </summary>
-    
-      <category term="网络缓存" scheme="http://swift.diagon.me/categories/%E7%BD%91%E7%BB%9C%E7%BC%93%E5%AD%98/"/>
-    
-    
-      <category term="缓存策略" scheme="http://swift.diagon.me/tags/%E7%BC%93%E5%AD%98%E7%AD%96%E7%95%A5/"/>
-    
-      <category term="CachePlicy" scheme="http://swift.diagon.me/tags/CachePlicy/"/>
-    
-      <category term="HTTP" scheme="http://swift.diagon.me/tags/HTTP/"/>
-    
-      <category term="Cache-Control" scheme="http://swift.diagon.me/tags/Cache-Control/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>iOS 开发中常用的缓存策略：客户端篇</title>
-    <link href="http://swift.diagon.me/urlcache-cachePolicy/"/>
-    <id>http://swift.diagon.me/urlcache-cachePolicy/</id>
-    <published>2017-01-26T16:00:00.000Z</published>
-    <updated>2017-02-08T07:33:11.000Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="几种客户端缓存策略"><a href="#几种客户端缓存策略" class="headerlink" title="几种客户端缓存策略"></a>几种客户端缓存策略</h2><p>我们在<a href="http://swift.diagon.me/urlcache-condiguration/">《iOS 开发中 URLCache 的应用》</a>一文中讨论了 URLCache 的构建。</p>
+    <item>
+      <title>iOS 开发中常用的缓存策略：客户端篇</title>
+      <link>http://swift.diagon.me/urlcache-cachePolicy/</link>
+      <guid>http://swift.diagon.me/urlcache-cachePolicy/</guid>
+      <pubDate>Thu, 26 Jan 2017 16:00:00 GMT</pubDate>
+      <description>
+      
+        &lt;h2 id=&quot;几种客户端缓存策略&quot;&gt;&lt;a href=&quot;#几种客户端缓存策略&quot; class=&quot;headerlink&quot; title=&quot;几种客户端缓存策略&quot;&gt;&lt;/a&gt;几种客户端缓存策略&lt;/h2&gt;&lt;p&gt;我们在&lt;a href=&quot;http://swift.diagon.me/urlcach
+      
+      </description>
+      
+      <content:encoded><![CDATA[<h2 id="几种客户端缓存策略"><a href="#几种客户端缓存策略" class="headerlink" title="几种客户端缓存策略"></a>几种客户端缓存策略</h2><p>我们在<a href="http://swift.diagon.me/urlcache-condiguration/">《iOS 开发中 URLCache 的应用》</a>一文中讨论了 URLCache 的构建。</p>
 <p>使用 URLCache 的最大好处在于可以指定缓存策略。缓存策略由请求（客户端）和响应（服务端）分别指定。几种客户端缓存策略：</p>
 <h3 id="reloadIgnoringLocalCacheData"><a href="#reloadIgnoringLocalCacheData" class="headerlink" title="reloadIgnoringLocalCacheData"></a>reloadIgnoringLocalCacheData</h3><p>忽略缓存，必须进行网络请求。</p>
 <h3 id="returnCacheDataElseLoad"><a href="#returnCacheDataElseLoad" class="headerlink" title="returnCacheDataElseLoad"></a>returnCacheDataElseLoad</h3><p>尝试读取本地缓存，如果没有本地缓存数据，才会去请求网络。这个策略有一个重大的缺陷：无法控制缓存过期时间。</p>
@@ -962,25 +746,10 @@
 <p>另外需要注意，URLCache 只能缓存 GET 请求, 无法缓存POST请求。因为 response是通过 URL+Parameters 为 key 存储的。从数学的角度来讲，GET 的结果是 幂等  的，就好像字典里的 key 与 value 就是幂等的，而 POST 不幂等。从这个意义上说，一个文件的资源链接，也是 GET 请求。</p>
 <hr>
 <div style="text-align: center"><br>关注公众号（ID：SwiftBetter），进一步探讨主题<br><br><br>每日精选高清题图，可做壁纸<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>
-]]></content>
+]]></content:encoded>
+      
+      <comments>http://swift.diagon.me/urlcache-cachePolicy/#disqus_thread</comments>
+    </item>
     
-    <summary type="html">
-    
-      &lt;h2 id=&quot;几种客户端缓存策略&quot;&gt;&lt;a href=&quot;#几种客户端缓存策略&quot; class=&quot;headerlink&quot; title=&quot;几种客户端缓存策略&quot;&gt;&lt;/a&gt;几种客户端缓存策略&lt;/h2&gt;&lt;p&gt;我们在&lt;a href=&quot;http://swift.diagon.me/urlcach
-    
-    </summary>
-    
-      <category term="网络缓存" scheme="http://swift.diagon.me/categories/%E7%BD%91%E7%BB%9C%E7%BC%93%E5%AD%98/"/>
-    
-    
-      <category term="缓存策略" scheme="http://swift.diagon.me/tags/%E7%BC%93%E5%AD%98%E7%AD%96%E7%95%A5/"/>
-    
-      <category term="URLCache" scheme="http://swift.diagon.me/tags/URLCache/"/>
-    
-      <category term="网络缓存" scheme="http://swift.diagon.me/tags/%E7%BD%91%E7%BB%9C%E7%BC%93%E5%AD%98/"/>
-    
-      <category term="CachePolicy" scheme="http://swift.diagon.me/tags/CachePolicy/"/>
-    
-  </entry>
-  
-</feed>
+  </channel>
+</rss>
