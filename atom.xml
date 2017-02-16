@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://swift.diagon.me/"/>
-  <updated>2017-02-15T10:11:55.000Z</updated>
+  <updated>2017-02-16T05:28:14.000Z</updated>
   <id>http://swift.diagon.me/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://swift.diagon.me/RxSwift-Getting-Started/"/>
     <id>http://swift.diagon.me/RxSwift-Getting-Started/</id>
     <published>2017-02-14T16:00:00.000Z</published>
-    <updated>2017-02-15T10:11:55.000Z</updated>
+    <updated>2017-02-16T05:28:14.000Z</updated>
     
     <content type="html"><![CDATA[<p>本文翻译改编自 <a href="https://www.raywenderlich.com" target="_blank" rel="external">ray</a> 的<a href="https://www.raywenderlich.com/138547/getting-started-with-rxswift-and-rxcocoa" target="_blank" rel="external">《Getting Started With RxSwift and RxCocoa》</a>。</p>
 <p>本教程的初始工程Chocotastic可以在<a href="https://koenig-media.raywenderlich.com/uploads/2016/10/Chocotastic-starter-s3-rxs-3b1.zip" target="_blank" rel="external">这里</a>获取。</p>
@@ -95,13 +95,13 @@
     <link href="http://swift.diagon.me/RxSwift-Observer-Observable-DisposeBag/"/>
     <id>http://swift.diagon.me/RxSwift-Observer-Observable-DisposeBag/</id>
     <published>2017-02-13T16:00:00.000Z</published>
-    <updated>2017-02-15T02:48:39.000Z</updated>
+    <updated>2017-02-16T05:54:02.000Z</updated>
     
     <content type="html"><![CDATA[<p>本文翻译改编自 <a href="https://www.raywenderlich.com" target="_blank" rel="external">ray</a> 的<a href="https://www.raywenderlich.com/138547/getting-started-with-rxswift-and-rxcocoa" target="_blank" rel="external">《Getting Started With RxSwift and RxCocoa》</a>。</p>
 <h2 id="响应式编程"><a href="#响应式编程" class="headerlink" title="响应式编程"></a>响应式编程</h2><p>在面向对象时代，这样的事情是必要的：你用各种方式来监听程序的变化，但是当变化发生时你是得必须主动的告诉系统。</p>
 <p>如果当变化发生时，代码能自动响应更新，岂不是更爽？这就是响应式编程(reactive programming)的思想:你的程序可以自主的对底层数据的变化做出响应，而不需要你再去通知它。这让你可以聚焦于处理的逻辑，而不用维护具体的状态。</p>
 <p>Swift 中可以使用 KVO,重载 setter, didSet方法来实现这种操作。但是这些方法不怎么好用。我们可以使用一个响应式编程框架：RxSwift，来更好的实现。</p>
-<h2 id="RxSwift-基本概念"><a href="#RxSwift-基本概念" class="headerlink" title="RxSwift 基本概念"></a>RxSwift 基本概念</h2><p>RxSwift 是 <a href="http://reactivex.io/" target="_blank" rel="external">ReactiveX</a>针对 Swift 的实现。</p>
+<h2 id="RxSwift-基本概念"><a href="#RxSwift-基本概念" class="headerlink" title="RxSwift 基本概念"></a>RxSwift 基本概念</h2><p>RxSwift 是 <a href="http://reactivex.io" target="_blank" rel="external">ReactiveX</a> 针对Swift 的实现。</p>
 <h3 id="Observables-和-Observers"><a href="#Observables-和-Observers" class="headerlink" title="Observables 和 Observers"></a>Observables 和 Observers</h3><p>两个基本概念：Observable和Observer。</p>
 <ul>
 <li><code>Observable</code>是发出变化通知的对象。</li>
@@ -211,9 +211,9 @@
     
       <category term="离屏渲染" scheme="http://swift.diagon.me/tags/%E7%A6%BB%E5%B1%8F%E6%B8%B2%E6%9F%93/"/>
     
-      <category term="性能优化" scheme="http://swift.diagon.me/tags/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/"/>
-    
       <category term="圆角" scheme="http://swift.diagon.me/tags/%E5%9C%86%E8%A7%92/"/>
+    
+      <category term="性能优化" scheme="http://swift.diagon.me/tags/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/"/>
     
       <category term="光栅化" scheme="http://swift.diagon.me/tags/%E5%85%89%E6%A0%85%E5%8C%96/"/>
     
@@ -249,9 +249,9 @@
     
       <category term="离屏渲染" scheme="http://swift.diagon.me/tags/%E7%A6%BB%E5%B1%8F%E6%B8%B2%E6%9F%93/"/>
     
-      <category term="性能优化" scheme="http://swift.diagon.me/tags/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/"/>
-    
       <category term="圆角" scheme="http://swift.diagon.me/tags/%E5%9C%86%E8%A7%92/"/>
+    
+      <category term="性能优化" scheme="http://swift.diagon.me/tags/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/"/>
     
   </entry>
   
@@ -260,7 +260,7 @@
     <link href="http://swift.diagon.me/off-screen-rendering/"/>
     <id>http://swift.diagon.me/off-screen-rendering/</id>
     <published>2017-02-09T16:00:00.000Z</published>
-    <updated>2017-02-12T01:58:35.000Z</updated>
+    <updated>2017-02-16T05:44:37.000Z</updated>
     
     <content type="html"><![CDATA[<h2 id="GPU-渲染"><a href="#GPU-渲染" class="headerlink" title="GPU 渲染"></a>GPU 渲染</h2><p>图形的生成一般是由 GPU 负责，而 GPU 屏幕渲染有以下两种方式：</p>
 <ol>
@@ -277,7 +277,7 @@
 </li>
 </ol>
 <p>GPU 会为每一帧（1/60s）重复合成所有的图层，上下文切换发生在每一帧中。</p>
-<h2 id="导致离屏渲染的因素"><a href="#导致离屏渲染的因素" class="headerlink" title="导致离屏渲染的因素"></a>导致离屏渲染的因素</h2><p>当图层属性的混合体被指定为在没有预合成之前不能直接在屏幕中绘制时，会触发离屏渲染。</p>
+<h2 id="导致离屏渲染的因素"><a href="#导致离屏渲染的因素" class="headerlink" title="导致离屏渲染的因素"></a>导致离屏渲染的因素</h2><p>当图层属性的混合体被指定为在没有预合成之前不能直接在屏幕中绘制时，会触发离屏渲染。</p>
 <p>图层的以下属性会导致离屏渲染：</p>
 <ul>
 <li>圆角 cornerRadius 和 maskToBounds 一起使用时</li>
@@ -305,9 +305,9 @@
     
       <category term="离屏渲染" scheme="http://swift.diagon.me/tags/%E7%A6%BB%E5%B1%8F%E6%B8%B2%E6%9F%93/"/>
     
-      <category term="性能优化" scheme="http://swift.diagon.me/tags/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/"/>
-    
       <category term="圆角" scheme="http://swift.diagon.me/tags/%E5%9C%86%E8%A7%92/"/>
+    
+      <category term="性能优化" scheme="http://swift.diagon.me/tags/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/"/>
     
   </entry>
   
@@ -552,9 +552,9 @@
     
       <category term="Optional Chaining" scheme="http://swift.diagon.me/tags/Optional-Chaining/"/>
     
-      <category term="Optional" scheme="http://swift.diagon.me/tags/Optional/"/>
-    
       <category term="可选链" scheme="http://swift.diagon.me/tags/%E5%8F%AF%E9%80%89%E9%93%BE/"/>
+    
+      <category term="Optional" scheme="http://swift.diagon.me/tags/Optional/"/>
     
   </entry>
   
@@ -591,11 +591,11 @@
       <category term="Optional" scheme="http://swift.diagon.me/categories/Optional/"/>
     
     
+      <category term="Optiional" scheme="http://swift.diagon.me/tags/Optiional/"/>
+    
       <category term="Optional Chaining" scheme="http://swift.diagon.me/tags/Optional-Chaining/"/>
     
       <category term="可选链" scheme="http://swift.diagon.me/tags/%E5%8F%AF%E9%80%89%E9%93%BE/"/>
-    
-      <category term="Optiional" scheme="http://swift.diagon.me/tags/Optiional/"/>
     
   </entry>
   
@@ -977,9 +977,9 @@
     
       <category term="URLCache" scheme="http://swift.diagon.me/tags/URLCache/"/>
     
-      <category term="CachePolicy" scheme="http://swift.diagon.me/tags/CachePolicy/"/>
-    
       <category term="网络缓存" scheme="http://swift.diagon.me/tags/%E7%BD%91%E7%BB%9C%E7%BC%93%E5%AD%98/"/>
+    
+      <category term="CachePolicy" scheme="http://swift.diagon.me/tags/CachePolicy/"/>
     
   </entry>
   

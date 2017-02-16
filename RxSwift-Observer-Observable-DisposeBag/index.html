@@ -97,7 +97,7 @@
 响应式编程在面向对象时代，这样的事情是必要的：你用各种方式来监听程序的变化，但是当变化发生时你是得必须主动的告诉系统。
 如果当变化发生时，代码能自动响应更新，岂不是更爽？这就是响应式编程(reactive programming)的思想:你的程序可以自主的对底层数据的变化做出响应，而不">
 <meta property="og:image" content="https://vernsu.github.io/images/wxqrcode.jpg">
-<meta property="og:updated_time" content="2017-02-15T02:48:39.000Z">
+<meta property="og:updated_time" content="2017-02-16T05:54:02.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Swift 开发中的响应式编程：RxSwift 初探">
 <meta name="twitter:description" content="本文翻译改编自 ray 的《Getting Started With RxSwift and RxCocoa》。
@@ -339,7 +339,7 @@
 <h2 id="响应式编程"><a href="#响应式编程" class="headerlink" title="响应式编程"></a>响应式编程</h2><p>在面向对象时代，这样的事情是必要的：你用各种方式来监听程序的变化，但是当变化发生时你是得必须主动的告诉系统。</p>
 <p>如果当变化发生时，代码能自动响应更新，岂不是更爽？这就是响应式编程(reactive programming)的思想:你的程序可以自主的对底层数据的变化做出响应，而不需要你再去通知它。这让你可以聚焦于处理的逻辑，而不用维护具体的状态。</p>
 <p>Swift 中可以使用 KVO,重载 setter, didSet方法来实现这种操作。但是这些方法不怎么好用。我们可以使用一个响应式编程框架：RxSwift，来更好的实现。</p>
-<h2 id="RxSwift-基本概念"><a href="#RxSwift-基本概念" class="headerlink" title="RxSwift 基本概念"></a>RxSwift 基本概念</h2><p>RxSwift 是 <a href="http://reactivex.io/" target="_blank" rel="external">ReactiveX</a>针对 Swift 的实现。</p>
+<h2 id="RxSwift-基本概念"><a href="#RxSwift-基本概念" class="headerlink" title="RxSwift 基本概念"></a>RxSwift 基本概念</h2><p>RxSwift 是 <a href="http://reactivex.io" target="_blank" rel="external">ReactiveX</a> 针对Swift 的实现。</p>
 <h3 id="Observables-和-Observers"><a href="#Observables-和-Observers" class="headerlink" title="Observables 和 Observers"></a>Observables 和 Observers</h3><p>两个基本概念：Observable和Observer。</p>
 <ul>
 <li><code>Observable</code>是发出变化通知的对象。</li>

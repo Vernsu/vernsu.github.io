@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="离屏渲染,性能优化,圆角," />
+  <meta name="keywords" content="离屏渲染,圆角,性能优化," />
 
 
 
@@ -107,7 +107,7 @@ Off-Screen Rendering：离屏渲染，意思是 GPU 的渲染操作是在当前�
 
 离屏渲染引">
 <meta property="og:image" content="https://vernsu.github.io/images/wxqrcode.jpg">
-<meta property="og:updated_time" content="2017-02-12T01:58:35.000Z">
+<meta property="og:updated_time" content="2017-02-16T05:44:37.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="iOS 性能优化之离屏渲染">
 <meta name="twitter:description" content="GPU 渲染图形的生成一般是由 GPU 负责，而 GPU 屏幕渲染有以下两种方式：
@@ -387,7 +387,7 @@ Off-Screen Rendering：离屏渲染，意思是 GPU 的渲染操作是在当前�
 </li>
 </ol>
 <p>GPU 会为每一帧（1/60s）重复合成所有的图层，上下文切换发生在每一帧中。</p>
-<h2 id="导致离屏渲染的因素"><a href="#导致离屏渲染的因素" class="headerlink" title="导致离屏渲染的因素"></a>导致离屏渲染的因素</h2><p>当图层属性的混合体被指定为在没有预合成之前不能直接在屏幕中绘制时，会触发离屏渲染。</p>
+<h2 id="导致离屏渲染的因素"><a href="#导致离屏渲染的因素" class="headerlink" title="导致离屏渲染的因素"></a>导致离屏渲染的因素</h2><p>当图层属性的混合体被指定为在没有预合成之前不能直接在屏幕中绘制时，会触发离屏渲染。</p>
 <p>图层的以下属性会导致离屏渲染：</p>
 <ul>
 <li>圆角 cornerRadius 和 maskToBounds 一起使用时</li>
@@ -425,9 +425,9 @@ Off-Screen Rendering：离屏渲染，意思是 GPU 的渲染操作是在当前�
           
             <a href="/tags/离屏渲染/" rel="tag"># 离屏渲染</a>
           
-            <a href="/tags/性能优化/" rel="tag"># 性能优化</a>
-          
             <a href="/tags/圆角/" rel="tag"># 圆角</a>
+          
+            <a href="/tags/性能优化/" rel="tag"># 性能优化</a>
           
         </div>
       
@@ -578,7 +578,7 @@ Off-Screen Rendering：离屏渲染，意思是 GPU 的渲染操作是在当前�
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#GPU-渲染"><span class="nav-number">1.</span> <span class="nav-text">GPU 渲染</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#离屏渲染引发的性能问题"><span class="nav-number">2.</span> <span class="nav-text">离屏渲染引发的性能问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#导致离屏渲染的因素"><span class="nav-number">3.</span> <span class="nav-text">导致离屏渲染的因素</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用-Instruments-监测性能"><span class="nav-number">4.</span> <span class="nav-text">使用 Instruments 监测性能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CPU-渲染"><span class="nav-number">5.</span> <span class="nav-text">CPU 渲染</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#GPU-渲染"><span class="nav-number">1.</span> <span class="nav-text">GPU 渲染</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#离屏渲染引发的性能问题"><span class="nav-number">2.</span> <span class="nav-text">离屏渲染引发的性能问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#导致离屏渲染的因素"><span class="nav-number">3.</span> <span class="nav-text">导致离屏渲染的因素</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用-Instruments-监测性能"><span class="nav-number">4.</span> <span class="nav-text">使用 Instruments 监测性能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CPU-渲染"><span class="nav-number">5.</span> <span class="nav-text">CPU 渲染</span></a></li></ol></div>
             
 
           </div>
