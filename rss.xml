@@ -8,13 +8,13 @@
     <atom:link href="/rss.xml" rel="self" type="application/rss+xml"/>
     
     <description>笨办法学Swift</description>
-    <pubDate>Sat, 18 Feb 2017 09:10:50 GMT</pubDate>
+    <pubDate>Sat, 18 Feb 2017 09:13:27 GMT</pubDate>
     <generator>http://hexo.io/</generator>
     
     <item>
       <title>iOS 客户端开发需要掌握的 HTTP 知识</title>
-      <link>http://swift.diagon.me/iOS-Swift-HTTP-TCP%E2%80%94IP%E2%80%94WebSocket-Socket/</link>
-      <guid>http://swift.diagon.me/iOS-Swift-HTTP-TCP%E2%80%94IP%E2%80%94WebSocket-Socket/</guid>
+      <link>http://swift.diagon.me/iOS-Swift-HTTP-TCP-IP-WebSocket-Socket/</link>
+      <guid>http://swift.diagon.me/iOS-Swift-HTTP-TCP-IP-WebSocket-Socket/</guid>
       <pubDate>Fri, 17 Feb 2017 16:00:00 GMT</pubDate>
       <description>
       
@@ -232,7 +232,7 @@
 <hr>
 <div style="text-align: center"><br>关注公众号（ID：SwiftBetter），进一步探讨主题<br><br><br>每日精选高清题图，可做壁纸<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>]]></content:encoded>
       
-      <comments>http://swift.diagon.me/iOS-Swift-HTTP-TCP%E2%80%94IP%E2%80%94WebSocket-Socket/#disqus_thread</comments>
+      <comments>http://swift.diagon.me/iOS-Swift-HTTP-TCP-IP-WebSocket-Socket/#disqus_thread</comments>
     </item>
     
     <item>
