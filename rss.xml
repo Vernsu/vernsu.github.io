@@ -8,8 +8,232 @@
     <atom:link href="/rss.xml" rel="self" type="application/rss+xml"/>
     
     <description>笨办法学Swift</description>
-    <pubDate>Thu, 16 Feb 2017 12:28:45 GMT</pubDate>
+    <pubDate>Sat, 18 Feb 2017 09:10:50 GMT</pubDate>
     <generator>http://hexo.io/</generator>
+    
+    <item>
+      <title>iOS 客户端开发需要掌握的 HTTP 知识</title>
+      <link>http://swift.diagon.me/iOS-Swift-HTTP-TCP%E2%80%94IP%E2%80%94WebSocket-Socket/</link>
+      <guid>http://swift.diagon.me/iOS-Swift-HTTP-TCP%E2%80%94IP%E2%80%94WebSocket-Socket/</guid>
+      <pubDate>Fri, 17 Feb 2017 16:00:00 GMT</pubDate>
+      <description>
+      
+        &lt;p&gt;注：本文内容总结自《图解HTTP》一书。&lt;/p&gt;
+&lt;h2 id=&quot;网络基础&quot;&gt;&lt;a href=&quot;#网络基础&quot; class=&quot;headerlink&quot; title=&quot;网络基础&quot;&gt;&lt;/a&gt;网络基础&lt;/h2&gt;&lt;h3 id=&quot;使用-HTTP-访问-Web&quot;&gt;&lt;a href=&quot;#使用-
+      
+      </description>
+      
+      <content:encoded><![CDATA[<p>注：本文内容总结自《图解HTTP》一书。</p>
+<h2 id="网络基础"><a href="#网络基础" class="headerlink" title="网络基础"></a>网络基础</h2><h3 id="使用-HTTP-访问-Web"><a href="#使用-HTTP-访问-Web" class="headerlink" title="使用 HTTP 访问 Web"></a>使用 HTTP 访问 Web</h3><p>在浏览器中输入域名并按下回车，发生了什么事情？这是一个古老的问题。详细的答案请点<a href="https://github.com/skyline75489/what-happens-when-zh_CN" target="_blank" rel="external">这里</a>。<br>简单的说就是浏览器根据 URL 从服务器获取了文件资源等信息，从而显示出 Web 页面。而其间完成从客户端到服务端之间运作流程的协议即 HTTP。</p>
+<h3 id="网络基础-TCP-IP"><a href="#网络基础-TCP-IP" class="headerlink" title="网络基础 TCP/IP"></a>网络基础 TCP/IP</h3><h4 id="TCP-IP-是什么"><a href="#TCP-IP-是什么" class="headerlink" title="TCP/IP 是什么"></a>TCP/IP 是什么</h4><p>TCP/IP 是互联网相关的各类协议集合起来的总称。比如包含DNS，IP，PPPoE，UDP，FTP，HTTP，TCP，ICMP等等。</p>
+<h4 id="网络分层"><a href="#网络分层" class="headerlink" title="网络分层"></a>网络分层</h4><p>TCP/IP 协议族按层次分为4层：应用层、传输层、网络层和数据链路层。这样做的意义是：如果互联网只由一个协议统筹，某个地方需要改变设计时，就必须把所有部分整体替换掉。而分层之后只需把变动的层替换掉即可。把各层之间的接口部分规划好之后，每个层次内部的设计就能够自由改动了。而对应的层次只需要考虑到自己的任务即可。</p>
+<ul>
+<li>应用层：决定了向用户提供应用服务时通信的活动。（FTP，DNS，HTTP）</li>
+<li>传输层：对上层应用层，提供处于网络连接中的两台计算机之间的数据传输。（TCP、UDP）</li>
+<li>网络层：用来处理在网络上流动的数据包。该层规定了通过怎样的路径到达对方计算机，并把数据包传送给对方。（IP）</li>
+<li>链路层（又名数据链路层）：用来处理连接网络的硬件部分。</li>
+</ul>
+<h4 id="通信传输流"><a href="#通信传输流" class="headerlink" title="通信传输流"></a>通信传输流</h4><p>进行网络通信时，会通过分层顺序与对方进行通信。发送端从应用层往下走，接收端则往应用层往上走。</p>
+<p>发送端在层与层之间传输数据时，每经过一层时必定会被打上一个该层所属的首部信息。反之，接收端在层与层传输数据时，每经过一层时会把对应的首部消去。</p>
+<h3 id="与-HTTP-关系密切的协议：IP、TCP-和-DNS"><a href="#与-HTTP-关系密切的协议：IP、TCP-和-DNS" class="headerlink" title="与 HTTP 关系密切的协议：IP、TCP 和 DNS"></a>与 HTTP 关系密切的协议：IP、TCP 和 DNS</h3><h4 id="负责数据包传送的-IP"><a href="#负责数据包传送的-IP" class="headerlink" title="负责数据包传送的 IP"></a>负责数据包传送的 IP</h4><p>IP 协议的作用是把各种数据包传送给对方。涉及到 IP 地址、MAC 地址。</p>
+<h4 id="确保可靠性的-TCP"><a href="#确保可靠性的-TCP" class="headerlink" title="确保可靠性的 TCP"></a>确保可靠性的 TCP</h4><p>TCP 将 HTTP 请求报文分割成报文段，把每个报文段可靠的传给对方。</p>
+<p>为了准确无误地将每个报文段送达目标处，TCP 协议采用了三次握手（three-way handshaking）策略。</p>
+<p>用 TCP 协议把数据包送出去后，TCP 不会对传送后的情况置之不理，它一定会向对方确认是否成功送达。握手过程中使用了 TCP 的标志 —— SYN 和 ACK。</p>
+<p>发送端首先发送一个带 SYN 标志的数据包给对方。接收端收到后，回传一个带有 SYN/ACK 标志的数据包以示传达确认信息。最后，发送端再回传一个带 ACK 标志的数据包，代表“握手”结束。若在握手过程中某个阶段莫名中断，TCP 协议会再次以相同的顺序发送相同的数据包。</p>
+<h4 id="负责域名解析的-DNS"><a href="#负责域名解析的-DNS" class="headerlink" title="负责域名解析的 DNS"></a>负责域名解析的 DNS</h4><p>它提供域名到 IP 地址之间的解析服务。</p>
+<h2 id="HTTP-基础"><a href="#HTTP-基础" class="headerlink" title="HTTP 基础"></a>HTTP 基础</h2><h3 id="HTTP-用于客户端和服务端之间的通信"><a href="#HTTP-用于客户端和服务端之间的通信" class="headerlink" title="HTTP 用于客户端和服务端之间的通信"></a>HTTP 用于客户端和服务端之间的通信</h3><p>HTTP 协议规定，请求从客户端发出，最后服务器端响应该请求并返回。换句话说，肯定是先从客户端开始建立通信的，服务器端在没有接收到请求之前不会发送响应。</p>
+<p>客户端发出的请求报文是由请求方法(GET等)、请求 URI（在首部指定Host就不需要绝对地址了）、协议版本（HTTP1.1）、请求首部字段和内容实体构成的。</p>
+<p>服务端的响应报文由协议版本、状态码、用以解释状态码的原因短语(OK)、响应首部字段以及内容实体构成。</p>
+<h3 id="HTTP-是不保存状态的协议"><a href="#HTTP-是不保存状态的协议" class="headerlink" title="HTTP 是不保存状态的协议"></a>HTTP 是不保存状态的协议</h3><p>HTTP 是一种不保存状态，即无状态（stateless）协议。也就是说在 HTTP 这个级别，协议对于发送过的请求或响应都不做持久化处理。</p>
+<p>比如，用户登录到一家购物网站，即使他跳转到该站的其他页面后，也需要能继续保持登录状态。针对这个实例，网站为了能够掌握是谁送出的请求，需要保存用户的状态。HTTP/1.1 虽然是无状态协议，为了实现保持状态功能，于是引入了 Cookie 技术。有了 Cookie 再用 HTTP 协议通信，就可以管理状态了。</p>
+<h3 id="告知服务器意图的-HTTP-方法"><a href="#告知服务器意图的-HTTP-方法" class="headerlink" title="告知服务器意图的 HTTP 方法"></a>告知服务器意图的 HTTP 方法</h3><ul>
+<li>GET 获取资源</li>
+<li>POST 传输内容实体</li>
+<li>PUT 传输文件（需配合验证机制）</li>
+<li>HEAD 获得报文头部</li>
+<li>DELETE 删除文件（需配合验证机制）</li>
+<li>OPTIONS 询问支持的方法</li>
+</ul>
+<h3 id="Cookie"><a href="#Cookie" class="headerlink" title="Cookie"></a>Cookie</h3><p>Cookie 技术通过在请求和响应报文中写入 Cookie 信息来控制客户端的状态。</p>
+<p>Cookie 会根据从服务器端发送的响应报文内的一个叫做 Set-Cookie 的首部字段信息，通知客户端保存 Cookie。当下次客户端再往该服务器发送请求时，客户端会自动在请求报文中加入 Cookie 值后发送出去。</p>
+<p>服务器端发现客户端发送过来的 Cookie 后，会去检查究竟是从哪一个客户端发来的连接请求，然后对比服务器上的记录，最后得到之前的状态信息。</p>
+<h2 id="HTTP-报文中的-HTTP-信息"><a href="#HTTP-报文中的-HTTP-信息" class="headerlink" title="HTTP 报文中的 HTTP 信息"></a>HTTP 报文中的 HTTP 信息</h2><h3 id="压缩传输的内容编码，提升传输速率"><a href="#压缩传输的内容编码，提升传输速率" class="headerlink" title="压缩传输的内容编码，提升传输速率"></a>压缩传输的内容编码，提升传输速率</h3><p>内容编码指明应用在实体内容上的编码格式，并保持实体信息原样压缩。内容编码后的实体由客户端接收并负责解码。<br>常用的内容编码有以下几种：</p>
+<ol>
+<li>gzip（GNU zip）</li>
+<li>compress（UNIX 系统的标准压缩）</li>
+<li>deflate（zlib）</li>
+<li>identity（不进行编码）</li>
+</ol>
+<h3 id="获取部分内容的范围请求"><a href="#获取部分内容的范围请求" class="headerlink" title="获取部分内容的范围请求"></a>获取部分内容的范围请求</h3><p>如果下载过程中遇到网络中断的情况，那就必须重头开始。为了解决上述问题，需要一种可恢复的机制。所谓恢复是指能从之前下载中断处恢复下载。</p>
+<p>要实现该功能需要指定下载的实体范围。像这样，指定范围发送的请求叫做范围请求（Range Request）。</p>
+<h2 id="HTTP-状态码"><a href="#HTTP-状态码" class="headerlink" title="HTTP 状态码"></a>HTTP 状态码</h2><p>状态码的职责是当客户端向服务器端发送请求时，描述返回的请求结果。</p>
+<table>
+<thead>
+<tr>
+<th>状态码</th>
+<th>类别</th>
+<th>原因</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1XX</td>
+<td>Informational（信息性状态码）</td>
+<td>接收的请求正在处理</td>
+</tr>
+<tr>
+<td>2XX</td>
+<td>Success（成功状态码）</td>
+<td>请求正常处理完毕</td>
+</tr>
+<tr>
+<td>3XX</td>
+<td>Redirection（重定向状态码）</td>
+<td>需求进行附加操作以完成请求</td>
+</tr>
+<tr>
+<td>4XX</td>
+<td>Client Error（客户端错误状态码）</td>
+<td>服务器无法处理请求</td>
+</tr>
+<tr>
+<td>5XX</td>
+<td>Server Error（服务器错误状态码）</td>
+<td>服务器处理请求出错</td>
+</tr>
+</tbody>
+</table>
+<h3 id="2XX-成功"><a href="#2XX-成功" class="headerlink" title="2XX 成功"></a>2XX 成功</h3><ul>
+<li>200 OK：表示从客户端发来的请求在服务器端被正常处理了</li>
+<li>206 Partial Content：请求处理成功，返回部分内容，响应报文中包含 Content-Range 指定范围的实体内容</li>
+</ul>
+<h3 id="3XX-重定向"><a href="#3XX-重定向" class="headerlink" title="3XX 重定向"></a>3XX 重定向</h3><ul>
+<li>301 Moved Permanently：永久性重定向。表示请求的资源已被分配了新的 URI，以后应使用资源现在所指的 URI。</li>
+<li>302 Found：临时性重定向。表示请求的资源已被分配了新的 URI，希望用户（本次）能使用新的 URI 访问。已移动的资源对应的 URI 将来还有可能发生改变。</li>
+<li>304 Not Modified：表示请求的资源没有改变，可以使用客户端上未过期的资源 </li>
+</ul>
+<h3 id="4XX-客户端错误"><a href="#4XX-客户端错误" class="headerlink" title="4XX 客户端错误"></a>4XX 客户端错误</h3><ul>
+<li>400 Bad Request：表示请求报文中存在语法错误。当错误发生时，需修改请求的内容后再次发送请求。</li>
+<li>403 Forbidden：表示请求资源的访问被服务器拒绝了。</li>
+<li>404 Not Found：表示服务器上没有请求的资源。除此之外，也可以在服务器端拒绝请求且不想说明理由时使用。</li>
+</ul>
+<h3 id="5XX-服务器错误"><a href="#5XX-服务器错误" class="headerlink" title="5XX 服务器错误"></a>5XX 服务器错误</h3><ul>
+<li><p>500 Internal Server Error：表示服务器在执行请求时发生了错误。</p>
+</li>
+<li><p>503 Service Unavailable：表示服务器暂时处于超负载或者正在进行停机维护，现在无法处理请求</p>
+</li>
+</ul>
+<h2 id="HTTP-首部字段"><a href="#HTTP-首部字段" class="headerlink" title="HTTP 首部字段"></a>HTTP 首部字段</h2><p>使用首部字段是为了给浏览器和服务器提供报文主体大小、所使用的语言、认证信息等内容。</p>
+<h3 id="通用首部字段"><a href="#通用首部字段" class="headerlink" title="通用首部字段"></a>通用首部字段</h3><table>
+<thead>
+<tr>
+<th>首部字段名</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Cache-Control</td>
+<td>控制缓存的行为</td>
+</tr>
+<tr>
+<td>Upgrade</td>
+<td>升级为其他协议</td>
+</tr>
+</tbody>
+</table>
+<h3 id="请求首部字段"><a href="#请求首部字段" class="headerlink" title="请求首部字段"></a>请求首部字段</h3><table>
+<thead>
+<tr>
+<th>首部字段名</th>
+<th>说明</th>
+<th>例子</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Accept</td>
+<td>用户代理可处理的媒体类型</td>
+<td>Accept: text/html,application/xml</td>
+</tr>
+<tr>
+<td>Accept-Encoding</td>
+<td>优先的内容编码</td>
+<td>Accept-Encoding: gzip, deflate </td>
+</tr>
+<tr>
+<td>Accept-Language</td>
+<td>优先的语言</td>
+<td>Accept-Language: zh-cn,zh;q=0.7 </td>
+</tr>
+<tr>
+<td>Host</td>
+<td>请求资源所在服务器</td>
+<td>Host: swift.diagon.me</td>
+</tr>
+<tr>
+<td>User-Agent</td>
+<td>HTTP 客户端程序的信息</td>
+<td>User-Agent: Mozilla/5.0 </td>
+</tr>
+<tr>
+<td>If-Modified-Since</td>
+<td>比较资源的更新时间</td>
+</tr>
+<tr>
+<td>If-None-Match</td>
+<td>比较实体标记（ETag）</td>
+</tr>
+</tbody>
+</table>
+<h2 id="HTTPS"><a href="#HTTPS" class="headerlink" title="HTTPS"></a>HTTPS</h2><h3 id="HTTP-安全隐患"><a href="#HTTP-安全隐患" class="headerlink" title="HTTP 安全隐患"></a>HTTP 安全隐患</h3><h4 id="通信使用明文（不加密），内容可能会被窃听"><a href="#通信使用明文（不加密），内容可能会被窃听" class="headerlink" title="通信使用明文（不加密），内容可能会被窃听"></a>通信使用明文（不加密），内容可能会被窃听</h4><h5 id="加密处理防止窃听"><a href="#加密处理防止窃听" class="headerlink" title="加密处理防止窃听"></a>加密处理防止窃听</h5><h6 id="通信的加密"><a href="#通信的加密" class="headerlink" title="通信的加密"></a>通信的加密</h6><p>HTTP 协议中没有加密机制，但可以通过 SSL（Secure Socket Layer，安全套接层），加密 HTTP 的通信线路。</p>
+<p>用 SSL 建立安全通信线路之后，就可以在这条线路上进行 HTTP 通信了。与 SSL 组合使用的 HTTP 被称为 HTTPS。</p>
+<h6 id="内容加密"><a href="#内容加密" class="headerlink" title="内容加密"></a>内容加密</h6><p>由于 HTTP 协议中没有加密机制，那么就对 HTTP 协议传输的内容本身加密。即把 HTTP 报文里所含的内容进行加密处理。</p>
+<p>在这种情况下，客户端需要对 HTTP 报文进行加密处理后再发送请求。</p>
+<p>有一点必须引起注意，由于该方式不同于 SSL 将整个通信线路加密处理，所以内容仍有被篡改的风险。</p>
+<h4 id="不验证通信方的身份，因此有可能遭遇伪装"><a href="#不验证通信方的身份，因此有可能遭遇伪装" class="headerlink" title="不验证通信方的身份，因此有可能遭遇伪装"></a>不验证通信方的身份，因此有可能遭遇伪装</h4><h5 id="任何人都可以发起请求"><a href="#任何人都可以发起请求" class="headerlink" title="任何人都可以发起请求"></a>任何人都可以发起请求</h5><ul>
+<li>无法确定请求发送至目标的 Web 服务器是否是按真实意图返回响应的那台服务器。有可能是已伪装的 Web 服务器。</li>
+<li>无法确定响应返回到的客户端是否是按真实意图接收响应的那个客户端。有可能是已伪装的客户端</li>
+<li>即使是无意义的请求也会照单全收。无法阻止海量请求下的 DoS 攻击。</li>
+</ul>
+<h5 id="查明对手的证书"><a href="#查明对手的证书" class="headerlink" title="查明对手的证书"></a>查明对手的证书</h5><p>SSL 不仅提供加密处理，而且还使用了一种被称为证书的手段，可用于确定对方。证书由值得信任的第三方机构颁发，用以证明服务器和客户端是实际存在的。</p>
+<h4 id="无法证明报文的完整性，所以有可能已遭篡改"><a href="#无法证明报文的完整性，所以有可能已遭篡改" class="headerlink" title="无法证明报文的完整性，所以有可能已遭篡改"></a>无法证明报文的完整性，所以有可能已遭篡改</h4><h5 id="接收到的内容可能有误"><a href="#接收到的内容可能有误" class="headerlink" title="接收到的内容可能有误"></a>接收到的内容可能有误</h5><p>请求或响应在传输途中，遭攻击者拦截并篡改内容的攻击称为中间人攻击</p>
+<h5 id="如何防止篡改"><a href="#如何防止篡改" class="headerlink" title="如何防止篡改"></a>如何防止篡改</h5><p>SSL 提供认证和加密处理及摘要功能。”</p>
+<h3 id="HTTP-加密-认证-完整性保护-HTTPS"><a href="#HTTP-加密-认证-完整性保护-HTTPS" class="headerlink" title="HTTP + 加密 + 认证 + 完整性保护 = HTTPS"></a>HTTP + 加密 + 认证 + 完整性保护 = HTTPS</h3><h4 id="HTTPS-是身披-SSL-外壳的-HTTP"><a href="#HTTPS-是身披-SSL-外壳的-HTTP" class="headerlink" title="HTTPS 是身披 SSL 外壳的 HTTP"></a>HTTPS 是身披 SSL 外壳的 HTTP</h4><p>通常，HTTP 直接和 TCP 通信。当使用 SSL 时，则演变成先和 SSL 通信，再由 SSL 和 TCP 通信了。简言之，所谓 HTTPS，其实就是身披 SSL 协议这层外壳的 HTTP。</p>
+<p>SSL 是独立于 HTTP 的协议，所以不光是 HTTP 协议，其他运行在应用层的 均可配合 SSL协议使用。SSL 是当今世界上应用最为广泛的网络安全技术。</p>
+<h4 id="相互交换密钥的公开密钥加密技术"><a href="#相互交换密钥的公开密钥加密技术" class="headerlink" title="相互交换密钥的公开密钥加密技术"></a>相互交换密钥的公开密钥加密技术</h4><p>SSL 采用一种叫做公开密钥加密的加密处理方式。近代的加密方法中加密算法是公开的，而密钥却是保密的。通过这种方式得以保持加密方法的安全性。</p>
+<p>加密和解密都会用到密钥。没有密钥就无法对密码解密，反过来说，任何人只要持有密钥就能解密了。如果密钥被攻击者获得，那加密也就失去了意义。</p>
+<h5 id="对称密钥加密的困境"><a href="#对称密钥加密的困境" class="headerlink" title="对称密钥加密的困境"></a>对称密钥加密的困境</h5><p>加密和解密同用一个密钥的方式称为共享密钥加密，也被叫做对称密钥加密。即加密解密用同样的密钥。</p>
+<p>以共享密钥方式加密时必须将密钥也发给对方。可究竟怎样才能安全地转交？在互联网上转发密钥时，如果通信被监听那么密钥就可会落入攻击者之手，同时也就失去了加密的意义。另外还得设法安全地保管接收到的密钥。</p>
+<h5 id="使用两把密钥的公开（非对称）密钥加密"><a href="#使用两把密钥的公开（非对称）密钥加密" class="headerlink" title="使用两把密钥的公开（非对称）密钥加密"></a>使用两把密钥的公开（非对称）密钥加密</h5><p>公开密钥加密使用一对非对称的密钥。一把叫做私有密钥（private key），另一把叫做公开密钥（public key）。顾名思义，私有密钥不能让其他任何人知道，而公开密钥则可以随意发布，任何人都可以获得。</p>
+<p>使用公开密钥加密方式，发送密文的一方使用对方的公开密钥进行加密处理，对方收到被加密的信息后，再使用自己的私有密钥进行解密。利用这种方式，不需要发送用来解密的私有密钥，也不必担心密钥被攻击者窃听而盗走</p>
+<h5 id="HTTPS-采用混合加密机制"><a href="#HTTPS-采用混合加密机制" class="headerlink" title="HTTPS 采用混合加密机制"></a>HTTPS 采用混合加密机制</h5><p>公开密钥加密与对称密钥加密相比，其处理速度要慢。所以 HTTPS 使用公开密钥的方式安全的交换了稍后对称加密中会使用的密钥，之后的建立通信交换报文阶段则使用对称密钥加密方式。</p>
+<h4 id="证明公开密钥正确性的证书"><a href="#证明公开密钥正确性的证书" class="headerlink" title="证明公开密钥正确性的证书"></a>证明公开密钥正确性的证书</h4><p>公开密钥加密方式还是存在一些问题的。那就是无法证明公开密钥本身就是货真价实的公开密钥。比如，正准备和某台服务器建立公开密钥加密方式下的通信时，如何证明收到的公开密钥就是原本预想的那台服务器发行的公开密钥。或许在公开密钥传输途中，真正的公开密钥已经被攻击者替换掉了。</p>
+<p>为了解决上述问题，可以使用由数字证书认证机构（CA，Certificate Authority）和颁发的公开密钥证书。</p>
+<ol>
+<li>服务器方向数字证书认证机构提交公开密钥。</li>
+<li>数字证书认证机构在判明提出申请者的身份之后，会用自己的私有密钥对服务器方的公开密钥做数字签名，并向网站方颁发公钥证书。</li>
+<li>服务器方会将这份由数字证书认证机构颁发的公钥证书发送给客户端，以进行公开密钥加密方式通信。公钥证书也可叫做数字证书或直接称为证书。</li>
+<li>接到证书的客户端可使用数字证书认证机构的公开密钥，向数字证书认证机构验证公钥证书上的数字签名。一旦验证通过，客户端便可明确两件事：一，认证服务器的公开密钥的是真实有效的数字证书认证机构。二，服务器的公开密钥是值得信赖的。</li>
+<li>使用服务器的公开密钥对报文进行加密后发送。</li>
+<li>服务器使用私有密钥对报文解密。</li>
+</ol>
+<p>此处认证机关的公开密钥必须安全地转交给客户端。使用通信方式时，如何安全转交是一件很困难的事，因此，多数浏览器开发商发布版本时，会事先在内部植入常用认证机关的公开密钥。</p>
+<h2 id="基于-HTTP-的功能追加协议"><a href="#基于-HTTP-的功能追加协议" class="headerlink" title="基于 HTTP 的功能追加协议"></a>基于 HTTP 的功能追加协议</h2><h3 id="HTTP-瓶颈"><a href="#HTTP-瓶颈" class="headerlink" title="HTTP 瓶颈"></a>HTTP 瓶颈</h3><p>为了尽可能实时地显示更新的内容，服务器上一有内容更新，就需要直接把那些内容反馈到客户端的界面上。使用HTTP协议探知服务器上是否有内容更新，就必须频繁地从客户端到服务器端进行确认。如果服务器上没有内容更新，那么就会产生徒劳的通信。</p>
+<h3 id="WebSocket"><a href="#WebSocket" class="headerlink" title="WebSocket"></a>WebSocket</h3><p>WebSocket，即 Web 浏览器与 Web 服务器之间全双工通信标准。</p>
+<h4 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h4><p>一旦Web服务器与客户端之间建立起WebSocket协议的通信连接，之后所有的通信都依靠这个专用协议进行。通信过程中可互相发送JSON、XML、HTML或图片等任意格式的数据。</p>
+<p>由于是建立在 HTTP 基础上的协议，因此连接的发起方仍是客户端，而一旦确立 WebSocket 通信连接，不论服务器还是客户端，任意一方都可直接向对方发送报文。</p>
+<h4 id="握手"><a href="#握手" class="headerlink" title="握手"></a>握手</h4><p>为了实现WebSocket通信，在HTTP连接建立之后，需要完成一次“握手”的步骤。</p>
+<ul>
+<li>握手·请求：为了实现WebSocket通信，需要用到HTTP的Upgrade首部字段，告知服务器通信协议发生改变，以达到握手的目的。</li>
+<li>握手·响应：对于之前的请求，返回状态码101 Switching Protocols 的响应。</li>
+</ul>
+<p>成功握手确立WebSocket连接后，通信时不再使用HTTP的数据帧，而采用WebSocket独立的数据帧。</p>
+<hr>
+<div style="text-align: center"><br>关注公众号（ID：SwiftBetter），进一步探讨主题<br><br><br>每日精选高清题图，可做壁纸<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>]]></content:encoded>
+      
+      <comments>http://swift.diagon.me/iOS-Swift-HTTP-TCP%E2%80%94IP%E2%80%94WebSocket-Socket/#disqus_thread</comments>
+    </item>
     
     <item>
       <title>iOS[Swift] 中 XML 解析与 RSS 阅读器的制作</title>
@@ -664,97 +888,6 @@
 <div style="text-align: center"><br>关注公众号（ID：SwiftBetter），进一步探讨主题<br><br><br>每日精选高清题图，可做壁纸<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>]]></content:encoded>
       
       <comments>http://swift.diagon.me/urlcache-cachedurlresponse/#disqus_thread</comments>
-    </item>
-    
-    <item>
-      <title>iOS 开发中常用的缓存策略：验证篇</title>
-      <link>http://swift.diagon.me/urlcache-cache-control/</link>
-      <guid>http://swift.diagon.me/urlcache-cache-control/</guid>
-      <pubDate>Sat, 28 Jan 2017 16:00:00 GMT</pubDate>
-      <description>
-      
-        &lt;p&gt;前两篇文章( &lt;a href=&quot;http://swift.diagon.me/urlcache-cache-control/&quot;&gt;《iOS 开发中常用的缓存策略：客户端篇》&lt;/a&gt;、&lt;a href=&quot;http://swift.diagon.me/urlcache-http/&quot;
-      
-      </description>
-      
-      <content:encoded><![CDATA[<p>前两篇文章( <a href="http://swift.diagon.me/urlcache-cache-control/">《iOS 开发中常用的缓存策略：客户端篇》</a>、<a href="http://swift.diagon.me/urlcache-http/">《iOS 开发中常用的缓存策略：HTTP 协议篇》</a> )中，我们详细描述了 iOS 的缓存策略。目前网上中文资料对这块的讲解大多有误，本文我们对各种可能的情况做一个验证。</p>
-<h2 id="本地缓存位置"><a href="#本地缓存位置" class="headerlink" title="本地缓存位置"></a>本地缓存位置</h2><p>缓存存储在 APP 沙盒中 Library/Caches/bundid 目录下的 Cache.db 中。<br>使用模拟器调试时，可以使用下列代码打印出沙盒路径。</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> path = <span class="type">NSSearchPathForDirectoriesInDomains</span>(.libraryDirectory, .userDomainMask, <span class="literal">true</span>)</div><div class="line"><span class="keyword">let</span> pathDocuments = path[<span class="number">0</span>]</div><div class="line"><span class="built_in">print</span>(pathDocuments)</div></pre></td></tr></table></figure>
-<h2 id="验证方式"><a href="#验证方式" class="headerlink" title="验证方式"></a>验证方式</h2><p>使用抓包工具 Charles 制造一个虚拟的响应。使用 Map Local 制造响应体，使用 Rewrite 制造响应头。</p>
-<p>请求代码如下：</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> configuration = <span class="type">URLSessionConfiguration</span>.<span class="keyword">default</span></div><div class="line"></div><div class="line"><span class="comment">//configuration.requestCachePolicy = .returnCacheDataDontLoad</span></div><div class="line"></div><div class="line"><span class="keyword">let</span> session = <span class="type">URLSession</span>(configuration: configuration)</div><div class="line"><span class="keyword">let</span> url = <span class="type">URL</span>(string: <span class="string">"http://swift.diagon.me/charles?type=Cache-Control"</span>)!</div><div class="line"><span class="keyword">let</span> task = session.dataTask(with: url) &#123;</div><div class="line">    (data, response, error) <span class="keyword">in</span></div><div class="line">    <span class="built_in">print</span>(<span class="string">"+++++++++++++++++++++++++++++"</span>)</div><div class="line">    <span class="keyword">guard</span> <span class="keyword">let</span> data = data <span class="keyword">else</span> &#123; <span class="built_in">print</span>(error ?? <span class="string">"未知错误"</span>); <span class="keyword">return</span> &#125;</div><div class="line">    <span class="built_in">print</span>((response <span class="keyword">as</span>? <span class="type">HTTPURLResponse</span>)?.allHeaderFields)</div><div class="line">    <span class="built_in">print</span>(<span class="string">"+++++++++++++++++++++++++++++"</span>)</div><div class="line">    <span class="keyword">let</span> result = <span class="type">NSString</span>(data: data, encoding:<span class="type">String</span>.<span class="type">Encoding</span>.utf8.rawValue)    </div><div class="line">    <span class="built_in">print</span>(result)</div><div class="line">&#125;</div><div class="line">task.resume()</div></pre></td></tr></table></figure>
-<h2 id="验证结果"><a href="#验证结果" class="headerlink" title="验证结果"></a>验证结果</h2><table>
-<thead>
-<tr>
-<th>Cache-Control</th>
-<th>本地策略</th>
-<th>是否创建本地缓存</th>
-<th>再次请求是否使用缓存 </th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td> 无</td>
-<td>默认</td>
-<td>创建</td>
-<td>不使用缓存</td>
-</tr>
-<tr>
-<td> 无</td>
-<td>RCDEL</td>
-<td>创建</td>
-<td>使用缓存</td>
-</tr>
-<tr>
-<td> max-age=60</td>
-<td>默认</td>
-<td>创建</td>
-<td>在没有过期之前使用缓存。过期之后发出新请求，并更新本地缓存。</td>
-</tr>
-<tr>
-<td> max-age=60</td>
-<td>RCDEL</td>
-<td>创建</td>
-<td>无视 max-age，始终使用缓存。</td>
-</tr>
-<tr>
-<td> no-store</td>
-<td>默认</td>
-<td>不创建</td>
-<td>不使用缓存</td>
-</tr>
-<tr>
-<td> no-store</td>
-<td>RCDEL</td>
-<td>不创建。注意，无论本地策略选择了哪种，只要为 no-store，就不会创建本地缓存。</td>
-<td>因为 no-store 的原因，没有缓存，所以无法使用缓存。</td>
-</tr>
-<tr>
-<td> no-cache</td>
-<td>默认</td>
-<td>创建</td>
-<td>资源验证通过时使用缓存，否则，不使用缓存。</td>
-</tr>
-<tr>
-<td> no-cache</td>
-<td>RCDEL</td>
-<td>创建</td>
-<td>使用缓存</td>
-</tr>
-</tbody>
-</table>
-<p>注：表中 RCDEL 指代 returnCacheDataElseLoad</p>
-<h2 id="缓存策略优先级"><a href="#缓存策略优先级" class="headerlink" title="缓存策略优先级"></a>缓存策略优先级</h2><p>我们在<a href="http://swift.diagon.me/urlcache-http/">《iOS 开发中常用的缓存策略：HTTP 协议篇》</a>一文中提到：如果你觉得服务端提供的缓存策略不合适，你可以指定 URLCache 自己的缓存策略。</p>
-<p>但是需要注意，如果 Cache-Control 包含 no-store， 那么 iOS 系统不会在应用沙盒缓存任何响应数据。</p>
-<p>换句话说就是， Cache-Control 是否包含 no-store 决定了是否创建缓存。而是否使用缓存分两种情况：</p>
-<ol>
-<li>本地缓存策略为默认值：useProtocolCachePolicy，使用缓存的方式由 Cache-Control 决定。</li>
-<li>本地缓存策略为其他值，忽略 Cache-Control 中指定的缓存使用方式，使用缓存的方式由本地缓存策略决定。</li>
-</ol>
-<hr>
-<div style="text-align: center"><br>关注公众号（ID：SwiftBetter），进一步探讨主题<br><br><br>每日精选高清题图，可做壁纸<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>]]></content:encoded>
-      
-      <comments>http://swift.diagon.me/urlcache-cache-control/#disqus_thread</comments>
     </item>
     
   </channel>
