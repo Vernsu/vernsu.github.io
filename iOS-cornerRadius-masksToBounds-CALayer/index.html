@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="protocol,extension,协议扩展," />
+  <meta name="keywords" content="离屏渲染,性能," />
 
 
 
@@ -86,23 +86,26 @@
 
 
 
-<meta name="description" content="面向协议的编程打破了旧的协议规则，允许让你用协议自身实现协议。
-你可以用下面的语法定义一个 protocol extension：
-123456789101112131415protocol TeamRecord &amp;#123;        var wins: Int &amp;#123; get &amp;#125;        var losses: Int &amp;#123; get &amp;#125;">
+<meta name="description" content="masksToBounds在《iOS 性能优化之视图圆角》中提到同时使用 cornerRadius 和 maskToBounds 会触发离屏渲染。
+如果你给 UIImageView 设置圆角，会发现只需要设置 cornerRadius，就可以完成圆角效果，那 masksToBounds 是做什么的？
+查看 cornerRadius 的文档：
+&amp;gt;Setting the radius to a">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Swift 中的协议扩展初探">
-<meta property="og:url" content="http://swift.diagon.me/protocol-extension/index.html">
+<meta property="og:title" content="iOS 中 masksToBounds 与 layer’s contents">
+<meta property="og:url" content="http://swift.diagon.me/iOS-cornerRadius-masksToBounds-CALayer/index.html">
 <meta property="og:site_name" content="Swift学徒">
-<meta property="og:description" content="面向协议的编程打破了旧的协议规则，允许让你用协议自身实现协议。
-你可以用下面的语法定义一个 protocol extension：
-123456789101112131415protocol TeamRecord &amp;#123;        var wins: Int &amp;#123; get &amp;#125;        var losses: Int &amp;#123; get &amp;#125;">
+<meta property="og:description" content="masksToBounds在《iOS 性能优化之视图圆角》中提到同时使用 cornerRadius 和 maskToBounds 会触发离屏渲染。
+如果你给 UIImageView 设置圆角，会发现只需要设置 cornerRadius，就可以完成圆角效果，那 masksToBounds 是做什么的？
+查看 cornerRadius 的文档：
+&amp;gt;Setting the radius to a">
 <meta property="og:image" content="https://vernsu.github.io/images/wxqrcode.jpg">
-<meta property="og:updated_time" content="2017-02-12T01:59:51.000Z">
+<meta property="og:updated_time" content="2017-02-19T13:11:25.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Swift 中的协议扩展初探">
-<meta name="twitter:description" content="面向协议的编程打破了旧的协议规则，允许让你用协议自身实现协议。
-你可以用下面的语法定义一个 protocol extension：
-123456789101112131415protocol TeamRecord &amp;#123;        var wins: Int &amp;#123; get &amp;#125;        var losses: Int &amp;#123; get &amp;#125;">
+<meta name="twitter:title" content="iOS 中 masksToBounds 与 layer’s contents">
+<meta name="twitter:description" content="masksToBounds在《iOS 性能优化之视图圆角》中提到同时使用 cornerRadius 和 maskToBounds 会触发离屏渲染。
+如果你给 UIImageView 设置圆角，会发现只需要设置 cornerRadius，就可以完成圆角效果，那 masksToBounds 是做什么的？
+查看 cornerRadius 的文档：
+&amp;gt;Setting the radius to a">
 <meta name="twitter:image" content="https://vernsu.github.io/images/wxqrcode.jpg">
 
 
@@ -131,13 +134,13 @@
 
 
 
-  <link rel="canonical" href="http://swift.diagon.me/protocol-extension/"/>
+  <link rel="canonical" href="http://swift.diagon.me/iOS-cornerRadius-masksToBounds-CALayer/"/>
 
 
 
 
 
-  <title> Swift 中的协议扩展初探 | Swift学徒 </title>
+  <title> iOS 中 masksToBounds 与 layer’s contents | Swift学徒 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -260,7 +263,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://swift.diagon.me/protocol-extension/">
+  <link itemprop="mainEntityOfPage" href="http://swift.diagon.me/iOS-cornerRadius-masksToBounds-CALayer/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="万恶胖为首">
@@ -284,7 +287,7 @@
             
             
               
-                Swift 中的协议扩展初探
+                iOS 中 masksToBounds 与 layer’s contents
               
             
           </h1>
@@ -299,8 +302,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-07T00:00:00+08:00">
-                2017-02-07
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-18T00:00:00+08:00">
+                2017-02-18
               </time>
             
 
@@ -309,28 +312,6 @@
             
           </span>
 
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/协议/" itemprop="url" rel="index">
-                    <span itemprop="name">协议</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
           
 
           
@@ -357,17 +338,19 @@
       
 
       
-        <p>面向协议的编程打破了旧的协议规则，允许让你用<strong>协议自身实现协议</strong>。</p>
-<p>你可以用下面的语法定义一个 protocol extension：</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">protocol</span> <span class="title">TeamRecord</span> </span>&#123;</div><div class="line">    </div><div class="line">    <span class="keyword">var</span> wins: <span class="type">Int</span> &#123; <span class="keyword">get</span> &#125;</div><div class="line">    </div><div class="line">    <span class="keyword">var</span> losses: <span class="type">Int</span> &#123; <span class="keyword">get</span> &#125;</div><div class="line">    </div><div class="line">    <span class="keyword">var</span> winningPercentage: <span class="type">Double</span> &#123; <span class="keyword">get</span> &#125;</div><div class="line">&#125;</div><div class="line"><span class="class"><span class="keyword">extension</span> <span class="title">TeamRecord</span> </span>&#123;</div><div class="line">    </div><div class="line">    <span class="keyword">var</span> gamesPlayed: <span class="type">Int</span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">return</span> wins + losses</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>这里 protocol extension 和 protocol 的不同是：extension 包括了成员的实现。 </p>
-<p>我们可以在 protocol extension 中使用 protocol 的成员，因为遵守 TemRecord 协议时，必定实现了 TemRecord 的成员。</p>
-<p>现在我们写一个 struct，可以直接使用 gamesPlayed，而不需要重新实现它。</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">BaseballRecord</span>: <span class="title">TeamRecord</span> </span>&#123;</div><div class="line">    </div><div class="line">    <span class="keyword">var</span> wins: <span class="type">Int</span></div><div class="line">    <span class="keyword">var</span> losses: <span class="type">Int</span></div><div class="line">    </div><div class="line">    <span class="keyword">var</span> winningPercentage: <span class="type">Double</span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">return</span> <span class="type">Double</span>(wins) / (<span class="type">Double</span>(wins) + <span class="type">Double</span>(losses))</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">let</span> sanFranciscoSwifts = <span class="type">BaseballRecord</span>(wins: <span class="number">10</span>, losses:<span class="number">5</span>)</div><div class="line"></div><div class="line">sanFranciscoSwifts.gamesPlayed <span class="comment">// 15</span></div></pre></td></tr></table></figure>
-<p>无奈滞留在机场，先写这么多。</p>
-<p>关于协议扩展更多内容参见：<a href="http://swift.diagon.me/protocol-extension/">《Swift 中的协议成员的默认实现》</a></p>
+        <h3 id="masksToBounds"><a href="#masksToBounds" class="headerlink" title="masksToBounds"></a>masksToBounds</h3><p>在<a href="http://swift.diagon.me/cornerRadius/">《iOS 性能优化之视图圆角》</a>中提到同时使用 <code>cornerRadius</code> 和 <code>maskToBounds</code> 会触发离屏渲染。</p>
+<p>如果你给 UIImageView 设置圆角，会发现只需要设置 <code>cornerRadius</code>，就可以完成圆角效果，那 <code>masksToBounds</code> 是做什么的？</p>
+<p>查看 <code>cornerRadius</code> 的文档：</p>
+<p>&gt;<br>Setting the radius to a value greater than 0.0 causes the layer to begin drawing rounded corners on its background. By default, the corner radius does not apply to the image in the layer’s contents property; it applies only to the background color and border of the layer. However, setting the masksToBounds property to YES causes the content to be clipped to the rounded corners.</p>
+<p>说明 <code>cornerRadius</code> 设置的圆角只对背景色和图层边框有用，对 <code>layer</code> 的 <code>contents</code> 属性中的 <code>image</code> 无效。当 <code>contents</code> 有内容或者内容背景不是透明的时，单靠 <code>cornerRadius</code> 是无法完成圆角效果的（比如说 UILabel ）。所以才要设置 <code>masksToBounds</code> 为 <code>true</code> (在 UIView 上对应的属性是 <code>clipsToBounds</code>，在 IB 里对应的设置是「Clip Subiews」选项)。<code>masksToBounds</code> 会裁剪 <code>layer</code>的 <code>contents</code>。</p>
+<h3 id="layer’s-contents"><a href="#layer’s-contents" class="headerlink" title="layer’s contents"></a>layer’s contents</h3><p>CALayer 有一个 <code>contents</code> 属性，这个属性的类型被定义为 id，意味着它可以是任何类型的对象。但是，在实践中，如果 <code>contents</code> 不是 CGImage，那么图层将是空白。</p>
+<p>UIImage 有一个 cgImage 属性，我们把 layerView 图层的 contents 属性设置成图片。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">layerView.layer.contents = <span class="type">UIImage</span>(named: <span class="string">"image"</span>)?.cgImage</div></pre></td></tr></table></figure>
+<p>我们利用 CALayer 在一个普通的 UIView 中显示了一张图片。</p>
 <hr>
 <div style="text-align: center"><br>关注公众号（ID：SwiftBetter），进一步探讨主题<br><br><br>每日精选高清题图，可做壁纸<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>
+
+
       
     </div>
 
@@ -390,11 +373,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/protocol/" rel="tag"># protocol</a>
+            <a href="/tags/离屏渲染/" rel="tag"># 离屏渲染</a>
           
-            <a href="/tags/extension/" rel="tag"># extension</a>
-          
-            <a href="/tags/协议扩展/" rel="tag"># 协议扩展</a>
+            <a href="/tags/性能/" rel="tag"># 性能</a>
           
         </div>
       
@@ -403,8 +384,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/optional-IUO/" rel="next" title="Swift 中 Optional 的隐式解包">
-                <i class="fa fa-chevron-left"></i> Swift 中 Optional 的隐式解包
+              <a href="/iOS-Swift-HTTP-TCP-IP-WebSocket-Socket/" rel="next" title="iOS 客户端开发需要掌握的 HTTP 知识">
+                <i class="fa fa-chevron-left"></i> iOS 客户端开发需要掌握的 HTTP 知识
               </a>
             
           </div>
@@ -412,10 +393,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/protocol-member-default/" rel="prev" title="Swift 中的协议成员的默认实现">
-                Swift 中的协议成员的默认实现 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -462,8 +439,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.gif"
@@ -526,6 +512,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#masksToBounds"><span class="nav-number">1.</span> <span class="nav-text">masksToBounds</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#layer’s-contents"><span class="nav-number">2.</span> <span class="nav-text">layer’s contents</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
     </div>

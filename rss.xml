@@ -8,8 +8,36 @@
     <atom:link href="/rss.xml" rel="self" type="application/rss+xml"/>
     
     <description>笨办法学Swift</description>
-    <pubDate>Sat, 18 Feb 2017 09:13:27 GMT</pubDate>
+    <pubDate>Sun, 19 Feb 2017 13:11:25 GMT</pubDate>
     <generator>http://hexo.io/</generator>
+    
+    <item>
+      <title>iOS 中 masksToBounds 与 layer’s contents</title>
+      <link>http://swift.diagon.me/iOS-cornerRadius-masksToBounds-CALayer/</link>
+      <guid>http://swift.diagon.me/iOS-cornerRadius-masksToBounds-CALayer/</guid>
+      <pubDate>Fri, 17 Feb 2017 16:00:00 GMT</pubDate>
+      <description>
+      
+        &lt;h3 id=&quot;masksToBounds&quot;&gt;&lt;a href=&quot;#masksToBounds&quot; class=&quot;headerlink&quot; title=&quot;masksToBounds&quot;&gt;&lt;/a&gt;masksToBounds&lt;/h3&gt;&lt;p&gt;在&lt;a href=&quot;http://swift.dia
+      
+      </description>
+      
+      <content:encoded><![CDATA[<h3 id="masksToBounds"><a href="#masksToBounds" class="headerlink" title="masksToBounds"></a>masksToBounds</h3><p>在<a href="http://swift.diagon.me/cornerRadius/">《iOS 性能优化之视图圆角》</a>中提到同时使用 <code>cornerRadius</code> 和 <code>maskToBounds</code> 会触发离屏渲染。</p>
+<p>如果你给 UIImageView 设置圆角，会发现只需要设置 <code>cornerRadius</code>，就可以完成圆角效果，那 <code>masksToBounds</code> 是做什么的？</p>
+<p>查看 <code>cornerRadius</code> 的文档：</p>
+<p>&gt;<br>Setting the radius to a value greater than 0.0 causes the layer to begin drawing rounded corners on its background. By default, the corner radius does not apply to the image in the layer’s contents property; it applies only to the background color and border of the layer. However, setting the masksToBounds property to YES causes the content to be clipped to the rounded corners.</p>
+<p>说明 <code>cornerRadius</code> 设置的圆角只对背景色和图层边框有用，对 <code>layer</code> 的 <code>contents</code> 属性中的 <code>image</code> 无效。当 <code>contents</code> 有内容或者内容背景不是透明的时，单靠 <code>cornerRadius</code> 是无法完成圆角效果的（比如说 UILabel ）。所以才要设置 <code>masksToBounds</code> 为 <code>true</code> (在 UIView 上对应的属性是 <code>clipsToBounds</code>，在 IB 里对应的设置是「Clip Subiews」选项)。<code>masksToBounds</code> 会裁剪 <code>layer</code>的 <code>contents</code>。</p>
+<h3 id="layer’s-contents"><a href="#layer’s-contents" class="headerlink" title="layer’s contents"></a>layer’s contents</h3><p>CALayer 有一个 <code>contents</code> 属性，这个属性的类型被定义为 id，意味着它可以是任何类型的对象。但是，在实践中，如果 <code>contents</code> 不是 CGImage，那么图层将是空白。</p>
+<p>UIImage 有一个 cgImage 属性，我们把 layerView 图层的 contents 属性设置成图片。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">layerView.layer.contents = <span class="type">UIImage</span>(named: <span class="string">"image"</span>)?.cgImage</div></pre></td></tr></table></figure>
+<p>我们利用 CALayer 在一个普通的 UIView 中显示了一张图片。</p>
+<hr>
+<div style="text-align: center"><br>关注公众号（ID：SwiftBetter），进一步探讨主题<br><br><br>每日精选高清题图，可做壁纸<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>
+
+]]></content:encoded>
+      
+      <comments>http://swift.diagon.me/iOS-cornerRadius-masksToBounds-CALayer/#disqus_thread</comments>
+    </item>
     
     <item>
       <title>iOS 客户端开发需要掌握的 HTTP 知识</title>
@@ -857,37 +885,6 @@
 <div style="text-align: center"><br>关注公众号（ID：SwiftBetter），进一步探讨主题<br><br><br>每日精选高清题图，可做壁纸<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>]]></content:encoded>
       
       <comments>http://swift.diagon.me/last-modified-etag/#disqus_thread</comments>
-    </item>
-    
-    <item>
-      <title>URLCache 与 CachedURLResponse</title>
-      <link>http://swift.diagon.me/urlcache-cachedurlresponse/</link>
-      <guid>http://swift.diagon.me/urlcache-cachedurlresponse/</guid>
-      <pubDate>Sun, 29 Jan 2017 16:00:00 GMT</pubDate>
-      <description>
-      
-        &lt;p&gt;&lt;a href=&quot;http://swift.diagon.me/urlcache-condiguration/&quot;&gt;《iOS 开发中 URLCache 的应用》&lt;/a&gt;中介绍了 URLCache 的使用方法。本文将进一步讲解 URLCache 更加深层次的用法。 &lt;/p&gt;
-&lt;
-      
-      </description>
-      
-      <content:encoded><![CDATA[<p><a href="http://swift.diagon.me/urlcache-condiguration/">《iOS 开发中 URLCache 的应用》</a>中介绍了 URLCache 的使用方法。本文将进一步讲解 URLCache 更加深层次的用法。 </p>
-<h2 id="CachedURLResponse"><a href="#CachedURLResponse" class="headerlink" title="CachedURLResponse"></a>CachedURLResponse</h2><p>CachedURLResponse 包含了一个服务端响应 metadata 的 URLResponse 和 一个包含实际存储数据 的 Data。</p>
-<h3 id="存取方法"><a href="#存取方法" class="headerlink" title="存取方法"></a>存取方法</h3><p>URLCache将 URLRequest/URLSessionDataTask 和 CachedURLResponse 进行了映射。</p>
-<p>得到和存储缓存对象的方法：</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">cachedResponse</span><span class="params">(<span class="keyword">for</span> request: URLRequest)</span></span> -&gt; <span class="type">CachedURLResponse</span>?</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">storeCachedResponse</span><span class="params">(<span class="number">_</span> cachedResponse: CachedURLResponse, <span class="keyword">for</span> request: URLRequest)</span></span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">storeCachedResponse</span><span class="params">(<span class="number">_</span> cachedResponse: CachedURLResponse, <span class="keyword">for</span> dataTask: URLSessionDataTask)</span></span></div></pre></td></tr></table></figure>
-<h3 id="修改缓存数据"><a href="#修改缓存数据" class="headerlink" title="修改缓存数据"></a>修改缓存数据</h3><p>URLSessionDataDelegate 协议中方法可以在数据返回后即将缓存时调用的方法。可以在这个方法里可以对即将缓存的数据进行修改，在代理方法中必须调用 completionHandler，提供要缓存的数据，如果传 nil 则表示不缓存。</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">urlSession</span><span class="params">(<span class="number">_</span> session: URLSession, dataTask: URLSessionDataTask, willCacheResponse proposedResponse: CachedURLResponse, completionHandler: @escaping <span class="params">(CachedURLResponse?)</span></span></span> -&gt; <span class="type">Void</span>) &#123;</div><div class="line"></div><div class="line">    &#125;</div></pre></td></tr></table></figure>
-<p>同时，这个方法中有说明：<strong>如果一个请求的响应内容的大小超过了 URLCache 中对应硬盘大小的 5%, 它就不会被缓存。</strong></p>
-<p>在 Alamofire 中可以这样写：</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="type">Alamofire</span>.<span class="type">Manager</span></div><div class="line">.sharedInstance</div><div class="line">.delegate</div><div class="line">.dataTaskWillCacheResponse = &#123; (session, task, cachedResponse) -&gt; <span class="type">NSCachedURLResponse</span>? <span class="keyword">in</span></div><div class="line">    <span class="keyword">var</span> userInfo = [<span class="type">NSObject</span> : <span class="type">AnyObject</span>]()</div><div class="line">    <span class="comment">// 设置userInfo</span></div><div class="line">    <span class="keyword">return</span> <span class="type">NSCachedURLResponse</span>(response: cachedResponse.response,</div><div class="line">                               data: cachedResponse.data,</div><div class="line">                               userInfo: userInfo,</div><div class="line">                               storagePolicy: cachedResponse.storagePolicy)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h2 id="清理缓存"><a href="#清理缓存" class="headerlink" title="清理缓存"></a>清理缓存</h2><p>可以删除全部缓存或者针对某个 URLRequest/URLSessionDataTask 的缓存。</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="type">URLCache</span>.shared.removeAllCachedResponses()</div></pre></td></tr></table></figure>
-<h2 id="线程安全"><a href="#线程安全" class="headerlink" title="线程安全"></a>线程安全</h2><p>在 iOS8 之后 URLCache 是线程安全的。尽管 URLCache 实例方法能够安全的被多个执行上下文同时调用，还是要注意有些方法的使用。比如使用 <code>cacheResponse(for:)</code> 和 <code>storeCachedResponse(_:for:)</code> 在同一个 request 中存取响应，不可避免的会出现竞争条件。URLCache的子类必须实现线程安全的方法重载。</p>
-<hr>
-<div style="text-align: center"><br>关注公众号（ID：SwiftBetter），进一步探讨主题<br><br><br>每日精选高清题图，可做壁纸<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>]]></content:encoded>
-      
-      <comments>http://swift.diagon.me/urlcache-cachedurlresponse/#disqus_thread</comments>
     </item>
     
   </channel>
