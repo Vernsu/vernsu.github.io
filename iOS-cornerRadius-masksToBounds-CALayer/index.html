@@ -89,7 +89,8 @@
 <meta name="description" content="masksToBounds在《iOS 性能优化之视图圆角》中提到同时使用 cornerRadius 和 maskToBounds 会触发离屏渲染。
 如果你给 UIImageView 设置圆角，会发现只需要设置 cornerRadius，就可以完成圆角效果，那 masksToBounds 是做什么的？
 查看 cornerRadius 的文档：
-&amp;gt;Setting the radius to a">
+
+Setting the radius to a val">
 <meta property="og:type" content="article">
 <meta property="og:title" content="iOS 中 masksToBounds 与 layer’s contents">
 <meta property="og:url" content="http://swift.diagon.me/iOS-cornerRadius-masksToBounds-CALayer/index.html">
@@ -97,15 +98,17 @@
 <meta property="og:description" content="masksToBounds在《iOS 性能优化之视图圆角》中提到同时使用 cornerRadius 和 maskToBounds 会触发离屏渲染。
 如果你给 UIImageView 设置圆角，会发现只需要设置 cornerRadius，就可以完成圆角效果，那 masksToBounds 是做什么的？
 查看 cornerRadius 的文档：
-&amp;gt;Setting the radius to a">
+
+Setting the radius to a val">
 <meta property="og:image" content="https://vernsu.github.io/images/wxqrcode.jpg">
-<meta property="og:updated_time" content="2017-02-20T01:23:30.000Z">
+<meta property="og:updated_time" content="2017-02-20T01:31:11.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="iOS 中 masksToBounds 与 layer’s contents">
 <meta name="twitter:description" content="masksToBounds在《iOS 性能优化之视图圆角》中提到同时使用 cornerRadius 和 maskToBounds 会触发离屏渲染。
 如果你给 UIImageView 设置圆角，会发现只需要设置 cornerRadius，就可以完成圆角效果，那 masksToBounds 是做什么的？
 查看 cornerRadius 的文档：
-&amp;gt;Setting the radius to a">
+
+Setting the radius to a val">
 <meta name="twitter:image" content="https://vernsu.github.io/images/wxqrcode.jpg">
 
 
@@ -302,8 +305,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-18T00:00:00+08:00">
-                2017-02-18
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-19T00:00:00+08:00">
+                2017-02-19
               </time>
             
 
@@ -341,7 +344,9 @@
         <h3 id="masksToBounds"><a href="#masksToBounds" class="headerlink" title="masksToBounds"></a>masksToBounds</h3><p>在<a href="http://swift.diagon.me/cornerRadius/">《iOS 性能优化之视图圆角》</a>中提到同时使用 <code>cornerRadius</code> 和 <code>maskToBounds</code> 会触发离屏渲染。</p>
 <p>如果你给 UIImageView 设置圆角，会发现只需要设置 <code>cornerRadius</code>，就可以完成圆角效果，那 <code>masksToBounds</code> 是做什么的？</p>
 <p>查看 <code>cornerRadius</code> 的文档：</p>
-<p>&gt;<br>Setting the radius to a value greater than 0.0 causes the layer to begin drawing rounded corners on its background. By default, the corner radius does not apply to the image in the layer’s contents property; it applies only to the background color and border of the layer. However, setting the masksToBounds property to YES causes the content to be clipped to the rounded corners.</p>
+<blockquote>
+<p>Setting the radius to a value greater than 0.0 causes the layer to begin drawing rounded corners on its background. By default, the corner radius does not apply to the image in the layer’s contents property; it applies only to the background color and border of the layer. However, setting the masksToBounds property to YES causes the content to be clipped to the rounded corners.</p>
+</blockquote>
 <p>说明 <code>cornerRadius</code> 设置的圆角只对背景色和图层边框有用，对 <code>layer</code> 的 <code>contents</code> 属性中的 <code>image</code> 无效。当 <code>contents</code> 有内容或者内容背景不是透明的时，单靠 <code>cornerRadius</code> 是无法完成圆角效果的（比如说 UILabel ）。所以才要设置 <code>masksToBounds</code> 为 <code>true</code> (在 UIView 上对应的属性是 <code>clipsToBounds</code>，在 IB 里对应的设置是「Clip Subiews」选项)。<code>masksToBounds</code> 会裁剪 <code>layer</code>的 <code>contents</code>。</p>
 <h3 id="layer’s-contents"><a href="#layer’s-contents" class="headerlink" title="layer’s contents"></a>layer’s contents</h3><p>CALayer 有一个 <code>contents</code> 属性，这个属性的类型被定义为 id，意味着它可以是任何类型的对象。但是，在实践中，如果 <code>contents</code> 不是 CGImage，那么图层将是空白。</p>
 <p>UIImage 有一个 cgImage 属性，我们把 layerView 图层的 contents 属性设置成图片。</p>
