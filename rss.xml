@@ -8,8 +8,35 @@
     <atom:link href="/rss.xml" rel="self" type="application/rss+xml"/>
     
     <description>笨办法学Swift</description>
-    <pubDate>Mon, 20 Feb 2017 01:31:11 GMT</pubDate>
+    <pubDate>Mon, 20 Feb 2017 12:58:40 GMT</pubDate>
     <generator>http://hexo.io/</generator>
+    
+    <item>
+      <title>Swift 模式匹配之标识符模式与值绑定模式</title>
+      <link>http://swift.diagon.me/swift-pattern-matching-value-binding-pattern-identifier-pattern/</link>
+      <guid>http://swift.diagon.me/swift-pattern-matching-value-binding-pattern-identifier-pattern/</guid>
+      <pubDate>Sun, 19 Feb 2017 16:00:00 GMT</pubDate>
+      <description>
+      
+        &lt;h2 id=&quot;值绑定模式（Value-Binding-Pattern）&quot;&gt;&lt;a href=&quot;#值绑定模式（Value-Binding-Pattern）&quot; class=&quot;headerlink&quot; title=&quot;值绑定模式（Value-Binding Pattern）&quot;&gt;&lt;/a&gt;值绑
+      
+      </description>
+      
+      <content:encoded><![CDATA[<h2 id="值绑定模式（Value-Binding-Pattern）"><a href="#值绑定模式（Value-Binding-Pattern）" class="headerlink" title="值绑定模式（Value-Binding Pattern）"></a>值绑定模式（Value-Binding Pattern）</h2><p>值绑定模式是指把匹配到的值绑定给一个变量或常量。你能够在接下来的代码块中使用该变量/常量的值。把匹配到的值绑定给变量时，用关键字 var，绑定给常量时，用关键字 let。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">let coordinate = (x: 1, y: 0, z: 0)</div><div class="line"></div><div class="line">if case (let x, 0, 0) = coordinate &#123;</div><div class="line">  print(“x坐标为 \(x)") //  1</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这个 case 匹配 x 坐标为任意值，y，z为0。然后名为 x 的常量绑定了元组 x 部分的值。相当于你告诉编译器，从(something，0，0)中找到一个值时，分配something给x。</p>
+<p>如果要绑定多个值，声明多个就好了：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">if case let (x, y, 0) = coordinate &#123;</div><div class="line">  print(“x,y分别是(\(x), \(y))&quot;) //  1, 0</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>将let移到元组外边，编译器能够绑定所有的常量。这个例子中，let 会分配到元组模式 (x, y, z) 中的各个标识符模式。因此，switch 语句中 case let (x, y ,0): 和 case (let x, let y, 0): 的匹配效果是一样的。</p>
+<h2 id="标识符模式-（Identifier-Pattern）"><a href="#标识符模式-（Identifier-Pattern）" class="headerlink" title="标识符模式 （Identifier Pattern）"></a>标识符模式 （Identifier Pattern）</h2><p>标识符模式是值绑定模式的子模式。标识符模式是常量或者变量的名称自身。例如，在下面的常量声明中，someValue 是一个标识符模式，匹配了 Int 类型的 42：</p>
+<p><code>`swift
+let someValue = 42</code></p>
+<p>当匹配成功时，42 被绑定（赋值）给常量 someValue。</p>
+<p>在值绑定模式中的标识符模式会把新命名的变量或常量与匹配到的值做绑定。例如，你可以拆开一个元组，然后把每个元素绑定到相应的标识符模式中。</p>
+]]></content:encoded>
+      
+      <comments>http://swift.diagon.me/swift-pattern-matching-value-binding-pattern-identifier-pattern/#disqus_thread</comments>
+    </item>
     
     <item>
       <title>iOS 中 masksToBounds 与 layer’s contents</title>
@@ -862,31 +889,6 @@
 <div style="text-align: center"><br>关注公众号（ID：SwiftBetter），进一步探讨主题<br><br><br>每日精选高清题图，可做壁纸<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>]]></content:encoded>
       
       <comments>http://swift.diagon.me/delegate-weak/#disqus_thread</comments>
-    </item>
-    
-    <item>
-      <title>使用 Last-Modified 和 Etag 精确控制缓存失效时机</title>
-      <link>http://swift.diagon.me/last-modified-etag/</link>
-      <guid>http://swift.diagon.me/last-modified-etag/</guid>
-      <pubDate>Mon, 30 Jan 2017 16:00:00 GMT</pubDate>
-      <description>
-      
-        &lt;p&gt;&lt;a href=&quot;http://swift.diagon.me/urlcache-http/&quot;&gt;《iOS 开发中常用的缓存策略：HTTP 协议篇》&lt;/a&gt; 一文中说到 Cache-control 含有 no-cache 时需要进一步验证缓存有效性。一般使用的验证机制有 La
-      
-      </description>
-      
-      <content:encoded><![CDATA[<p><a href="http://swift.diagon.me/urlcache-http/">《iOS 开发中常用的缓存策略：HTTP 协议篇》</a> 一文中说到 Cache-control 含有 no-cache 时需要进一步验证缓存有效性。一般使用的验证机制有 Last-Modified 和 ETag。</p>
-<h2 id="Last-Modified"><a href="#Last-Modified" class="headerlink" title="Last-Modified"></a>Last-Modified</h2><p>Last-Modified 在服务器返回的响应头中，标识资源的最后修改时间。相对应的客户端的请求头中有 If-Modified-Since ，标识客户端所记录的，资源的最后修改时间，值为最后一次请求时返回的 Last-Modified 字段的值。</p>
-<p>第一次请求某一个URL时，服务器端的返回状态会是200，内容是你请求的资源，同时响应头中含有 Last-Modified ，格式类似这样：<code>Last-Modified: Fri, 12 May 2006 18:53:33 GMT</code> 。客户端第二次请求此 URL 时，根据 HTTP 协议的规定，客户端向服务器传送 If-Modified-Since 报头，格式类似这样： <code>If-Modified-Since: Fri, 12 May 2006 18:53:33 GMT</code> 。如果服务端的资源没有变化，则自动返回304状态码 <code>Not Changed</code>，内容为空，客户端就直接使用本地的缓存。当服务器端代码发生改变或者重启服务器时，则重新发出资源，返回和第一次请求时类似。这样就可以保证不向客户端重复发出资源，也保证当服务器有变化时，客户端能够得到最新的资源。</p>
-<h2 id="ETag"><a href="#ETag" class="headerlink" title="ETag"></a>ETag</h2><p>Etag 在服务器返回的响应头中，是资源的唯一标识符。相对应的客户端的请求头中有 If-None-Match ，标识客户端所记录的，资源的唯一标识符，值为最后一次请求时返回的 Etag 字段的值。</p>
-<p>第一次请求某一个URL时，服务器端的返回状态会是200，内容是你请求的资源，同时响应头中含有 Etag ，格式类似这样：<code>Etag：&quot;50b1c1d4f775c61:df3&quot;</code> 。客户端第二次请求此 URL 时，根据 HTTP 协议的规定，客户端向服务器传送 If-None-Match: 报头，格式类似这样： <code>If-None-Match: &quot;50b1c1d4f775c61:df3&quot;</code>。如果服务端的资源没有变化，则自动返回304状态码 <code>Not Changed</code>，与Last-Modified一样。</p>
-<h2 id="客户端处理"><a href="#客户端处理" class="headerlink" title="客户端处理"></a>客户端处理</h2><p>若缓存策略为默认的，iOS 系统会自动的处理 Last-Modified 和 ETag 并使用缓存。</p>
-<p>如果想自己用代码处理 Last-Modified 和 ETag，那么缓存策略则必须使用  <code>NSURLRequestReloadIgnoringCacheData</code>，忽略缓存，每次都要向服务端进行校验。然后再用代码判断是否使用缓存。</p>
-<p>另外如果更新频率较高，比如微博消息列表、一般的处理方式是添加一个接口，客户端将本地缓存的最后一条数据的的时间戳或 id 传给服务端，然后服务端返回新增的数据，没有新数据则返回 nil 或 304。</p>
-<hr>
-<div style="text-align: center"><br>关注公众号（ID：SwiftBetter），进一步探讨主题<br><br><br>每日精选高清题图，可做壁纸<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>]]></content:encoded>
-      
-      <comments>http://swift.diagon.me/last-modified-etag/#disqus_thread</comments>
     </item>
     
   </channel>

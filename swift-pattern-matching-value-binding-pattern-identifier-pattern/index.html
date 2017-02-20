@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Optiional," />
+  <meta name="keywords" content="模式匹配," />
 
 
 
@@ -86,21 +86,19 @@
 
 
 
-<meta name="description" content="Optional Chaining 的基本用法Optional Chaining (可选链) 中任何一个节点为 nil 时，则整个链条失效，返回 nil。因此，即使链条最后的属性、方法、下标调用返回的结果不是 Optional 类型的，整个链条返回的结果也是 Optional 类型的。
-换而言之，Optional Chaining 会将原本返回的结果包装为 Optional。一个原本返回 Int">
+<meta name="description" content="值绑定模式（Value-Binding Pattern）值绑定模式是指把匹配到的值绑定给一个变量或常量。你能够在接下来的代码块中使用该变量/常量的值。把匹配到的值绑定给变量时，用关键字 var，绑定给常量时，用关键字 let。
+12345let coordinate = (x: 1, y: 0, z: 0)if case (let x, 0, 0) = coordinate &amp;#123;  pri">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Swift 中的 Optional Chaining">
-<meta property="og:url" content="http://swift.diagon.me/optional-chaining/index.html">
+<meta property="og:title" content="Swift 模式匹配之标识符模式与值绑定模式">
+<meta property="og:url" content="http://swift.diagon.me/swift-pattern-matching-value-binding-pattern-identifier-pattern/index.html">
 <meta property="og:site_name" content="Swift学徒">
-<meta property="og:description" content="Optional Chaining 的基本用法Optional Chaining (可选链) 中任何一个节点为 nil 时，则整个链条失效，返回 nil。因此，即使链条最后的属性、方法、下标调用返回的结果不是 Optional 类型的，整个链条返回的结果也是 Optional 类型的。
-换而言之，Optional Chaining 会将原本返回的结果包装为 Optional。一个原本返回 Int">
-<meta property="og:image" content="https://vernsu.github.io/images/wxqrcode.jpg">
-<meta property="og:updated_time" content="2017-02-20T01:20:35.000Z">
+<meta property="og:description" content="值绑定模式（Value-Binding Pattern）值绑定模式是指把匹配到的值绑定给一个变量或常量。你能够在接下来的代码块中使用该变量/常量的值。把匹配到的值绑定给变量时，用关键字 var，绑定给常量时，用关键字 let。
+12345let coordinate = (x: 1, y: 0, z: 0)if case (let x, 0, 0) = coordinate &amp;#123;  pri">
+<meta property="og:updated_time" content="2017-02-20T12:58:40.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Swift 中的 Optional Chaining">
-<meta name="twitter:description" content="Optional Chaining 的基本用法Optional Chaining (可选链) 中任何一个节点为 nil 时，则整个链条失效，返回 nil。因此，即使链条最后的属性、方法、下标调用返回的结果不是 Optional 类型的，整个链条返回的结果也是 Optional 类型的。
-换而言之，Optional Chaining 会将原本返回的结果包装为 Optional。一个原本返回 Int">
-<meta name="twitter:image" content="https://vernsu.github.io/images/wxqrcode.jpg">
+<meta name="twitter:title" content="Swift 模式匹配之标识符模式与值绑定模式">
+<meta name="twitter:description" content="值绑定模式（Value-Binding Pattern）值绑定模式是指把匹配到的值绑定给一个变量或常量。你能够在接下来的代码块中使用该变量/常量的值。把匹配到的值绑定给变量时，用关键字 var，绑定给常量时，用关键字 let。
+12345let coordinate = (x: 1, y: 0, z: 0)if case (let x, 0, 0) = coordinate &amp;#123;  pri">
 
 
 
@@ -128,13 +126,13 @@
 
 
 
-  <link rel="canonical" href="http://swift.diagon.me/optional-chaining/"/>
+  <link rel="canonical" href="http://swift.diagon.me/swift-pattern-matching-value-binding-pattern-identifier-pattern/"/>
 
 
 
 
 
-  <title> Swift 中的 Optional Chaining | Swift学徒 </title>
+  <title> Swift 模式匹配之标识符模式与值绑定模式 | Swift学徒 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -257,7 +255,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://swift.diagon.me/optional-chaining/">
+  <link itemprop="mainEntityOfPage" href="http://swift.diagon.me/swift-pattern-matching-value-binding-pattern-identifier-pattern/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="万恶胖为首">
@@ -281,7 +279,7 @@
             
             
               
-                Swift 中的 Optional Chaining
+                Swift 模式匹配之标识符模式与值绑定模式
               
             
           </h1>
@@ -296,8 +294,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-03T00:00:00+08:00">
-                2017-02-03
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-20T00:00:00+08:00">
+                2017-02-20
               </time>
             
 
@@ -306,28 +304,6 @@
             
           </span>
 
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Optional/" itemprop="url" rel="index">
-                    <span itemprop="name">Optional</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
           
 
           
@@ -354,22 +330,18 @@
       
 
       
-        <h3 id="Optional-Chaining-的基本用法"><a href="#Optional-Chaining-的基本用法" class="headerlink" title="Optional Chaining 的基本用法"></a>Optional Chaining 的基本用法</h3><p><code>Optional Chaining</code> (可选链) 中任何一个节点为 <code>nil</code> 时，则整个链条失效，返回 nil。因此，即使链条最后的属性、方法、下标调用返回的结果不是 <code>Optional</code> 类型的，整个链条返回的结果也是 <code>Optional</code> 类型的。</p>
-<p>换而言之，<code>Optional Chaining</code> 会将原本返回的结果包装为 <code>Optional</code>。一个原本返回 <code>Int</code> 的方法会返回 <code>Int？</code>。</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span> </span>&#123;</div><div class="line">    <span class="keyword">var</span> residence: <span class="type">Residence</span>?</div><div class="line">&#125;</div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Residence</span> </span>&#123;</div><div class="line">    <span class="keyword">var</span> numberOfRooms = <span class="number">1</span></div><div class="line">    <span class="keyword">var</span> colorForFirstRoom:<span class="type">String</span>?</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">func</span> <span class="title">roomName</span><span class="params">()</span></span> -&gt; <span class="type">String</span>?&#123;</div><div class="line">    	<span class="keyword">return</span> <span class="string">"name"</span></div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"><span class="keyword">let</span> john = <span class="type">Person</span>()</div><div class="line"><span class="comment">//john.residence = Residence()</span></div><div class="line"></div><div class="line"><span class="keyword">let</span> roomCount = john.residence?.numberOfRooms</div></pre></td></tr></table></figure>
-<p>虽然 numberOfRooms 的类型是 <code>Int</code>，但此时得到的 roomCount 的类型是 <code>Int?</code>。与此类似，调用返回值为 <code>Int</code> 类型的方法时，最终得到的结果是 <code>Int?</code>。</p>
-<p>如果要在方法的返回值上进行可选链式调用，在方法的圆括号后面加上问号即可:</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> roomCount = john.residence?.roomName()?.hasPrefix(<span class="string">"name"</span>)</div></pre></td></tr></table></figure>
-<p><strong>在实际使用时 Optional Chaining  经常和 Optional Binding 一起使用</strong>：</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span> <span class="keyword">let</span> roomCount = john.residence?.numberOfRooms &#123;</div><div class="line">    <span class="built_in">print</span>(<span class="string">"John's residence has <span class="subst">\(roomCount)</span> room(s)."</span>)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>另外还可以直接使用 <code>Optional Chaining</code> 设定属性：</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">john.residence?.colorForFirstRoom = <span class="string">"Red"</span></div></pre></td></tr></table></figure>
-<p>在这个例子中如果等号左侧的链条调用失败，等号右侧的代码不会被执行。</p>
-<h3 id="访问-Optional-类型下标"><a href="#访问-Optional-类型下标" class="headerlink" title="访问 Optional 类型下标"></a>访问 Optional 类型下标</h3><figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> testScores = [<span class="string">"Dave"</span>: [<span class="number">86</span>, <span class="number">82</span>, <span class="number">84</span>], <span class="string">"Bev"</span>: [<span class="number">79</span>, <span class="number">94</span>, <span class="number">81</span>]]</div><div class="line">testScores[<span class="string">"Dave"</span>]?[<span class="number">0</span>] = <span class="number">91</span></div><div class="line">testScores[<span class="string">"Bev"</span>]?[<span class="number">0</span>] += <span class="number">1</span></div><div class="line">testScores[<span class="string">"Brian"</span>]?[<span class="number">0</span>] = <span class="number">72</span></div></pre></td></tr></table></figure>
-<p>“Dave” 数组现在是 [91, 82, 84]，”Bev” 数组现在是 [80, 94, 81]，testScores字典中没有”Brian”这个键，所以第三个调用失败。</p>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>记住一句话:使用 <code>Optional Chaining</code> 所得到的东西一定是 <code>Optional</code>类型的。</p>
-<hr>
-<div style="text-align: center"><br>关注公众号（ID：SwiftBetter），进一步探讨主题<br><br><br>每日精选高清题图，可做壁纸<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>
+        <h2 id="值绑定模式（Value-Binding-Pattern）"><a href="#值绑定模式（Value-Binding-Pattern）" class="headerlink" title="值绑定模式（Value-Binding Pattern）"></a>值绑定模式（Value-Binding Pattern）</h2><p>值绑定模式是指把匹配到的值绑定给一个变量或常量。你能够在接下来的代码块中使用该变量/常量的值。把匹配到的值绑定给变量时，用关键字 var，绑定给常量时，用关键字 let。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">let coordinate = (x: 1, y: 0, z: 0)</div><div class="line"></div><div class="line">if case (let x, 0, 0) = coordinate &#123;</div><div class="line">  print(“x坐标为 \(x)") //  1</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这个 case 匹配 x 坐标为任意值，y，z为0。然后名为 x 的常量绑定了元组 x 部分的值。相当于你告诉编译器，从(something，0，0)中找到一个值时，分配something给x。</p>
+<p>如果要绑定多个值，声明多个就好了：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">if case let (x, y, 0) = coordinate &#123;</div><div class="line">  print(“x,y分别是(\(x), \(y))&quot;) //  1, 0</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>将let移到元组外边，编译器能够绑定所有的常量。这个例子中，let 会分配到元组模式 (x, y, z) 中的各个标识符模式。因此，switch 语句中 case let (x, y ,0): 和 case (let x, let y, 0): 的匹配效果是一样的。</p>
+<h2 id="标识符模式-（Identifier-Pattern）"><a href="#标识符模式-（Identifier-Pattern）" class="headerlink" title="标识符模式 （Identifier Pattern）"></a>标识符模式 （Identifier Pattern）</h2><p>标识符模式是值绑定模式的子模式。标识符模式是常量或者变量的名称自身。例如，在下面的常量声明中，someValue 是一个标识符模式，匹配了 Int 类型的 42：</p>
+<p><code>`swift
+let someValue = 42</code></p>
+<p>当匹配成功时，42 被绑定（赋值）给常量 someValue。</p>
+<p>在值绑定模式中的标识符模式会把新命名的变量或常量与匹配到的值做绑定。例如，你可以拆开一个元组，然后把每个元素绑定到相应的标识符模式中。</p>
+
       
     </div>
 
@@ -392,7 +364,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Optiional/" rel="tag"># Optiional</a>
+            <a href="/tags/模式匹配/" rel="tag"># 模式匹配</a>
           
         </div>
       
@@ -401,8 +373,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/protocol-mutable-method/" rel="next" title="Swift 中的可选协议方法">
-                <i class="fa fa-chevron-left"></i> Swift 中的可选协议方法
+              <a href="/iOS-cornerRadius-masksToBounds-CALayer/" rel="next" title="iOS 中 masksToBounds 与 layer’s contents">
+                <i class="fa fa-chevron-left"></i> iOS 中 masksToBounds 与 layer’s contents
               </a>
             
           </div>
@@ -410,10 +382,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/optional-chaining-issue/" rel="prev" title="Optional Chaining 陷阱">
-                Optional Chaining 陷阱 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -543,7 +511,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Optional-Chaining-的基本用法"><span class="nav-number">1.</span> <span class="nav-text">Optional Chaining 的基本用法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#访问-Optional-类型下标"><span class="nav-number">2.</span> <span class="nav-text">访问 Optional 类型下标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-number">3.</span> <span class="nav-text">总结</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#值绑定模式（Value-Binding-Pattern）"><span class="nav-number">1.</span> <span class="nav-text">值绑定模式（Value-Binding Pattern）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#标识符模式-（Identifier-Pattern）"><span class="nav-number">2.</span> <span class="nav-text">标识符模式 （Identifier Pattern）</span></a></li></ol></div>
             
 
           </div>
