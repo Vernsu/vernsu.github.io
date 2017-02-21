@@ -1,1 +1,1 @@
-http://swift.diagon.me/swift-pattern-matching-value-binding-pattern-identifier-pattern/
+http://swift.diagon.me/swift-enum-associated-values/
