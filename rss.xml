@@ -8,8 +8,79 @@
     <atom:link href="/rss.xml" rel="self" type="application/rss+xml"/>
     
     <description>笨办法学Swift</description>
-    <pubDate>Tue, 21 Feb 2017 14:12:40 GMT</pubDate>
+    <pubDate>Wed, 22 Feb 2017 14:37:04 GMT</pubDate>
     <generator>http://hexo.io/</generator>
+    
+    <item>
+      <title>UIView Animation 1：基础动画效果</title>
+      <link>http://swift.diagon.me/UIView-Animation-getting-start/</link>
+      <guid>http://swift.diagon.me/UIView-Animation-getting-start/</guid>
+      <pubDate>Tue, 21 Feb 2017 16:00:00 GMT</pubDate>
+      <description>
+      
+        &lt;p&gt;UIView Animation 是被设计来让开发者更简单的创建动画效果，避免使用复杂的 Core Animation。&lt;/p&gt;
+&lt;p&gt;本文将介绍 UIView Animation 的常用 API。&lt;/p&gt;
+&lt;p&gt;下图是一个普通的登录页面：&lt;/p&gt;
+&lt;p&gt;&lt;img src=
+      
+      </description>
+      
+      <content:encoded><![CDATA[<p>UIView Animation 是被设计来让开发者更简单的创建动画效果，避免使用复杂的 Core Animation。</p>
+<p>本文将介绍 UIView Animation 的常用 API。</p>
+<p>下图是一个普通的登录页面：</p>
+<p><img src="https://ww4.sinaimg.cn/large/006tNc79ly1fczhze1z9zj30ac0a1gm6.jpg" alt=""></p>
+<h2 id="第一个动画"><a href="#第一个动画" class="headerlink" title="第一个动画"></a>第一个动画</h2><p>第一个动画效果是当用户打开 app 时，页面的 UI 元素从屏幕外移动到屏幕内。</p>
+<p>在<code>viewWillAppear</code>中,将这几个元素移出屏幕：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">heading.center.x  -= view.bounds.width</div><div class="line">username.center.x -= view.bounds.width</div><div class="line">password.center.x -= view.bounds.width</div></pre></td></tr></table></figure>
+<p>目前这几个元素的位置相当于在当前屏幕左侧新建了一个对称屏幕中的位置。</p>
+<p><img src="https://ww1.sinaimg.cn/large/006tNc79ly1fczilnuiebj30ac0baq3c.jpg" alt=""></p>
+<p>现在可以在页面显示后，将这几个元素移动回原位置，为了避免所有元素同步显示显得呆板，可以设置显示的先后顺序。在<code>viewDidAppear</code>中：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="type">UIView</span>.animate(withDuration: <span class="number">0.5</span>) &#123;</div><div class="line">    <span class="keyword">self</span>.heading.center.x += <span class="keyword">self</span>.view.bounds.width</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="type">UIView</span>.animate(withDuration: <span class="number">0.5</span>, delay: <span class="number">0.3</span>, options: [], animations: &#123; </div><div class="line">    <span class="keyword">self</span>.username.center.x += <span class="keyword">self</span>.view.bounds.width</div><div class="line">&#125;, completion: <span class="literal">nil</span>)</div><div class="line">    </div><div class="line"><span class="type">UIView</span>.animate(withDuration: <span class="number">0.5</span>, delay: <span class="number">0.4</span>, options: [], animations: &#123; </div><div class="line">    <span class="keyword">self</span>.password.center.x += <span class="keyword">self</span>.view.bounds.width</div><div class="line">&#125;, completion: <span class="literal">nil</span>)</div></pre></td></tr></table></figure>
+<p><code>option</code> 是一组自定义的选项，这里先传入<code>[]</code>，表示没有特殊选项。</p>
+<p><img src="https://ww1.sinaimg.cn/large/006tNc79ly1fczj8hdmz6g30a309cwfb.gif" alt=""></p>
+<h2 id="可以添加动画的属性"><a href="#可以添加动画的属性" class="headerlink" title="可以添加动画的属性"></a>可以添加动画的属性</h2><p>不是所有的 UIView 属性都可以添加动画，以下是可以使用动画的属性。</p>
+<h3 id="位置和大小"><a href="#位置和大小" class="headerlink" title="位置和大小"></a>位置和大小</h3><p>对视图位置和大小的修改可以产生扩张，收缩，移动效果。以下是相关的属性：</p>
+<ul>
+<li>bounds：在视图的 frame 中重新安排视图的内容的位置</li>
+<li>frame：移动或缩放视图</li>
+<li>center：移动视图到新位置</li>
+</ul>
+<p>你可以修改这些属性或者这些属性的成员。比如通过 <code>center.y</code> 改变竖直位置，通过<code>frame.size.width</code>来缩放。</p>
+<h3 id="外观"><a href="#外观" class="headerlink" title="外观"></a>外观</h3><p>可以改变视图的背景色或透明度。</p>
+<ul>
+<li>backgroundColor</li>
+<li>alpha：可以制造淡入淡出的效果。</li>
+</ul>
+<p>对云朵使用淡入动画:</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="type">UIView</span>.animate(withDuration: <span class="number">0.5</span>, delay: <span class="number">0.5</span>, options: [], animations: &#123;</div><div class="line">    <span class="keyword">self</span>.cloud1.alpha = <span class="number">1.0</span></div><div class="line">&#125;, completion: <span class="literal">nil</span>)</div><div class="line"><span class="type">UIView</span>.animate(withDuration: <span class="number">0.5</span>, delay: <span class="number">0.7</span>, options: [], animations: &#123;</div><div class="line">    <span class="keyword">self</span>.cloud2.alpha = <span class="number">1.0</span></div><div class="line">&#125;, completion: <span class="literal">nil</span>)</div><div class="line"><span class="type">UIView</span>.animate(withDuration: <span class="number">0.5</span>, delay: <span class="number">0.9</span>, options: [], animations: &#123;</div><div class="line">    <span class="keyword">self</span>.cloud3.alpha = <span class="number">1.0</span></div><div class="line">&#125;, completion: <span class="literal">nil</span>)</div><div class="line"><span class="type">UIView</span>.animate(withDuration: <span class="number">0.5</span>, delay: <span class="number">1.0</span>, options: [], animations: &#123;</div><div class="line">    <span class="keyword">self</span>.cloud4.alpha = <span class="number">1.0</span></div><div class="line">&#125;, completion: <span class="literal">nil</span>)</div></pre></td></tr></table></figure>
+<p><img src="https://ww3.sinaimg.cn/large/006tNc79ly1fczm9miadhg30a30dkdhq.gif" alt=""></p>
+<h3 id="变形"><a href="#变形" class="headerlink" title="变形"></a>变形</h3><ul>
+<li>transform： 旋转，缩放</li>
+</ul>
+<p>底层是仿射变换。可以使用跟强大的缩放因子和旋转角度，而不是详细的 bounds 和  center。</p>
+<h2 id="动画选项"><a href="#动画选项" class="headerlink" title="动画选项"></a>动画选项</h2><p>接下来我们了解之前提到的 <code>option</code>。<code>UIViewAnimationOptions</code>罗列了所有的<code>option</code>，可以通过组合不同的<code>option</code>。</p>
+<h3 id="重复"><a href="#重复" class="headerlink" title="重复"></a>重复</h3><ul>
+<li>.repeat 包含这个选项可以使动画永远重复</li>
+<li>.autoreverse 这个选项只能和 <code>.repeat</code>组合起来用。让你的动画先正向播放，再逆向播放。</li>
+</ul>
+<p>修改代码:</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="type">UIView</span>.animate(withDuration: <span class="number">0.5</span>, delay: <span class="number">0.4</span>,</div><div class="line">               options: .<span class="keyword">repeat</span>,</div><div class="line">               animations: &#123;</div><div class="line">                <span class="keyword">self</span>.password.center.x += <span class="keyword">self</span>.view.bounds.width</div><div class="line">                &#125;,</div><div class="line">               completion: <span class="literal">nil</span>)</div></pre></td></tr></table></figure>
+<p><img src="https://ww2.sinaimg.cn/large/006tNc79ly1fczllm4fjqg30a309cta9.gif" alt=""></p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="type">UIView</span>.animate(withDuration: <span class="number">0.5</span>, delay: <span class="number">0.4</span>,</div><div class="line">               options: [.<span class="keyword">repeat</span>,.autoreverse] ,</div><div class="line">               animations: &#123;</div><div class="line">                <span class="keyword">self</span>.password.center.x += <span class="keyword">self</span>.view.bounds.width</div><div class="line">                &#125;,</div><div class="line">               completion: <span class="literal">nil</span>)</div></pre></td></tr></table></figure>
+<p><img src="https://ww1.sinaimg.cn/large/006tNc79ly1fczllqhd5ng30a309cmyw.gif" alt=""></p>
+<p>注意 swift 为了方便使用，在只有一个 <code>option</code> 时 允许不将其放在 <code>[]</code> 中。</p>
+<h3 id="动画缓动（Animation-easing）"><a href="#动画缓动（Animation-easing）" class="headerlink" title="动画缓动（Animation easing）"></a>动画缓动（Animation easing）</h3><p>物理世界的运动不一直是匀速的，不仅速度是变动的，而且加速度也是变动的。<br>常用的 easing option：</p>
+<ul>
+<li>.curveLinear： 用于没有加速度的动画。</li>
+<li>.curveEaseIn： 用于开始时加速。</li>
+<li>.curveEaseOut： 用于结束时减速。</li>
+<li>.curveEaseInOut： 用于开始时加速，结束时减速。</li>
+</ul>
+<hr>
+<div style="text-align: center"><br>关注公众号（ID：SwiftBetter），进一步探讨主题<br><br><br>每日精选高清题图，可做壁纸<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>]]></content:encoded>
+      
+      <comments>http://swift.diagon.me/UIView-Animation-getting-start/#disqus_thread</comments>
+    </item>
     
     <item>
       <title>Swift 中枚举的关联值</title>
@@ -18,13 +89,13 @@
       <pubDate>Mon, 20 Feb 2017 16:00:00 GMT</pubDate>
       <description>
       
-        &lt;h2 id=&quot;枚举关联值与值绑定模式&quot;&gt;&lt;a href=&quot;#枚举关联值与值绑定模式&quot; class=&quot;headerlink&quot; title=&quot;枚举关联值与值绑定模式&quot;&gt;&lt;/a&gt;枚举关联值与值绑定模式&lt;/h2&gt;&lt;p&gt;当你将枚举模式和值绑定模式结合起来，你能够从枚举中拿到关联值。&lt;/p
+        &lt;h2 id=&quot;枚举关联值与值绑定模式&quot;&gt;&lt;a href=&quot;#枚举关联值与值绑定模式&quot; class=&quot;headerlink&quot; title=&quot;枚举关联值与值绑定模式&quot;&gt;&lt;/a&gt;枚举关联值与值绑定模式&lt;/h2&gt;&lt;p&gt;当枚举的关联值和值绑定模式结合起来，就能够达到从枚举中取得关联值的效
       
       </description>
       
-      <content:encoded><![CDATA[<h2 id="枚举关联值与值绑定模式"><a href="#枚举关联值与值绑定模式" class="headerlink" title="枚举关联值与值绑定模式"></a>枚举关联值与值绑定模式</h2><p>当你将枚举模式和值绑定模式结合起来，你能够从枚举中拿到关联值。</p>
+      <content:encoded><![CDATA[<h2 id="枚举关联值与值绑定模式"><a href="#枚举关联值与值绑定模式" class="headerlink" title="枚举关联值与值绑定模式"></a>枚举关联值与值绑定模式</h2><p>当枚举的关联值和值绑定模式结合起来，就能够达到从枚举中取得关联值的效果。</p>
 <figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">enum</span> <span class="title">Organism</span> </span>&#123;</div><div class="line">  <span class="keyword">case</span> plant</div><div class="line">  <span class="keyword">case</span> animal(legs: <span class="type">Int</span>)</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">let</span> pet = <span class="type">Organism</span>.animal(legs: <span class="number">4</span>)</div><div class="line"></div><div class="line"><span class="keyword">switch</span> pet &#123;</div><div class="line"><span class="keyword">case</span> .animal(<span class="keyword">let</span> legs):</div><div class="line">  <span class="built_in">print</span>(<span class="string">" <span class="subst">\(legs)</span> 条腿的动物"</span>) <span class="comment">// Printed: 4 条腿的动物</span></div><div class="line"><span class="keyword">default</span>:</div><div class="line">  <span class="built_in">print</span>(<span class="string">"植物"</span>)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>这段代码中，.animal的关联值是一个叫 legs 的常量。怎么把关联的值取出来？使用值绑定模式即可取出值。定义一个局部变量，名字可以随便取(不一定是 legs)，这个局部变量会和关联值连接起来。</p>
+<p>这段代码中，.animal 的关联值是一个叫 legs 的常量。怎么把关联的值取出来？使用值绑定模式即可取出值。定义一个局部变量，名字可以随便取(不一定是 legs)，这个局部变量会和关联值连接起来。</p>
 <h2 id="optional"><a href="#optional" class="headerlink" title="optional"></a>optional</h2><p>optional 就是用 enum 实现的。</p>
 <ol>
 <li>.none 意味着没有值</li>
@@ -33,7 +104,8 @@
 <figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> age: <span class="type">Int</span>?</div><div class="line">age = <span class="number">17</span></div><div class="line"><span class="comment">//age = nil</span></div><div class="line"></div><div class="line"><span class="keyword">switch</span> age &#123;</div><div class="line"><span class="keyword">case</span> .<span class="keyword">none</span>:</div><div class="line">  <span class="built_in">print</span>(<span class="string">"No value"</span>)</div><div class="line"><span class="keyword">case</span> .some(<span class="keyword">let</span> value):</div><div class="line">  <span class="built_in">print</span>(<span class="string">"Got a value: <span class="subst">\(value)</span>"</span>)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>swift 中 nil 中其实就是 .none。</p>
 <figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> optionalNil: <span class="type">Int</span>? = .<span class="keyword">none</span></div><div class="line"></div><div class="line">optionalNil == <span class="literal">nil</span>    <span class="comment">// true</span></div><div class="line">optionalNil == .<span class="keyword">none</span>  <span class="comment">// true</span></div></pre></td></tr></table></figure>
-]]></content:encoded>
+<hr>
+<div style="text-align: center"><br>关注公众号（ID：SwiftBetter），进一步探讨主题<br><br><br>每日精选高清题图，可做壁纸<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>]]></content:encoded>
       
       <comments>http://swift.diagon.me/swift-enum-associated-values/#disqus_thread</comments>
     </item>
@@ -58,7 +130,8 @@
 <h2 id="标识符模式-（Identifier-Pattern）"><a href="#标识符模式-（Identifier-Pattern）" class="headerlink" title="标识符模式 （Identifier Pattern）"></a>标识符模式 （Identifier Pattern）</h2><p>标识符模式是值绑定模式的子模式。标识符模式是常量或者变量的名称自身。例如，在下面的常量声明中，someValue 是一个标识符模式，匹配了 Int 类型的 42：</p>
 <figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> someValue = <span class="number">42</span></div></pre></td></tr></table></figure>
 <p>当匹配成功时，42 被绑定（赋值）给常量 someValue。</p>
-<p>在值绑定模式中的标识符模式会把新命名的变量或常量与匹配到的值做绑定。例如，你可以拆开一个元组，然后把每个元素绑定到相应的标识符模式中。</p>
+<h2 id="在值绑定模式中的标识符模式会把新命名的变量或常量与匹配到的值做绑定。例如，你可以拆开一个元组，然后把每个元素绑定到相应的标识符模式中。"><a href="#在值绑定模式中的标识符模式会把新命名的变量或常量与匹配到的值做绑定。例如，你可以拆开一个元组，然后把每个元素绑定到相应的标识符模式中。" class="headerlink" title="在值绑定模式中的标识符模式会把新命名的变量或常量与匹配到的值做绑定。例如，你可以拆开一个元组，然后把每个元素绑定到相应的标识符模式中。"></a>在值绑定模式中的标识符模式会把新命名的变量或常量与匹配到的值做绑定。例如，你可以拆开一个元组，然后把每个元素绑定到相应的标识符模式中。</h2><div style="text-align: center"><br>关注公众号（ID：SwiftBetter），进一步探讨主题<br><br><br>每日精选高清题图，可做壁纸<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>
+
 ]]></content:encoded>
       
       <comments>http://swift.diagon.me/swift-pattern-matching-value-binding-pattern-identifier-pattern/#disqus_thread</comments>
@@ -843,38 +916,6 @@
 <div style="text-align: center"><br>关注公众号（ID：SwiftBetter），进一步探讨主题<br><br><br>每日精选高清题图，可做壁纸<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>]]></content:encoded>
       
       <comments>http://swift.diagon.me/optional-chaining/#disqus_thread</comments>
-    </item>
-    
-    <item>
-      <title>Swift 中的可选协议方法</title>
-      <link>http://swift.diagon.me/protocol-mutable-method/</link>
-      <guid>http://swift.diagon.me/protocol-mutable-method/</guid>
-      <pubDate>Wed, 01 Feb 2017 16:00:00 GMT</pubDate>
-      <description>
-      
-        &lt;p&gt;&lt;a href=&quot;http://swift.diagon.me/delegate-weak/&quot;&gt;《Swift 中的 delegate 设计模式如何使用 weak 引用》&lt;/a&gt;一文中还留有一个小尾巴。Cocoa 框架中大量使用了 delegate 设计模式，很多 deleg
-      
-      </description>
-      
-      <content:encoded><![CDATA[<p><a href="http://swift.diagon.me/delegate-weak/">《Swift 中的 delegate 设计模式如何使用 weak 引用》</a>一文中还留有一个小尾巴。Cocoa 框架中大量使用了 delegate 设计模式，很多 delegate 方法都是可选的。而 Swift 中的  protocol 中的协议方法必须被实现，否则编译器会报错。</p>
-<h2 id="协议可选方法的实现"><a href="#协议可选方法的实现" class="headerlink" title="协议可选方法的实现"></a>协议可选方法的实现</h2><h3 id="NSObjectProtocol-与-objc"><a href="#NSObjectProtocol-与-objc" class="headerlink" title="NSObjectProtocol 与 @objc"></a>NSObjectProtocol 与 @objc</h3><p>我们最常使用的 <code>UITableViewDataSource</code> 中，除了 <code>numberOfRowsInSection</code> 和 <code>cellForRowAtindexPath</code> 两个必须实现的方法，其他方法都是可选方法。     </p>
-<p>以下为 Cocoa 框架对协议可选方法的实现：</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">protocol</span> <span class="title">UITableViewDataSource</span> : <span class="title">NSObjectProtocol</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">func</span> <span class="title">tableView</span><span class="params">(<span class="number">_</span> tableView: UITableView, numberOfRowsInSection section: Int)</span></span> -&gt; <span class="type">Int</span></div><div class="line"></div><div class="line">    <span class="keyword">optional</span> <span class="keyword">public</span> <span class="function"><span class="keyword">func</span> <span class="title">numberOfSections</span><span class="params">(<span class="keyword">in</span> tableView: UITableView)</span></span> -&gt; <span class="type">Int</span>  </div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>另一种定义协议可选方法的方式是使用 <code>@objc</code> 关键字，将协议和方法都定义为 Objective-C 的:</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@objc</span> <span class="class"><span class="keyword">protocol</span> <span class="title">SwiftDiagonProtocol</span></span>&#123;</div><div class="line">    <span class="function"><span class="keyword">func</span> <span class="title">requiredMethod</span><span class="params">()</span></span></div><div class="line">    <span class="meta">@objc</span> <span class="keyword">optional</span> <span class="function"><span class="keyword">func</span> <span class="title">optionalMethod</span><span class="params">()</span></span>   </div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>```</p>
-<h3 id="使用协议扩展"><a href="#使用协议扩展" class="headerlink" title="使用协议扩展"></a>使用协议扩展</h3><p>将协议标记 <code>@objc</code> 意味着 protocol 只能被 calss 实现，struct 和 enum 无法使用。而且对于纯 swift 项目来说，引入 Objective-C 的东西相当让人不爽。</p>
-<p>所以更加推荐的实现协议可选方法的方式是：使用 protocol extension。即我们利用协议的扩展实现我们想要可选的方法的默认实现。这样，这些方法在使用时就可以当成可选方法了。</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="class"><span class="keyword">protocol</span> <span class="title">SwiftDiagonProtocol</span></span>&#123;</div><div class="line">    <span class="comment">//必须</span></div><div class="line">    <span class="function"><span class="keyword">func</span> <span class="title">requiredMethod</span><span class="params">()</span></span>    </div><div class="line">    <span class="comment">//可选</span></div><div class="line">    <span class="function"><span class="keyword">func</span> <span class="title">optionalMethod</span><span class="params">()</span></span>    </div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">extension</span> <span class="title">SwiftDiagonProtocol</span></span>&#123;</div><div class="line">    <span class="function"><span class="keyword">func</span> <span class="title">optionalMethod</span><span class="params">()</span></span>&#123;</div><div class="line">        <span class="comment">//空实现也可以</span></div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">SwiftClass</span>: <span class="title">SwiftDiagonProtocol</span></span>&#123;</div><div class="line">    <span class="function"><span class="keyword">func</span> <span class="title">requiredMethod</span><span class="params">()</span></span> &#123;</div><div class="line">        <span class="comment">//Someting</span></div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="comment">//如果需要实现可选方法则实现，这里的实现会覆盖extension中的默认实现</span></div><div class="line">    <span class="function"><span class="keyword">func</span> <span class="title">optionalMethod</span><span class="params">()</span></span>&#123;</div><div class="line">        <span class="comment">//Something</span></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h2 id="调用可选的-delegate-方法"><a href="#调用可选的-delegate-方法" class="headerlink" title="调用可选的 delegate 方法"></a>调用可选的 delegate 方法</h2><p><a href="http://swift.diagon.me/delegate-weak/">《Swift 中的 delegate 设计模式如何使用 weak 引用》</a>中指出了使用 delegate 的几个步骤，其中第四步是调用 delegate 方法。 既然我们制造出了协议可选方法，那么在调用 delegate 时要不要判断该方法是否被实现？</p>
-<p>如果使用 @objc 的方式标记了协议可选方法，则调用 delegate 方法时需要这样写：</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">delegate?.optionalMethod?()</div></pre></td></tr></table></figure>
-<p>而使用协议扩展实现协议可选方法，因为可选方法实际上已经被实现了，所以只需要这样写：</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">delegate?.optionalMethod()</div></pre></td></tr></table></figure>
-<hr>
-<div style="text-align: center"><br>关注公众号（ID：SwiftBetter），进一步探讨主题<br><br><br>每日精选高清题图，可做壁纸<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>]]></content:encoded>
-      
-      <comments>http://swift.diagon.me/protocol-mutable-method/#disqus_thread</comments>
     </item>
     
   </channel>
