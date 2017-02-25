@@ -253,6 +253,328 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://swift.diagon.me/AsyncDisplayKit-5/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="万恶胖为首">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.gif">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="Swift学徒">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="Swift学徒" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/AsyncDisplayKit-5/" itemprop="url">
+                  AsyncDisplayKit 教程(5)：智能预加载
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-27T00:00:00+08:00">
+                2017-02-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/性能优化/" itemprop="url" rel="index">
+                    <span itemprop="name">性能优化</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="预加载的使用"><a href="#预加载的使用" class="headerlink" title="预加载的使用"></a>预加载的使用</h3><p>你可能曾经写过这样的 App ：根据 ScrollView /PageView 的滚动来提前加载数据。比如一个全屏的图片浏览器，总是提前加载下几张图片，这样你的用户基本不会看到空白图片。 如果你想写这样一个程序，你会发现需要考虑的东西太多了。</p>
+<p>之前我们说， ASRangeController 会魔法，现在我们解释一下。</p>
+<p>在每个容器类中，每个 node 都会有一个“界面状态”的概念。在任何给定的时刻，一个 node 都会处于下列状态：</p>
+<p><img src="https://ww2.sinaimg.cn/large/006tNc79ly1fd33jhb46qj30fy0zuahb.jpg" alt=""></p>
+<ul>
+<li>Preload Range: 这个位置距离“可见”最远。这时 cell 中的所有 subnode 的内容，比如 ASNetworkImageNode 需要从外部数据源、API 或本地缓存中下载内容。以 batch fetching 为例，这个时候应当抓取模型对象。</li>
+<li>Display Range: 处于这个位置的时候，将进行显示操作，比如绘制文本和图片解码。</li>
+<li>Visible Range: 处于这个位置的时候，node 至少在屏幕上有一个像素。</li>
+</ul>
+<p>这些 Range 都能以“整屏”的方式度量，还可以轻易地通过 ASRangeTuningParameters 属性进行调整。</p>
+<p>例如，如果你用一个 ASNetworkImageNode 来显示一页图片。当每一页进入 Preload Range 位置时，都要从网络请求数据，而当它进入 Display Range 位置时又会对已经下载的图片进行解码。</p>
+<p>通常，如果你不愿意，你可以不考虑这些 Range。它们已经内置了，比如 ASNetworkImageNode 和 ASTextNode。</p>
+<h3 id="Node-界面状态-Callbacks"><a href="#Node-界面状态-Callbacks" class="headerlink" title="Node 界面状态 Callbacks"></a>Node 界面状态 Callbacks</h3><p>每个 node 都有一个 interfaceState 属性，它是一个 “bitfield” (NS_OPTION) 类型 ASInterfaceState。因为 ASCellNode 在 Scroll View 中滚动时，Scroll View 是受 ASRangeController 管理的，每个subnode 都会适时改变它的 interfaceState 属性。这样，即使层次最深的那个 node 也可以根据 interfaceState 的改变做出反应。</p>
+<p>幸运的是，几乎不需要直接操纵 node 的 interfaceState 属性。通常，需要对节点的状态改变进行响应即可。也就是所谓的 界面状态 Callbacks。</p>
+<h4 id="对-node-进行命名"><a href="#对-node-进行命名" class="headerlink" title="对 node 进行命名"></a>对 node 进行命名</h4><p>为了明白节点的状态是怎样变化的，我们需要给它命名。这样，你就可以看到节点是什么时候加载数据，显示内容，进入屏幕，以及它离开时的逆过程。</p>
+<p>找到 <code>tableNode:nodeBlockForRowAtIndexPath:</code> 方法中的这个注释：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//You'll add something extra here later...</span></div></pre></td></tr></table></figure>
+<p>在注释的下面，加入下句，给每个 cell 一个 debugName 值。</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">cardNode.debugName = [<span class="built_in">NSString</span> stringWithFormat:<span class="string">@"cell %zd"</span>, indexPath.row];</div></pre></td></tr></table></figure>
+<p>现在可以跟踪到每个 cell 进入不同范围的变化过程。</p>
+<h4 id="观察-Cell"><a href="#观察-Cell" class="headerlink" title="观察 Cell"></a>观察 Cell</h4><p>打开 CardNode_InterfaceCallbacks.m。这里有 6 个方法，这些方法用来打印节点进入各种范围的过程。取消注释，运行程序，慢慢滚动界面。同时，观察 cell 状态的改变。</p>
+<p><img src="https://ww3.sinaimg.cn/large/006tNc79ly1fd340ce8e8g30da09y7wl.gif" alt=""></p>
+<p>注意：大部分情况下，你只需要用到两个关于 ASInterfaceState 的改变方法：<code>didEnterVisibleState</code> 和 <code>didExitVisibleState</code>。也就是说，大量底层的工作已经为你完成了。要想知道什么时候需要用到 Preload 和 Display 状态，请看一下 ASNetworkImageNode 的源代码。所有的 Network Image Node 都会自动抓取和解码，以及释放内存。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://swift.diagon.me/AsyncDisplayKit-4/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="万恶胖为首">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.gif">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="Swift学徒">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="Swift学徒" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/AsyncDisplayKit-4/" itemprop="url">
+                  AsyncDisplayKit 教程(4)：Batch Fetching
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-26T00:00:00+08:00">
+                2017-02-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/性能优化/" itemprop="url" rel="index">
+                    <span itemprop="name">性能优化</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="使用-Batch-Fetching-进行无限滚动"><a href="#使用-Batch-Fetching-进行无限滚动" class="headerlink" title="使用 Batch Fetching 进行无限滚动"></a>使用 Batch Fetching 进行无限滚动</h3><p>每个 App 都会采用某些机制，保证用户浏览到当前列表结尾时，可以从服务器上拉取新的数据。通常通过 ScrollView 的 delegate 方法 <code>scrollViewDidScroll:</code>  监听 content<br> offset 来进行处理。在 ASDK 中，只需要指定：需要提前多少页时请求数据。</p>
+<p>取消 AnimalTableController.m 中 Helpers 类别中的两个方法注释。</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">AnimalTableController</span> (<span class="title">Helpers</span>)</span></div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)retrieveNextPageWithCompletion:(<span class="keyword">void</span> (^)(<span class="built_in">NSArray</span> *))block &#123;</div><div class="line">  <span class="built_in">NSArray</span> *moreAnimals = [[<span class="built_in">NSArray</span> alloc] initWithArray:[<span class="keyword">self</span>.animals subarrayWithRange:<span class="built_in">NSMakeRange</span>(<span class="number">0</span>, <span class="number">5</span>)] copyItems:<span class="literal">NO</span>];</div><div class="line">  </div><div class="line">  <span class="comment">// Important: this block must run on the main thread</span></div><div class="line">  <span class="built_in">dispatch_async</span>(dispatch_get_main_queue(), ^&#123;</div><div class="line">    block(moreAnimals);</div><div class="line">  &#125;);</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)insertNewRowsInTableNode:(<span class="built_in">NSArray</span> *)newAnimals &#123;</div><div class="line">  <span class="built_in">NSInteger</span> section = <span class="number">0</span>;</div><div class="line">  <span class="built_in">NSMutableArray</span> *indexPaths = [<span class="built_in">NSMutableArray</span> array];</div><div class="line">  </div><div class="line">  <span class="built_in">NSUInteger</span> newTotalNumberOfPhotos = <span class="keyword">self</span>.animals.count + newAnimals.count;</div><div class="line">  <span class="keyword">for</span> (<span class="built_in">NSUInteger</span> row = <span class="keyword">self</span>.animals.count; row &lt; newTotalNumberOfPhotos; row++) &#123;</div><div class="line">    <span class="built_in">NSIndexPath</span> *path = [<span class="built_in">NSIndexPath</span> indexPathForRow:row inSection:section];</div><div class="line">    [indexPaths addObject:path];</div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  [<span class="keyword">self</span>.animals addObjectsFromArray:newAnimals];</div><div class="line">  [<span class="keyword">self</span>.tableNode insertRowsAtIndexPaths:indexPaths withRowAnimation:<span class="built_in">UITableViewRowAnimationNone</span>];</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
+<p><code>retrieveNextPageWithCompletion:</code> 方法中可以进行网络调用，而 <code>insertNewRowsInTableNode:</code> 将新的数据添加到 table 中。</p>
+<p>在 <code>viewDidLoad:</code> 方法中加入：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">self</span>.tableNode.view.leadingScreensForBatching = <span class="number">1.0</span>;  <span class="comment">// 默认值是 2.0</span></div></pre></td></tr></table></figure>
+<p>将 leadingScreensForBatching 设置为 1.0 表示当用户滚动还剩 1 个全屏就到达页尾时，开始抓取新的一批数据。</p>
+<p>在 Delegate 类别中加入这个方法：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">- (<span class="built_in">BOOL</span>)shouldBatchFetchForTableNode:(ASTableNode *)tableNode &#123;</div><div class="line">  <span class="keyword">return</span> <span class="literal">YES</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这个方法告诉表格，在这次批抓取之后是否还可以进行新的批抓取。如果你知道 API 上的数据什么时候结束，返回 NO，表示不用进行新的批抓取了。</p>
+<p>然后，继续加入：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">- (<span class="keyword">void</span>)tableNode:(ASTableNode *)tableNode willBeginBatchFetchWithContext:(ASBatchContext *)context &#123;</div><div class="line">  <span class="comment">//1</span></div><div class="line">  [<span class="keyword">self</span> retrieveNextPageWithCompletion:^(<span class="built_in">NSArray</span> *animals) &#123;</div><div class="line">    <span class="comment">//2</span></div><div class="line">    [<span class="keyword">self</span> insertNewRowsInTableNode:animals];</div><div class="line"></div><div class="line">    <span class="comment">//3</span></div><div class="line">    [context completeBatchFetching:<span class="literal">YES</span>];</div><div class="line">  &#125;];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这个方法在用户即将滚动到 table 末尾并且 <code>shouldBatchFetchForTableNode:</code> 方法返回 YES 时被调用。<br>代码解释：</p>
+<ol>
+<li>请求一次新批抓取，以备显示。通常这会从 API 返回一个对象数组。</li>
+<li>在完成块中，用新数据刷新表格。</li>
+<li>调用 <code>completeBatchFetching:</code> ，YES 表示你已经完成这个批次。在本批次抓取完成之前，不会进行新的批次抓取。</li>
+</ol>
+<p>运行程序，可以无限滚动。 </p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
   <link itemprop="mainEntityOfPage" href="http://swift.diagon.me/AsyncDisplayKit-3/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -705,6 +1027,7 @@
 <li>图形绘制：手动绘制渐变色和阴影。</li>
 <li>对象生命周期：创建、操作和销毁系统对象（比如创建一个 UIView）。</li>
 </ul>
+<p><img src="https://ww1.sinaimg.cn/large/006tNc79ly1fd32exi206j30rk0e6tbh.jpg" alt=""></p>
 <p>AsyncDisplayKit 默认允许异步的进行尺寸计算，视图布局，Rendering（文本渲染、图形绘制、图片解码）操作。这样就大量的减轻了主线程的负担。</p>
 <p>AsyncDisplayKit 支持 Objective-C 与 Swift，但是不支持 Interface Builder 与 AutoLayout。</p>
 
@@ -1644,292 +1967,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://swift.diagon.me/Swift-XML-XMLParser-RSS/">
-
-  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="万恶胖为首">
-    <meta itemprop="description" content="">
-    <meta itemprop="image" content="/images/avatar.gif">
-  </span>
-
-  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="Swift学徒">
-    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
-      <img style="display:none;" itemprop="url image" alt="Swift学徒" src="">
-    </span>
-  </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/Swift-XML-XMLParser-RSS/" itemprop="url">
-                  iOS[Swift] 中 XML 解析与 RSS 阅读器的制作
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-17T00:00:00+08:00">
-                2017-02-17
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-
-          
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>为了实践本文，抽时间给博客添加了 <a href="http://swift.diagon.me/rss.xml">RSS 订阅</a>，中间还遇到了<a href="http://swift.diagon.me/Hexo-RSS-Next-XML-feed-UTF-8/">各种问题</a>。 </p>
-<h2 id="XML-解析"><a href="#XML-解析" class="headerlink" title="XML 解析"></a>XML 解析</h2><h3 id="XMLParser"><a href="#XMLParser" class="headerlink" title="XMLParser"></a>XMLParser</h3><p>XML 跟 JSON 一样，也是常用的的数据格式。苹果提供了 <code>XMLParser</code>类用来解析 XML 文档。</p>
-<p><code>XMLParser</code>常用的两个方法，分别用来初始化和开始解析操作。</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">init</span>(data: <span class="type">Data</span>)</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">parse</span><span class="params">()</span></span></div></pre></td></tr></table></figure>
-<h3 id="XMLParserDelegate"><a href="#XMLParserDelegate" class="headerlink" title="XMLParserDelegate"></a>XMLParserDelegate</h3><p>对 XML 的解析实际上是实现 <code>XMLParserDelegate</code> 中的几个方法。<code>XMLParserDelegate</code>方法都是可选的。</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 开始解析时调用</span></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">parserDidStartDocument</span><span class="params">(XMLParser)</span></span></div><div class="line"></div><div class="line"><span class="comment">// 遇到一个开始标签时调用</span></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">parser</span><span class="params">(XMLParser, didStartElement: String, namespaceURI: String?, qualifiedName: String?, attributes: [String : String] = [:])</span></span></div><div class="line"></div><div class="line"><span class="comment">// 遇到字符串时调用</span></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">parser</span><span class="params">(XMLParser, foundCharacters: String)</span></span></div><div class="line"></div><div class="line"><span class="comment">// 遇到结束标签时调用</span></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">parser</span><span class="params">(XMLParser, didEndElement: String, namespaceURI: String?, qualifiedName: String?)</span></span></div><div class="line"></div><div class="line"><span class="comment">// 成功完成解析时调用</span></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">parserDidEndDocument</span><span class="params">(XMLParser)</span></span></div></pre></td></tr></table></figure>
-<h2 id="解析-RSS"><a href="#解析-RSS" class="headerlink" title="解析 RSS"></a>解析 RSS</h2><h3 id="解析过程分析"><a href="#解析过程分析" class="headerlink" title="解析过程分析"></a>解析过程分析</h3><p>RSS 是一种内容分享格式规范，通常使用 XML 格式实现。观察本博客的<a href="http://swift.diagon.me/rss.xml">RSS</a>。发现每篇日志都包含在一个<code>&lt;item&gt;</code>闭合标签中，而一篇日志的三个要素，标题、日期、内容分别使用的标签为<code>&lt;title&gt;</code>,<code>&lt;pubDate&gt;</code>,<code>&lt;description&gt;</code>。我们在解析 XML 时保存这三块内容即可。</p>
-<p>首先我们声明几个 property 存储当前的内容。</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> currentElement = <span class="string">""</span> </div><div class="line"><span class="keyword">var</span> currentTitle = <span class="string">""</span></div><div class="line"><span class="keyword">var</span> currentDescription = <span class="string">""</span></div><div class="line"><span class="keyword">var</span> currentPubDate = <span class="string">""</span></div></pre></td></tr></table></figure>
-<p>当<code>elementName</code>是 <code>&quot;item&quot;</code>时，说明接下来要解析该<code>&lt;item&gt;</code>包含的内容，即一篇独立的文章。这时候我们将标题、日期、内容 property 设置为空字符串。</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">parser</span><span class="params">(<span class="number">_</span> parser: XMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [String : String] = [:])</span></span> &#123;</div><div class="line"></div><div class="line">  currentElement = elementName</div><div class="line">  </div><div class="line">  <span class="keyword">if</span> currentElement == <span class="string">"item"</span> &#123;</div><div class="line">    currentTitle = <span class="string">""</span></div><div class="line">    currentDescription = <span class="string">""</span></div><div class="line">    currentPubDate = <span class="string">""</span></div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>接下来每遇到一个字符，将该字符追加到相应的 property 中。</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">parser</span><span class="params">(<span class="number">_</span> parser: XMLParser, foundCharacters string: String)</span></span> &#123;</div><div class="line">  <span class="comment">/// Note: current string may only contain part of info.</span></div><div class="line">  <span class="keyword">switch</span> currentElement &#123;</div><div class="line">  <span class="keyword">case</span> <span class="string">"title"</span>:</div><div class="line">    currentTitle += string</div><div class="line">  <span class="keyword">case</span> <span class="string">"description"</span>:</div><div class="line">    currentDescription += string</div><div class="line">  <span class="keyword">case</span> <span class="string">"pubDate"</span>:</div><div class="line">    currentPubDate += string</div><div class="line">  <span class="keyword">default</span>:</div><div class="line">    <span class="keyword">break</span></div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>标签<code>item</code>结束时生成该篇文章的 model，存入数组容器。</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> rssItems = [(title: <span class="type">String</span>, description: <span class="type">String</span>, pubDate: <span class="type">String</span>)]()</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">parser</span><span class="params">(<span class="number">_</span> parser: XMLParser, didEndElement elementName: String, namespaceURI: String?, qualifiedName qName: String?)</span></span> &#123;</div><div class="line">    <span class="keyword">if</span> elementName == <span class="string">"item"</span> &#123;</div><div class="line">      <span class="keyword">let</span> rssItem = (title: currentTitle, description: currentDescription, pubDate: currentPubDate)</div><div class="line">      rssItems.append(rssItem)</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>解析结束后更新 UI：</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">parserDidEndDocument</span><span class="params">(<span class="number">_</span> parser: XMLParser)</span></span> &#123;</div><div class="line">	<span class="comment">// update UI</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>如遇解析错误，打印出来方便调试。</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">parser</span><span class="params">(<span class="number">_</span> parser: XMLParser, parseErrorOccurred parseError: Error)</span></span> &#123;</div><div class="line">  <span class="built_in">print</span>(parseError.localizedDescription)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="DEMO"><a href="#DEMO" class="headerlink" title="DEMO"></a>DEMO</h3><p>完整的项目代码点<a href="https://github.com/Vernsu/SwiftBlogDemo" target="_blank" rel="external">这里(Github)</a>下载。</p>
-<hr>
-<div style="text-align: center"><br>关注公众号（ID：SwiftBetter），进一步探讨主题<br><br><br>每日精选高清题图，可做壁纸<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://swift.diagon.me/Hexo-RSS-Next-XML-feed-UTF-8/">
-
-  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="万恶胖为首">
-    <meta itemprop="description" content="">
-    <meta itemprop="image" content="/images/avatar.gif">
-  </span>
-
-  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="Swift学徒">
-    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
-      <img style="display:none;" itemprop="url image" alt="Swift学徒" src="">
-    </span>
-  </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/Hexo-RSS-Next-XML-feed-UTF-8/" itemprop="url">
-                  Hexo 博客框架添加 RSS 订阅
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-16T00:00:00+08:00">
-                2017-02-16
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-
-          
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>抽空给博客增加了 <a href="http://swift.diagon.me/rss.xml">RSS</a> 功能。</p>
-<h2 id="基本步骤"><a href="#基本步骤" class="headerlink" title="基本步骤"></a>基本步骤</h2><h3 id="安装-RSS-插件"><a href="#安装-RSS-插件" class="headerlink" title="安装 RSS 插件"></a>安装 RSS 插件</h3><p>在 blog 根目录下执行命令安装 RSS 插件: <a href="https://github.com/hexojs/hexo-generator-feed/" target="_blank" rel="external">hexo-generator-feed</a></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm install hexo-generator-feed --save</div></pre></td></tr></table></figure>
-<h3 id="配置-RSS-插件"><a href="#配置-RSS-插件" class="headerlink" title="配置 RSS 插件"></a>配置 RSS 插件</h3><p>编辑 Hexo 的配置文件 <code>_config.yml</code>，添加以下代码</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">#RSS 订阅插件</div><div class="line">plugin:</div><div class="line">- hexo-generator-feed</div><div class="line">#RSS 插件配置</div><div class="line">feed:</div><div class="line">  type: rss2</div><div class="line">  path: rss.xml</div><div class="line">  limit: 20</div><div class="line">  hub:</div><div class="line">  content: true</div></pre></td></tr></table></figure>
-<h3 id="主题开启-RSS-支持"><a href="#主题开启-RSS-支持" class="headerlink" title="主题开启 RSS 支持"></a>主题开启 RSS 支持</h3><p><a href="https://github.com/iissnan/hexo-theme-next" target="_blank" rel="external">NexT</a> 主题，默认开启 RSS。其它主题请参考主题文档。</p>
-<h3 id="生成-RSS"><a href="#生成-RSS" class="headerlink" title="生成 RSS"></a>生成 RSS</h3><p>执行 <code>hexo clean &amp;&amp; hexo g &amp;&amp; hexo d</code> 重新生成博客文件并完成部署即可。 </p>
-<h2 id="填坑"><a href="#填坑" class="headerlink" title="填坑"></a>填坑</h2><p>一切进行的这么的自然和谐，然而打开 RSS 页面的时候，What？</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">This page contains the following errors:</div><div class="line">error on line 98 at column 35: Input is not proper UTF-8, indicate encoding !</div><div class="line">Bytes: 0x01 0xE9 0x92 0x88</div><div class="line">Below is a rendering of the page up to the first error.</div></pre></td></tr></table></figure>
-<p>Google 了一番，很多中文用户都遇到了这个问题，但是并没有找到解决方案。</p>
-<p>根据错误提示，用编辑器打开 <code>public</code> 目录下 的<code>rss.xml</code> 或 <code>atom.xml</code>。找到第98行35列，是这样的内容:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;content type=&quot;html&quot;&gt;&lt;![CDATA[&lt;p&gt;</div></pre></td></tr></table></figure>
-<p>继续 Google，找到了十四年前的一篇文章 <a href="https://coderanch.com/t/124970/Invalid-Character-CDATA" target="_blank" rel="external">Invalid Character inside CDATA</a>，大意就是 CDATA 里面的文本不能超出 UTF-8 字符集。</p>
-<p>既然找到问题了，就有办法解决了。</p>
-<ol>
-<li><p>接着看错误信息，<code>Bytes</code> 这行，意思是在 <code>xml</code> 文件里有几个 <code>0x01</code> 字符。</p>
-</li>
-<li><p>编辑器打开 XML 文件，通过查找功能的正则匹配 <code>\x01</code>，果然找到了几个特殊字符。</p>
-</li>
-<li><p>然后打开对应文章的<code>.md</code>文档，找到相应的的位置，替换出问题的字符。</p>
-</li>
-<li><p>重新生成 rss.xml 并部署。</p>
-</li>
-<li><p>搞定。</p>
-</li>
-</ol>
-<p>点击这里查看生成的 <a href="http://swift.diagon.me/rss.xml">RSS</a>。</p>
-<p>然而，为什么会出现这种问题并不得而知。产生这个问题的原因可能是 Hexo 或者 Next 主题的 bug。</p>
-<hr>
-<div style="text-align: center"><br>关注公众号（ID：SwiftBetter），进一步探讨主题<br><br><br>每日精选高清题图，可做壁纸<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1977,7 +2014,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">38</span>
+                <span class="site-state-item-count">40</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

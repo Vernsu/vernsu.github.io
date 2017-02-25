@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="protocol," />
+  <meta name="keywords" content="AsyncDisplayKit," />
 
 
 
@@ -86,24 +86,25 @@
 
 
 
-<meta name="description" content="当遵循 protocol 的类型重新定义了 protocol 中没有但 protocol extension 中定义的 method 或 property 时，static dispatching 将会执行。这就意味着，property 或 method 的实现依赖于变量或常量声明的类型，而不是实例实际的类型。
-定义一个协议：
-123456protocol WinLoss &amp;#123;">
+<meta name="description" content="预加载的使用你可能曾经写过这样的 App ：根据 ScrollView /PageView 的滚动来提前加载数据。比如一个全屏的图片浏览器，总是提前加载下几张图片，这样你的用户基本不会看到空白图片。 如果你想写这样一个程序，你会发现需要考虑的东西太多了。
+之前我们说， ASRangeController 会魔法，现在我们解释一下。
+在每个容器类中，每个 node 都会有一个“界面状态”的概念。在任">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Swift 中的协议扩展派发">
-<meta property="og:url" content="http://swift.diagon.me/protocol-extension-dispathing/index.html">
+<meta property="og:title" content="AsyncDisplayKit 教程(5)：智能预加载">
+<meta property="og:url" content="http://swift.diagon.me/AsyncDisplayKit-5/index.html">
 <meta property="og:site_name" content="Swift学徒">
-<meta property="og:description" content="当遵循 protocol 的类型重新定义了 protocol 中没有但 protocol extension 中定义的 method 或 property 时，static dispatching 将会执行。这就意味着，property 或 method 的实现依赖于变量或常量声明的类型，而不是实例实际的类型。
-定义一个协议：
-123456protocol WinLoss &amp;#123;">
-<meta property="og:image" content="https://vernsu.github.io/images/wxqrcode.jpg">
-<meta property="og:updated_time" content="2017-02-20T01:21:56.000Z">
+<meta property="og:description" content="预加载的使用你可能曾经写过这样的 App ：根据 ScrollView /PageView 的滚动来提前加载数据。比如一个全屏的图片浏览器，总是提前加载下几张图片，这样你的用户基本不会看到空白图片。 如果你想写这样一个程序，你会发现需要考虑的东西太多了。
+之前我们说， ASRangeController 会魔法，现在我们解释一下。
+在每个容器类中，每个 node 都会有一个“界面状态”的概念。在任">
+<meta property="og:image" content="https://ww2.sinaimg.cn/large/006tNc79ly1fd33jhb46qj30fy0zuahb.jpg">
+<meta property="og:image" content="https://ww3.sinaimg.cn/large/006tNc79ly1fd340ce8e8g30da09y7wl.gif">
+<meta property="og:updated_time" content="2017-02-25T15:00:31.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Swift 中的协议扩展派发">
-<meta name="twitter:description" content="当遵循 protocol 的类型重新定义了 protocol 中没有但 protocol extension 中定义的 method 或 property 时，static dispatching 将会执行。这就意味着，property 或 method 的实现依赖于变量或常量声明的类型，而不是实例实际的类型。
-定义一个协议：
-123456protocol WinLoss &amp;#123;">
-<meta name="twitter:image" content="https://vernsu.github.io/images/wxqrcode.jpg">
+<meta name="twitter:title" content="AsyncDisplayKit 教程(5)：智能预加载">
+<meta name="twitter:description" content="预加载的使用你可能曾经写过这样的 App ：根据 ScrollView /PageView 的滚动来提前加载数据。比如一个全屏的图片浏览器，总是提前加载下几张图片，这样你的用户基本不会看到空白图片。 如果你想写这样一个程序，你会发现需要考虑的东西太多了。
+之前我们说， ASRangeController 会魔法，现在我们解释一下。
+在每个容器类中，每个 node 都会有一个“界面状态”的概念。在任">
+<meta name="twitter:image" content="https://ww2.sinaimg.cn/large/006tNc79ly1fd33jhb46qj30fy0zuahb.jpg">
 
 
 
@@ -131,13 +132,13 @@
 
 
 
-  <link rel="canonical" href="http://swift.diagon.me/protocol-extension-dispathing/"/>
+  <link rel="canonical" href="http://swift.diagon.me/AsyncDisplayKit-5/"/>
 
 
 
 
 
-  <title> Swift 中的协议扩展派发 | Swift学徒 </title>
+  <title> AsyncDisplayKit 教程(5)：智能预加载 | Swift学徒 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -260,7 +261,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://swift.diagon.me/protocol-extension-dispathing/">
+  <link itemprop="mainEntityOfPage" href="http://swift.diagon.me/AsyncDisplayKit-5/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="万恶胖为首">
@@ -284,7 +285,7 @@
             
             
               
-                Swift 中的协议扩展派发
+                AsyncDisplayKit 教程(5)：智能预加载
               
             
           </h1>
@@ -299,8 +300,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-09T00:00:00+08:00">
-                2017-02-09
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-27T00:00:00+08:00">
+                2017-02-27
               </time>
             
 
@@ -322,8 +323,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/协议/" itemprop="url" rel="index">
-                    <span itemprop="name">协议</span>
+                  <a href="/categories/性能优化/" itemprop="url" rel="index">
+                    <span itemprop="name">性能优化</span>
                   </a>
                 </span>
 
@@ -357,23 +358,30 @@
       
 
       
-        <p>当遵循 protocol 的类型重新定义了 protocol 中没有但 protocol extension 中定义的 method 或 property 时，static dispatching 将会执行。这就意味着，property 或 method 的实现依赖于变量或常量声明的类型，而不是实例实际的类型。</p>
-<p>定义一个协议：</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">protocol</span> <span class="title">WinLoss</span> </span>&#123;</div><div class="line">    </div><div class="line">    <span class="keyword">var</span> wins: <span class="type">Int</span> &#123; <span class="keyword">get</span>&#125;</div><div class="line">    </div><div class="line">    <span class="keyword">var</span> losses: <span class="type">Int</span> &#123; <span class="keyword">get</span>&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>该协议有一个 extension:</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">extension</span> <span class="title">WinLoss</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">var</span> winningPercentage: <span class="type">Double</span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">return</span> <span class="type">Double</span>(wins) / (<span class="type">Double</span>(wins) + <span class="type">Double</span>(losses))</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>有一个遵循该协议的类型:</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">CricketRecord</span>: <span class="title">WinLoss</span></span></div><div class="line">&#123;    </div><div class="line">    <span class="keyword">var</span> wins: <span class="type">Int</span></div><div class="line">    </div><div class="line">    <span class="keyword">var</span> losses: <span class="type">Int</span></div><div class="line">    </div><div class="line">    <span class="keyword">var</span> draws: <span class="type">Int</span></div><div class="line">    </div><div class="line">    <span class="keyword">var</span> winningPercentage: <span class="type">Double</span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">return</span> <span class="type">Double</span>(wins) / (<span class="type">Double</span>(wins) + <span class="type">Double</span>(losses) + <span class="type">Double</span>(draws))</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>观察：</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> miamiTuples = <span class="type">CricketRecord</span>(wins: <span class="number">8</span>, losses: <span class="number">7</span>, draws: <span class="number">1</span>)</div><div class="line"><span class="keyword">let</span> winLoss: <span class="type">WinLoss</span> = miamiTuples</div><div class="line"></div><div class="line">miamiTuples.winningPercentage <span class="comment">// .5 执行 struct 的实现</span></div><div class="line">winLoss.winningPercentage <span class="comment">// .53 !!!执行 extension 的实现</span></div></pre></td></tr></table></figure>
-<p>即使 miamiTuples 和 winLoss 包含的是相同的实例，结果也不同。因为 static dispatching 是根据声明类型来选择实现的。miamiTuples 是 CricketRecord 类型的，  winLoss 是 WinLoss 类型的。</p>
-<p>注意，这种情况只出现在 protocol 自身没有该成员的情况下，如果</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">protocol</span> <span class="title">WinLoss</span></span></div><div class="line">&#123;    </div><div class="line">    <span class="keyword">var</span> wins: <span class="type">Int</span> &#123; <span class="keyword">get</span>&#125;</div><div class="line">    </div><div class="line">    <span class="keyword">var</span> losses: <span class="type">Int</span> &#123; <span class="keyword">get</span>&#125;</div><div class="line">    </div><div class="line">    <span class="keyword">var</span> winningPercentage: <span class="type">Double</span> &#123; <span class="keyword">get</span>&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>则</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">miamiTuples.winningPercentage <span class="comment">// .5</span></div><div class="line">winLoss.winningPercentage <span class="comment">// .5</span></div></pre></td></tr></table></figure>
-<p>这里是 dynamic dispatching。依赖于实际的类型，而不是声明的类型。</p>
-<hr>
-<div style="text-align: center"><br>关注公众号（ID：SwiftBetter），进一步探讨主题<br><br><br>每日精选高清题图，可做壁纸<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>
+        <h3 id="预加载的使用"><a href="#预加载的使用" class="headerlink" title="预加载的使用"></a>预加载的使用</h3><p>你可能曾经写过这样的 App ：根据 ScrollView /PageView 的滚动来提前加载数据。比如一个全屏的图片浏览器，总是提前加载下几张图片，这样你的用户基本不会看到空白图片。 如果你想写这样一个程序，你会发现需要考虑的东西太多了。</p>
+<p>之前我们说， ASRangeController 会魔法，现在我们解释一下。</p>
+<p>在每个容器类中，每个 node 都会有一个“界面状态”的概念。在任何给定的时刻，一个 node 都会处于下列状态：</p>
+<p><img src="https://ww2.sinaimg.cn/large/006tNc79ly1fd33jhb46qj30fy0zuahb.jpg" alt=""></p>
+<ul>
+<li>Preload Range: 这个位置距离“可见”最远。这时 cell 中的所有 subnode 的内容，比如 ASNetworkImageNode 需要从外部数据源、API 或本地缓存中下载内容。以 batch fetching 为例，这个时候应当抓取模型对象。</li>
+<li>Display Range: 处于这个位置的时候，将进行显示操作，比如绘制文本和图片解码。</li>
+<li>Visible Range: 处于这个位置的时候，node 至少在屏幕上有一个像素。</li>
+</ul>
+<p>这些 Range 都能以“整屏”的方式度量，还可以轻易地通过 ASRangeTuningParameters 属性进行调整。</p>
+<p>例如，如果你用一个 ASNetworkImageNode 来显示一页图片。当每一页进入 Preload Range 位置时，都要从网络请求数据，而当它进入 Display Range 位置时又会对已经下载的图片进行解码。</p>
+<p>通常，如果你不愿意，你可以不考虑这些 Range。它们已经内置了，比如 ASNetworkImageNode 和 ASTextNode。</p>
+<h3 id="Node-界面状态-Callbacks"><a href="#Node-界面状态-Callbacks" class="headerlink" title="Node 界面状态 Callbacks"></a>Node 界面状态 Callbacks</h3><p>每个 node 都有一个 interfaceState 属性，它是一个 “bitfield” (NS_OPTION) 类型 ASInterfaceState。因为 ASCellNode 在 Scroll View 中滚动时，Scroll View 是受 ASRangeController 管理的，每个subnode 都会适时改变它的 interfaceState 属性。这样，即使层次最深的那个 node 也可以根据 interfaceState 的改变做出反应。</p>
+<p>幸运的是，几乎不需要直接操纵 node 的 interfaceState 属性。通常，需要对节点的状态改变进行响应即可。也就是所谓的 界面状态 Callbacks。</p>
+<h4 id="对-node-进行命名"><a href="#对-node-进行命名" class="headerlink" title="对 node 进行命名"></a>对 node 进行命名</h4><p>为了明白节点的状态是怎样变化的，我们需要给它命名。这样，你就可以看到节点是什么时候加载数据，显示内容，进入屏幕，以及它离开时的逆过程。</p>
+<p>找到 <code>tableNode:nodeBlockForRowAtIndexPath:</code> 方法中的这个注释：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//You'll add something extra here later...</span></div></pre></td></tr></table></figure>
+<p>在注释的下面，加入下句，给每个 cell 一个 debugName 值。</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">cardNode.debugName = [<span class="built_in">NSString</span> stringWithFormat:<span class="string">@"cell %zd"</span>, indexPath.row];</div></pre></td></tr></table></figure>
+<p>现在可以跟踪到每个 cell 进入不同范围的变化过程。</p>
+<h4 id="观察-Cell"><a href="#观察-Cell" class="headerlink" title="观察 Cell"></a>观察 Cell</h4><p>打开 CardNode_InterfaceCallbacks.m。这里有 6 个方法，这些方法用来打印节点进入各种范围的过程。取消注释，运行程序，慢慢滚动界面。同时，观察 cell 状态的改变。</p>
+<p><img src="https://ww3.sinaimg.cn/large/006tNc79ly1fd340ce8e8g30da09y7wl.gif" alt=""></p>
+<p>注意：大部分情况下，你只需要用到两个关于 ASInterfaceState 的改变方法：<code>didEnterVisibleState</code> 和 <code>didExitVisibleState</code>。也就是说，大量底层的工作已经为你完成了。要想知道什么时候需要用到 Preload 和 Display 状态，请看一下 ASNetworkImageNode 的源代码。所有的 Network Image Node 都会自动抓取和解码，以及释放内存。</p>
+
       
     </div>
 
@@ -396,7 +404,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/protocol/" rel="tag"># protocol</a>
+            <a href="/tags/AsyncDisplayKit/" rel="tag"># AsyncDisplayKit</a>
           
         </div>
       
@@ -405,8 +413,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/protocol-member-default/" rel="next" title="Swift 中的协议成员的默认实现">
-                <i class="fa fa-chevron-left"></i> Swift 中的协议成员的默认实现
+              <a href="/AsyncDisplayKit-4/" rel="next" title="AsyncDisplayKit 教程(4)：Batch Fetching">
+                <i class="fa fa-chevron-left"></i> AsyncDisplayKit 教程(4)：Batch Fetching
               </a>
             
           </div>
@@ -414,10 +422,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/off-screen-rendering/" rel="prev" title="iOS 性能优化之离屏渲染">
-                iOS 性能优化之离屏渲染 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -464,8 +468,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.gif"
@@ -528,6 +541,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#预加载的使用"><span class="nav-number">1.</span> <span class="nav-text">预加载的使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Node-界面状态-Callbacks"><span class="nav-number">2.</span> <span class="nav-text">Node 界面状态 Callbacks</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#对-node-进行命名"><span class="nav-number">2.1.</span> <span class="nav-text">对 node 进行命名</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#观察-Cell"><span class="nav-number">2.2.</span> <span class="nav-text">观察 Cell</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
     </div>

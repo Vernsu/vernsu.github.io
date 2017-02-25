@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="protocol," />
+  <meta name="keywords" content="AsyncDisplayKit," />
 
 
 
@@ -86,24 +86,19 @@
 
 
 
-<meta name="description" content="当遵循 protocol 的类型重新定义了 protocol 中没有但 protocol extension 中定义的 method 或 property 时，static dispatching 将会执行。这就意味着，property 或 method 的实现依赖于变量或常量声明的类型，而不是实例实际的类型。
-定义一个协议：
-123456protocol WinLoss &amp;#123;">
+<meta name="description" content="使用 Batch Fetching 进行无限滚动每个 App 都会采用某些机制，保证用户浏览到当前列表结尾时，可以从服务器上拉取新的数据。通常通过 ScrollView 的 delegate 方法 scrollViewDidScroll:  监听 content offset 来进行处理。在 ASDK 中，只需要指定：需要提前多少页时请求数据。
+取消 AnimalTableController.m">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Swift 中的协议扩展派发">
-<meta property="og:url" content="http://swift.diagon.me/protocol-extension-dispathing/index.html">
+<meta property="og:title" content="AsyncDisplayKit 教程(4)：Batch Fetching">
+<meta property="og:url" content="http://swift.diagon.me/AsyncDisplayKit-4/index.html">
 <meta property="og:site_name" content="Swift学徒">
-<meta property="og:description" content="当遵循 protocol 的类型重新定义了 protocol 中没有但 protocol extension 中定义的 method 或 property 时，static dispatching 将会执行。这就意味着，property 或 method 的实现依赖于变量或常量声明的类型，而不是实例实际的类型。
-定义一个协议：
-123456protocol WinLoss &amp;#123;">
-<meta property="og:image" content="https://vernsu.github.io/images/wxqrcode.jpg">
-<meta property="og:updated_time" content="2017-02-20T01:21:56.000Z">
+<meta property="og:description" content="使用 Batch Fetching 进行无限滚动每个 App 都会采用某些机制，保证用户浏览到当前列表结尾时，可以从服务器上拉取新的数据。通常通过 ScrollView 的 delegate 方法 scrollViewDidScroll:  监听 content offset 来进行处理。在 ASDK 中，只需要指定：需要提前多少页时请求数据。
+取消 AnimalTableController.m">
+<meta property="og:updated_time" content="2017-02-25T14:03:48.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Swift 中的协议扩展派发">
-<meta name="twitter:description" content="当遵循 protocol 的类型重新定义了 protocol 中没有但 protocol extension 中定义的 method 或 property 时，static dispatching 将会执行。这就意味着，property 或 method 的实现依赖于变量或常量声明的类型，而不是实例实际的类型。
-定义一个协议：
-123456protocol WinLoss &amp;#123;">
-<meta name="twitter:image" content="https://vernsu.github.io/images/wxqrcode.jpg">
+<meta name="twitter:title" content="AsyncDisplayKit 教程(4)：Batch Fetching">
+<meta name="twitter:description" content="使用 Batch Fetching 进行无限滚动每个 App 都会采用某些机制，保证用户浏览到当前列表结尾时，可以从服务器上拉取新的数据。通常通过 ScrollView 的 delegate 方法 scrollViewDidScroll:  监听 content offset 来进行处理。在 ASDK 中，只需要指定：需要提前多少页时请求数据。
+取消 AnimalTableController.m">
 
 
 
@@ -131,13 +126,13 @@
 
 
 
-  <link rel="canonical" href="http://swift.diagon.me/protocol-extension-dispathing/"/>
+  <link rel="canonical" href="http://swift.diagon.me/AsyncDisplayKit-4/"/>
 
 
 
 
 
-  <title> Swift 中的协议扩展派发 | Swift学徒 </title>
+  <title> AsyncDisplayKit 教程(4)：Batch Fetching | Swift学徒 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -260,7 +255,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://swift.diagon.me/protocol-extension-dispathing/">
+  <link itemprop="mainEntityOfPage" href="http://swift.diagon.me/AsyncDisplayKit-4/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="万恶胖为首">
@@ -284,7 +279,7 @@
             
             
               
-                Swift 中的协议扩展派发
+                AsyncDisplayKit 教程(4)：Batch Fetching
               
             
           </h1>
@@ -299,8 +294,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-09T00:00:00+08:00">
-                2017-02-09
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-26T00:00:00+08:00">
+                2017-02-26
               </time>
             
 
@@ -322,8 +317,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/协议/" itemprop="url" rel="index">
-                    <span itemprop="name">协议</span>
+                  <a href="/categories/性能优化/" itemprop="url" rel="index">
+                    <span itemprop="name">性能优化</span>
                   </a>
                 </span>
 
@@ -357,23 +352,26 @@
       
 
       
-        <p>当遵循 protocol 的类型重新定义了 protocol 中没有但 protocol extension 中定义的 method 或 property 时，static dispatching 将会执行。这就意味着，property 或 method 的实现依赖于变量或常量声明的类型，而不是实例实际的类型。</p>
-<p>定义一个协议：</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">protocol</span> <span class="title">WinLoss</span> </span>&#123;</div><div class="line">    </div><div class="line">    <span class="keyword">var</span> wins: <span class="type">Int</span> &#123; <span class="keyword">get</span>&#125;</div><div class="line">    </div><div class="line">    <span class="keyword">var</span> losses: <span class="type">Int</span> &#123; <span class="keyword">get</span>&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>该协议有一个 extension:</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">extension</span> <span class="title">WinLoss</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">var</span> winningPercentage: <span class="type">Double</span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">return</span> <span class="type">Double</span>(wins) / (<span class="type">Double</span>(wins) + <span class="type">Double</span>(losses))</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>有一个遵循该协议的类型:</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">CricketRecord</span>: <span class="title">WinLoss</span></span></div><div class="line">&#123;    </div><div class="line">    <span class="keyword">var</span> wins: <span class="type">Int</span></div><div class="line">    </div><div class="line">    <span class="keyword">var</span> losses: <span class="type">Int</span></div><div class="line">    </div><div class="line">    <span class="keyword">var</span> draws: <span class="type">Int</span></div><div class="line">    </div><div class="line">    <span class="keyword">var</span> winningPercentage: <span class="type">Double</span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">return</span> <span class="type">Double</span>(wins) / (<span class="type">Double</span>(wins) + <span class="type">Double</span>(losses) + <span class="type">Double</span>(draws))</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>观察：</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> miamiTuples = <span class="type">CricketRecord</span>(wins: <span class="number">8</span>, losses: <span class="number">7</span>, draws: <span class="number">1</span>)</div><div class="line"><span class="keyword">let</span> winLoss: <span class="type">WinLoss</span> = miamiTuples</div><div class="line"></div><div class="line">miamiTuples.winningPercentage <span class="comment">// .5 执行 struct 的实现</span></div><div class="line">winLoss.winningPercentage <span class="comment">// .53 !!!执行 extension 的实现</span></div></pre></td></tr></table></figure>
-<p>即使 miamiTuples 和 winLoss 包含的是相同的实例，结果也不同。因为 static dispatching 是根据声明类型来选择实现的。miamiTuples 是 CricketRecord 类型的，  winLoss 是 WinLoss 类型的。</p>
-<p>注意，这种情况只出现在 protocol 自身没有该成员的情况下，如果</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">protocol</span> <span class="title">WinLoss</span></span></div><div class="line">&#123;    </div><div class="line">    <span class="keyword">var</span> wins: <span class="type">Int</span> &#123; <span class="keyword">get</span>&#125;</div><div class="line">    </div><div class="line">    <span class="keyword">var</span> losses: <span class="type">Int</span> &#123; <span class="keyword">get</span>&#125;</div><div class="line">    </div><div class="line">    <span class="keyword">var</span> winningPercentage: <span class="type">Double</span> &#123; <span class="keyword">get</span>&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>则</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">miamiTuples.winningPercentage <span class="comment">// .5</span></div><div class="line">winLoss.winningPercentage <span class="comment">// .5</span></div></pre></td></tr></table></figure>
-<p>这里是 dynamic dispatching。依赖于实际的类型，而不是声明的类型。</p>
-<hr>
-<div style="text-align: center"><br>关注公众号（ID：SwiftBetter），进一步探讨主题<br><br><br>每日精选高清题图，可做壁纸<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>
+        <h3 id="使用-Batch-Fetching-进行无限滚动"><a href="#使用-Batch-Fetching-进行无限滚动" class="headerlink" title="使用 Batch Fetching 进行无限滚动"></a>使用 Batch Fetching 进行无限滚动</h3><p>每个 App 都会采用某些机制，保证用户浏览到当前列表结尾时，可以从服务器上拉取新的数据。通常通过 ScrollView 的 delegate 方法 <code>scrollViewDidScroll:</code>  监听 content<br> offset 来进行处理。在 ASDK 中，只需要指定：需要提前多少页时请求数据。</p>
+<p>取消 AnimalTableController.m 中 Helpers 类别中的两个方法注释。</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">AnimalTableController</span> (<span class="title">Helpers</span>)</span></div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)retrieveNextPageWithCompletion:(<span class="keyword">void</span> (^)(<span class="built_in">NSArray</span> *))block &#123;</div><div class="line">  <span class="built_in">NSArray</span> *moreAnimals = [[<span class="built_in">NSArray</span> alloc] initWithArray:[<span class="keyword">self</span>.animals subarrayWithRange:<span class="built_in">NSMakeRange</span>(<span class="number">0</span>, <span class="number">5</span>)] copyItems:<span class="literal">NO</span>];</div><div class="line">  </div><div class="line">  <span class="comment">// Important: this block must run on the main thread</span></div><div class="line">  <span class="built_in">dispatch_async</span>(dispatch_get_main_queue(), ^&#123;</div><div class="line">    block(moreAnimals);</div><div class="line">  &#125;);</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)insertNewRowsInTableNode:(<span class="built_in">NSArray</span> *)newAnimals &#123;</div><div class="line">  <span class="built_in">NSInteger</span> section = <span class="number">0</span>;</div><div class="line">  <span class="built_in">NSMutableArray</span> *indexPaths = [<span class="built_in">NSMutableArray</span> array];</div><div class="line">  </div><div class="line">  <span class="built_in">NSUInteger</span> newTotalNumberOfPhotos = <span class="keyword">self</span>.animals.count + newAnimals.count;</div><div class="line">  <span class="keyword">for</span> (<span class="built_in">NSUInteger</span> row = <span class="keyword">self</span>.animals.count; row &lt; newTotalNumberOfPhotos; row++) &#123;</div><div class="line">    <span class="built_in">NSIndexPath</span> *path = [<span class="built_in">NSIndexPath</span> indexPathForRow:row inSection:section];</div><div class="line">    [indexPaths addObject:path];</div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  [<span class="keyword">self</span>.animals addObjectsFromArray:newAnimals];</div><div class="line">  [<span class="keyword">self</span>.tableNode insertRowsAtIndexPaths:indexPaths withRowAnimation:<span class="built_in">UITableViewRowAnimationNone</span>];</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
+<p><code>retrieveNextPageWithCompletion:</code> 方法中可以进行网络调用，而 <code>insertNewRowsInTableNode:</code> 将新的数据添加到 table 中。</p>
+<p>在 <code>viewDidLoad:</code> 方法中加入：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">self</span>.tableNode.view.leadingScreensForBatching = <span class="number">1.0</span>;  <span class="comment">// 默认值是 2.0</span></div></pre></td></tr></table></figure>
+<p>将 leadingScreensForBatching 设置为 1.0 表示当用户滚动还剩 1 个全屏就到达页尾时，开始抓取新的一批数据。</p>
+<p>在 Delegate 类别中加入这个方法：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">- (<span class="built_in">BOOL</span>)shouldBatchFetchForTableNode:(ASTableNode *)tableNode &#123;</div><div class="line">  <span class="keyword">return</span> <span class="literal">YES</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这个方法告诉表格，在这次批抓取之后是否还可以进行新的批抓取。如果你知道 API 上的数据什么时候结束，返回 NO，表示不用进行新的批抓取了。</p>
+<p>然后，继续加入：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">- (<span class="keyword">void</span>)tableNode:(ASTableNode *)tableNode willBeginBatchFetchWithContext:(ASBatchContext *)context &#123;</div><div class="line">  <span class="comment">//1</span></div><div class="line">  [<span class="keyword">self</span> retrieveNextPageWithCompletion:^(<span class="built_in">NSArray</span> *animals) &#123;</div><div class="line">    <span class="comment">//2</span></div><div class="line">    [<span class="keyword">self</span> insertNewRowsInTableNode:animals];</div><div class="line"></div><div class="line">    <span class="comment">//3</span></div><div class="line">    [context completeBatchFetching:<span class="literal">YES</span>];</div><div class="line">  &#125;];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这个方法在用户即将滚动到 table 末尾并且 <code>shouldBatchFetchForTableNode:</code> 方法返回 YES 时被调用。<br>代码解释：</p>
+<ol>
+<li>请求一次新批抓取，以备显示。通常这会从 API 返回一个对象数组。</li>
+<li>在完成块中，用新数据刷新表格。</li>
+<li>调用 <code>completeBatchFetching:</code> ，YES 表示你已经完成这个批次。在本批次抓取完成之前，不会进行新的批次抓取。</li>
+</ol>
+<p>运行程序，可以无限滚动。 </p>
+
       
     </div>
 
@@ -396,7 +394,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/protocol/" rel="tag"># protocol</a>
+            <a href="/tags/AsyncDisplayKit/" rel="tag"># AsyncDisplayKit</a>
           
         </div>
       
@@ -405,8 +403,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/protocol-member-default/" rel="next" title="Swift 中的协议成员的默认实现">
-                <i class="fa fa-chevron-left"></i> Swift 中的协议成员的默认实现
+              <a href="/AsyncDisplayKit-3/" rel="next" title="AsyncDisplayKit 教程(3)：TableNode">
+                <i class="fa fa-chevron-left"></i> AsyncDisplayKit 教程(3)：TableNode
               </a>
             
           </div>
@@ -415,8 +413,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/off-screen-rendering/" rel="prev" title="iOS 性能优化之离屏渲染">
-                iOS 性能优化之离屏渲染 <i class="fa fa-chevron-right"></i>
+              <a href="/AsyncDisplayKit-5/" rel="prev" title="AsyncDisplayKit 教程(5)：智能预加载">
+                AsyncDisplayKit 教程(5)：智能预加载 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -464,8 +462,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.gif"
@@ -528,6 +535,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#使用-Batch-Fetching-进行无限滚动"><span class="nav-number">1.</span> <span class="nav-text">使用 Batch Fetching 进行无限滚动</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
     </div>
