@@ -8,8 +8,128 @@
     <atom:link href="/rss.xml" rel="self" type="application/rss+xml"/>
     
     <description>笨办法学Swift</description>
-    <pubDate>Wed, 22 Feb 2017 14:37:04 GMT</pubDate>
+    <pubDate>Sat, 25 Feb 2017 12:48:13 GMT</pubDate>
     <generator>http://hexo.io/</generator>
+    
+    <item>
+      <title>AsyncDisplayKit 教程(3)：TableNode</title>
+      <link>http://swift.diagon.me/AsyncDisplayKit-3/</link>
+      <guid>http://swift.diagon.me/AsyncDisplayKit-3/</guid>
+      <pubDate>Fri, 24 Feb 2017 16:00:00 GMT</pubDate>
+      <description>
+      
+        &lt;p&gt;本教程的初始工程 RainforestStarter 可以点&lt;a href=&quot;https://koenig-media.raywenderlich.com/uploads/2016/12/AsyncDisplayKit-Starter-3.zip&quot; target=&quot;_bla
+      
+      </description>
+      
+      <content:encoded><![CDATA[<p>本教程的初始工程 RainforestStarter 可以点<a href="https://koenig-media.raywenderlich.com/uploads/2016/12/AsyncDisplayKit-Starter-3.zip" target="_blank" rel="external">这里</a>获取。</p>
+<p>运行程序，App 中包含了一个 UITableView，显示了一个野生动物的列表。滚动页面，帧率开始下降。这个 App 明显的需要进行性能上调优。</p>
+<h3 id="用-TableNode-替换-Table-View"><a href="#用-TableNode-替换-Table-View" class="headerlink" title="用 TableNode 替换 Table View"></a>用 TableNode 替换 Table View</h3><p>在 AnimalTableController.m 中引入 AsyncDisplayKit：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#import <span class="meta-string">&lt;AsyncDisplayKit/AsyncDisplayKit.h&gt;</span></span></div></pre></td></tr></table></figure>
+<p>将 tableView 属性声明：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">@property</span> (<span class="keyword">strong</span>, <span class="keyword">nonatomic</span>) <span class="built_in">UITableView</span> *tableView;</div></pre></td></tr></table></figure>
+<p>替换为 tableNode:</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">@property</span> (<span class="keyword">strong</span>, <span class="keyword">nonatomic</span>) ASTableNode *tableNode;</div></pre></td></tr></table></figure>
+<p>这会导致许多代码出现错误，这些错误会引导你去完成整个转换。</p>
+<p>我们需要将所有的 tableView 实例修改为 tableNode，其中注意这些地方：</p>
+<ol>
+<li>将一个 ASTableNode 实例分配给 tableNode。</li>
+<li>ASTableNode 对象没有 <code>registerCalss: forCellReuseIdentifier</code> 方法。</li>
+<li>你不能将 node 添加为一个 subview。</li>
+</ol>
+<p>将 <code>viewDidLoad</code> 方法修改为：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">- (<span class="keyword">void</span>)viewDidLoad &#123;</div><div class="line">    [<span class="keyword">super</span> viewDidLoad];</div><div class="line"></div><div class="line">    <span class="keyword">self</span>.tableNode = [[ASTableNode alloc]initWithStyle:<span class="built_in">UITableViewStylePlain</span>];</div><div class="line">    </div><div class="line">    [<span class="keyword">self</span>.view addSubnode:<span class="keyword">self</span>.tableNode];</div><div class="line">    [<span class="keyword">self</span> wireDelegation];</div><div class="line">    </div><div class="line">    [<span class="keyword">self</span> applyStyle];</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这里，我们调用它了 UIVIew 的 <code>addSubnode:</code> 方法，这个方法是通过 Category 的方式被添加到 UIView 上的。它实际上等于：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[<span class="keyword">self</span>.view addSubview:<span class="keyword">self</span>.tableNode.view];</div></pre></td></tr></table></figure>
+<p>修改 <code>viewWillLayoutSubviews</code> 方法，将 self.tableView 替换为 self.tableNode :</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">- (<span class="keyword">void</span>)viewWillLayoutSubviews &#123;</div><div class="line">  [<span class="keyword">super</span> viewWillLayoutSubviews];</div><div class="line"></div><div class="line">  <span class="keyword">self</span>.tableNode.frame = <span class="keyword">self</span>.view.bounds;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>修改 <code>applyStyle</code> 方法：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">- (<span class="keyword">void</span>)applyStyle &#123;</div><div class="line">  <span class="keyword">self</span>.view.backgroundColor = [<span class="built_in">UIColor</span> blackColor];</div><div class="line">  <span class="keyword">self</span>.tableNode.view.separatorStyle = <span class="built_in">UITableViewCellSeparatorStyleNone</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>为了设置 tableView 的 separatorStyle 属性，我们必须访问 tableNode 的 view 属性。ASTableNode 并没有将 UITableView 的所有属性都暴露出来，因此为了访问 UITableView 的某些属性，你必须访问位于 TableNode 底下的 UITableView 对象。</p>
+<h3 id="设置-TableNote-的-Data-Source-amp-Delegate"><a href="#设置-TableNote-的-Data-Source-amp-Delegate" class="headerlink" title="设置 TableNote 的 Data Source &amp; Delegate"></a>设置 TableNote 的 Data Source &amp; Delegate</h3><p>和 UITableView 一样，ASTableNode 也有 Data Source 和 Delegate。TableNode 的 ASTableDataSource 和 ASTableDelegate 协议和 UITableViewDataSource 和 UITableViewDelegate 协议非常相似。</p>
+<p>将 <code>wireDelegation</code>方法中的 tableView 修改为 tableNode</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">- (<span class="keyword">void</span>)wireDelegation &#123;</div><div class="line">  <span class="keyword">self</span>.tableNode.dataSource = <span class="keyword">self</span>;</div><div class="line">  <span class="keyword">self</span>.tableNode.delegate = <span class="keyword">self</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>并且让 controller 遵守 ASTableDataSource 和 ASTableDelegate 协议。</p>
+<h4 id="实现-ASTableDataSource-协议"><a href="#实现-ASTableDataSource-协议" class="headerlink" title="实现 ASTableDataSource 协议"></a>实现 ASTableDataSource 协议</h4><p>首先，将 UITableViewDataSource 方法 <code>tableView:numberOfRowsInSection:</code> 修改为 ASTableDataSource 协议的版本。</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">- (<span class="built_in">NSInteger</span>)tableNode:(ASTableNode *)tableNode numberOfRowsInSection:(<span class="built_in">NSInteger</span>)section &#123;</div><div class="line">  <span class="keyword">return</span> <span class="keyword">self</span>.animals.count;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>然后，ASTableNodes 返回 cell 的方式和 UITableView 有所不同。将 <code>tableView:cellForRowAtIndexPath:</code>方法替换为:</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//1</span></div><div class="line">- (ASCellNodeBlock)tableNode:(ASTableView *)tableView nodeBlockForRowAtIndexPath:(<span class="built_in">NSIndexPath</span> *)indexPath &#123;</div><div class="line">  <span class="comment">//2</span></div><div class="line">  RainforestCardInfo *animal = <span class="keyword">self</span>.animals[indexPath.row];</div><div class="line"></div><div class="line">  <span class="comment">//3</span></div><div class="line">  <span class="keyword">return</span> ^&#123;</div><div class="line">    <span class="comment">//4</span></div><div class="line">    CardNode *cardNode = [[CardNode alloc] initWithAnimal:animal];</div><div class="line"></div><div class="line">    <span class="comment">//You'll add something extra here later...</span></div><div class="line">    <span class="keyword">return</span> cardNode;</div><div class="line">  &#125;;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>代码解释：</p>
+<ol>
+<li>ASCellNode 等价于 UITableViewCell 或 UICollectionViewCell。注意这个方法返回的是一个 ASCellNodeBlock。因为一个 ASTableNode 在内部维护了所有的 cell，为每个 cell 的 Index Path 指定了一个 block，这样就能够并发的初始化所有的 cell。</li>
+<li>得到一个数据模型对象。闭包会捕捉到这个对象。IndexPath 不需要在闭包中使用，有可能在闭包调用前数据会发生改变。</li>
+<li>闭包中返回的类型必须是 ASCellNode。</li>
+<li>不需要关心 cell 重用的问题，因此只需要实例化一个 cell。注意，你返回的是一个 CardNode 而不是 CardCell。</li>
+</ol>
+<h4 id="实现-ASTableDelegate-协议"><a href="#实现-ASTableDelegate-协议" class="headerlink" title="实现 ASTableDelegate 协议"></a>实现 ASTableDelegate 协议</h4><p>在使用 UITableView 的时候通常都需要实现 <code>tableView:heightForRowAtIndexPath:</code> 方法来计算每个 cell 的高度。</p>
+<p>ASTableDelegate 中没有 <code>tableView:heightForRowAtIndexPath:</code> 方法。如果使用 ASDK, 所有的 ASCellNodes 都自己负责计算它们的大小。不需要提供一个固定的高度，你可以为每个 cell 指定一个最大尺寸和最小尺寸。这个例子中，你需要让每个 cell 至少占据屏幕 2/3 的高度。</p>
+<p>将 -tableView:heightForRowAtIndexPath: 方法替换为:</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">-(ASSizeRange)tableNode:(ASTableNode *)tableNode constrainedSizeForRowAtIndexPath:(<span class="built_in">NSIndexPath</span> *)indexPath</div><div class="line">&#123;</div><div class="line">    <span class="built_in">CGFloat</span> width = [<span class="built_in">UIScreen</span> mainScreen].bounds.size.width;</div><div class="line">    <span class="built_in">CGSize</span> min = <span class="built_in">CGSizeMake</span>(width, ([<span class="built_in">UIScreen</span> mainScreen].bounds.size.height/<span class="number">3</span>) * <span class="number">2</span>);</div><div class="line">    <span class="built_in">CGSize</span> max = <span class="built_in">CGSizeMake</span>(width, INFINITY);</div><div class="line">    </div><div class="line">    <span class="keyword">return</span> ASSizeRangeMake(min, max);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>搞定！ 运行一下，很流畅~</p>
+]]></content:encoded>
+      
+      <comments>http://swift.diagon.me/AsyncDisplayKit-3/#disqus_thread</comments>
+    </item>
+    
+    <item>
+      <title>AsyncDisplayKit 教程(2)：ASDisplayNode</title>
+      <link>http://swift.diagon.me/AsyncDisplayKit-2/</link>
+      <guid>http://swift.diagon.me/AsyncDisplayKit-2/</guid>
+      <pubDate>Thu, 23 Feb 2017 16:00:00 GMT</pubDate>
+      <description>
+      
+        &lt;h2 id=&quot;ASDisplayNode&quot;&gt;&lt;a href=&quot;#ASDisplayNode&quot; class=&quot;headerlink&quot; title=&quot;ASDisplayNode&quot;&gt;&lt;/a&gt;ASDisplayNode&lt;/h2&gt;&lt;p&gt;ASDisplayNode 是 ASDK 的核心类。
+      
+      </description>
+      
+      <content:encoded><![CDATA[<h2 id="ASDisplayNode"><a href="#ASDisplayNode" class="headerlink" title="ASDisplayNode"></a>ASDisplayNode</h2><p>ASDisplayNode 是 ASDK 的核心类。</p>
+<p>我们知道 UIView 是对 CALayer 的一个封装，添加了触摸事件的处理以及其他功能。</p>
+<p><img src="https://ww1.sinaimg.cn/large/006tNc79ly1fd2tzeu6aej30i208mq3r.jpg" alt=""></p>
+<p>ASDisplayNode 也使用了这种抽象。你可以认为 Node 包含了一个 View，就像 View 包含了一个 Layer。</p>
+<p>Node 可以在后台队列中创建和配置，默认情况使用异步渲染。</p>
+<p><img src="https://ww1.sinaimg.cn/large/006tNc79ly1fd2u1q81jbj30qo08ymx8.jpg" alt=""></p>
+<p>Node 的 API 和 UIView 的难以置信的相似：所有的 View 属性都可以在 node 上找到相同的。你还可访问底层的 view 或 layer，就像你可以访问 UIView的 .layer 一样。</p>
+<h2 id="Node-Containers"><a href="#Node-Containers" class="headerlink" title="Node Containers"></a>Node Containers</h2><p>Node 与四个容器类中的一个结合使用时，就产生魔法般的性能提升。</p>
+<p>这四个类包含：</p>
+<ul>
+<li>ASViewController:  UIViewController 子类，允许你创建节点并进行管理。</li>
+<li>ASCollectionNode 和 ASTableNode:  UICollectionView 和 UITableView 对应的 Node 类。</li>
+<li>ASPagerNode:  ASCollectionNode 子类，和 UIPageViewController 相比，提供了很棒的 swiping 性能。</li>
+</ul>
+<p>真正的魔法来自于： ASRangeController，这 4 个类都会通过它来影响所包含的 node 的行为。这个后面再讲。</p>
+]]></content:encoded>
+      
+      <comments>http://swift.diagon.me/AsyncDisplayKit-2/#disqus_thread</comments>
+    </item>
+    
+    <item>
+      <title>AsyncDisplayKit 教程(1)：介绍</title>
+      <link>http://swift.diagon.me/AsyncDisplayKit-1/</link>
+      <guid>http://swift.diagon.me/AsyncDisplayKit-1/</guid>
+      <pubDate>Wed, 22 Feb 2017 16:00:00 GMT</pubDate>
+      <description>
+      
+        &lt;p&gt;本文翻译改编自 ray 的&lt;a href=&quot;https://www.raywenderlich.com/124311/asyncdisplaykit-2-0-tutorial-getting-started&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;《
+      
+      </description>
+      
+      <content:encoded><![CDATA[<p>本文翻译改编自 ray 的<a href="https://www.raywenderlich.com/124311/asyncdisplaykit-2-0-tutorial-getting-started" target="_blank" rel="external">《AsyncDisplayKit 2.0 Tutorial: Getting Started》</a>。</p>
+<p>AsyncDisplayKit 是一个 UI 框架，源自 Facebook 的 Paper。它解决了 Paper 团队面临的一个核心问题：如何让主线程尽可能地保持简洁？ </p>
+<p>用户界面完全依赖于主线程，并且对主线程的延迟非常敏感。主线程阻塞意味着掉帧，并导致用户体验很差。</p>
+<p>主线程进行的高消耗操作包括：</p>
+<ul>
+<li>尺寸计算和视图布局：比如，<code>heightForRowAtIndexPath</code>方法，或者对 UILabel 调用 <code>sizeThatFits</code>方法。以及大量 AutoLayout 约束计算。</li>
+<li>图片解码：在一个 UIImageView 中使用 UIImage，意味着首先要进行图片数据的解码。</li>
+<li>文本渲染：复杂文本的渲染。</li>
+<li>图形绘制：手动绘制渐变色和阴影。</li>
+<li>对象生命周期：创建、操作和销毁系统对象（比如创建一个 UIView）。</li>
+</ul>
+<p>AsyncDisplayKit 默认允许异步的进行尺寸计算，视图布局，Rendering（文本渲染、图形绘制、图片解码）操作。这样就大量的减轻了主线程的负担。</p>
+<p>AsyncDisplayKit 支持 Objective-C 与 Swift，但是不支持 Interface Builder 与 AutoLayout。</p>
+]]></content:encoded>
+      
+      <comments>http://swift.diagon.me/AsyncDisplayKit-1/#disqus_thread</comments>
+    </item>
     
     <item>
       <title>UIView Animation 1：基础动画效果</title>
@@ -827,95 +947,6 @@
 <div style="text-align: center"><br>关注公众号（ID：SwiftBetter），进一步探讨主题<br><br><br>每日精选高清题图，可做壁纸<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>]]></content:encoded>
       
       <comments>http://swift.diagon.me/optional-IUO/#disqus_thread</comments>
-    </item>
-    
-    <item>
-      <title>Swift 中的 final 修饰符</title>
-      <link>http://swift.diagon.me/final/</link>
-      <guid>http://swift.diagon.me/final/</guid>
-      <pubDate>Sat, 04 Feb 2017 16:00:00 GMT</pubDate>
-      <description>
-      
-        &lt;p&gt;&lt;a href=&quot;http://swift.diagon.me/static-class/&quot;&gt;《Swift 中的 static 和 class 关键字》&lt;/a&gt;一文中提及：「使用 &lt;code&gt;static&lt;/code&gt; 修饰的类方法和类属性无法在子类中重载。也就是说 &lt;co
-      
-      </description>
-      
-      <content:encoded><![CDATA[<p><a href="http://swift.diagon.me/static-class/">《Swift 中的 static 和 class 关键字》</a>一文中提及：「使用 <code>static</code> 修饰的类方法和类属性无法在子类中重载。也就是说 <code>static</code> 修饰的类方法和类属性包含了 <code>final</code> 关键字的特性。相当于 <code>final class</code> 。」，本文将详细介绍 <code>final</code> 的作用。</p>
-<h3 id="final-的特性"><a href="#final-的特性" class="headerlink" title="final 的特性"></a>final 的特性</h3><p>当使用 <code>final</code> 修饰符修饰 <code>class</code> 的方法 属性 下标时，可以防止他们被重写。例如：<code>final var</code>，<code>final func</code>，<code>final class func</code>，<code>final subscript</code>。</p>
-<p>当你试图重写被 <code>fianl</code> 修饰的东西时，编译时会报错。</p>
-<p>在申明 <code>class</code> 时，在 <code>calss</code> 之前添加 <code>final</code>，可以标记整个类为 <code>final</code>，如果你尝试继承这个类，编译时会报错。</p>
-<p>注意，<code>final</code> 只能修饰 <code>class</code> ，不能用来修饰 <code>struct</code> 和 <code>enum</code>，因为 <code>struct</code> 和 <code>enum</code> 只能遵循协议，无法继承。而协议虽然可以遵循其他协议，但是并不能重写遵循的协议中的成员。</p>
-<h3 id="final-常见用法"><a href="#final-常见用法" class="headerlink" title="final 常见用法"></a>final 常见用法</h3><p><code>final</code> 这一特性，在我们写提供给别人使用的代码时要谨慎思考。不希望被继承和重写有这么几种情况：</p>
-<ol>
-<li>性能调优。编译器可以从<code>final</code>中获取额外信息，以便于对<code>class</code>或<code>class的成员</code>进行优化。这个优化并不明显，所以只建议的极端性能调优的时候使用。</li>
-<li>类提供了充分并且可靠的功能。一般这样的类是工具类，可能只有类方法而没有实例方法。比如 MD5 工具类。</li>
-<li>子类继承或重载会产生风险。你开发的类库基于某些基本因子，如果基本因子含义被改变，可能会导致功能失效。</li>
-</ol>
-<hr>
-<div style="text-align: center"><br>关注公众号（ID：SwiftBetter），进一步探讨主题<br><br><br>每日精选高清题图，可做壁纸<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>]]></content:encoded>
-      
-      <comments>http://swift.diagon.me/final/#disqus_thread</comments>
-    </item>
-    
-    <item>
-      <title>Optional Chaining 陷阱</title>
-      <link>http://swift.diagon.me/optional-chaining-issue/</link>
-      <guid>http://swift.diagon.me/optional-chaining-issue/</guid>
-      <pubDate>Fri, 03 Feb 2017 16:00:00 GMT</pubDate>
-      <description>
-      
-        &lt;p&gt;&lt;a href=&quot;http://swift.diagon.me/optional-chaining/&quot;&gt;《Swift 中的 Optional Chaining》&lt;/a&gt;讲述了 &lt;code&gt;Optional Chaining&lt;/code&gt;（可选链） 的基本用法和需要注意的问题
-      
-      </description>
-      
-      <content:encoded><![CDATA[<p><a href="http://swift.diagon.me/optional-chaining/">《Swift 中的 Optional Chaining》</a>讲述了 <code>Optional Chaining</code>（可选链） 的基本用法和需要注意的问题。这篇文章我们深入探索一下更多可能会面临的问题。</p>
-<p>给 <code>Residence</code> 类增加方法：</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">printNumberOfRooms</span><span class="params">()</span></span> &#123;</div><div class="line">    <span class="built_in">print</span>(<span class="string">"The number of rooms is <span class="subst">\(numberOfRooms)</span>"</span>)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>这个方法没有返回值。实际上没有返回值的方法依然返回了值，一个特殊的 <code>Void</code>值。它其实是一个空的元组，可以写成<code>()</code>。</p>
-<p>根据<a href="http://swift.diagon.me/optional-chaining/">《Swift 中的 Optional Chaining》</a>指出的原则，如果在 <code>Optional Chaining</code> 调用这个方法，返回的类型应该是  <code>Void?</code>而不是 <code>Void</code>。</p>
-<p>因此，我们可以使用 <code>if</code> 语句来判断是否能成功够调用 <code>printNumberOfRooms</code>。通过判断返回值是否为 <code>nil</code> 可以判断调用是否成功。</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span> john.residence?.printNumberOfRooms() != <span class="literal">nil</span> &#123;</div><div class="line">    <span class="built_in">print</span>(<span class="string">"It was possible to print the number of rooms."</span>)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>同样的，我们可以判断通过 <code>Optional Chaining</code> 为属性赋值是否成功。通过可选链给属性复制会返回 <code>Void?</code>，通过判断返回值是否为 <code>nil</code> 就知道赋值是否成功。</p>
-<p>if (john.residence?.colorForFirstRoom = “Red”) != nil {<br>    print(“have a color”)<br>} </p>
-<p>如果想看看返回值到底是什么可以这样写:</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span> <span class="keyword">let</span> result = (john.residence?.colorForFirstRoom = <span class="string">"Red"</span>)  &#123;</div><div class="line">    <span class="built_in">print</span>(result)</div><div class="line">&#125;</div><div class="line"><span class="comment">//()</span></div></pre></td></tr></table></figure>
-<p><code>residence</code> 存在时，<code>result</code>为一个空的元组<code>()</code>，即 <code>Void</code>。</p>
-<hr>
-<div style="text-align: center"><br>关注公众号（ID：SwiftBetter），进一步探讨主题<br><br><br>每日精选高清题图，可做壁纸<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>
-]]></content:encoded>
-      
-      <comments>http://swift.diagon.me/optional-chaining-issue/#disqus_thread</comments>
-    </item>
-    
-    <item>
-      <title>Swift 中的 Optional Chaining</title>
-      <link>http://swift.diagon.me/optional-chaining/</link>
-      <guid>http://swift.diagon.me/optional-chaining/</guid>
-      <pubDate>Thu, 02 Feb 2017 16:00:00 GMT</pubDate>
-      <description>
-      
-        &lt;h3 id=&quot;Optional-Chaining-的基本用法&quot;&gt;&lt;a href=&quot;#Optional-Chaining-的基本用法&quot; class=&quot;headerlink&quot; title=&quot;Optional Chaining 的基本用法&quot;&gt;&lt;/a&gt;Optional Chaining
-      
-      </description>
-      
-      <content:encoded><![CDATA[<h3 id="Optional-Chaining-的基本用法"><a href="#Optional-Chaining-的基本用法" class="headerlink" title="Optional Chaining 的基本用法"></a>Optional Chaining 的基本用法</h3><p><code>Optional Chaining</code> (可选链) 中任何一个节点为 <code>nil</code> 时，则整个链条失效，返回 nil。因此，即使链条最后的属性、方法、下标调用返回的结果不是 <code>Optional</code> 类型的，整个链条返回的结果也是 <code>Optional</code> 类型的。</p>
-<p>换而言之，<code>Optional Chaining</code> 会将原本返回的结果包装为 <code>Optional</code>。一个原本返回 <code>Int</code> 的方法会返回 <code>Int？</code>。</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span> </span>&#123;</div><div class="line">    <span class="keyword">var</span> residence: <span class="type">Residence</span>?</div><div class="line">&#125;</div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Residence</span> </span>&#123;</div><div class="line">    <span class="keyword">var</span> numberOfRooms = <span class="number">1</span></div><div class="line">    <span class="keyword">var</span> colorForFirstRoom:<span class="type">String</span>?</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">func</span> <span class="title">roomName</span><span class="params">()</span></span> -&gt; <span class="type">String</span>?&#123;</div><div class="line">    	<span class="keyword">return</span> <span class="string">"name"</span></div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"><span class="keyword">let</span> john = <span class="type">Person</span>()</div><div class="line"><span class="comment">//john.residence = Residence()</span></div><div class="line"></div><div class="line"><span class="keyword">let</span> roomCount = john.residence?.numberOfRooms</div></pre></td></tr></table></figure>
-<p>虽然 numberOfRooms 的类型是 <code>Int</code>，但此时得到的 roomCount 的类型是 <code>Int?</code>。与此类似，调用返回值为 <code>Int</code> 类型的方法时，最终得到的结果是 <code>Int?</code>。</p>
-<p>如果要在方法的返回值上进行可选链式调用，在方法的圆括号后面加上问号即可:</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> roomCount = john.residence?.roomName()?.hasPrefix(<span class="string">"name"</span>)</div></pre></td></tr></table></figure>
-<p><strong>在实际使用时 Optional Chaining  经常和 Optional Binding 一起使用</strong>：</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span> <span class="keyword">let</span> roomCount = john.residence?.numberOfRooms &#123;</div><div class="line">    <span class="built_in">print</span>(<span class="string">"John's residence has <span class="subst">\(roomCount)</span> room(s)."</span>)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>另外还可以直接使用 <code>Optional Chaining</code> 设定属性：</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">john.residence?.colorForFirstRoom = <span class="string">"Red"</span></div></pre></td></tr></table></figure>
-<p>在这个例子中如果等号左侧的链条调用失败，等号右侧的代码不会被执行。</p>
-<h3 id="访问-Optional-类型下标"><a href="#访问-Optional-类型下标" class="headerlink" title="访问 Optional 类型下标"></a>访问 Optional 类型下标</h3><figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> testScores = [<span class="string">"Dave"</span>: [<span class="number">86</span>, <span class="number">82</span>, <span class="number">84</span>], <span class="string">"Bev"</span>: [<span class="number">79</span>, <span class="number">94</span>, <span class="number">81</span>]]</div><div class="line">testScores[<span class="string">"Dave"</span>]?[<span class="number">0</span>] = <span class="number">91</span></div><div class="line">testScores[<span class="string">"Bev"</span>]?[<span class="number">0</span>] += <span class="number">1</span></div><div class="line">testScores[<span class="string">"Brian"</span>]?[<span class="number">0</span>] = <span class="number">72</span></div></pre></td></tr></table></figure>
-<p>“Dave” 数组现在是 [91, 82, 84]，”Bev” 数组现在是 [80, 94, 81]，testScores字典中没有”Brian”这个键，所以第三个调用失败。</p>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>记住一句话:使用 <code>Optional Chaining</code> 所得到的东西一定是 <code>Optional</code>类型的。</p>
-<hr>
-<div style="text-align: center"><br>关注公众号（ID：SwiftBetter），进一步探讨主题<br><br><br>每日精选高清题图，可做壁纸<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>]]></content:encoded>
-      
-      <comments>http://swift.diagon.me/optional-chaining/#disqus_thread</comments>
     </item>
     
   </channel>
