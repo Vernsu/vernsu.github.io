@@ -8,8 +8,46 @@
     <atom:link href="/rss.xml" rel="self" type="application/rss+xml"/>
     
     <description>笨办法学Swift</description>
-    <pubDate>Sat, 25 Feb 2017 15:00:31 GMT</pubDate>
+    <pubDate>Sun, 26 Feb 2017 01:48:09 GMT</pubDate>
     <generator>http://hexo.io/</generator>
+    
+    <item>
+      <title>AsyncDisplayKit 教程(6)：多方向的智能预加载</title>
+      <link>http://swift.diagon.me/AsyncDisplayKit-6/</link>
+      <guid>http://swift.diagon.me/AsyncDisplayKit-6/</guid>
+      <pubDate>Mon, 27 Feb 2017 16:00:00 GMT</pubDate>
+      <description>
+      
+        &lt;h2 id=&quot;多方向的智能预加载&quot;&gt;&lt;a href=&quot;#多方向的智能预加载&quot; class=&quot;headerlink&quot; title=&quot;多方向的智能预加载&quot;&gt;&lt;/a&gt;多方向的智能预加载&lt;/h2&gt;&lt;p&gt;ASDK 支持多方向的智能预加载。也就是说可以在垂直方向上滚动 table，当 ce
+      
+      </description>
+      
+      <content:encoded><![CDATA[<h2 id="多方向的智能预加载"><a href="#多方向的智能预加载" class="headerlink" title="多方向的智能预加载"></a>多方向的智能预加载</h2><p>ASDK 支持多方向的智能预加载。也就是说可以在垂直方向上滚动 table，当 cell 来到屏幕上的某个位置时，cell 会包含一个水平滚动的 Collection View。</p>
+<p><img src="https://ww4.sinaimg.cn/large/006tNc79ly1fd3mf2sxc6g30i20bau13.gif" alt=""></p>
+<p>虽然 Collection View 明显已经位于可见区域，但你并不想将整个 Collection View 都加载。为此，你可以让每个 Scroll View 分别拥有各自的 ASRangeController，每个 ASRangeController 的 Range Tuning Parameters 是分开配置的。</p>
+<p>现在你已经完成了 AnimalTableController，你可以把它作为 ASPageNode 中的一页来使用。</p>
+<p>打开 AppDelegate.m，将这句代码:</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">AnimalTableController *vc = [[AnimalTableController alloc] initWithAnimals:[RainforestCardInfo allAnimals]];</div></pre></td></tr></table></figure>
+<p>替换为</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">AnimalPagerController *vc = [[AnimalPagerController alloc] init];</div></pre></td></tr></table></figure>
+<p>然后打开 AnimalPagerController.m 在构造函数中 return 语句之前加入代码。你所需要做的仅仅是创建一个新的 pager，并将它作为 View Controller 的数据源：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">_pagerNode = [[ASPagerNode alloc] init];</div><div class="line">_pagerNode.dataSource = <span class="keyword">self</span>;</div><div class="line">```   </div><div class="line">Pager Node 实际上是一个配置好的 ASCollectionNode 子类，这和 <span class="built_in">UIPageViewController</span> 的用法是一样的。</div><div class="line"></div><div class="line">接下来你必须实现 Pager 的数据源方法。</div><div class="line"></div><div class="line">实现 `numberOfPagesInPagerNode:`  方法：</div><div class="line"></div><div class="line">```objc</div><div class="line">- (<span class="built_in">NSInteger</span>)numberOfPagesInPagerNode:(ASPagerNode *)pagerNode &#123;</div><div class="line">  <span class="keyword">return</span> <span class="keyword">self</span>.animals.count;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>实现 <code>pagerNode:nodeAtIndex:</code>方法，这和早先你实现过的 ASTableNode 方法很像：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">- (ASCellNode *)pagerNode:(ASPagerNode *)pagerNode nodeAtIndex:(<span class="built_in">NSInteger</span>)index &#123;</div><div class="line">  <span class="comment">//1</span></div><div class="line">  <span class="built_in">CGSize</span> pagerNodeSize = pagerNode.bounds.size;</div><div class="line">  <span class="built_in">NSArray</span> *animals = <span class="keyword">self</span>.animals[index];</div><div class="line"></div><div class="line">  <span class="comment">//2</span></div><div class="line">  ASCellNode *node = [[ASCellNode alloc] initWithViewControllerBlock:^&#123;</div><div class="line">    <span class="keyword">return</span> [[AnimalTableController alloc] initWithAnimals:animals];</div><div class="line">  &#125; didLoadBlock:<span class="literal">nil</span>];</div><div class="line"></div><div class="line">  <span class="keyword">return</span> node;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>代码解释如下：</p>
+<ol>
+<li>需要先获取一个数据模型。</li>
+<li>你用到的是强大的 <code>initWithViewControllerBlock:</code> 构造方法。你需要提供一个闭包，在这个块闭包中返回你前面已经做好的 Table Node Controller，这样它的 View 会自动用作每一页的 View。酷！</li>
+</ol>
+<p>这样就拥有一个完整的 Pager 了，它的 cell 来自于你前面完成的那个 Table Node Controller。它拥有二维的预加载，用户可以从水平、垂直两个方向滚动。   </p>
+<h2 id="总述"><a href="#总述" class="headerlink" title="总述"></a>总述</h2><p>完整的 AsyncDisplayKit 2.0 教程项目，从<a href="https://koenig-media.raywenderlich.com/uploads/2016/12/AsyncDisplayKit-Finished-3.zip" target="_blank" rel="external">这里</a>下载。如果你想看 Swift 版的，也可以从<a href="https://koenig-media.raywenderlich.com/uploads/2016/12/RainForestSwift.zip" target="_blank" rel="external">这里</a>下载。</p>
+<p>如果在进入第二部分之前想学习更多的内容，你可以浏览 AsyncDisplayKit 的官方主页，并查看它的文档。Scott Goodson (AsyncDisplayKit 的原作者) 也会发表一些你感兴趣的文字，它们按时间顺序罗列在这个地方：<a href="http://asyncdisplaykit.org/docs/resources.html" target="_blank" rel="external">AsyncDisplayKit.org Resources</a>。</p>
+<p>你可能会对 <a href="https://www.youtube.com/watch?v=OiY1cheLpmI" target="_blank" rel="external">Building Paper 大事记</a> 感兴趣。尽管它还没有被开源，并且还有许多东西会变化，但在它才开始的时候就关注它仍然是一件很有意思的事情。                   </p>
+<p>接下来，我们会讲到，如何利用 ASDK 2.0 强大的布局系统。</p>
+]]></content:encoded>
+      
+      <comments>http://swift.diagon.me/AsyncDisplayKit-6/#disqus_thread</comments>
+    </item>
     
     <item>
       <title>AsyncDisplayKit 教程(5)：智能预加载</title>
@@ -44,7 +82,7 @@
 <p>现在可以跟踪到每个 cell 进入不同范围的变化过程。</p>
 <h4 id="观察-Cell"><a href="#观察-Cell" class="headerlink" title="观察 Cell"></a>观察 Cell</h4><p>打开 CardNode_InterfaceCallbacks.m。这里有 6 个方法，这些方法用来打印节点进入各种范围的过程。取消注释，运行程序，慢慢滚动界面。同时，观察 cell 状态的改变。</p>
 <p><img src="https://ww3.sinaimg.cn/large/006tNc79ly1fd340ce8e8g30da09y7wl.gif" alt=""></p>
-<p>注意：大部分情况下，你只需要用到两个关于 ASInterfaceState 的改变方法：<code>didEnterVisibleState</code> 和 <code>didExitVisibleState</code>。也就是说，大量底层的工作已经为你完成了。要想知道什么时候需要用到 Preload 和 Display 状态，请看一下 ASNetworkImageNode 的源代码。所有的 Network Image Node 都会自动抓取和解码，以及释放内存。</p>
+<p>注意：大部分情况下，你只需要用到两个关于 ASInterfaceState 的改变方法：<code>didEnterVisibleState</code> 和 <code>didExitVisibleState</code>。也就是说，大量底层的工作已经为你完成了。要想知道什么时候需要用到 Preload 和 Display 状态，请看 ASNetworkImageNode 的源代码。所有的 Network Image Node 都会自动抓取和解码，以及释放内存。</p>
 ]]></content:encoded>
       
       <comments>http://swift.diagon.me/AsyncDisplayKit-5/#disqus_thread</comments>
@@ -183,11 +221,11 @@
       <pubDate>Wed, 22 Feb 2017 16:00:00 GMT</pubDate>
       <description>
       
-        &lt;p&gt;本文翻译改编自 ray 的&lt;a href=&quot;https://www.raywenderlich.com/124311/asyncdisplaykit-2-0-tutorial-getting-started&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;《
+        &lt;p&gt;本系列翻译改编自 ray 的&lt;a href=&quot;https://www.raywenderlich.com/124311/asyncdisplaykit-2-0-tutorial-getting-started&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;
       
       </description>
       
-      <content:encoded><![CDATA[<p>本文翻译改编自 ray 的<a href="https://www.raywenderlich.com/124311/asyncdisplaykit-2-0-tutorial-getting-started" target="_blank" rel="external">《AsyncDisplayKit 2.0 Tutorial: Getting Started》</a>。</p>
+      <content:encoded><![CDATA[<p>本系列翻译改编自 ray 的<a href="https://www.raywenderlich.com/124311/asyncdisplaykit-2-0-tutorial-getting-started" target="_blank" rel="external">《AsyncDisplayKit 2.0 Tutorial: Getting Started》</a>。</p>
 <p>AsyncDisplayKit 是一个 UI 框架，源自 Facebook 的 Paper。它解决了 Paper 团队面临的一个核心问题：如何让主线程尽可能地保持简洁？ </p>
 <p>用户界面完全依赖于主线程，并且对主线程的延迟非常敏感。主线程阻塞意味着掉帧，并导致用户体验很差。</p>
 <p>主线程进行的高消耗操作包括：</p>
@@ -933,36 +971,6 @@
 <div style="text-align: center"><br>关注公众号（ID：SwiftBetter），进一步探讨主题<br><br><br>每日精选高清题图，可做壁纸<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>]]></content:encoded>
       
       <comments>http://swift.diagon.me/protocol-extension-dispathing/#disqus_thread</comments>
-    </item>
-    
-    <item>
-      <title>Swift 中的协议成员的默认实现</title>
-      <link>http://swift.diagon.me/protocol-member-default/</link>
-      <guid>http://swift.diagon.me/protocol-member-default/</guid>
-      <pubDate>Tue, 07 Feb 2017 16:00:00 GMT</pubDate>
-      <description>
-      
-        &lt;p&gt;&lt;a href=&quot;http://swift.diagon.me/protocol-extension/&quot;&gt;《Swift 中的协议扩展初探》&lt;/a&gt;一文中列举了使用协议扩展增加并实现新的成员。由于该 property 只在 protocol extension 声明和实现，而
-      
-      </description>
-      
-      <content:encoded><![CDATA[<p><a href="http://swift.diagon.me/protocol-extension/">《Swift 中的协议扩展初探》</a>一文中列举了使用协议扩展增加并实现新的成员。由于该 property 只在 protocol extension 声明和实现，而没有在 protocol 自身中声明，所以遵守该 protocol 的类型无需实现该成员。</p>
-<p>现在再考虑另一个例子：</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">protocol</span> <span class="title">TeamRecord</span> </span>&#123;</div><div class="line">    </div><div class="line">    <span class="keyword">var</span> wins: <span class="type">Int</span> &#123; <span class="keyword">get</span> &#125;</div><div class="line">    </div><div class="line">    <span class="keyword">var</span> losses: <span class="type">Int</span> &#123; <span class="keyword">get</span> &#125;</div><div class="line">    </div><div class="line">    <span class="keyword">var</span> winningPercentage: <span class="type">Double</span> &#123; <span class="keyword">get</span> &#125;</div><div class="line">&#125;</div><div class="line"><span class="class"><span class="keyword">extension</span> <span class="title">TeamRecord</span> </span>&#123;</div><div class="line">    </div><div class="line">    <span class="keyword">var</span> winningPercentage: <span class="type">Double</span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">return</span> <span class="type">Double</span>(wins) / (<span class="type">Double</span>(wins) + <span class="type">Double</span>(losses))</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>这个例子和之前的 protocol extension 不同之处在于，winningPercentage 是 TeamRecord protocol 已经声明了的成员。</p>
-<p>在 protocol extension 中实现 protoxol 声明的成员，就创建了一个该成员的默认实现。此时遵守协议的类型可以不实现该成员 ，而使用其默认实现。</p>
-<p>这就是<a href="http://swift.diagon.me/protocol-mutable-method/">《Swift 中的可选协议方法》</a>的理论基础了。</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">BasketballRecord</span>: <span class="title">TeamRecord</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">var</span> wins: <span class="type">Int</span></div><div class="line">    </div><div class="line">    <span class="keyword">var</span> losses: <span class="type">Int</span></div><div class="line">    </div><div class="line">    <span class="keyword">let</span> seasonLength = <span class="number">82</span></div><div class="line">&#125;</div><div class="line"><span class="keyword">let</span> minneapolisFunctors = <span class="type">BasketballRecord</span>(wins: <span class="number">60</span>, losses: <span class="number">22</span>)</div><div class="line">minneapolisFunctors.winningPercentage</div></pre></td></tr></table></figure>
-<p>需要不同的实现时，只需要简单的写下不同的实现即可：</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">HockeyRecord</span>: <span class="title">TeamRecord</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">var</span> wins: <span class="type">Int</span></div><div class="line">    </div><div class="line">    <span class="keyword">var</span> losses: <span class="type">Int</span></div><div class="line">    </div><div class="line">    <span class="keyword">var</span> ties: <span class="type">Int</span></div><div class="line">    </div><div class="line">    <span class="keyword">var</span> winningPercentage: <span class="type">Double</span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">return</span> <span class="type">Double</span>(wins) / (<span class="type">Double</span>(wins) + <span class="type">Double</span>(losses) + <span class="type">Double</span>(ties))</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">let</span> chicagoOptionals = <span class="type">BasketballRecord</span>(wins: <span class="number">10</span>, losses: <span class="number">6</span>)</div><div class="line"><span class="keyword">let</span> phoenixStridables = <span class="type">HockeyRecord</span>(wins: <span class="number">8</span>, losses: <span class="number">7</span>, ties: <span class="number">1</span>)</div><div class="line"></div><div class="line">chicagoOptionals.winningPercentage <span class="comment">// 10 / (10 + 6) == .625</span></div><div class="line">phoenixStridables.winningPercentage <span class="comment">// 8 / (8 + 7 + 1) == .500</span></div></pre></td></tr></table></figure>
-<hr>
-<div style="text-align: center"><br>关注公众号（ID：SwiftBetter），进一步探讨主题<br><br><br>每日精选高清题图，可做壁纸<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>
-
-
-
-]]></content:encoded>
-      
-      <comments>http://swift.diagon.me/protocol-member-default/#disqus_thread</comments>
     </item>
     
   </channel>

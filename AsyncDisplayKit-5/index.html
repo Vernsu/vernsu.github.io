@@ -98,7 +98,7 @@
 在每个容器类中，每个 node 都会有一个“界面状态”的概念。在任">
 <meta property="og:image" content="https://ww2.sinaimg.cn/large/006tNc79ly1fd33jhb46qj30fy0zuahb.jpg">
 <meta property="og:image" content="https://ww3.sinaimg.cn/large/006tNc79ly1fd340ce8e8g30da09y7wl.gif">
-<meta property="og:updated_time" content="2017-02-25T15:00:31.000Z">
+<meta property="og:updated_time" content="2017-02-26T01:24:00.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="AsyncDisplayKit 教程(5)：智能预加载">
 <meta name="twitter:description" content="预加载的使用你可能曾经写过这样的 App ：根据 ScrollView /PageView 的滚动来提前加载数据。比如一个全屏的图片浏览器，总是提前加载下几张图片，这样你的用户基本不会看到空白图片。 如果你想写这样一个程序，你会发现需要考虑的东西太多了。
@@ -380,7 +380,7 @@
 <p>现在可以跟踪到每个 cell 进入不同范围的变化过程。</p>
 <h4 id="观察-Cell"><a href="#观察-Cell" class="headerlink" title="观察 Cell"></a>观察 Cell</h4><p>打开 CardNode_InterfaceCallbacks.m。这里有 6 个方法，这些方法用来打印节点进入各种范围的过程。取消注释，运行程序，慢慢滚动界面。同时，观察 cell 状态的改变。</p>
 <p><img src="https://ww3.sinaimg.cn/large/006tNc79ly1fd340ce8e8g30da09y7wl.gif" alt=""></p>
-<p>注意：大部分情况下，你只需要用到两个关于 ASInterfaceState 的改变方法：<code>didEnterVisibleState</code> 和 <code>didExitVisibleState</code>。也就是说，大量底层的工作已经为你完成了。要想知道什么时候需要用到 Preload 和 Display 状态，请看一下 ASNetworkImageNode 的源代码。所有的 Network Image Node 都会自动抓取和解码，以及释放内存。</p>
+<p>注意：大部分情况下，你只需要用到两个关于 ASInterfaceState 的改变方法：<code>didEnterVisibleState</code> 和 <code>didExitVisibleState</code>。也就是说，大量底层的工作已经为你完成了。要想知道什么时候需要用到 Preload 和 Display 状态，请看 ASNetworkImageNode 的源代码。所有的 Network Image Node 都会自动抓取和解码，以及释放内存。</p>
 
       
     </div>
@@ -422,6 +422,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/AsyncDisplayKit-6/" rel="prev" title="AsyncDisplayKit 教程(6)：多方向的智能预加载">
+                AsyncDisplayKit 教程(6)：多方向的智能预加载 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -491,7 +495,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">40</span>
+                <span class="site-state-item-count">41</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
