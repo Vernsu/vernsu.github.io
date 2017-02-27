@@ -365,10 +365,6 @@
 <p>需要不同的实现时，只需要简单的写下不同的实现即可：</p>
 <figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">HockeyRecord</span>: <span class="title">TeamRecord</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">var</span> wins: <span class="type">Int</span></div><div class="line">    </div><div class="line">    <span class="keyword">var</span> losses: <span class="type">Int</span></div><div class="line">    </div><div class="line">    <span class="keyword">var</span> ties: <span class="type">Int</span></div><div class="line">    </div><div class="line">    <span class="keyword">var</span> winningPercentage: <span class="type">Double</span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">return</span> <span class="type">Double</span>(wins) / (<span class="type">Double</span>(wins) + <span class="type">Double</span>(losses) + <span class="type">Double</span>(ties))</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">let</span> chicagoOptionals = <span class="type">BasketballRecord</span>(wins: <span class="number">10</span>, losses: <span class="number">6</span>)</div><div class="line"><span class="keyword">let</span> phoenixStridables = <span class="type">HockeyRecord</span>(wins: <span class="number">8</span>, losses: <span class="number">7</span>, ties: <span class="number">1</span>)</div><div class="line"></div><div class="line">chicagoOptionals.winningPercentage <span class="comment">// 10 / (10 + 6) == .625</span></div><div class="line">phoenixStridables.winningPercentage <span class="comment">// 8 / (8 + 7 + 1) == .500</span></div></pre></td></tr></table></figure>
 <hr>
-<div style="text-align: center"><br>关注公众号（ID：SwiftBetter），进一步探讨主题<br><br><br>每日精选高清题图，可做壁纸<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>
-
-
-
 
           
         
@@ -519,7 +515,7 @@
 <p>无奈滞留在机场，先写这么多。</p>
 <p>关于协议扩展更多内容参见：<a href="http://swift.diagon.me/protocol-extension/">《Swift 中的协议成员的默认实现》</a></p>
 <hr>
-<div style="text-align: center"><br>关注公众号（ID：SwiftBetter），进一步探讨主题<br><br><br>每日精选高清题图，可做壁纸<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>
+
           
         
       
@@ -673,7 +669,7 @@
 <p>Swift 是一门进化中的语言 ，Swift 3.0 中废除了隐式解包可选类型(ImplicitlyUnwrappedOptional)，并用 IUO 属性代替。理由就是隐式解包破坏了 Swift 的类型安全设计，所以要减少隐式解包的使用。</p>
 <p>在变量类型后的 <code>!</code> 不再表示是隐式解包可选类型(ImplicitlyUnwrappedOptional)，而是表示是 Optional，并有一个被隐式指定的属性。</p>
 <hr>
-<div style="text-align: center"><br>关注公众号（ID：SwiftBetter），进一步探讨主题<br><br><br>每日精选高清题图，可做壁纸<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>
+
           
         
       
@@ -825,7 +821,7 @@
 <li>子类继承或重载会产生风险。你开发的类库基于某些基本因子，如果基本因子含义被改变，可能会导致功能失效。</li>
 </ol>
 <hr>
-<div style="text-align: center"><br>关注公众号（ID：SwiftBetter），进一步探讨主题<br><br><br>每日精选高清题图，可做壁纸<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>
+
           
         
       
@@ -978,7 +974,6 @@
 <figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span> <span class="keyword">let</span> result = (john.residence?.colorForFirstRoom = <span class="string">"Red"</span>)  &#123;</div><div class="line">    <span class="built_in">print</span>(result)</div><div class="line">&#125;</div><div class="line"><span class="comment">//()</span></div></pre></td></tr></table></figure>
 <p><code>residence</code> 存在时，<code>result</code>为一个空的元组<code>()</code>，即 <code>Void</code>。</p>
 <hr>
-<div style="text-align: center"><br>关注公众号（ID：SwiftBetter），进一步探讨主题<br><br><br>每日精选高清题图，可做壁纸<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>
 
           
         
@@ -1134,7 +1129,7 @@
 <p>“Dave” 数组现在是 [91, 82, 84]，”Bev” 数组现在是 [80, 94, 81]，testScores字典中没有”Brian”这个键，所以第三个调用失败。</p>
 <h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>记住一句话:使用 <code>Optional Chaining</code> 所得到的东西一定是 <code>Optional</code>类型的。</p>
 <hr>
-<div style="text-align: center"><br>关注公众号（ID：SwiftBetter），进一步探讨主题<br><br><br>每日精选高清题图，可做壁纸<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>
+
           
         
       
@@ -1290,7 +1285,7 @@
 <p>而使用协议扩展实现协议可选方法，因为可选方法实际上已经被实现了，所以只需要这样写：</p>
 <figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">delegate?.optionalMethod()</div></pre></td></tr></table></figure>
 <hr>
-<div style="text-align: center"><br>关注公众号（ID：SwiftBetter），进一步探讨主题<br><br><br>每日精选高清题图，可做壁纸<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>
+
           
         
       
@@ -1454,7 +1449,7 @@
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>在纯 Swift 项目中建议用 <code>delegate: class</code> 这样的方式标记 protocol 为只能被 class 使用。因为这种方式直指问题本质。</p>
 <p>另外，这个问题也从另一方面说明我们应该多使用值类型，值类型可以很好的避免循环引用问题。使用值类型时值会被拷贝，所以不会出现这样的内存泄露问题。但是我们又不得不使用 Cocoa 框架。</p>
 <hr>
-<div style="text-align: center"><br>关注公众号（ID：SwiftBetter），进一步探讨主题<br><br><br>每日精选高清题图，可做壁纸<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>
+
           
         
       
@@ -1603,7 +1598,7 @@
 <p>如果想自己用代码处理 Last-Modified 和 ETag，那么缓存策略则必须使用  <code>NSURLRequestReloadIgnoringCacheData</code>，忽略缓存，每次都要向服务端进行校验。然后再用代码判断是否使用缓存。</p>
 <p>另外如果更新频率较高，比如微博消息列表、一般的处理方式是添加一个接口，客户端将本地缓存的最后一条数据的的时间戳或 id 传给服务端，然后服务端返回新增的数据，没有新数据则返回 nil 或 304。</p>
 <hr>
-<div style="text-align: center"><br>关注公众号（ID：SwiftBetter），进一步探讨主题<br><br><br>每日精选高清题图，可做壁纸<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>
+
           
         
       
@@ -1757,7 +1752,7 @@
 <figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="type">URLCache</span>.shared.removeAllCachedResponses()</div></pre></td></tr></table></figure>
 <h2 id="线程安全"><a href="#线程安全" class="headerlink" title="线程安全"></a>线程安全</h2><p>在 iOS8 之后 URLCache 是线程安全的。尽管 URLCache 实例方法能够安全的被多个执行上下文同时调用，还是要注意有些方法的使用。比如使用 <code>cacheResponse(for:)</code> 和 <code>storeCachedResponse(_:for:)</code> 在同一个 request 中存取响应，不可避免的会出现竞争条件。URLCache的子类必须实现线程安全的方法重载。</p>
 <hr>
-<div style="text-align: center"><br>关注公众号（ID：SwiftBetter），进一步探讨主题<br><br><br>每日精选高清题图，可做壁纸<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>
+
           
         
       

@@ -92,12 +92,10 @@
 <meta property="og:url" content="http://swift.diagon.me/shouldRasterize/index.html">
 <meta property="og:site_name" content="Swift学徒">
 <meta property="og:description" content="在《iOS 开发中的离屏渲染问题》一文中提到，离屏渲染通常发生在 GPU 中。一个 tableView 中有大量带圆角的视图，当 tableView 快速滑动时，可以看到 GPU 已经被占满，而 CPU 占用量很少。这时界面仍然能正常滑动，但平均帧数会降到很低。为了避免这种情况，可以尝试开启光栅化（CALayer.shouldRasterize ），但这会把原本 GPU 离屏渲染的操作转嫁到 CP">
-<meta property="og:image" content="https://vernsu.github.io/images/wxqrcode.jpg">
-<meta property="og:updated_time" content="2017-02-20T01:22:26.000Z">
+<meta property="og:updated_time" content="2017-02-27T04:03:38.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="iOS 性能优化之光栅化">
 <meta name="twitter:description" content="在《iOS 开发中的离屏渲染问题》一文中提到，离屏渲染通常发生在 GPU 中。一个 tableView 中有大量带圆角的视图，当 tableView 快速滑动时，可以看到 GPU 已经被占满，而 CPU 占用量很少。这时界面仍然能正常滑动，但平均帧数会降到很低。为了避免这种情况，可以尝试开启光栅化（CALayer.shouldRasterize ），但这会把原本 GPU 离屏渲染的操作转嫁到 CP">
-<meta name="twitter:image" content="https://vernsu.github.io/images/wxqrcode.jpg">
 
 
 
@@ -363,13 +361,18 @@
 <h2 id="使用-Instruments-监测性能"><a href="#使用-Instruments-监测性能" class="headerlink" title="使用 Instruments 监测性能"></a>使用 Instruments 监测性能</h2><p>Instruments 的 Core Animation 工具里有检测光栅化是否正确使用的选项：<code>Color Hits Green and Misses Red</code>，如果开启了光栅化，渲染结果会被缓存，如果图层是绿色，就表示有渲染缓存可用；如果是红色，就表示无渲染缓存可用，缓存会被重复创建，这就可能导致性能问题。</p>
 <p>注意：这个工具只能在真机上调试时使用。</p>
 <hr>
-<div style="text-align: center"><br>关注公众号（ID：SwiftBetter），进一步探讨主题<br><br><br>每日精选高清题图，可做壁纸<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>
+
       
     </div>
 
     <div>
       
         
+<div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/images/wxqrcode.jpg" alt="万恶胖为首 wechat" style="width: 200px; max-width: 100%;"/>
+    <div>关注公众号（ID：SwiftBetter），进一步探讨交流。</div>
+</div>
+
 
       
     </div>

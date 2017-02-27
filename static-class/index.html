@@ -98,15 +98,13 @@ class 是专门用在 calss 类型中修饰类方法和类的计算属性（注�
 在所有类型（class、struct、enum ）中使用 static 修饰都可以表示类方法类与属性（包括存储属性和计算属性）。
 class 是专门用在 calss 类型中修饰类方法和类的计算属性（注意：无法使用 class 修饰存储属性）。
 在 class 类型中 static 和">
-<meta property="og:image" content="https://vernsu.github.io/images/wxqrcode.jpg">
-<meta property="og:updated_time" content="2017-02-20T01:17:26.000Z">
+<meta property="og:updated_time" content="2017-02-27T04:00:57.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Swift 中的 static 和 class 关键字">
 <meta name="twitter:description" content="static 和 class在 Swift 中 Static 和 class 都是表示「类型范围作用域」的关键字。
 在所有类型（class、struct、enum ）中使用 static 修饰都可以表示类方法类与属性（包括存储属性和计算属性）。
 class 是专门用在 calss 类型中修饰类方法和类的计算属性（注意：无法使用 class 修饰存储属性）。
 在 class 类型中 static 和">
-<meta name="twitter:image" content="https://vernsu.github.io/images/wxqrcode.jpg">
 
 
 
@@ -371,13 +369,18 @@ class 是专门用在 calss 类型中修饰类方法和类的计算属性（注�
 <figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span> </span>&#123;</div><div class="line">    <span class="comment">//class var name = "GoodMen" // 编译器提示错误：class stored properties not supported in classes</span></div><div class="line">    </div><div class="line">    <span class="keyword">static</span> <span class="keyword">var</span> name = <span class="string">"GoodMen"</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Student</span>:<span class="title">Person</span></span>&#123;</div><div class="line">    <span class="comment">//static var name = "GoodMen"  // 编译器提示错误：cannot override with a stored property 'name'</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <h2 id="ststic-在-Protocol-中的使用"><a href="#ststic-在-Protocol-中的使用" class="headerlink" title="ststic 在 Protocol 中的使用"></a>ststic 在 Protocol 中的使用</h2><p>Swift 中 class，struct，enum 都可以实现某个指定 protocol。在 protocol定义一个类方法或者类计算属性，显而易见，应该使用 <code>static</code> 关键字来修饰。使用 protocol 时，在 struct 和 enum 中仍然使用 <code>static</code>，在 class 类型中 <code>class</code> 和 <code>static</code> 关键字都可以使用。</p>
 <hr>
-<div style="text-align: center"><br>关注公众号（ID：SwiftBetter），进一步探讨主题<br><br><br>每日精选高清题图，可做壁纸<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>
+
       
     </div>
 
     <div>
       
         
+<div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/images/wxqrcode.jpg" alt="万恶胖为首 wechat" style="width: 200px; max-width: 100%;"/>
+    <div>关注公众号（ID：SwiftBetter），进一步探讨交流。</div>
+</div>
+
 
       
     </div>

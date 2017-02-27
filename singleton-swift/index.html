@@ -96,14 +96,12 @@
 <meta property="og:description" content="Objective-C 中单例的实现在 iOS 开发中，单例是常用到的一种设计模式。使用单例通常是为了保证在应用的生命周期里某个类只存在一个实例，方便全局访问，并可以节约系统资源。
 在 Objective-C中，单例经典的写法如下：
 12345678910111213@implementation Manager+ (Manager *)sharedInstance&amp;#123;	static sh">
-<meta property="og:image" content="https://vernsu.github.io/images/wxqrcode.jpg">
-<meta property="og:updated_time" content="2017-02-20T01:17:11.000Z">
+<meta property="og:updated_time" content="2017-02-27T04:00:48.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Swift 中单例的实现">
 <meta name="twitter:description" content="Objective-C 中单例的实现在 iOS 开发中，单例是常用到的一种设计模式。使用单例通常是为了保证在应用的生命周期里某个类只存在一个实例，方便全局访问，并可以节约系统资源。
 在 Objective-C中，单例经典的写法如下：
 12345678910111213@implementation Manager+ (Manager *)sharedInstance&amp;#123;	static sh">
-<meta name="twitter:image" content="https://vernsu.github.io/images/wxqrcode.jpg">
 
 
 
@@ -381,8 +379,6 @@
 <p>如果需要让单例在初始化时有额外的操作，可以通过调用Block的方式来实现：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">class Manager &#123;</div><div class="line">    static let shared: Manager = &#123;</div><div class="line">        let instance = Manager()</div><div class="line">        // setup code</div><div class="line">        return instance</div><div class="line">    &#125;()</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <hr>
-<div style="text-align: center"><br>关注公众号（ID：SwiftBetter），进一步探讨主题<br><br><br>每日精选高清题图，可做壁纸<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>
-
 
       
     </div>
@@ -390,6 +386,11 @@
     <div>
       
         
+<div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/images/wxqrcode.jpg" alt="万恶胖为首 wechat" style="width: 200px; max-width: 100%;"/>
+    <div>关注公众号（ID：SwiftBetter），进一步探讨交流。</div>
+</div>
+
 
       
     </div>

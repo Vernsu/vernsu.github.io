@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="URLCache,缓存," />
+  <meta name="keywords" content="缓存,URLCache," />
 
 
 
@@ -96,14 +96,12 @@ CachedURLResponseCachedURLResponse 包含了一个服务端响应 metadata 的 U
 <meta property="og:description" content="《iOS 开发中 URLCache 的应用》中介绍了 URLCache 的使用方法。本文将进一步讲解 URLCache 更加深层次的用法。 
 CachedURLResponseCachedURLResponse 包含了一个服务端响应 metadata 的 URLResponse 和 一个包含实际存储数据 的 Data。
 存取方法URLCache将 URLRequest/URLSessionData">
-<meta property="og:image" content="https://vernsu.github.io/images/wxqrcode.jpg">
-<meta property="og:updated_time" content="2017-02-20T01:18:59.000Z">
+<meta property="og:updated_time" content="2017-02-27T04:01:44.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="URLCache 与 CachedURLResponse">
 <meta name="twitter:description" content="《iOS 开发中 URLCache 的应用》中介绍了 URLCache 的使用方法。本文将进一步讲解 URLCache 更加深层次的用法。 
 CachedURLResponseCachedURLResponse 包含了一个服务端响应 metadata 的 URLResponse 和 一个包含实际存储数据 的 Data。
 存取方法URLCache将 URLRequest/URLSessionData">
-<meta name="twitter:image" content="https://vernsu.github.io/images/wxqrcode.jpg">
 
 
 
@@ -371,13 +369,18 @@ CachedURLResponseCachedURLResponse 包含了一个服务端响应 metadata 的 U
 <figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="type">URLCache</span>.shared.removeAllCachedResponses()</div></pre></td></tr></table></figure>
 <h2 id="线程安全"><a href="#线程安全" class="headerlink" title="线程安全"></a>线程安全</h2><p>在 iOS8 之后 URLCache 是线程安全的。尽管 URLCache 实例方法能够安全的被多个执行上下文同时调用，还是要注意有些方法的使用。比如使用 <code>cacheResponse(for:)</code> 和 <code>storeCachedResponse(_:for:)</code> 在同一个 request 中存取响应，不可避免的会出现竞争条件。URLCache的子类必须实现线程安全的方法重载。</p>
 <hr>
-<div style="text-align: center"><br>关注公众号（ID：SwiftBetter），进一步探讨主题<br><br><br>每日精选高清题图，可做壁纸<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>
+
       
     </div>
 
     <div>
       
         
+<div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/images/wxqrcode.jpg" alt="万恶胖为首 wechat" style="width: 200px; max-width: 100%;"/>
+    <div>关注公众号（ID：SwiftBetter），进一步探讨交流。</div>
+</div>
+
 
       
     </div>
@@ -394,9 +397,9 @@ CachedURLResponseCachedURLResponse 包含了一个服务端响应 metadata 的 U
       
         <div class="post-tags">
           
-            <a href="/tags/URLCache/" rel="tag"># URLCache</a>
-          
             <a href="/tags/缓存/" rel="tag"># 缓存</a>
+          
+            <a href="/tags/URLCache/" rel="tag"># URLCache</a>
           
         </div>
       

@@ -108,8 +108,7 @@
 调用 delegate
 
 其中第二步，是新手经常犯错的地方。为了避免循环引用，在声明 delegate pro">
-<meta property="og:image" content="https://vernsu.github.io/images/wxqrcode.jpg">
-<meta property="og:updated_time" content="2017-02-20T01:20:13.000Z">
+<meta property="og:updated_time" content="2017-02-27T04:02:01.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Swift 中 delegate 设计模式使用 weak 避免循环引用">
 <meta name="twitter:description" content="delegate 模式Delegate 是 Cocoa 框架中的一种常见设计模式，这种模式有利于代码解耦合，在iOS开发中经常被使用。
@@ -121,7 +120,6 @@
 调用 delegate
 
 其中第二步，是新手经常犯错的地方。为了避免循环引用，在声明 delegate pro">
-<meta name="twitter:image" content="https://vernsu.github.io/images/wxqrcode.jpg">
 
 
 
@@ -399,13 +397,18 @@
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>在纯 Swift 项目中建议用 <code>delegate: class</code> 这样的方式标记 protocol 为只能被 class 使用。因为这种方式直指问题本质。</p>
 <p>另外，这个问题也从另一方面说明我们应该多使用值类型，值类型可以很好的避免循环引用问题。使用值类型时值会被拷贝，所以不会出现这样的内存泄露问题。但是我们又不得不使用 Cocoa 框架。</p>
 <hr>
-<div style="text-align: center"><br>关注公众号（ID：SwiftBetter），进一步探讨主题<br><br><br>每日精选高清题图，可做壁纸<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>
+
       
     </div>
 
     <div>
       
         
+<div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/images/wxqrcode.jpg" alt="万恶胖为首 wechat" style="width: 200px; max-width: 100%;"/>
+    <div>关注公众号（ID：SwiftBetter），进一步探讨交流。</div>
+</div>
+
 
       
     </div>

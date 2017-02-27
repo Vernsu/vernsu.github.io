@@ -96,14 +96,12 @@ Moya 建立在 Alamofire 之上，全">
 <meta property="og:description" content="什么是 Moya在 iOS 开发中，除了使用 AFNetworking/Alamofire 这样的针对 URLSession 抽象的网络库之外，我们还需要创建诸如  “APIManager”  或  “NetworkModel”  这样详细的网络抽象层。
 Moya 就是这种网络抽象层的集大成者，URLs、参数等等的配置通通都可以由 Moya 来搞定。
 Moya 建立在 Alamofire 之上，全">
-<meta property="og:image" content="https://vernsu.github.io/images/wxqrcode.jpg">
-<meta property="og:updated_time" content="2017-02-20T01:22:40.000Z">
+<meta property="og:updated_time" content="2017-02-27T04:03:46.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Moya：基于 Alamofire 的网络抽象层">
 <meta name="twitter:description" content="什么是 Moya在 iOS 开发中，除了使用 AFNetworking/Alamofire 这样的针对 URLSession 抽象的网络库之外，我们还需要创建诸如  “APIManager”  或  “NetworkModel”  这样详细的网络抽象层。
 Moya 就是这种网络抽象层的集大成者，URLs、参数等等的配置通通都可以由 Moya 来搞定。
 Moya 建立在 Alamofire 之上，全">
-<meta name="twitter:image" content="https://vernsu.github.io/images/wxqrcode.jpg">
 
 
 
@@ -356,13 +354,18 @@ Moya 建立在 Alamofire 之上，全">
 <figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="type">GitHubProvider</span>.request(.userRepositories(<span class="string">"apple"</span>)) &#123; result <span class="keyword">in</span></div><div class="line">    <span class="keyword">switch</span> result &#123;</div><div class="line">    <span class="keyword">case</span> <span class="keyword">let</span> .success(response):</div><div class="line">        <span class="comment">//doSomething</span></div><div class="line">    <span class="keyword">case</span> <span class="keyword">let</span> .failure(error):</div><div class="line">        <span class="comment">//doSomething</span></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>更详细的写法请参考：<a href="https://github.com/Moya/Moya/blob/master/docs/Examples/Basic.md" target="_blank" rel="external">Moya 基本用法文档</a>，更丰富的 Demo 请参考 <a href="https://github.com/artsy/eidolon/blob/master/Kiosk/App/Networking/ArtsyAPI.swift" target="_blank" rel="external">ArtsyAPI</a>。</p>
 <hr>
-<div style="text-align: center"><br>关注公众号（ID：SwiftBetter），进一步探讨主题<br><br><br>每日精选高清题图，可做壁纸<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>
+
       
     </div>
 
     <div>
       
         
+<div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/images/wxqrcode.jpg" alt="万恶胖为首 wechat" style="width: 200px; max-width: 100%;"/>
+    <div>关注公众号（ID：SwiftBetter），进一步探讨交流。</div>
+</div>
+
 
       
     </div>

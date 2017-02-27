@@ -8,7 +8,7 @@
     <atom:link href="/rss.xml" rel="self" type="application/rss+xml"/>
     
     <description>笨办法学Swift</description>
-    <pubDate>Sun, 26 Feb 2017 01:48:09 GMT</pubDate>
+    <pubDate>Sun, 26 Feb 2017 02:28:34 GMT</pubDate>
     <generator>http://hexo.io/</generator>
     
     <item>
@@ -33,7 +33,7 @@
 <p>然后打开 AnimalPagerController.m 在构造函数中 return 语句之前加入代码。你所需要做的仅仅是创建一个新的 pager，并将它作为 View Controller 的数据源：</p>
 <figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">_pagerNode = [[ASPagerNode alloc] init];</div><div class="line">_pagerNode.dataSource = <span class="keyword">self</span>;</div><div class="line">```   </div><div class="line">Pager Node 实际上是一个配置好的 ASCollectionNode 子类，这和 <span class="built_in">UIPageViewController</span> 的用法是一样的。</div><div class="line"></div><div class="line">接下来你必须实现 Pager 的数据源方法。</div><div class="line"></div><div class="line">实现 `numberOfPagesInPagerNode:`  方法：</div><div class="line"></div><div class="line">```objc</div><div class="line">- (<span class="built_in">NSInteger</span>)numberOfPagesInPagerNode:(ASPagerNode *)pagerNode &#123;</div><div class="line">  <span class="keyword">return</span> <span class="keyword">self</span>.animals.count;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>实现 <code>pagerNode:nodeAtIndex:</code>方法，这和早先你实现过的 ASTableNode 方法很像：</p>
-<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">- (ASCellNode *)pagerNode:(ASPagerNode *)pagerNode nodeAtIndex:(<span class="built_in">NSInteger</span>)index &#123;</div><div class="line">  <span class="comment">//1</span></div><div class="line">  <span class="built_in">CGSize</span> pagerNodeSize = pagerNode.bounds.size;</div><div class="line">  <span class="built_in">NSArray</span> *animals = <span class="keyword">self</span>.animals[index];</div><div class="line"></div><div class="line">  <span class="comment">//2</span></div><div class="line">  ASCellNode *node = [[ASCellNode alloc] initWithViewControllerBlock:^&#123;</div><div class="line">    <span class="keyword">return</span> [[AnimalTableController alloc] initWithAnimals:animals];</div><div class="line">  &#125; didLoadBlock:<span class="literal">nil</span>];</div><div class="line"></div><div class="line">  <span class="keyword">return</span> node;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">- (ASCellNode *)pagerNode:(ASPagerNode *)pagerNode nodeAtIndex:(<span class="built_in">NSInteger</span>)index &#123;</div><div class="line">  <span class="comment">//1</span></div><div class="line">  <span class="built_in">NSArray</span> *animals = <span class="keyword">self</span>.animals[index];</div><div class="line"></div><div class="line">  <span class="comment">//2</span></div><div class="line">  ASCellNode *node = [[ASCellNode alloc] initWithViewControllerBlock:^&#123;</div><div class="line">    <span class="keyword">return</span> [[AnimalTableController alloc] initWithAnimals:animals];</div><div class="line">  &#125; didLoadBlock:<span class="literal">nil</span>];</div><div class="line"></div><div class="line">  <span class="keyword">return</span> node;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>代码解释如下：</p>
 <ol>
 <li>需要先获取一个数据模型。</li>
@@ -310,7 +310,7 @@
 <li>.curveEaseInOut： 用于开始时加速，结束时减速。</li>
 </ul>
 <hr>
-<div style="text-align: center"><br>关注公众号（ID：SwiftBetter），进一步探讨主题<br><br><br>每日精选高清题图，可做壁纸<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>]]></content:encoded>
+]]></content:encoded>
       
       <comments>http://swift.diagon.me/UIView-Animation-getting-start/#disqus_thread</comments>
     </item>
@@ -338,7 +338,7 @@
 <p>swift 中 nil 中其实就是 .none。</p>
 <figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> optionalNil: <span class="type">Int</span>? = .<span class="keyword">none</span></div><div class="line"></div><div class="line">optionalNil == <span class="literal">nil</span>    <span class="comment">// true</span></div><div class="line">optionalNil == .<span class="keyword">none</span>  <span class="comment">// true</span></div></pre></td></tr></table></figure>
 <hr>
-<div style="text-align: center"><br>关注公众号（ID：SwiftBetter），进一步探讨主题<br><br><br>每日精选高清题图，可做壁纸<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>]]></content:encoded>
+]]></content:encoded>
       
       <comments>http://swift.diagon.me/swift-enum-associated-values/#disqus_thread</comments>
     </item>
@@ -363,9 +363,7 @@
 <h2 id="标识符模式-（Identifier-Pattern）"><a href="#标识符模式-（Identifier-Pattern）" class="headerlink" title="标识符模式 （Identifier Pattern）"></a>标识符模式 （Identifier Pattern）</h2><p>标识符模式是值绑定模式的子模式。标识符模式是常量或者变量的名称自身。例如，在下面的常量声明中，someValue 是一个标识符模式，匹配了 Int 类型的 42：</p>
 <figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> someValue = <span class="number">42</span></div></pre></td></tr></table></figure>
 <p>当匹配成功时，42 被绑定（赋值）给常量 someValue。</p>
-<h2 id="在值绑定模式中的标识符模式会把新命名的变量或常量与匹配到的值做绑定。例如，你可以拆开一个元组，然后把每个元素绑定到相应的标识符模式中。"><a href="#在值绑定模式中的标识符模式会把新命名的变量或常量与匹配到的值做绑定。例如，你可以拆开一个元组，然后把每个元素绑定到相应的标识符模式中。" class="headerlink" title="在值绑定模式中的标识符模式会把新命名的变量或常量与匹配到的值做绑定。例如，你可以拆开一个元组，然后把每个元素绑定到相应的标识符模式中。"></a>在值绑定模式中的标识符模式会把新命名的变量或常量与匹配到的值做绑定。例如，你可以拆开一个元组，然后把每个元素绑定到相应的标识符模式中。</h2><div style="text-align: center"><br>关注公众号（ID：SwiftBetter），进一步探讨主题<br><br><br>每日精选高清题图，可做壁纸<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>
-
-]]></content:encoded>
+<h2 id="在值绑定模式中的标识符模式会把新命名的变量或常量与匹配到的值做绑定。例如，你可以拆开一个元组，然后把每个元素绑定到相应的标识符模式中。"><a href="#在值绑定模式中的标识符模式会把新命名的变量或常量与匹配到的值做绑定。例如，你可以拆开一个元组，然后把每个元素绑定到相应的标识符模式中。" class="headerlink" title="在值绑定模式中的标识符模式会把新命名的变量或常量与匹配到的值做绑定。例如，你可以拆开一个元组，然后把每个元素绑定到相应的标识符模式中。"></a>在值绑定模式中的标识符模式会把新命名的变量或常量与匹配到的值做绑定。例如，你可以拆开一个元组，然后把每个元素绑定到相应的标识符模式中。</h2>]]></content:encoded>
       
       <comments>http://swift.diagon.me/swift-pattern-matching-value-binding-pattern-identifier-pattern/#disqus_thread</comments>
     </item>
@@ -393,8 +391,6 @@
 <figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">layerView.layer.contents = <span class="type">UIImage</span>(named: <span class="string">"image"</span>)?.cgImage</div></pre></td></tr></table></figure>
 <p>我们利用 CALayer 在一个普通的 UIView 中显示了一张图片。</p>
 <hr>
-<div style="text-align: center"><br>关注公众号（ID：SwiftBetter），进一步探讨主题<br><br><br>每日精选高清题图，可做壁纸<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>
-
 ]]></content:encoded>
       
       <comments>http://swift.diagon.me/iOS-cornerRadius-masksToBounds-CALayer/#disqus_thread</comments>
@@ -619,7 +615,7 @@
 </ul>
 <p>成功握手确立WebSocket连接后，通信时不再使用HTTP的数据帧，而采用WebSocket独立的数据帧。</p>
 <hr>
-<div style="text-align: center"><br>关注公众号（ID：SwiftBetter），进一步探讨主题<br><br><br>每日精选高清题图，可做壁纸<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>]]></content:encoded>
+]]></content:encoded>
       
       <comments>http://swift.diagon.me/iOS-Swift-HTTP-TCP-IP-WebSocket-Socket/#disqus_thread</comments>
     </item>
@@ -656,7 +652,7 @@
 <figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">parser</span><span class="params">(<span class="number">_</span> parser: XMLParser, parseErrorOccurred parseError: Error)</span></span> &#123;</div><div class="line">  <span class="built_in">print</span>(parseError.localizedDescription)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <h3 id="DEMO"><a href="#DEMO" class="headerlink" title="DEMO"></a>DEMO</h3><p>完整的项目代码点<a href="https://github.com/Vernsu/SwiftBlogDemo" target="_blank" rel="external">这里(Github)</a>下载。</p>
 <hr>
-<div style="text-align: center"><br>关注公众号（ID：SwiftBetter），进一步探讨主题<br><br><br>每日精选高清题图，可做壁纸<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>]]></content:encoded>
+]]></content:encoded>
       
       <comments>http://swift.diagon.me/Swift-XML-XMLParser-RSS/#disqus_thread</comments>
     </item>
@@ -702,7 +698,7 @@
 <p>点击这里查看生成的 <a href="http://swift.diagon.me/rss.xml">RSS</a>。</p>
 <p>然而，为什么会出现这种问题并不得而知。产生这个问题的原因可能是 Hexo 或者 Next 主题的 bug。</p>
 <hr>
-<div style="text-align: center"><br>关注公众号（ID：SwiftBetter），进一步探讨主题<br><br><br>每日精选高清题图，可做壁纸<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>]]></content:encoded>
+]]></content:encoded>
       
       <comments>http://swift.diagon.me/Hexo-RSS-Next-XML-feed-UTF-8/#disqus_thread</comments>
     </item>
@@ -766,7 +762,6 @@
 <figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">setupCartObserver()</div></pre></td></tr></table></figure>
 <p>大功告成，购物车按钮可以自动更新了。</p>
 <hr>
-<div style="text-align: center"><br>关注公众号（ID：SwiftBetter），进一步探讨主题<br><br><br>每日精选高清题图，可做壁纸<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>
 ]]></content:encoded>
       
       <comments>http://swift.diagon.me/RxSwift-Getting-Started/#disqus_thread</comments>
@@ -799,7 +794,7 @@
 <p>如果没有<code>DisposeBag</code>，会有两种后果：要么<code>Observer</code>会产生一个 <code>retain cycle</code>，将无限期的进行监听；要么<code>Observer</code>被意外释放，导致程序崩溃。</p>
 <p>所以在设置<code>Observable</code>对象时，将其添加到<code>DisposeBag</code>中。</p>
 <hr>
-<div style="text-align: center"><br>关注公众号（ID：SwiftBetter），进一步探讨主题<br><br><br>每日精选高清题图，可做壁纸<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>]]></content:encoded>
+]]></content:encoded>
       
       <comments>http://swift.diagon.me/RxSwift-Observer-Observable-DisposeBag/#disqus_thread</comments>
     </item>
@@ -836,7 +831,7 @@
 <figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="type">GitHubProvider</span>.request(.userRepositories(<span class="string">"apple"</span>)) &#123; result <span class="keyword">in</span></div><div class="line">    <span class="keyword">switch</span> result &#123;</div><div class="line">    <span class="keyword">case</span> <span class="keyword">let</span> .success(response):</div><div class="line">        <span class="comment">//doSomething</span></div><div class="line">    <span class="keyword">case</span> <span class="keyword">let</span> .failure(error):</div><div class="line">        <span class="comment">//doSomething</span></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>更详细的写法请参考：<a href="https://github.com/Moya/Moya/blob/master/docs/Examples/Basic.md" target="_blank" rel="external">Moya 基本用法文档</a>，更丰富的 Demo 请参考 <a href="https://github.com/artsy/eidolon/blob/master/Kiosk/App/Networking/ArtsyAPI.swift" target="_blank" rel="external">ArtsyAPI</a>。</p>
 <hr>
-<div style="text-align: center"><br>关注公众号（ID：SwiftBetter），进一步探讨主题<br><br><br>每日精选高清题图，可做壁纸<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>]]></content:encoded>
+]]></content:encoded>
       
       <comments>http://swift.diagon.me/Alamofire-Moya-TargetType/#disqus_thread</comments>
     </item>
@@ -864,7 +859,7 @@
 <h2 id="使用-Instruments-监测性能"><a href="#使用-Instruments-监测性能" class="headerlink" title="使用 Instruments 监测性能"></a>使用 Instruments 监测性能</h2><p>Instruments 的 Core Animation 工具里有检测光栅化是否正确使用的选项：<code>Color Hits Green and Misses Red</code>，如果开启了光栅化，渲染结果会被缓存，如果图层是绿色，就表示有渲染缓存可用；如果是红色，就表示无渲染缓存可用，缓存会被重复创建，这就可能导致性能问题。</p>
 <p>注意：这个工具只能在真机上调试时使用。</p>
 <hr>
-<div style="text-align: center"><br>关注公众号（ID：SwiftBetter），进一步探讨主题<br><br><br>每日精选高清题图，可做壁纸<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>]]></content:encoded>
+]]></content:encoded>
       
       <comments>http://swift.diagon.me/shouldRasterize/#disqus_thread</comments>
     </item>
@@ -890,7 +885,7 @@
 <p>注意：如果我们重写了 drawRect 方法，并且使用 Core Graphics 进行绘制作，就涉及到了 CPU 渲染。整个渲染过程由 CPU 完成，渲染得到的 bitmap 最后再交由 GPU 用于显示。</p>
 <h2 id="光栅化"><a href="#光栅化" class="headerlink" title="光栅化"></a>光栅化</h2><p>对于视图圆角的性能优化，还有一种方式，请参考<a href="http://swift.diagon.me/shouldRasterize/">《iOS 性能优化之光栅化》</a>。</p>
 <hr>
-<div style="text-align: center"><br>关注公众号（ID：SwiftBetter），进一步探讨主题<br><br><br>每日精选高清题图，可做壁纸<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>]]></content:encoded>
+]]></content:encoded>
       
       <comments>http://swift.diagon.me/cornerRadius/#disqus_thread</comments>
     </item>
@@ -936,7 +931,7 @@
 <p>注意这个工具只能在真机上调试时使用，如果想在模拟器上查看离屏渲染区域可以选择：模拟器菜单 - Debug - Color Offscreen-Rendered。</p>
 <h2 id="CPU-渲染"><a href="#CPU-渲染" class="headerlink" title="CPU 渲染"></a>CPU 渲染</h2><p>本文探讨了 GPU 的离屏渲染，关于 CPU 渲染请参考<a href="http://swift.diagon.me/shouldRasterize/">《iOS 性能优化之光栅化》</a>。</p>
 <hr>
-<div style="text-align: center"><br>关注公众号（ID：SwiftBetter），进一步探讨主题<br><br><br>每日精选高清题图，可做壁纸<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>]]></content:encoded>
+]]></content:encoded>
       
       <comments>http://swift.diagon.me/off-screen-rendering/#disqus_thread</comments>
     </item>
@@ -968,7 +963,7 @@
 <figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">miamiTuples.winningPercentage <span class="comment">// .5</span></div><div class="line">winLoss.winningPercentage <span class="comment">// .5</span></div></pre></td></tr></table></figure>
 <p>这里是 dynamic dispatching。依赖于实际的类型，而不是声明的类型。</p>
 <hr>
-<div style="text-align: center"><br>关注公众号（ID：SwiftBetter），进一步探讨主题<br><br><br>每日精选高清题图，可做壁纸<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>]]></content:encoded>
+]]></content:encoded>
       
       <comments>http://swift.diagon.me/protocol-extension-dispathing/#disqus_thread</comments>
     </item>

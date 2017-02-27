@@ -430,7 +430,7 @@
 <li>本地缓存策略为其他值，忽略 Cache-Control 中指定的缓存使用方式，使用缓存的方式由本地缓存策略决定。</li>
 </ol>
 <hr>
-<div style="text-align: center"><br>关注公众号（ID：SwiftBetter），进一步探讨主题<br><br><br>每日精选高清题图，可做壁纸<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>
+
           
         
       
@@ -600,7 +600,7 @@
 </li>
 </ol>
 <hr>
-<div style="text-align: center"><br>关注公众号（ID：SwiftBetter），进一步探讨主题<br><br><br>每日精选高清题图，可做壁纸<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>
+
           
         
       
@@ -754,7 +754,6 @@
 </ul>
 <p>另外需要注意，URLCache 只能缓存 GET 请求, 无法缓存POST请求。因为 response是通过 URL+Parameters 为 key 存储的。从数学的角度来讲，GET 的结果是 幂等  的，就好像字典里的 key 与 value 就是幂等的，而 POST 不幂等。从这个意义上说，一个文件的资源链接，也是 GET 请求。</p>
 <hr>
-<div style="text-align: center"><br>关注公众号（ID：SwiftBetter），进一步探讨主题<br><br><br>每日精选高清题图，可做壁纸<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>
 
           
         
@@ -917,8 +916,6 @@
 </blockquote>
 <p>缓存的目的本质上就是：以空间换时间。</p>
 <hr>
-<div style="text-align: center"><br>关注公众号（ID：SwiftBetter），进一步探讨主题<br><br><br>每日精选高清题图，可做壁纸<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>
-
 
           
         
@@ -1070,7 +1067,7 @@
 <figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span> </span>&#123;</div><div class="line">    <span class="comment">//class var name = "GoodMen" // 编译器提示错误：class stored properties not supported in classes</span></div><div class="line">    </div><div class="line">    <span class="keyword">static</span> <span class="keyword">var</span> name = <span class="string">"GoodMen"</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Student</span>:<span class="title">Person</span></span>&#123;</div><div class="line">    <span class="comment">//static var name = "GoodMen"  // 编译器提示错误：cannot override with a stored property 'name'</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <h2 id="ststic-在-Protocol-中的使用"><a href="#ststic-在-Protocol-中的使用" class="headerlink" title="ststic 在 Protocol 中的使用"></a>ststic 在 Protocol 中的使用</h2><p>Swift 中 class，struct，enum 都可以实现某个指定 protocol。在 protocol定义一个类方法或者类计算属性，显而易见，应该使用 <code>static</code> 关键字来修饰。使用 protocol 时，在 struct 和 enum 中仍然使用 <code>static</code>，在 class 类型中 <code>class</code> 和 <code>static</code> 关键字都可以使用。</p>
 <hr>
-<div style="text-align: center"><br>关注公众号（ID：SwiftBetter），进一步探讨主题<br><br><br>每日精选高清题图，可做壁纸<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>
+
           
         
       
@@ -1234,8 +1231,6 @@
 <p>如果需要让单例在初始化时有额外的操作，可以通过调用Block的方式来实现：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">class Manager &#123;</div><div class="line">    static let shared: Manager = &#123;</div><div class="line">        let instance = Manager()</div><div class="line">        // setup code</div><div class="line">        return instance</div><div class="line">    &#125;()</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <hr>
-<div style="text-align: center"><br>关注公众号（ID：SwiftBetter），进一步探讨主题<br><br><br>每日精选高清题图，可做壁纸<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>
-
 
           
         
@@ -1404,8 +1399,6 @@
 <p>假设 something 的类型是String?，它可能包含一个 String，也可能是 nil。使用这种特殊的 if 语法可以检查并访问 something。这个 if 语句跟普通的 if 语句不一样，它的条件并不是一个 Bool，而是一个变量绑定 let content = something。</p>
 <p>这几行代码的含义是：如果 something 是nil，那么整个 if 语句被忽略。如果它不是 nil，那么将 something 的值（unwrap操作） 分配给变量 content ，接下来执行 if 块中的代码。</p>
 <hr>
-<div style="text-align: center"><br>关注公众号（ID：SwiftBetter），进一步探讨主题<br><br><br>每日精选高清题图，可做壁纸<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>
-
 
           
         
@@ -1581,7 +1574,6 @@
 <p>此时，array1 中 e1 的 value 值为 1000。</p>
 <p>array1 中包含 e1,e2,e3 三个元素。array2 包含 e1，e2 两个元素。array2  拷贝了 array1 中<strong>元素</strong>的引用，array2 执行 <code>removeLast()</code>时删除了最后一个元素的引用。元素的引用已经被拷贝出来了，array2 删除元素引用并不会影响  array1。但是修改 array1 和 array2 共有的元素本身，会对两者都造成影响。</p>
 <hr>
-<div style="text-align: center"><br>关注公众号（ID：SwiftBetter），进一步探讨主题<br><br><br>每日精选高清题图，可做壁纸<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>
 
           
         
@@ -1749,7 +1741,6 @@
 <h3 id="吐槽-2"><a href="#吐槽-2" class="headerlink" title="吐槽 2"></a>吐槽 2</h3><p>某人：「王垠不管说什么，一定是错的。如果你觉得王垠说的有点道理，那一定是你错了。」</p>
 <p>王垠：「你说的很有道理。」</p>
 <hr>
-<div style="text-align: center"><br>关注公众号（ID：SwiftBetter），进一步探讨主题<br><br><br>每日精选高清题图，可做壁纸<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>
 
           
         
@@ -1912,8 +1903,6 @@
 <p>但是一旦你使用变量修改实例，为了不影响别的变量，系统会拷贝 backing storeage 。这样可以推迟内存占用和计算力消耗直到必须拷贝时。</p>
 <p>这个例子还可以进一步的优化，详细介绍参考<a href="http://swift.diagon.me/copy-on-write/">《写时复制（COW）在 Swift 中的应用》</a>。</p>
 <hr>
-<div style="text-align: center"><br>关注公众号（ID：SwiftBetter），进一步探讨主题<br><br><br>每日精选高清题图，可做壁纸<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>
-
 
           
         

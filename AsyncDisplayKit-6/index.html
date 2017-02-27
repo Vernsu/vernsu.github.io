@@ -97,7 +97,7 @@
 
 虽然 Collection View 明显已经位于可见区域，但你并不想将整个 Collection View 都加载。为此，你可以让每个 Scroll View 分别拥有各自的 ASRangeCont">
 <meta property="og:image" content="https://ww4.sinaimg.cn/large/006tNc79ly1fd3mf2sxc6g30i20bau13.gif">
-<meta property="og:updated_time" content="2017-02-26T01:48:09.000Z">
+<meta property="og:updated_time" content="2017-02-26T02:28:34.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="AsyncDisplayKit 教程(6)：多方向的智能预加载">
 <meta name="twitter:description" content="多方向的智能预加载ASDK 支持多方向的智能预加载。也就是说可以在垂直方向上滚动 table，当 cell 来到屏幕上的某个位置时，cell 会包含一个水平滚动的 Collection View。
@@ -368,7 +368,7 @@
 <p>然后打开 AnimalPagerController.m 在构造函数中 return 语句之前加入代码。你所需要做的仅仅是创建一个新的 pager，并将它作为 View Controller 的数据源：</p>
 <figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">_pagerNode = [[ASPagerNode alloc] init];</div><div class="line">_pagerNode.dataSource = <span class="keyword">self</span>;</div><div class="line">```   </div><div class="line">Pager Node 实际上是一个配置好的 ASCollectionNode 子类，这和 <span class="built_in">UIPageViewController</span> 的用法是一样的。</div><div class="line"></div><div class="line">接下来你必须实现 Pager 的数据源方法。</div><div class="line"></div><div class="line">实现 `numberOfPagesInPagerNode:`  方法：</div><div class="line"></div><div class="line">```objc</div><div class="line">- (<span class="built_in">NSInteger</span>)numberOfPagesInPagerNode:(ASPagerNode *)pagerNode &#123;</div><div class="line">  <span class="keyword">return</span> <span class="keyword">self</span>.animals.count;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>实现 <code>pagerNode:nodeAtIndex:</code>方法，这和早先你实现过的 ASTableNode 方法很像：</p>
-<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">- (ASCellNode *)pagerNode:(ASPagerNode *)pagerNode nodeAtIndex:(<span class="built_in">NSInteger</span>)index &#123;</div><div class="line">  <span class="comment">//1</span></div><div class="line">  <span class="built_in">CGSize</span> pagerNodeSize = pagerNode.bounds.size;</div><div class="line">  <span class="built_in">NSArray</span> *animals = <span class="keyword">self</span>.animals[index];</div><div class="line"></div><div class="line">  <span class="comment">//2</span></div><div class="line">  ASCellNode *node = [[ASCellNode alloc] initWithViewControllerBlock:^&#123;</div><div class="line">    <span class="keyword">return</span> [[AnimalTableController alloc] initWithAnimals:animals];</div><div class="line">  &#125; didLoadBlock:<span class="literal">nil</span>];</div><div class="line"></div><div class="line">  <span class="keyword">return</span> node;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">- (ASCellNode *)pagerNode:(ASPagerNode *)pagerNode nodeAtIndex:(<span class="built_in">NSInteger</span>)index &#123;</div><div class="line">  <span class="comment">//1</span></div><div class="line">  <span class="built_in">NSArray</span> *animals = <span class="keyword">self</span>.animals[index];</div><div class="line"></div><div class="line">  <span class="comment">//2</span></div><div class="line">  ASCellNode *node = [[ASCellNode alloc] initWithViewControllerBlock:^&#123;</div><div class="line">    <span class="keyword">return</span> [[AnimalTableController alloc] initWithAnimals:animals];</div><div class="line">  &#125; didLoadBlock:<span class="literal">nil</span>];</div><div class="line"></div><div class="line">  <span class="keyword">return</span> node;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>代码解释如下：</p>
 <ol>
 <li>需要先获取一个数据模型。</li>
@@ -386,6 +386,11 @@
     <div>
       
         
+<div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/images/wxqrcode.jpg" alt="万恶胖为首 wechat" style="width: 200px; max-width: 100%;"/>
+    <div>关注公众号（ID：SwiftBetter），进一步探讨交流。</div>
+</div>
+
 
       
     </div>

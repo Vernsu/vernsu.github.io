@@ -366,7 +366,7 @@
 <p>然后打开 AnimalPagerController.m 在构造函数中 return 语句之前加入代码。你所需要做的仅仅是创建一个新的 pager，并将它作为 View Controller 的数据源：</p>
 <figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">_pagerNode = [[ASPagerNode alloc] init];</div><div class="line">_pagerNode.dataSource = <span class="keyword">self</span>;</div><div class="line">```   </div><div class="line">Pager Node 实际上是一个配置好的 ASCollectionNode 子类，这和 <span class="built_in">UIPageViewController</span> 的用法是一样的。</div><div class="line"></div><div class="line">接下来你必须实现 Pager 的数据源方法。</div><div class="line"></div><div class="line">实现 `numberOfPagesInPagerNode:`  方法：</div><div class="line"></div><div class="line">```objc</div><div class="line">- (<span class="built_in">NSInteger</span>)numberOfPagesInPagerNode:(ASPagerNode *)pagerNode &#123;</div><div class="line">  <span class="keyword">return</span> <span class="keyword">self</span>.animals.count;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>实现 <code>pagerNode:nodeAtIndex:</code>方法，这和早先你实现过的 ASTableNode 方法很像：</p>
-<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">- (ASCellNode *)pagerNode:(ASPagerNode *)pagerNode nodeAtIndex:(<span class="built_in">NSInteger</span>)index &#123;</div><div class="line">  <span class="comment">//1</span></div><div class="line">  <span class="built_in">CGSize</span> pagerNodeSize = pagerNode.bounds.size;</div><div class="line">  <span class="built_in">NSArray</span> *animals = <span class="keyword">self</span>.animals[index];</div><div class="line"></div><div class="line">  <span class="comment">//2</span></div><div class="line">  ASCellNode *node = [[ASCellNode alloc] initWithViewControllerBlock:^&#123;</div><div class="line">    <span class="keyword">return</span> [[AnimalTableController alloc] initWithAnimals:animals];</div><div class="line">  &#125; didLoadBlock:<span class="literal">nil</span>];</div><div class="line"></div><div class="line">  <span class="keyword">return</span> node;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">- (ASCellNode *)pagerNode:(ASPagerNode *)pagerNode nodeAtIndex:(<span class="built_in">NSInteger</span>)index &#123;</div><div class="line">  <span class="comment">//1</span></div><div class="line">  <span class="built_in">NSArray</span> *animals = <span class="keyword">self</span>.animals[index];</div><div class="line"></div><div class="line">  <span class="comment">//2</span></div><div class="line">  ASCellNode *node = [[ASCellNode alloc] initWithViewControllerBlock:^&#123;</div><div class="line">    <span class="keyword">return</span> [[AnimalTableController alloc] initWithAnimals:animals];</div><div class="line">  &#125; didLoadBlock:<span class="literal">nil</span>];</div><div class="line"></div><div class="line">  <span class="keyword">return</span> node;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>代码解释如下：</p>
 <ol>
 <li>需要先获取一个数据模型。</li>
@@ -1384,7 +1384,7 @@
 <li>.curveEaseInOut： 用于开始时加速，结束时减速。</li>
 </ul>
 <hr>
-<div style="text-align: center"><br>关注公众号（ID：SwiftBetter），进一步探讨主题<br><br><br>每日精选高清题图，可做壁纸<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>
+
           
         
       
@@ -1514,7 +1514,7 @@
 <p>swift 中 nil 中其实就是 .none。</p>
 <figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> optionalNil: <span class="type">Int</span>? = .<span class="keyword">none</span></div><div class="line"></div><div class="line">optionalNil == <span class="literal">nil</span>    <span class="comment">// true</span></div><div class="line">optionalNil == .<span class="keyword">none</span>  <span class="comment">// true</span></div></pre></td></tr></table></figure>
 <hr>
-<div style="text-align: center"><br>关注公众号（ID：SwiftBetter），进一步探讨主题<br><br><br>每日精选高清题图，可做壁纸<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>
+
           
         
       
@@ -1641,9 +1641,7 @@
 <h2 id="标识符模式-（Identifier-Pattern）"><a href="#标识符模式-（Identifier-Pattern）" class="headerlink" title="标识符模式 （Identifier Pattern）"></a>标识符模式 （Identifier Pattern）</h2><p>标识符模式是值绑定模式的子模式。标识符模式是常量或者变量的名称自身。例如，在下面的常量声明中，someValue 是一个标识符模式，匹配了 Int 类型的 42：</p>
 <figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> someValue = <span class="number">42</span></div></pre></td></tr></table></figure>
 <p>当匹配成功时，42 被绑定（赋值）给常量 someValue。</p>
-<h2 id="在值绑定模式中的标识符模式会把新命名的变量或常量与匹配到的值做绑定。例如，你可以拆开一个元组，然后把每个元素绑定到相应的标识符模式中。"><a href="#在值绑定模式中的标识符模式会把新命名的变量或常量与匹配到的值做绑定。例如，你可以拆开一个元组，然后把每个元素绑定到相应的标识符模式中。" class="headerlink" title="在值绑定模式中的标识符模式会把新命名的变量或常量与匹配到的值做绑定。例如，你可以拆开一个元组，然后把每个元素绑定到相应的标识符模式中。"></a>在值绑定模式中的标识符模式会把新命名的变量或常量与匹配到的值做绑定。例如，你可以拆开一个元组，然后把每个元素绑定到相应的标识符模式中。</h2><div style="text-align: center"><br>关注公众号（ID：SwiftBetter），进一步探讨主题<br><br><br>每日精选高清题图，可做壁纸<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>
-
-
+<h2 id="在值绑定模式中的标识符模式会把新命名的变量或常量与匹配到的值做绑定。例如，你可以拆开一个元组，然后把每个元素绑定到相应的标识符模式中。"><a href="#在值绑定模式中的标识符模式会把新命名的变量或常量与匹配到的值做绑定。例如，你可以拆开一个元组，然后把每个元素绑定到相应的标识符模式中。" class="headerlink" title="在值绑定模式中的标识符模式会把新命名的变量或常量与匹配到的值做绑定。例如，你可以拆开一个元组，然后把每个元素绑定到相应的标识符模式中。"></a>在值绑定模式中的标识符模式会把新命名的变量或常量与匹配到的值做绑定。例如，你可以拆开一个元组，然后把每个元素绑定到相应的标识符模式中。</h2>
           
         
       
@@ -1773,8 +1771,6 @@
 <figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">layerView.layer.contents = <span class="type">UIImage</span>(named: <span class="string">"image"</span>)?.cgImage</div></pre></td></tr></table></figure>
 <p>我们利用 CALayer 在一个普通的 UIView 中显示了一张图片。</p>
 <hr>
-<div style="text-align: center"><br>关注公众号（ID：SwiftBetter），进一步探讨主题<br><br><br>每日精选高清题图，可做壁纸<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>
-
 
           
         

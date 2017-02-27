@@ -96,14 +96,12 @@ c">
 <meta property="og:description" content="在《iOS 开发中的离屏渲染问题》中提到，大量的离屏渲染会造成性能问题。在 TableView 中使用 cornerRadius 和 maskToBounds 共同设置 View 的圆角是最常见的引发离屏渲染性能问题的场景。
 为视图设置圆角时触发离屏渲染12cell.view.layer.cornerRadius = 15cell.view.layer.masksToBounds = true
 c">
-<meta property="og:image" content="https://vernsu.github.io/images/wxqrcode.jpg">
-<meta property="og:updated_time" content="2017-02-20T01:22:16.000Z">
+<meta property="og:updated_time" content="2017-02-27T04:03:30.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="iOS 性能优化之视图圆角">
 <meta name="twitter:description" content="在《iOS 开发中的离屏渲染问题》中提到，大量的离屏渲染会造成性能问题。在 TableView 中使用 cornerRadius 和 maskToBounds 共同设置 View 的圆角是最常见的引发离屏渲染性能问题的场景。
 为视图设置圆角时触发离屏渲染12cell.view.layer.cornerRadius = 15cell.view.layer.masksToBounds = true
 c">
-<meta name="twitter:image" content="https://vernsu.github.io/images/wxqrcode.jpg">
 
 
 
@@ -367,13 +365,18 @@ c">
 <p>注意：如果我们重写了 drawRect 方法，并且使用 Core Graphics 进行绘制作，就涉及到了 CPU 渲染。整个渲染过程由 CPU 完成，渲染得到的 bitmap 最后再交由 GPU 用于显示。</p>
 <h2 id="光栅化"><a href="#光栅化" class="headerlink" title="光栅化"></a>光栅化</h2><p>对于视图圆角的性能优化，还有一种方式，请参考<a href="http://swift.diagon.me/shouldRasterize/">《iOS 性能优化之光栅化》</a>。</p>
 <hr>
-<div style="text-align: center"><br>关注公众号（ID：SwiftBetter），进一步探讨主题<br><br><br>每日精选高清题图，可做壁纸<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>
+
       
     </div>
 
     <div>
       
         
+<div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/images/wxqrcode.jpg" alt="万恶胖为首 wechat" style="width: 200px; max-width: 100%;"/>
+    <div>关注公众号（ID：SwiftBetter），进一步探讨交流。</div>
+</div>
+
 
       
     </div>

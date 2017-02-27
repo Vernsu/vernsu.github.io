@@ -110,8 +110,7 @@ withUnsafePointer(to:_:) 函数可以用来打印值类型变量的内存">
 接下来分析时，使用 struct 代表值类型， class 代表引用类型。并且这里不考虑写时拷贝语义。
 
 withUnsafePointer(to:_:) 函数可以用来打印值类型变量的内存">
-<meta property="og:image" content="https://vernsu.github.io/images/wxqrcode.jpg">
-<meta property="og:updated_time" content="2017-02-20T01:16:34.000Z">
+<meta property="og:updated_time" content="2017-02-27T04:00:20.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Swift 中的嵌套类型">
 <meta name="twitter:description" content="几种值类型和引用类型的嵌套结构我们都知道值类型和引用类型的用法，日常使用时，经常会进行多层嵌套。这里，介绍下四种两级嵌套结构：
@@ -124,7 +123,6 @@ withUnsafePointer(to:_:) 函数可以用来打印值类型变量的内存">
 接下来分析时，使用 struct 代表值类型， class 代表引用类型。并且这里不考虑写时拷贝语义。
 
 withUnsafePointer(to:_:) 函数可以用来打印值类型变量的内存">
-<meta name="twitter:image" content="https://vernsu.github.io/images/wxqrcode.jpg">
 
 
 
@@ -413,7 +411,6 @@ withUnsafePointer(to:_:) 函数可以用来打印值类型变量的内存">
 <p>此时，array1 中 e1 的 value 值为 1000。</p>
 <p>array1 中包含 e1,e2,e3 三个元素。array2 包含 e1，e2 两个元素。array2  拷贝了 array1 中<strong>元素</strong>的引用，array2 执行 <code>removeLast()</code>时删除了最后一个元素的引用。元素的引用已经被拷贝出来了，array2 删除元素引用并不会影响  array1。但是修改 array1 和 array2 共有的元素本身，会对两者都造成影响。</p>
 <hr>
-<div style="text-align: center"><br>关注公众号（ID：SwiftBetter），进一步探讨主题<br><br><br>每日精选高清题图，可做壁纸<br></div><br><div style="text-align: center"><br><img src="https://vernsu.github.io/images/wxqrcode.jpg" style="text-align: center;display: block;margin:auto;"><br></div>
 
       
     </div>
@@ -421,6 +418,11 @@ withUnsafePointer(to:_:) 函数可以用来打印值类型变量的内存">
     <div>
       
         
+<div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/images/wxqrcode.jpg" alt="万恶胖为首 wechat" style="width: 200px; max-width: 100%;"/>
+    <div>关注公众号（ID：SwiftBetter），进一步探讨交流。</div>
+</div>
+
 
       
     </div>
