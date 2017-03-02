@@ -86,27 +86,36 @@
 
 
 
-<meta name="description" content="注1：本文中实例引述自《iOS Architecture Patterns -Demystifying MVC, MVP, MVVM and VIPER》。
+<meta name="description" content="注1：本文中实例引述自《iOS Architecture Patterns》。
 注2：本系列从 M、V、C 角色定义以及数据流向的层面探讨架构模式设计。
 为什么要考虑架构模式如果不关心架构模式，总有一天，你的一个复杂类会变得无比庞大，你会发现很难修改这个类的功能，无法快速的定位 bug。
-一个优秀的架构应该具备以下几个特">
+一个优秀的架构应该具备以下几个特点：
+
+职能均衡的划分给具有清晰角色的功能类（雨露均沾）。
+容易测试（往往得益">
 <meta property="og:type" content="article">
 <meta property="og:title" content="iOS 架构模式之 MVC">
 <meta property="og:url" content="http://swift.diagon.me/Pattern-MVC/index.html">
 <meta property="og:site_name" content="Swift学徒">
-<meta property="og:description" content="注1：本文中实例引述自《iOS Architecture Patterns -Demystifying MVC, MVP, MVVM and VIPER》。
+<meta property="og:description" content="注1：本文中实例引述自《iOS Architecture Patterns》。
 注2：本系列从 M、V、C 角色定义以及数据流向的层面探讨架构模式设计。
 为什么要考虑架构模式如果不关心架构模式，总有一天，你的一个复杂类会变得无比庞大，你会发现很难修改这个类的功能，无法快速的定位 bug。
-一个优秀的架构应该具备以下几个特">
+一个优秀的架构应该具备以下几个特点：
+
+职能均衡的划分给具有清晰角色的功能类（雨露均沾）。
+容易测试（往往得益">
 <meta property="og:image" content="https://ww4.sinaimg.cn/large/006tNbRwgy1fd8kdc6dzjj30go06fgly.jpg">
 <meta property="og:image" content="https://ww4.sinaimg.cn/large/006tNbRwgy1fd8kkfmsc7j30m8074mxt.jpg">
-<meta property="og:updated_time" content="2017-03-02T08:35:27.000Z">
+<meta property="og:updated_time" content="2017-03-02T12:06:21.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="iOS 架构模式之 MVC">
-<meta name="twitter:description" content="注1：本文中实例引述自《iOS Architecture Patterns -Demystifying MVC, MVP, MVVM and VIPER》。
+<meta name="twitter:description" content="注1：本文中实例引述自《iOS Architecture Patterns》。
 注2：本系列从 M、V、C 角色定义以及数据流向的层面探讨架构模式设计。
 为什么要考虑架构模式如果不关心架构模式，总有一天，你的一个复杂类会变得无比庞大，你会发现很难修改这个类的功能，无法快速的定位 bug。
-一个优秀的架构应该具备以下几个特">
+一个优秀的架构应该具备以下几个特点：
+
+职能均衡的划分给具有清晰角色的功能类（雨露均沾）。
+容易测试（往往得益">
 <meta name="twitter:image" content="https://ww4.sinaimg.cn/large/006tNbRwgy1fd8kdc6dzjj30go06fgly.jpg">
 
 
@@ -361,24 +370,25 @@
       
 
       
-        <p>注1：本文中实例引述自<a href="https://medium.com/ios-os-x-development/ios-architecture-patterns-ecba4c38de52" target="_blank" rel="external">《iOS Architecture Patterns -<br>Demystifying MVC, MVP, MVVM and VIPER》</a>。</p>
+        <p>注1：本文中实例引述自<a href="https://medium.com/ios-os-x-development/ios-architecture-patterns-ecba4c38de52" target="_blank" rel="external">《iOS Architecture Patterns》</a>。</p>
 <p>注2：本系列从 M、V、C 角色定义以及数据流向的层面探讨架构模式设计。</p>
 <h2 id="为什么要考虑架构模式"><a href="#为什么要考虑架构模式" class="headerlink" title="为什么要考虑架构模式"></a>为什么要考虑架构模式</h2><p>如果不关心架构模式，总有一天，你的一个复杂类会变得无比庞大，你会发现很难修改这个类的功能，无法快速的定位 bug。</p>
 <p>一个优秀的架构应该具备以下几个特点：</p>
 <ol>
-<li>职能均衡的划分给具有清晰角色的实体（雨露均沾）。</li>
+<li>职能均衡的划分给具有清晰角色的功能类（雨露均沾）。</li>
 <li>容易测试（往往得益于第一点）</li>
-<li>易用，维护成本低。</li>
+<li>易用，方便维护。</li>
 </ol>
-<h3 id="为什么要划分职能"><a href="#为什么要划分职能" class="headerlink" title="为什么要划分职能"></a>为什么要划分职能</h3><p>当我们理解事物的时候，划分职能让我们的大脑清晰的思考。如果你认为不断的写代码，你的大脑就能习惯复杂的思维，是这样的。但是，这种思维能力并不是线性增长的，而且很快会到达瓶颈。所以，能够解决复杂问题的简单的方法就是：遵循<a href="https://zh.wikipedia.org/wiki/%E5%8D%95%E4%B8%80%E5%8A%9F%E8%83%BD%E5%8E%9F%E5%88%99" target="_blank" rel="external">单一功能原则</a> ，将职能划分给不同的实体。</p>
-<h3 id="为什么要易用"><a href="#为什么要易用" class="headerlink" title="为什么要易用"></a>为什么要易用</h3><p>最好的代码是从未被写过的代码，所以代码量越少，bug就越少。这就意味着更少的代码不代表一个程序员懒惰，同时也不应该为了一个高大上的解决方案而忽视了它的维护成本。</p>
-<h2 id="MV-X-系列"><a href="#MV-X-系列" class="headerlink" title="MV(X)系列"></a>MV(X)系列</h2><p>目前架构设计模式的选择：</p>
+<h3 id="为什么要划分职能"><a href="#为什么要划分职能" class="headerlink" title="为什么要划分职能"></a>为什么要划分职能</h3><p>当我们理解事物的时候，划分职能让我们的大脑清晰的思考。如果你认为不断的写代码，你的大脑就能习惯复杂的思维，是这样的。但是，这种思维能力并不是线性增长的，而且很快会到达瓶颈。所以，能够解决复杂问题的简单的方法就是：遵循<a href="https://zh.wikipedia.org/wiki/%E5%8D%95%E4%B8%80%E5%8A%9F%E8%83%BD%E5%8E%9F%E5%88%99" target="_blank" rel="external">单一功能原则</a> ，将职能划分给不同的功能类。</p>
+<h3 id="为什么要易用"><a href="#为什么要易用" class="headerlink" title="为什么要易用"></a>为什么要易用</h3><p>易用和易维护是针对团队而言的。团队成员要对架构模式达成共识，这样才能快速有效的进行开发和 Debug。在一个准备使用一个看上去很棒的解决方案时也要考虑它的维护成本。</p>
+<h2 id="主流架构模式"><a href="#主流架构模式" class="headerlink" title="主流架构模式"></a>主流架构模式</h2><p>目前几种主流的架构设计模式：</p>
 <ul>
 <li>MVC</li>
 <li>MVP</li>
 <li>MVVM</li>
 <li>VIPER</li>
 </ul>
+<p>架构模式没有教科书式的标准答案，关键在于架构师和团队成员达成一致认识，在遇到问题时不断的调整，跨越瓶颈。</p>
 <h2 id="MVC"><a href="#MVC" class="headerlink" title="MVC"></a>MVC</h2><h3 id="苹果的-MVC"><a href="#苹果的-MVC" class="headerlink" title="苹果的 MVC"></a>苹果的 MVC</h3><p>这里我们说得 MVC 特指苹果推荐的 MVC 模式，如图：</p>
 <p><img src="https://ww4.sinaimg.cn/large/006tNbRwgy1fd8kdc6dzjj30go06fgly.jpg" alt=""></p>
 <p>Controller 是介于 View 和 Model 之间， View 和 Model 没有任何直接联系。这种模式很直接，并且易学。这种模式看上去很美好，但现实中，这个模式往往变成了这样的：</p>
@@ -386,8 +396,8 @@
 <p>因为 Controller 包含了 View 的生命周期，很难说 view 和 Controller 是相互独立的。并且 Controller 处于桥接位置，很容易变成一个可以处理任何事情的容器。</p>
 <h3 id="违背-MVC-的日常代码"><a href="#违背-MVC-的日常代码" class="headerlink" title="违背 MVC 的日常代码"></a>违背 MVC 的日常代码</h3><p>经常会看到这样的代码：</p>
 <figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">var userCell = tableView.dequeueReusableCellWithIdentifier(<span class="string">"identifier"</span>) as UserCell</div><div class="line">userCell.configureWithUser(user)</div></pre></td></tr></table></figure>
-<p>这个 cell（View）直接调用了 Model，实际上以及违背了 MVC，但是这种情况很普遍，以至于人们不觉得这里有哪些不对。如果严格遵守 MVC 的话，要把对 cell 的设置放在 Controller 中，而不是不向 View 传递一个 Model 对象，这会让 Controller 的体积变得更庞大。</p>
-<h3 id="MVC-实例"><a href="#MVC-实例" class="headerlink" title="MVC 实例"></a>MVC 实例</h3><figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">import <span class="built_in">UIKit</span></div><div class="line"> </div><div class="line"><span class="keyword">struct</span> Person &#123; <span class="comment">// Model</span></div><div class="line">    let firstName: String</div><div class="line">    let lastName: String</div><div class="line">&#125;</div><div class="line"> </div><div class="line"><span class="keyword">class</span> GreetingViewController : <span class="built_in">UIViewController</span> &#123; <span class="comment">// View + Controller</span></div><div class="line">    var person: Person!</div><div class="line">    let showGreetingButton = <span class="built_in">UIButton</span>()</div><div class="line">    let greetingLabel = <span class="built_in">UILabel</span>()</div><div class="line"> </div><div class="line">    override func viewDidLoad() &#123;</div><div class="line">        <span class="keyword">super</span>.viewDidLoad()</div><div class="line">        <span class="keyword">self</span>.showGreetingButton.addTarget(<span class="keyword">self</span>, action: <span class="string">"didTapButton:"</span>, forControlEvents: .TouchUpInside)</div><div class="line">    &#125;</div><div class="line"> </div><div class="line">    func didTapButton(button: <span class="built_in">UIButton</span>) &#123;</div><div class="line">        let greeting = <span class="string">"Hello"</span> + <span class="string">" "</span> + <span class="keyword">self</span>.person.firstName + <span class="string">" "</span> + <span class="keyword">self</span>.person.lastName</div><div class="line">        <span class="keyword">self</span>.greetingLabel.text = greeting</div><div class="line"> </div><div class="line">    &#125;</div><div class="line">    <span class="comment">// layout code goes here</span></div><div class="line">&#125;</div><div class="line"><span class="comment">// Assembling of MVC</span></div><div class="line">let model = Person(firstName: <span class="string">"David"</span>, lastName: <span class="string">"Blaine"</span>)</div><div class="line">let view = GreetingViewController()</div><div class="line">view.person = model;</div></pre></td></tr></table></figure>
+<p>这个 cell（View）直接调用了 Model，实际上已经违背了 MVC 模型的规则，但这种情况很普遍，以至于人们不觉得这里有什么不对。如果严格遵守 MVC 的话，要把对 cell 的配置放在 Controller 中，而不是向 cell（View） 传递一个 Model 对象。当然这会让 Controller 的体积变得更庞大。</p>
+<h3 id="MVC-实例"><a href="#MVC-实例" class="headerlink" title="MVC 实例"></a>MVC 实例</h3><figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">import <span class="built_in">UIKit</span></div><div class="line"> </div><div class="line"><span class="keyword">struct</span> Person &#123; <span class="comment">// Model</span></div><div class="line">    let firstName: String</div><div class="line">    let lastName: String</div><div class="line">&#125;</div><div class="line"> </div><div class="line"><span class="keyword">class</span> GreetingViewController : <span class="built_in">UIViewController</span> &#123; <span class="comment">// View + Controller</span></div><div class="line">    var person: Person!</div><div class="line">    let showGreetingButton = <span class="built_in">UIButton</span>()</div><div class="line">    let greetingLabel = <span class="built_in">UILabel</span>()</div><div class="line"> </div><div class="line">    override func viewDidLoad() &#123;</div><div class="line">        <span class="keyword">super</span>.viewDidLoad()</div><div class="line">        <span class="keyword">self</span>.showGreetingButton.addTarget(<span class="keyword">self</span>, action: <span class="string">"didTapButton:"</span>, forControlEvents: .TouchUpInside)</div><div class="line">    &#125;</div><div class="line"> </div><div class="line">    func didTapButton(button: <span class="built_in">UIButton</span>) &#123;</div><div class="line">        let greeting = <span class="string">"Hello"</span> + <span class="string">" "</span> + <span class="keyword">self</span>.person.firstName + <span class="string">" "</span> + <span class="keyword">self</span>.person.lastName</div><div class="line">        <span class="keyword">self</span>.greetingLabel.text = greeting</div><div class="line"> </div><div class="line">    &#125;</div><div class="line">    <span class="comment">// layout code goes here</span></div><div class="line">&#125;</div><div class="line"><span class="comment">// MVC</span></div><div class="line">let model = Person(firstName: <span class="string">"David"</span>, lastName: <span class="string">"Blaine"</span>)</div><div class="line">let controller = GreetingViewController()</div><div class="line">controller.person = model;</div></pre></td></tr></table></figure>
 <p>我们评估下之前提出的架构特点：</p>
 <ol>
 <li>职能均分：View 和 Controller 紧密耦合。</li>
@@ -440,6 +450,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/Pattern-MVP/" rel="prev" title="iOS 架构模式之 MVP">
+                iOS 架构模式之 MVP <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -509,7 +523,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">42</span>
+                <span class="site-state-item-count">43</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -569,7 +583,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么要考虑架构模式"><span class="nav-number">1.</span> <span class="nav-text">为什么要考虑架构模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#为什么要划分职能"><span class="nav-number">1.1.</span> <span class="nav-text">为什么要划分职能</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#为什么要易用"><span class="nav-number">1.2.</span> <span class="nav-text">为什么要易用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MV-X-系列"><span class="nav-number">2.</span> <span class="nav-text">MV(X)系列</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MVC"><span class="nav-number">3.</span> <span class="nav-text">MVC</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#苹果的-MVC"><span class="nav-number">3.1.</span> <span class="nav-text">苹果的 MVC</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#违背-MVC-的日常代码"><span class="nav-number">3.2.</span> <span class="nav-text">违背 MVC 的日常代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MVC-实例"><span class="nav-number">3.3.</span> <span class="nav-text">MVC 实例</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么要考虑架构模式"><span class="nav-number">1.</span> <span class="nav-text">为什么要考虑架构模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#为什么要划分职能"><span class="nav-number">1.1.</span> <span class="nav-text">为什么要划分职能</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#为什么要易用"><span class="nav-number">1.2.</span> <span class="nav-text">为什么要易用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#主流架构模式"><span class="nav-number">2.</span> <span class="nav-text">主流架构模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MVC"><span class="nav-number">3.</span> <span class="nav-text">MVC</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#苹果的-MVC"><span class="nav-number">3.1.</span> <span class="nav-text">苹果的 MVC</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#违背-MVC-的日常代码"><span class="nav-number">3.2.</span> <span class="nav-text">违背 MVC 的日常代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MVC-实例"><span class="nav-number">3.3.</span> <span class="nav-text">MVC 实例</span></a></li></ol></li></ol></div>
             
 
           </div>

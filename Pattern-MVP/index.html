@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="模式匹配," />
+  <meta name="keywords" content="架构," />
 
 
 
@@ -86,19 +86,27 @@
 
 
 
-<meta name="description" content="值绑定模式（Value-Binding Pattern）值绑定模式是指把匹配到的值绑定给一个变量或常量。你能够在接下来的代码块中使用该变量/常量的值。把匹配到的值绑定给变量时，用关键字 var，绑定给常量时，用关键字 let。
-12345let coordinate = (x: 1, y: 0, z: 0)if case (let x, 0, 0) = coordinate &amp;#123;  pri">
+<meta name="description" content="MVP 构成在了解 MVC 之后，我们再来看看 MVP：
+
+我们知道 MVC 中的 View 和 Controller 是紧密耦合的。MVP 中的中间者 Presenter 与  View Controller 的生命周期没有任何关系，与页面布局也没有任何关系，但是它负责更新 View 的数据与状态。
+UIViewController 是 View在 MVP 中，UIViewController">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Swift 模式匹配之标识符模式与值绑定模式">
-<meta property="og:url" content="http://swift.diagon.me/swift-pattern-matching-value-binding-pattern-identifier-pattern/index.html">
+<meta property="og:title" content="iOS 架构模式之 MVP">
+<meta property="og:url" content="http://swift.diagon.me/Pattern-MVP/index.html">
 <meta property="og:site_name" content="Swift学徒">
-<meta property="og:description" content="值绑定模式（Value-Binding Pattern）值绑定模式是指把匹配到的值绑定给一个变量或常量。你能够在接下来的代码块中使用该变量/常量的值。把匹配到的值绑定给变量时，用关键字 var，绑定给常量时，用关键字 let。
-12345let coordinate = (x: 1, y: 0, z: 0)if case (let x, 0, 0) = coordinate &amp;#123;  pri">
-<meta property="og:updated_time" content="2017-02-28T02:34:12.000Z">
+<meta property="og:description" content="MVP 构成在了解 MVC 之后，我们再来看看 MVP：
+
+我们知道 MVC 中的 View 和 Controller 是紧密耦合的。MVP 中的中间者 Presenter 与  View Controller 的生命周期没有任何关系，与页面布局也没有任何关系，但是它负责更新 View 的数据与状态。
+UIViewController 是 View在 MVP 中，UIViewController">
+<meta property="og:image" content="https://ww1.sinaimg.cn/large/006tNbRwgy1fd8qn6wrh4j30m806s3zh.jpg">
+<meta property="og:updated_time" content="2017-03-02T12:22:19.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Swift 模式匹配之标识符模式与值绑定模式">
-<meta name="twitter:description" content="值绑定模式（Value-Binding Pattern）值绑定模式是指把匹配到的值绑定给一个变量或常量。你能够在接下来的代码块中使用该变量/常量的值。把匹配到的值绑定给变量时，用关键字 var，绑定给常量时，用关键字 let。
-12345let coordinate = (x: 1, y: 0, z: 0)if case (let x, 0, 0) = coordinate &amp;#123;  pri">
+<meta name="twitter:title" content="iOS 架构模式之 MVP">
+<meta name="twitter:description" content="MVP 构成在了解 MVC 之后，我们再来看看 MVP：
+
+我们知道 MVC 中的 View 和 Controller 是紧密耦合的。MVP 中的中间者 Presenter 与  View Controller 的生命周期没有任何关系，与页面布局也没有任何关系，但是它负责更新 View 的数据与状态。
+UIViewController 是 View在 MVP 中，UIViewController">
+<meta name="twitter:image" content="https://ww1.sinaimg.cn/large/006tNbRwgy1fd8qn6wrh4j30m806s3zh.jpg">
 
 
 
@@ -126,13 +134,13 @@
 
 
 
-  <link rel="canonical" href="http://swift.diagon.me/swift-pattern-matching-value-binding-pattern-identifier-pattern/"/>
+  <link rel="canonical" href="http://swift.diagon.me/Pattern-MVP/"/>
 
 
 
 
 
-  <title> Swift 模式匹配之标识符模式与值绑定模式 | Swift学徒 </title>
+  <title> iOS 架构模式之 MVP | Swift学徒 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -255,7 +263,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://swift.diagon.me/swift-pattern-matching-value-binding-pattern-identifier-pattern/">
+  <link itemprop="mainEntityOfPage" href="http://swift.diagon.me/Pattern-MVP/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="万恶胖为首">
@@ -279,7 +287,7 @@
             
             
               
-                Swift 模式匹配之标识符模式与值绑定模式
+                iOS 架构模式之 MVP
               
             
           </h1>
@@ -294,8 +302,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-20T00:00:00+08:00">
-                2017-02-20
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-02T00:00:00+08:00">
+                2017-03-02
               </time>
             
 
@@ -304,6 +312,28 @@
             
           </span>
 
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/架构/" itemprop="url" rel="index">
+                    <span itemprop="name">架构</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -330,17 +360,18 @@
       
 
       
-        <h2 id="值绑定模式（Value-Binding-Pattern）"><a href="#值绑定模式（Value-Binding-Pattern）" class="headerlink" title="值绑定模式（Value-Binding Pattern）"></a>值绑定模式（Value-Binding Pattern）</h2><p>值绑定模式是指把匹配到的值绑定给一个变量或常量。你能够在接下来的代码块中使用该变量/常量的值。把匹配到的值绑定给变量时，用关键字 var，绑定给常量时，用关键字 let。</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">let coordinate = (x: 1, y: 0, z: 0)</div><div class="line"></div><div class="line">if case (let x, 0, 0) = coordinate &#123;</div><div class="line">  print(“x坐标为 \(x)") //  1</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>这个 case 匹配 x 坐标为任意值，y，z为0。然后名为 x 的常量绑定了元组 x 部分的值。相当于你告诉编译器，从(something，0，0)中找到一个值时，分配something给x。</p>
-<p>如果要绑定多个值，声明多个就好了：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">if case let (x, y, 0) = coordinate &#123;</div><div class="line">  print(“x,y分别是(\(x), \(y))&quot;) //  1, 0</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>将let移到元组外边，编译器能够绑定所有的常量。这个例子中，let 会分配到元组模式 (x, y, z) 中的各个标识符模式。因此，switch 语句中 case let (x, y ,0): 和 case (let x, let y, 0): 的匹配效果是一样的。</p>
-<h2 id="标识符模式-（Identifier-Pattern）"><a href="#标识符模式-（Identifier-Pattern）" class="headerlink" title="标识符模式 （Identifier Pattern）"></a>标识符模式 （Identifier Pattern）</h2><p>标识符模式是值绑定模式的子模式。标识符模式是常量或者变量的名称自身。例如，在下面的常量声明中，someValue 是一个标识符模式，匹配了 Int 类型的 42：</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> someValue = <span class="number">42</span></div></pre></td></tr></table></figure>
-<p>当匹配成功时，42 被绑定（赋值）给常量 someValue。</p>
-<p>在值绑定模式中的标识符模式会把新命名的变量或常量与匹配到的值做绑定。例如，你可以拆开一个元组，然后把每个元素绑定到相应的标识符模式中。</p>
-<hr>
+        <h3 id="MVP-构成"><a href="#MVP-构成" class="headerlink" title="MVP 构成"></a>MVP 构成</h3><p>在了解 MVC 之后，我们再来看看 MVP：</p>
+<p><img src="https://ww1.sinaimg.cn/large/006tNbRwgy1fd8qn6wrh4j30m806s3zh.jpg" alt=""></p>
+<p>我们知道 MVC 中的 View 和 Controller 是紧密耦合的。MVP 中的中间者 Presenter 与  View Controller 的生命周期没有任何关系，与页面布局也没有任何关系，但是它负责更新 View 的数据与状态。</p>
+<h3 id="UIViewController-是-View"><a href="#UIViewController-是-View" class="headerlink" title="UIViewController 是 View"></a>UIViewController 是 View</h3><p>在 MVP 中，UIViewController 的子类实际上是 View 而不是 Presenter。这个定义让结构更加清晰，代价是开发速度的降低。因为必须手动进行数据和事件绑定。</p>
+<h3 id="MVP-实例"><a href="#MVP-实例" class="headerlink" title="MVP 实例"></a>MVP 实例</h3><figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div></pre></td><td class="code"><pre><div class="line">import <span class="built_in">UIKit</span></div><div class="line"> </div><div class="line"><span class="keyword">struct</span> Person &#123; <span class="comment">// Model</span></div><div class="line">    let firstName: String</div><div class="line">    let lastName: String</div><div class="line">&#125;</div><div class="line"> </div><div class="line">protocol GreetingView: <span class="keyword">class</span> &#123;</div><div class="line">    func setGreeting(greeting: String)</div><div class="line">&#125;</div><div class="line"> </div><div class="line">protocol GreetingViewPresenter &#123;</div><div class="line">    init(view: GreetingView, person: Person)</div><div class="line">    func showGreeting()</div><div class="line">&#125;</div><div class="line"> </div><div class="line"><span class="keyword">class</span> GreetingPresenter : GreetingViewPresenter &#123;</div><div class="line">    unowned let view: GreetingView</div><div class="line">    let person: Person</div><div class="line">    required init(view: GreetingView, person: Person) &#123;</div><div class="line">        <span class="keyword">self</span>.view = view</div><div class="line">        <span class="keyword">self</span>.person = person</div><div class="line">    &#125;</div><div class="line">    func showGreeting() &#123;</div><div class="line">        let greeting = <span class="string">"Hello"</span> + <span class="string">" "</span> + <span class="keyword">self</span>.person.firstName + <span class="string">" "</span> + <span class="keyword">self</span>.person.lastName</div><div class="line">        <span class="keyword">self</span>.view.setGreeting(greeting)</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"> </div><div class="line"><span class="keyword">class</span> GreetingViewController : <span class="built_in">UIViewController</span>, GreetingView &#123;</div><div class="line">    var presenter: GreetingViewPresenter!</div><div class="line">    let showGreetingButton = <span class="built_in">UIButton</span>()</div><div class="line">    let greetingLabel = <span class="built_in">UILabel</span>()</div><div class="line"> </div><div class="line">    override func viewDidLoad() &#123;</div><div class="line">        <span class="keyword">super</span>.viewDidLoad()</div><div class="line">        <span class="keyword">self</span>.showGreetingButton.addTarget(<span class="keyword">self</span>, action: <span class="string">"didTapButton:"</span>, forControlEvents: .TouchUpInside)</div><div class="line">    &#125;</div><div class="line"> </div><div class="line">    func didTapButton(button: <span class="built_in">UIButton</span>) &#123;</div><div class="line">        <span class="keyword">self</span>.presenter.showGreeting()</div><div class="line">    &#125;</div><div class="line"> </div><div class="line">    func setGreeting(greeting: String) &#123;</div><div class="line">        <span class="keyword">self</span>.greetingLabel.text = greeting</div><div class="line">    &#125;</div><div class="line"> </div><div class="line">    <span class="comment">// 布局代码</span></div><div class="line">&#125;</div><div class="line"><span class="comment">//  MVP</span></div><div class="line">let model = Person(firstName: <span class="string">"David"</span>, lastName: <span class="string">"Blaine"</span>)</div><div class="line">let view = GreetingViewController()</div><div class="line">let presenter = GreetingPresenter(view: view, person: model)</div><div class="line">view.presenter = presenter</div></pre></td></tr></table></figure>
+<p>我们不希望 View 和 Model 之间有任何联系， 所以 ViewController（实际上是 View ）中不应该处理这种协调逻辑。</p>
+<p>我们评估下之前提出的架构特点：</p>
+<ol>
+<li>职能均分：分隔的很清楚。</li>
+<li>容易测试：确实易于测试。</li>
+<li>易用，维护成本低：这个实例的代码量是 MVC 的两倍。换句话说，使用 MVP 意味着代码量大。</li>
+</ol>
 
       
     </div>
@@ -369,7 +400,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/模式匹配/" rel="tag"># 模式匹配</a>
+            <a href="/tags/架构/" rel="tag"># 架构</a>
           
         </div>
       
@@ -378,8 +409,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/iOS-cornerRadius-masksToBounds-CALayer/" rel="next" title="iOS 中 masksToBounds 与 layer’s contents">
-                <i class="fa fa-chevron-left"></i> iOS 中 masksToBounds 与 layer’s contents
+              <a href="/Pattern-MVC/" rel="next" title="iOS 架构模式之 MVC">
+                <i class="fa fa-chevron-left"></i> iOS 架构模式之 MVC
               </a>
             
           </div>
@@ -387,10 +418,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/swift-enum-associated-values/" rel="prev" title="Swift 中枚举的关联值">
-                Swift 中枚举的关联值 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -520,7 +547,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#值绑定模式（Value-Binding-Pattern）"><span class="nav-number">1.</span> <span class="nav-text">值绑定模式（Value-Binding Pattern）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#标识符模式-（Identifier-Pattern）"><span class="nav-number">2.</span> <span class="nav-text">标识符模式 （Identifier Pattern）</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#MVP-构成"><span class="nav-number">1.</span> <span class="nav-text">MVP 构成</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#UIViewController-是-View"><span class="nav-number">2.</span> <span class="nav-text">UIViewController 是 View</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MVP-实例"><span class="nav-number">3.</span> <span class="nav-text">MVP 实例</span></a></li></ol></div>
             
 
           </div>

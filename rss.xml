@@ -8,8 +8,37 @@
     <atom:link href="/rss.xml" rel="self" type="application/rss+xml"/>
     
     <description>笨办法学Swift</description>
-    <pubDate>Thu, 02 Mar 2017 08:35:27 GMT</pubDate>
+    <pubDate>Thu, 02 Mar 2017 12:22:19 GMT</pubDate>
     <generator>http://hexo.io/</generator>
+    
+    <item>
+      <title>iOS 架构模式之 MVP</title>
+      <link>http://swift.diagon.me/Pattern-MVP/</link>
+      <guid>http://swift.diagon.me/Pattern-MVP/</guid>
+      <pubDate>Wed, 01 Mar 2017 16:00:00 GMT</pubDate>
+      <description>
+      
+        &lt;h3 id=&quot;MVP-构成&quot;&gt;&lt;a href=&quot;#MVP-构成&quot; class=&quot;headerlink&quot; title=&quot;MVP 构成&quot;&gt;&lt;/a&gt;MVP 构成&lt;/h3&gt;&lt;p&gt;在了解 MVC 之后，我们再来看看 MVP：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://ww1.si
+      
+      </description>
+      
+      <content:encoded><![CDATA[<h3 id="MVP-构成"><a href="#MVP-构成" class="headerlink" title="MVP 构成"></a>MVP 构成</h3><p>在了解 MVC 之后，我们再来看看 MVP：</p>
+<p><img src="https://ww1.sinaimg.cn/large/006tNbRwgy1fd8qn6wrh4j30m806s3zh.jpg" alt=""></p>
+<p>我们知道 MVC 中的 View 和 Controller 是紧密耦合的。MVP 中的中间者 Presenter 与  View Controller 的生命周期没有任何关系，与页面布局也没有任何关系，但是它负责更新 View 的数据与状态。</p>
+<h3 id="UIViewController-是-View"><a href="#UIViewController-是-View" class="headerlink" title="UIViewController 是 View"></a>UIViewController 是 View</h3><p>在 MVP 中，UIViewController 的子类实际上是 View 而不是 Presenter。这个定义让结构更加清晰，代价是开发速度的降低。因为必须手动进行数据和事件绑定。</p>
+<h3 id="MVP-实例"><a href="#MVP-实例" class="headerlink" title="MVP 实例"></a>MVP 实例</h3><figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div></pre></td><td class="code"><pre><div class="line">import <span class="built_in">UIKit</span></div><div class="line"> </div><div class="line"><span class="keyword">struct</span> Person &#123; <span class="comment">// Model</span></div><div class="line">    let firstName: String</div><div class="line">    let lastName: String</div><div class="line">&#125;</div><div class="line"> </div><div class="line">protocol GreetingView: <span class="keyword">class</span> &#123;</div><div class="line">    func setGreeting(greeting: String)</div><div class="line">&#125;</div><div class="line"> </div><div class="line">protocol GreetingViewPresenter &#123;</div><div class="line">    init(view: GreetingView, person: Person)</div><div class="line">    func showGreeting()</div><div class="line">&#125;</div><div class="line"> </div><div class="line"><span class="keyword">class</span> GreetingPresenter : GreetingViewPresenter &#123;</div><div class="line">    unowned let view: GreetingView</div><div class="line">    let person: Person</div><div class="line">    required init(view: GreetingView, person: Person) &#123;</div><div class="line">        <span class="keyword">self</span>.view = view</div><div class="line">        <span class="keyword">self</span>.person = person</div><div class="line">    &#125;</div><div class="line">    func showGreeting() &#123;</div><div class="line">        let greeting = <span class="string">"Hello"</span> + <span class="string">" "</span> + <span class="keyword">self</span>.person.firstName + <span class="string">" "</span> + <span class="keyword">self</span>.person.lastName</div><div class="line">        <span class="keyword">self</span>.view.setGreeting(greeting)</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"> </div><div class="line"><span class="keyword">class</span> GreetingViewController : <span class="built_in">UIViewController</span>, GreetingView &#123;</div><div class="line">    var presenter: GreetingViewPresenter!</div><div class="line">    let showGreetingButton = <span class="built_in">UIButton</span>()</div><div class="line">    let greetingLabel = <span class="built_in">UILabel</span>()</div><div class="line"> </div><div class="line">    override func viewDidLoad() &#123;</div><div class="line">        <span class="keyword">super</span>.viewDidLoad()</div><div class="line">        <span class="keyword">self</span>.showGreetingButton.addTarget(<span class="keyword">self</span>, action: <span class="string">"didTapButton:"</span>, forControlEvents: .TouchUpInside)</div><div class="line">    &#125;</div><div class="line"> </div><div class="line">    func didTapButton(button: <span class="built_in">UIButton</span>) &#123;</div><div class="line">        <span class="keyword">self</span>.presenter.showGreeting()</div><div class="line">    &#125;</div><div class="line"> </div><div class="line">    func setGreeting(greeting: String) &#123;</div><div class="line">        <span class="keyword">self</span>.greetingLabel.text = greeting</div><div class="line">    &#125;</div><div class="line"> </div><div class="line">    <span class="comment">// 布局代码</span></div><div class="line">&#125;</div><div class="line"><span class="comment">//  MVP</span></div><div class="line">let model = Person(firstName: <span class="string">"David"</span>, lastName: <span class="string">"Blaine"</span>)</div><div class="line">let view = GreetingViewController()</div><div class="line">let presenter = GreetingPresenter(view: view, person: model)</div><div class="line">view.presenter = presenter</div></pre></td></tr></table></figure>
+<p>我们不希望 View 和 Model 之间有任何联系， 所以 ViewController（实际上是 View ）中不应该处理这种协调逻辑。</p>
+<p>我们评估下之前提出的架构特点：</p>
+<ol>
+<li>职能均分：分隔的很清楚。</li>
+<li>容易测试：确实易于测试。</li>
+<li>易用，维护成本低：这个实例的代码量是 MVC 的两倍。换句话说，使用 MVP 意味着代码量大。</li>
+</ol>
+]]></content:encoded>
+      
+      <comments>http://swift.diagon.me/Pattern-MVP/#disqus_thread</comments>
+    </item>
     
     <item>
       <title>iOS 架构模式之 MVC</title>
@@ -22,24 +51,25 @@
       
       </description>
       
-      <content:encoded><![CDATA[<p>注1：本文中实例引述自<a href="https://medium.com/ios-os-x-development/ios-architecture-patterns-ecba4c38de52" target="_blank" rel="external">《iOS Architecture Patterns -<br>Demystifying MVC, MVP, MVVM and VIPER》</a>。</p>
+      <content:encoded><![CDATA[<p>注1：本文中实例引述自<a href="https://medium.com/ios-os-x-development/ios-architecture-patterns-ecba4c38de52" target="_blank" rel="external">《iOS Architecture Patterns》</a>。</p>
 <p>注2：本系列从 M、V、C 角色定义以及数据流向的层面探讨架构模式设计。</p>
 <h2 id="为什么要考虑架构模式"><a href="#为什么要考虑架构模式" class="headerlink" title="为什么要考虑架构模式"></a>为什么要考虑架构模式</h2><p>如果不关心架构模式，总有一天，你的一个复杂类会变得无比庞大，你会发现很难修改这个类的功能，无法快速的定位 bug。</p>
 <p>一个优秀的架构应该具备以下几个特点：</p>
 <ol>
-<li>职能均衡的划分给具有清晰角色的实体（雨露均沾）。</li>
+<li>职能均衡的划分给具有清晰角色的功能类（雨露均沾）。</li>
 <li>容易测试（往往得益于第一点）</li>
-<li>易用，维护成本低。</li>
+<li>易用，方便维护。</li>
 </ol>
-<h3 id="为什么要划分职能"><a href="#为什么要划分职能" class="headerlink" title="为什么要划分职能"></a>为什么要划分职能</h3><p>当我们理解事物的时候，划分职能让我们的大脑清晰的思考。如果你认为不断的写代码，你的大脑就能习惯复杂的思维，是这样的。但是，这种思维能力并不是线性增长的，而且很快会到达瓶颈。所以，能够解决复杂问题的简单的方法就是：遵循<a href="https://zh.wikipedia.org/wiki/%E5%8D%95%E4%B8%80%E5%8A%9F%E8%83%BD%E5%8E%9F%E5%88%99" target="_blank" rel="external">单一功能原则</a> ，将职能划分给不同的实体。</p>
-<h3 id="为什么要易用"><a href="#为什么要易用" class="headerlink" title="为什么要易用"></a>为什么要易用</h3><p>最好的代码是从未被写过的代码，所以代码量越少，bug就越少。这就意味着更少的代码不代表一个程序员懒惰，同时也不应该为了一个高大上的解决方案而忽视了它的维护成本。</p>
-<h2 id="MV-X-系列"><a href="#MV-X-系列" class="headerlink" title="MV(X)系列"></a>MV(X)系列</h2><p>目前架构设计模式的选择：</p>
+<h3 id="为什么要划分职能"><a href="#为什么要划分职能" class="headerlink" title="为什么要划分职能"></a>为什么要划分职能</h3><p>当我们理解事物的时候，划分职能让我们的大脑清晰的思考。如果你认为不断的写代码，你的大脑就能习惯复杂的思维，是这样的。但是，这种思维能力并不是线性增长的，而且很快会到达瓶颈。所以，能够解决复杂问题的简单的方法就是：遵循<a href="https://zh.wikipedia.org/wiki/%E5%8D%95%E4%B8%80%E5%8A%9F%E8%83%BD%E5%8E%9F%E5%88%99" target="_blank" rel="external">单一功能原则</a> ，将职能划分给不同的功能类。</p>
+<h3 id="为什么要易用"><a href="#为什么要易用" class="headerlink" title="为什么要易用"></a>为什么要易用</h3><p>易用和易维护是针对团队而言的。团队成员要对架构模式达成共识，这样才能快速有效的进行开发和 Debug。在一个准备使用一个看上去很棒的解决方案时也要考虑它的维护成本。</p>
+<h2 id="主流架构模式"><a href="#主流架构模式" class="headerlink" title="主流架构模式"></a>主流架构模式</h2><p>目前几种主流的架构设计模式：</p>
 <ul>
 <li>MVC</li>
 <li>MVP</li>
 <li>MVVM</li>
 <li>VIPER</li>
 </ul>
+<p>架构模式没有教科书式的标准答案，关键在于架构师和团队成员达成一致认识，在遇到问题时不断的调整，跨越瓶颈。</p>
 <h2 id="MVC"><a href="#MVC" class="headerlink" title="MVC"></a>MVC</h2><h3 id="苹果的-MVC"><a href="#苹果的-MVC" class="headerlink" title="苹果的 MVC"></a>苹果的 MVC</h3><p>这里我们说得 MVC 特指苹果推荐的 MVC 模式，如图：</p>
 <p><img src="https://ww4.sinaimg.cn/large/006tNbRwgy1fd8kdc6dzjj30go06fgly.jpg" alt=""></p>
 <p>Controller 是介于 View 和 Model 之间， View 和 Model 没有任何直接联系。这种模式很直接，并且易学。这种模式看上去很美好，但现实中，这个模式往往变成了这样的：</p>
@@ -47,8 +77,8 @@
 <p>因为 Controller 包含了 View 的生命周期，很难说 view 和 Controller 是相互独立的。并且 Controller 处于桥接位置，很容易变成一个可以处理任何事情的容器。</p>
 <h3 id="违背-MVC-的日常代码"><a href="#违背-MVC-的日常代码" class="headerlink" title="违背 MVC 的日常代码"></a>违背 MVC 的日常代码</h3><p>经常会看到这样的代码：</p>
 <figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">var userCell = tableView.dequeueReusableCellWithIdentifier(<span class="string">"identifier"</span>) as UserCell</div><div class="line">userCell.configureWithUser(user)</div></pre></td></tr></table></figure>
-<p>这个 cell（View）直接调用了 Model，实际上以及违背了 MVC，但是这种情况很普遍，以至于人们不觉得这里有哪些不对。如果严格遵守 MVC 的话，要把对 cell 的设置放在 Controller 中，而不是不向 View 传递一个 Model 对象，这会让 Controller 的体积变得更庞大。</p>
-<h3 id="MVC-实例"><a href="#MVC-实例" class="headerlink" title="MVC 实例"></a>MVC 实例</h3><figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">import <span class="built_in">UIKit</span></div><div class="line"> </div><div class="line"><span class="keyword">struct</span> Person &#123; <span class="comment">// Model</span></div><div class="line">    let firstName: String</div><div class="line">    let lastName: String</div><div class="line">&#125;</div><div class="line"> </div><div class="line"><span class="keyword">class</span> GreetingViewController : <span class="built_in">UIViewController</span> &#123; <span class="comment">// View + Controller</span></div><div class="line">    var person: Person!</div><div class="line">    let showGreetingButton = <span class="built_in">UIButton</span>()</div><div class="line">    let greetingLabel = <span class="built_in">UILabel</span>()</div><div class="line"> </div><div class="line">    override func viewDidLoad() &#123;</div><div class="line">        <span class="keyword">super</span>.viewDidLoad()</div><div class="line">        <span class="keyword">self</span>.showGreetingButton.addTarget(<span class="keyword">self</span>, action: <span class="string">"didTapButton:"</span>, forControlEvents: .TouchUpInside)</div><div class="line">    &#125;</div><div class="line"> </div><div class="line">    func didTapButton(button: <span class="built_in">UIButton</span>) &#123;</div><div class="line">        let greeting = <span class="string">"Hello"</span> + <span class="string">" "</span> + <span class="keyword">self</span>.person.firstName + <span class="string">" "</span> + <span class="keyword">self</span>.person.lastName</div><div class="line">        <span class="keyword">self</span>.greetingLabel.text = greeting</div><div class="line"> </div><div class="line">    &#125;</div><div class="line">    <span class="comment">// layout code goes here</span></div><div class="line">&#125;</div><div class="line"><span class="comment">// Assembling of MVC</span></div><div class="line">let model = Person(firstName: <span class="string">"David"</span>, lastName: <span class="string">"Blaine"</span>)</div><div class="line">let view = GreetingViewController()</div><div class="line">view.person = model;</div></pre></td></tr></table></figure>
+<p>这个 cell（View）直接调用了 Model，实际上已经违背了 MVC 模型的规则，但这种情况很普遍，以至于人们不觉得这里有什么不对。如果严格遵守 MVC 的话，要把对 cell 的配置放在 Controller 中，而不是向 cell（View） 传递一个 Model 对象。当然这会让 Controller 的体积变得更庞大。</p>
+<h3 id="MVC-实例"><a href="#MVC-实例" class="headerlink" title="MVC 实例"></a>MVC 实例</h3><figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">import <span class="built_in">UIKit</span></div><div class="line"> </div><div class="line"><span class="keyword">struct</span> Person &#123; <span class="comment">// Model</span></div><div class="line">    let firstName: String</div><div class="line">    let lastName: String</div><div class="line">&#125;</div><div class="line"> </div><div class="line"><span class="keyword">class</span> GreetingViewController : <span class="built_in">UIViewController</span> &#123; <span class="comment">// View + Controller</span></div><div class="line">    var person: Person!</div><div class="line">    let showGreetingButton = <span class="built_in">UIButton</span>()</div><div class="line">    let greetingLabel = <span class="built_in">UILabel</span>()</div><div class="line"> </div><div class="line">    override func viewDidLoad() &#123;</div><div class="line">        <span class="keyword">super</span>.viewDidLoad()</div><div class="line">        <span class="keyword">self</span>.showGreetingButton.addTarget(<span class="keyword">self</span>, action: <span class="string">"didTapButton:"</span>, forControlEvents: .TouchUpInside)</div><div class="line">    &#125;</div><div class="line"> </div><div class="line">    func didTapButton(button: <span class="built_in">UIButton</span>) &#123;</div><div class="line">        let greeting = <span class="string">"Hello"</span> + <span class="string">" "</span> + <span class="keyword">self</span>.person.firstName + <span class="string">" "</span> + <span class="keyword">self</span>.person.lastName</div><div class="line">        <span class="keyword">self</span>.greetingLabel.text = greeting</div><div class="line"> </div><div class="line">    &#125;</div><div class="line">    <span class="comment">// layout code goes here</span></div><div class="line">&#125;</div><div class="line"><span class="comment">// MVC</span></div><div class="line">let model = Person(firstName: <span class="string">"David"</span>, lastName: <span class="string">"Blaine"</span>)</div><div class="line">let controller = GreetingViewController()</div><div class="line">controller.person = model;</div></pre></td></tr></table></figure>
 <p>我们评估下之前提出的架构特点：</p>
 <ol>
 <li>职能均分：View 和 Controller 紧密耦合。</li>
@@ -949,52 +979,6 @@
 ]]></content:encoded>
       
       <comments>http://swift.diagon.me/cornerRadius/#disqus_thread</comments>
-    </item>
-    
-    <item>
-      <title>iOS 性能优化之离屏渲染</title>
-      <link>http://swift.diagon.me/off-screen-rendering/</link>
-      <guid>http://swift.diagon.me/off-screen-rendering/</guid>
-      <pubDate>Thu, 09 Feb 2017 16:00:00 GMT</pubDate>
-      <description>
-      
-        &lt;h2 id=&quot;GPU-渲染&quot;&gt;&lt;a href=&quot;#GPU-渲染&quot; class=&quot;headerlink&quot; title=&quot;GPU 渲染&quot;&gt;&lt;/a&gt;GPU 渲染&lt;/h2&gt;&lt;p&gt;图形的生成一般是由 GPU 负责，而 GPU 屏幕渲染有以下两种方式：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;&lt;p&gt;On
-      
-      </description>
-      
-      <content:encoded><![CDATA[<h2 id="GPU-渲染"><a href="#GPU-渲染" class="headerlink" title="GPU 渲染"></a>GPU 渲染</h2><p>图形的生成一般是由 GPU 负责，而 GPU 屏幕渲染有以下两种方式：</p>
-<ol>
-<li><p>On-Screen Rendering：当前屏幕渲染，意思是 GPU 的渲染操作是在当前用于显示的屏幕缓冲区进行的。缓冲大小受限，一些复杂的操作可能无法完成。</p>
-</li>
-<li><p>Off-Screen Rendering：离屏渲染，意思是 GPU 的渲染操作是在当前用于显示的屏幕缓冲区之外新开辟的一个缓冲区进行的。</p>
-</li>
-</ol>
-<h2 id="离屏渲染引发的性能问题"><a href="#离屏渲染引发的性能问题" class="headerlink" title="离屏渲染引发的性能问题"></a>离屏渲染引发的性能问题</h2><p>大量的离屏渲染会引发性能问题，离屏渲染过程中的两个操作的代价很高：</p>
-<ol>
-<li><p>创建新缓冲区。</p>
-</li>
-<li><p>上下文切换。离屏渲染过程中需要先从 On-Screen 切换到 Off-Screen，在渲染完成后，需要将渲染结果从 Off-screen 切换到 On-screen。</p>
-</li>
-</ol>
-<p>GPU 会为每一帧（1/60s）重复合成所有的图层，上下文切换发生在每一帧中。</p>
-<h2 id="导致离屏渲染的因素"><a href="#导致离屏渲染的因素" class="headerlink" title="导致离屏渲染的因素"></a>导致离屏渲染的因素</h2><p>当图层属性的混合体被指定为在没有预合成之前不能直接在屏幕中绘制时，会触发离屏渲染。</p>
-<p>图层的以下属性会导致离屏渲染：</p>
-<ul>
-<li>圆角 cornerRadius 和 maskToBounds 一起使用时</li>
-<li>遮罩/蒙版 masks</li>
-<li>阴影 shadows</li>
-</ul>
-<p>因为上面所说原因，一般情况下应该避免离屏渲染。尽量避免使用 layer 的 border、corner、shadow、mask 等。</p>
-<h2 id="使用-Instruments-监测性能"><a href="#使用-Instruments-监测性能" class="headerlink" title="使用 Instruments 监测性能"></a>使用 Instruments 监测性能</h2><p>Instruments 的 Core Animation 工具里有检测离屏渲染的选项：<code>Color Offscreen-Rendered Yellow</code>, 开启后会将离屏渲染的区域标识为黄色。</p>
-<p>这个工具的使用在 WWDC 中讲到过：<a href="https://developer.apple.com/videos/play/wwdc2011/121/" target="_blank" rel="external">WWDC 2011: Understanding UIKit Rendering</a>、<a href="https://developer.apple.com/videos/play/wwdc2014/419/" target="_blank" rel="external">WWDC 2014: Advanced Graphics and Animations for iOS Apps </a>。</p>
-<p>注意这个工具只能在真机上调试时使用，如果想在模拟器上查看离屏渲染区域可以选择：模拟器菜单 - Debug - Color Offscreen-Rendered。</p>
-<h2 id="CPU-渲染"><a href="#CPU-渲染" class="headerlink" title="CPU 渲染"></a>CPU 渲染</h2><p>本文探讨了 GPU 的离屏渲染，关于 CPU 渲染请参考<a href="http://swift.diagon.me/shouldRasterize/">《iOS 性能优化之光栅化》</a>。</p>
-<hr>
-]]></content:encoded>
-      
-      <comments>http://swift.diagon.me/off-screen-rendering/#disqus_thread</comments>
     </item>
     
   </channel>
