@@ -253,6 +253,179 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://swift.diagon.me/Pattern-MVC/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="万恶胖为首">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.gif">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="Swift学徒">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="Swift学徒" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/Pattern-MVC/" itemprop="url">
+                  iOS 架构模式之 MVC
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-01T00:00:00+08:00">
+                2017-03-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/架构/" itemprop="url" rel="index">
+                    <span itemprop="name">架构</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>注1：本文中实例引述自<a href="https://medium.com/ios-os-x-development/ios-architecture-patterns-ecba4c38de52" target="_blank" rel="external">《iOS Architecture Patterns -<br>Demystifying MVC, MVP, MVVM and VIPER》</a>。</p>
+<p>注2：本系列从 M、V、C 角色定义以及数据流向的层面探讨架构模式设计。</p>
+<h2 id="为什么要考虑架构模式"><a href="#为什么要考虑架构模式" class="headerlink" title="为什么要考虑架构模式"></a>为什么要考虑架构模式</h2><p>如果不关心架构模式，总有一天，你的一个复杂类会变得无比庞大，你会发现很难修改这个类的功能，无法快速的定位 bug。</p>
+<p>一个优秀的架构应该具备以下几个特点：</p>
+<ol>
+<li>职能均衡的划分给具有清晰角色的实体（雨露均沾）。</li>
+<li>容易测试（往往得益于第一点）</li>
+<li>易用，维护成本低。</li>
+</ol>
+<h3 id="为什么要划分职能"><a href="#为什么要划分职能" class="headerlink" title="为什么要划分职能"></a>为什么要划分职能</h3><p>当我们理解事物的时候，划分职能让我们的大脑清晰的思考。如果你认为不断的写代码，你的大脑就能习惯复杂的思维，是这样的。但是，这种思维能力并不是线性增长的，而且很快会到达瓶颈。所以，能够解决复杂问题的简单的方法就是：遵循<a href="https://zh.wikipedia.org/wiki/%E5%8D%95%E4%B8%80%E5%8A%9F%E8%83%BD%E5%8E%9F%E5%88%99" target="_blank" rel="external">单一功能原则</a> ，将职能划分给不同的实体。</p>
+<h3 id="为什么要易用"><a href="#为什么要易用" class="headerlink" title="为什么要易用"></a>为什么要易用</h3><p>最好的代码是从未被写过的代码，所以代码量越少，bug就越少。这就意味着更少的代码不代表一个程序员懒惰，同时也不应该为了一个高大上的解决方案而忽视了它的维护成本。</p>
+<h2 id="MV-X-系列"><a href="#MV-X-系列" class="headerlink" title="MV(X)系列"></a>MV(X)系列</h2><p>目前架构设计模式的选择：</p>
+<ul>
+<li>MVC</li>
+<li>MVP</li>
+<li>MVVM</li>
+<li>VIPER</li>
+</ul>
+<h2 id="MVC"><a href="#MVC" class="headerlink" title="MVC"></a>MVC</h2><h3 id="苹果的-MVC"><a href="#苹果的-MVC" class="headerlink" title="苹果的 MVC"></a>苹果的 MVC</h3><p>这里我们说得 MVC 特指苹果推荐的 MVC 模式，如图：</p>
+<p><img src="https://ww4.sinaimg.cn/large/006tNbRwgy1fd8kdc6dzjj30go06fgly.jpg" alt=""></p>
+<p>Controller 是介于 View 和 Model 之间， View 和 Model 没有任何直接联系。这种模式很直接，并且易学。这种模式看上去很美好，但现实中，这个模式往往变成了这样的：</p>
+<p><img src="https://ww4.sinaimg.cn/large/006tNbRwgy1fd8kkfmsc7j30m8074mxt.jpg" alt=""></p>
+<p>因为 Controller 包含了 View 的生命周期，很难说 view 和 Controller 是相互独立的。并且 Controller 处于桥接位置，很容易变成一个可以处理任何事情的容器。</p>
+<h3 id="违背-MVC-的日常代码"><a href="#违背-MVC-的日常代码" class="headerlink" title="违背 MVC 的日常代码"></a>违背 MVC 的日常代码</h3><p>经常会看到这样的代码：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">var userCell = tableView.dequeueReusableCellWithIdentifier(<span class="string">"identifier"</span>) as UserCell</div><div class="line">userCell.configureWithUser(user)</div></pre></td></tr></table></figure>
+<p>这个 cell（View）直接调用了 Model，实际上以及违背了 MVC，但是这种情况很普遍，以至于人们不觉得这里有哪些不对。如果严格遵守 MVC 的话，要把对 cell 的设置放在 Controller 中，而不是不向 View 传递一个 Model 对象，这会让 Controller 的体积变得更庞大。</p>
+<h3 id="MVC-实例"><a href="#MVC-实例" class="headerlink" title="MVC 实例"></a>MVC 实例</h3><figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">import <span class="built_in">UIKit</span></div><div class="line"> </div><div class="line"><span class="keyword">struct</span> Person &#123; <span class="comment">// Model</span></div><div class="line">    let firstName: String</div><div class="line">    let lastName: String</div><div class="line">&#125;</div><div class="line"> </div><div class="line"><span class="keyword">class</span> GreetingViewController : <span class="built_in">UIViewController</span> &#123; <span class="comment">// View + Controller</span></div><div class="line">    var person: Person!</div><div class="line">    let showGreetingButton = <span class="built_in">UIButton</span>()</div><div class="line">    let greetingLabel = <span class="built_in">UILabel</span>()</div><div class="line"> </div><div class="line">    override func viewDidLoad() &#123;</div><div class="line">        <span class="keyword">super</span>.viewDidLoad()</div><div class="line">        <span class="keyword">self</span>.showGreetingButton.addTarget(<span class="keyword">self</span>, action: <span class="string">"didTapButton:"</span>, forControlEvents: .TouchUpInside)</div><div class="line">    &#125;</div><div class="line"> </div><div class="line">    func didTapButton(button: <span class="built_in">UIButton</span>) &#123;</div><div class="line">        let greeting = <span class="string">"Hello"</span> + <span class="string">" "</span> + <span class="keyword">self</span>.person.firstName + <span class="string">" "</span> + <span class="keyword">self</span>.person.lastName</div><div class="line">        <span class="keyword">self</span>.greetingLabel.text = greeting</div><div class="line"> </div><div class="line">    &#125;</div><div class="line">    <span class="comment">// layout code goes here</span></div><div class="line">&#125;</div><div class="line"><span class="comment">// Assembling of MVC</span></div><div class="line">let model = Person(firstName: <span class="string">"David"</span>, lastName: <span class="string">"Blaine"</span>)</div><div class="line">let view = GreetingViewController()</div><div class="line">view.person = model;</div></pre></td></tr></table></figure>
+<p>我们评估下之前提出的架构特点：</p>
+<ol>
+<li>职能均分：View 和 Controller 紧密耦合。</li>
+<li>容易测试：紧密耦合不利于测试。</li>
+<li>易用，维护成本低：MVC 很容易理解，相比其他模式代码量少，开发速度快，新手也可以维护。当时随着项目变大，可维护性越来越差。</li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
   <link itemprop="mainEntityOfPage" href="http://swift.diagon.me/AsyncDisplayKit-6/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -364,7 +537,11 @@
 <p>替换为</p>
 <figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">AnimalPagerController *vc = [[AnimalPagerController alloc] init];</div></pre></td></tr></table></figure>
 <p>然后打开 AnimalPagerController.m 在构造函数中 return 语句之前加入代码。你所需要做的仅仅是创建一个新的 pager，并将它作为 View Controller 的数据源：</p>
-<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">_pagerNode = [[ASPagerNode alloc] init];</div><div class="line">_pagerNode.dataSource = <span class="keyword">self</span>;</div><div class="line">```   </div><div class="line">Pager Node 实际上是一个配置好的 ASCollectionNode 子类，这和 <span class="built_in">UIPageViewController</span> 的用法是一样的。</div><div class="line"></div><div class="line">接下来你必须实现 Pager 的数据源方法。</div><div class="line"></div><div class="line">实现 `numberOfPagesInPagerNode:`  方法：</div><div class="line"></div><div class="line">```objc</div><div class="line">- (<span class="built_in">NSInteger</span>)numberOfPagesInPagerNode:(ASPagerNode *)pagerNode &#123;</div><div class="line">  <span class="keyword">return</span> <span class="keyword">self</span>.animals.count;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">_pagerNode = [[ASPagerNode alloc] init];</div><div class="line">_pagerNode.dataSource = <span class="keyword">self</span>;</div></pre></td></tr></table></figure>
+<p>Pager Node 实际上是一个配置好的 ASCollectionNode 子类，这和 UIPageViewController 的用法是一样的。</p>
+<p>接下来你必须实现 Pager 的数据源方法。</p>
+<p>实现 <code>numberOfPagesInPagerNode:</code>  方法：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">- (<span class="built_in">NSInteger</span>)numberOfPagesInPagerNode:(ASPagerNode *)pagerNode &#123;</div><div class="line">  <span class="keyword">return</span> <span class="keyword">self</span>.animals.count;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>实现 <code>pagerNode:nodeAtIndex:</code>方法，这和早先你实现过的 ASTableNode 方法很像：</p>
 <figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">- (ASCellNode *)pagerNode:(ASPagerNode *)pagerNode nodeAtIndex:(<span class="built_in">NSInteger</span>)index &#123;</div><div class="line">  <span class="comment">//1</span></div><div class="line">  <span class="built_in">NSArray</span> *animals = <span class="keyword">self</span>.animals[index];</div><div class="line"></div><div class="line">  <span class="comment">//2</span></div><div class="line">  ASCellNode *node = [[ASCellNode alloc] initWithViewControllerBlock:^&#123;</div><div class="line">    <span class="keyword">return</span> [[AnimalTableController alloc] initWithAnimals:animals];</div><div class="line">  &#125; didLoadBlock:<span class="literal">nil</span>];</div><div class="line"></div><div class="line">  <span class="keyword">return</span> node;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>代码解释如下：</p>
@@ -377,6 +554,7 @@
 <p>如果在进入第二部分之前想学习更多的内容，你可以浏览 AsyncDisplayKit 的官方主页，并查看它的文档。Scott Goodson (AsyncDisplayKit 的原作者) 也会发表一些你感兴趣的文字，它们按时间顺序罗列在这个地方：<a href="http://asyncdisplaykit.org/docs/resources.html" target="_blank" rel="external">AsyncDisplayKit.org Resources</a>。</p>
 <p>你可能会对 <a href="https://www.youtube.com/watch?v=OiY1cheLpmI" target="_blank" rel="external">Building Paper 大事记</a> 感兴趣。尽管它还没有被开源，并且还有许多东西会变化，但在它才开始的时候就关注它仍然是一件很有意思的事情。                   </p>
 <p>接下来，我们会讲到，如何利用 ASDK 2.0 强大的布局系统。</p>
+<hr>
 
           
         
@@ -540,6 +718,7 @@
 <h4 id="观察-Cell"><a href="#观察-Cell" class="headerlink" title="观察 Cell"></a>观察 Cell</h4><p>打开 CardNode_InterfaceCallbacks.m。这里有 6 个方法，这些方法用来打印节点进入各种范围的过程。取消注释，运行程序，慢慢滚动界面。同时，观察 cell 状态的改变。</p>
 <p><img src="https://ww3.sinaimg.cn/large/006tNc79ly1fd340ce8e8g30da09y7wl.gif" alt=""></p>
 <p>注意：大部分情况下，你只需要用到两个关于 ASInterfaceState 的改变方法：<code>didEnterVisibleState</code> 和 <code>didExitVisibleState</code>。也就是说，大量底层的工作已经为你完成了。要想知道什么时候需要用到 Preload 和 Display 状态，请看 ASNetworkImageNode 的源代码。所有的 Network Image Node 都会自动抓取和解码，以及释放内存。</p>
+<hr>
 
           
         
@@ -699,6 +878,7 @@
 <li>调用 <code>completeBatchFetching:</code> ，YES 表示你已经完成这个批次。在本批次抓取完成之前，不会进行新的批次抓取。</li>
 </ol>
 <p>运行程序，可以无限滚动。 </p>
+<hr>
 
           
         
@@ -883,6 +1063,7 @@
 <p>将 -tableView:heightForRowAtIndexPath: 方法替换为:</p>
 <figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">-(ASSizeRange)tableNode:(ASTableNode *)tableNode constrainedSizeForRowAtIndexPath:(<span class="built_in">NSIndexPath</span> *)indexPath</div><div class="line">&#123;</div><div class="line">    <span class="built_in">CGFloat</span> width = [<span class="built_in">UIScreen</span> mainScreen].bounds.size.width;</div><div class="line">    <span class="built_in">CGSize</span> min = <span class="built_in">CGSizeMake</span>(width, ([<span class="built_in">UIScreen</span> mainScreen].bounds.size.height/<span class="number">3</span>) * <span class="number">2</span>);</div><div class="line">    <span class="built_in">CGSize</span> max = <span class="built_in">CGSizeMake</span>(width, INFINITY);</div><div class="line">    </div><div class="line">    <span class="keyword">return</span> ASSizeRangeMake(min, max);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>搞定！ 运行一下，很流畅~</p>
+<hr>
 
           
         
@@ -1038,6 +1219,7 @@
 <li>ASPagerNode:  ASCollectionNode 子类，和 UIPageViewController 相比，提供了很棒的 swiping 性能。</li>
 </ul>
 <p>真正的魔法来自于： ASRangeController，这 4 个类都会通过它来影响所包含的 node 的行为。这个后面再讲。</p>
+<hr>
 
           
         
@@ -1192,6 +1374,7 @@
 <p><img src="https://ww1.sinaimg.cn/large/006tNc79ly1fd32exi206j30rk0e6tbh.jpg" alt=""></p>
 <p>AsyncDisplayKit 默认允许异步的进行尺寸计算，视图布局，Rendering（文本渲染、图形绘制、图片解码）操作。这样就大量的减轻了主线程的负担。</p>
 <p>AsyncDisplayKit 支持 Objective-C 与 Swift，但是不支持 Interface Builder 与 AutoLayout。</p>
+<hr>
 
           
         
@@ -1641,135 +1824,7 @@
 <h2 id="标识符模式-（Identifier-Pattern）"><a href="#标识符模式-（Identifier-Pattern）" class="headerlink" title="标识符模式 （Identifier Pattern）"></a>标识符模式 （Identifier Pattern）</h2><p>标识符模式是值绑定模式的子模式。标识符模式是常量或者变量的名称自身。例如，在下面的常量声明中，someValue 是一个标识符模式，匹配了 Int 类型的 42：</p>
 <figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> someValue = <span class="number">42</span></div></pre></td></tr></table></figure>
 <p>当匹配成功时，42 被绑定（赋值）给常量 someValue。</p>
-<h2 id="在值绑定模式中的标识符模式会把新命名的变量或常量与匹配到的值做绑定。例如，你可以拆开一个元组，然后把每个元素绑定到相应的标识符模式中。"><a href="#在值绑定模式中的标识符模式会把新命名的变量或常量与匹配到的值做绑定。例如，你可以拆开一个元组，然后把每个元素绑定到相应的标识符模式中。" class="headerlink" title="在值绑定模式中的标识符模式会把新命名的变量或常量与匹配到的值做绑定。例如，你可以拆开一个元组，然后把每个元素绑定到相应的标识符模式中。"></a>在值绑定模式中的标识符模式会把新命名的变量或常量与匹配到的值做绑定。例如，你可以拆开一个元组，然后把每个元素绑定到相应的标识符模式中。</h2>
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://swift.diagon.me/iOS-cornerRadius-masksToBounds-CALayer/">
-
-  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="万恶胖为首">
-    <meta itemprop="description" content="">
-    <meta itemprop="image" content="/images/avatar.gif">
-  </span>
-
-  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="Swift学徒">
-    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
-      <img style="display:none;" itemprop="url image" alt="Swift学徒" src="">
-    </span>
-  </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/iOS-cornerRadius-masksToBounds-CALayer/" itemprop="url">
-                  iOS 中 masksToBounds 与 layer’s contents
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-19T00:00:00+08:00">
-                2017-02-19
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-
-          
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="masksToBounds"><a href="#masksToBounds" class="headerlink" title="masksToBounds"></a>masksToBounds</h3><p>在<a href="http://swift.diagon.me/cornerRadius/">《iOS 性能优化之视图圆角》</a>中提到同时使用 <code>cornerRadius</code> 和 <code>maskToBounds</code> 会触发离屏渲染。</p>
-<p>如果你给 UIImageView 设置圆角，会发现只需要设置 <code>cornerRadius</code>，就可以完成圆角效果，那 <code>masksToBounds</code> 是做什么的？</p>
-<p>查看 <code>cornerRadius</code> 的文档：</p>
-<blockquote>
-<p>Setting the radius to a value greater than 0.0 causes the layer to begin drawing rounded corners on its background. By default, the corner radius does not apply to the image in the layer’s contents property; it applies only to the background color and border of the layer. However, setting the masksToBounds property to YES causes the content to be clipped to the rounded corners.</p>
-</blockquote>
-<p>说明 <code>cornerRadius</code> 设置的圆角只对背景色和图层边框有用，对 <code>layer</code> 的 <code>contents</code> 属性中的 <code>image</code> 无效。当 <code>contents</code> 有内容或者内容背景不是透明的时，单靠 <code>cornerRadius</code> 是无法完成圆角效果的（比如说 UILabel ）。所以才要设置 <code>masksToBounds</code> 为 <code>true</code> (在 UIView 上对应的属性是 <code>clipsToBounds</code>，在 IB 里对应的设置是「Clip Subiews」选项)。<code>masksToBounds</code> 会裁剪 <code>layer</code>的 <code>contents</code>。</p>
-<h3 id="layer’s-contents"><a href="#layer’s-contents" class="headerlink" title="layer’s contents"></a>layer’s contents</h3><p>CALayer 有一个 <code>contents</code> 属性，这个属性的类型被定义为 id，意味着它可以是任何类型的对象。但是，在实践中，如果 <code>contents</code> 不是 CGImage，那么图层将是空白。</p>
-<p>UIImage 有一个 cgImage 属性，我们把 layerView 图层的 contents 属性设置成图片。</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">layerView.layer.contents = <span class="type">UIImage</span>(named: <span class="string">"image"</span>)?.cgImage</div></pre></td></tr></table></figure>
-<p>我们利用 CALayer 在一个普通的 UIView 中显示了一张图片。</p>
+<p>在值绑定模式中的标识符模式会把新命名的变量或常量与匹配到的值做绑定。例如，你可以拆开一个元组，然后把每个元素绑定到相应的标识符模式中。</p>
 <hr>
 
           
@@ -1847,7 +1902,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">41</span>
+                <span class="site-state-item-count">42</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -1856,7 +1911,7 @@
           
             <div class="site-state-item site-state-categories">
               
-                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-count">8</span>
                 <span class="site-state-item-name">分类</span>
               
             </div>

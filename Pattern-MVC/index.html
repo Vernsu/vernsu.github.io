@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="缓存,HTTP," />
+  <meta name="keywords" content="架构," />
 
 
 
@@ -86,19 +86,28 @@
 
 
 
-<meta name="description" content="《iOS 开发中常用的缓存策略：HTTP 协议篇》 一文中说到 Cache-control 含有 no-cache 时需要进一步验证缓存有效性。一般使用的验证机制有 Last-Modified 和 ETag。
-Last-ModifiedLast-Modified 在服务器返回的响应头中，标识资源的最后修改时间。相对应的客户端的请求头中有 If-Modified-Since ，标识客户端所记录的，资">
+<meta name="description" content="注1：本文中实例引述自《iOS Architecture Patterns -Demystifying MVC, MVP, MVVM and VIPER》。
+注2：本系列从 M、V、C 角色定义以及数据流向的层面探讨架构模式设计。
+为什么要考虑架构模式如果不关心架构模式，总有一天，你的一个复杂类会变得无比庞大，你会发现很难修改这个类的功能，无法快速的定位 bug。
+一个优秀的架构应该具备以下几个特">
 <meta property="og:type" content="article">
-<meta property="og:title" content="使用 Last-Modified 和 Etag 精确控制缓存失效时机">
-<meta property="og:url" content="http://swift.diagon.me/last-modified-etag/index.html">
+<meta property="og:title" content="iOS 架构模式之 MVC">
+<meta property="og:url" content="http://swift.diagon.me/Pattern-MVC/index.html">
 <meta property="og:site_name" content="Swift学徒">
-<meta property="og:description" content="《iOS 开发中常用的缓存策略：HTTP 协议篇》 一文中说到 Cache-control 含有 no-cache 时需要进一步验证缓存有效性。一般使用的验证机制有 Last-Modified 和 ETag。
-Last-ModifiedLast-Modified 在服务器返回的响应头中，标识资源的最后修改时间。相对应的客户端的请求头中有 If-Modified-Since ，标识客户端所记录的，资">
-<meta property="og:updated_time" content="2017-02-27T04:01:53.000Z">
+<meta property="og:description" content="注1：本文中实例引述自《iOS Architecture Patterns -Demystifying MVC, MVP, MVVM and VIPER》。
+注2：本系列从 M、V、C 角色定义以及数据流向的层面探讨架构模式设计。
+为什么要考虑架构模式如果不关心架构模式，总有一天，你的一个复杂类会变得无比庞大，你会发现很难修改这个类的功能，无法快速的定位 bug。
+一个优秀的架构应该具备以下几个特">
+<meta property="og:image" content="https://ww4.sinaimg.cn/large/006tNbRwgy1fd8kdc6dzjj30go06fgly.jpg">
+<meta property="og:image" content="https://ww4.sinaimg.cn/large/006tNbRwgy1fd8kkfmsc7j30m8074mxt.jpg">
+<meta property="og:updated_time" content="2017-03-02T08:35:27.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="使用 Last-Modified 和 Etag 精确控制缓存失效时机">
-<meta name="twitter:description" content="《iOS 开发中常用的缓存策略：HTTP 协议篇》 一文中说到 Cache-control 含有 no-cache 时需要进一步验证缓存有效性。一般使用的验证机制有 Last-Modified 和 ETag。
-Last-ModifiedLast-Modified 在服务器返回的响应头中，标识资源的最后修改时间。相对应的客户端的请求头中有 If-Modified-Since ，标识客户端所记录的，资">
+<meta name="twitter:title" content="iOS 架构模式之 MVC">
+<meta name="twitter:description" content="注1：本文中实例引述自《iOS Architecture Patterns -Demystifying MVC, MVP, MVVM and VIPER》。
+注2：本系列从 M、V、C 角色定义以及数据流向的层面探讨架构模式设计。
+为什么要考虑架构模式如果不关心架构模式，总有一天，你的一个复杂类会变得无比庞大，你会发现很难修改这个类的功能，无法快速的定位 bug。
+一个优秀的架构应该具备以下几个特">
+<meta name="twitter:image" content="https://ww4.sinaimg.cn/large/006tNbRwgy1fd8kdc6dzjj30go06fgly.jpg">
 
 
 
@@ -126,13 +135,13 @@ Last-ModifiedLast-Modified 在服务器返回的响应头中，标识资源的�
 
 
 
-  <link rel="canonical" href="http://swift.diagon.me/last-modified-etag/"/>
+  <link rel="canonical" href="http://swift.diagon.me/Pattern-MVC/"/>
 
 
 
 
 
-  <title> 使用 Last-Modified 和 Etag 精确控制缓存失效时机 | Swift学徒 </title>
+  <title> iOS 架构模式之 MVC | Swift学徒 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -255,7 +264,7 @@ Last-ModifiedLast-Modified 在服务器返回的响应头中，标识资源的�
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://swift.diagon.me/last-modified-etag/">
+  <link itemprop="mainEntityOfPage" href="http://swift.diagon.me/Pattern-MVC/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="万恶胖为首">
@@ -279,7 +288,7 @@ Last-ModifiedLast-Modified 在服务器返回的响应头中，标识资源的�
             
             
               
-                使用 Last-Modified 和 Etag 精确控制缓存失效时机
+                iOS 架构模式之 MVC
               
             
           </h1>
@@ -294,8 +303,8 @@ Last-ModifiedLast-Modified 在服务器返回的响应头中，标识资源的�
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-31T00:00:00+08:00">
-                2017-01-31
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-01T00:00:00+08:00">
+                2017-03-01
               </time>
             
 
@@ -317,8 +326,8 @@ Last-ModifiedLast-Modified 在服务器返回的响应头中，标识资源的�
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/网络缓存/" itemprop="url" rel="index">
-                    <span itemprop="name">网络缓存</span>
+                  <a href="/categories/架构/" itemprop="url" rel="index">
+                    <span itemprop="name">架构</span>
                   </a>
                 </span>
 
@@ -352,15 +361,39 @@ Last-ModifiedLast-Modified 在服务器返回的响应头中，标识资源的�
       
 
       
-        <p><a href="http://swift.diagon.me/urlcache-http/">《iOS 开发中常用的缓存策略：HTTP 协议篇》</a> 一文中说到 Cache-control 含有 no-cache 时需要进一步验证缓存有效性。一般使用的验证机制有 Last-Modified 和 ETag。</p>
-<h2 id="Last-Modified"><a href="#Last-Modified" class="headerlink" title="Last-Modified"></a>Last-Modified</h2><p>Last-Modified 在服务器返回的响应头中，标识资源的最后修改时间。相对应的客户端的请求头中有 If-Modified-Since ，标识客户端所记录的，资源的最后修改时间，值为最后一次请求时返回的 Last-Modified 字段的值。</p>
-<p>第一次请求某一个URL时，服务器端的返回状态会是200，内容是你请求的资源，同时响应头中含有 Last-Modified ，格式类似这样：<code>Last-Modified: Fri, 12 May 2006 18:53:33 GMT</code> 。客户端第二次请求此 URL 时，根据 HTTP 协议的规定，客户端向服务器传送 If-Modified-Since 报头，格式类似这样： <code>If-Modified-Since: Fri, 12 May 2006 18:53:33 GMT</code> 。如果服务端的资源没有变化，则自动返回304状态码 <code>Not Changed</code>，内容为空，客户端就直接使用本地的缓存。当服务器端代码发生改变或者重启服务器时，则重新发出资源，返回和第一次请求时类似。这样就可以保证不向客户端重复发出资源，也保证当服务器有变化时，客户端能够得到最新的资源。</p>
-<h2 id="ETag"><a href="#ETag" class="headerlink" title="ETag"></a>ETag</h2><p>Etag 在服务器返回的响应头中，是资源的唯一标识符。相对应的客户端的请求头中有 If-None-Match ，标识客户端所记录的，资源的唯一标识符，值为最后一次请求时返回的 Etag 字段的值。</p>
-<p>第一次请求某一个URL时，服务器端的返回状态会是200，内容是你请求的资源，同时响应头中含有 Etag ，格式类似这样：<code>Etag：&quot;50b1c1d4f775c61:df3&quot;</code> 。客户端第二次请求此 URL 时，根据 HTTP 协议的规定，客户端向服务器传送 If-None-Match: 报头，格式类似这样： <code>If-None-Match: &quot;50b1c1d4f775c61:df3&quot;</code>。如果服务端的资源没有变化，则自动返回304状态码 <code>Not Changed</code>，与Last-Modified一样。</p>
-<h2 id="客户端处理"><a href="#客户端处理" class="headerlink" title="客户端处理"></a>客户端处理</h2><p>若缓存策略为默认的，iOS 系统会自动的处理 Last-Modified 和 ETag 并使用缓存。</p>
-<p>如果想自己用代码处理 Last-Modified 和 ETag，那么缓存策略则必须使用  <code>NSURLRequestReloadIgnoringCacheData</code>，忽略缓存，每次都要向服务端进行校验。然后再用代码判断是否使用缓存。</p>
-<p>另外如果更新频率较高，比如微博消息列表、一般的处理方式是添加一个接口，客户端将本地缓存的最后一条数据的的时间戳或 id 传给服务端，然后服务端返回新增的数据，没有新数据则返回 nil 或 304。</p>
-<hr>
+        <p>注1：本文中实例引述自<a href="https://medium.com/ios-os-x-development/ios-architecture-patterns-ecba4c38de52" target="_blank" rel="external">《iOS Architecture Patterns -<br>Demystifying MVC, MVP, MVVM and VIPER》</a>。</p>
+<p>注2：本系列从 M、V、C 角色定义以及数据流向的层面探讨架构模式设计。</p>
+<h2 id="为什么要考虑架构模式"><a href="#为什么要考虑架构模式" class="headerlink" title="为什么要考虑架构模式"></a>为什么要考虑架构模式</h2><p>如果不关心架构模式，总有一天，你的一个复杂类会变得无比庞大，你会发现很难修改这个类的功能，无法快速的定位 bug。</p>
+<p>一个优秀的架构应该具备以下几个特点：</p>
+<ol>
+<li>职能均衡的划分给具有清晰角色的实体（雨露均沾）。</li>
+<li>容易测试（往往得益于第一点）</li>
+<li>易用，维护成本低。</li>
+</ol>
+<h3 id="为什么要划分职能"><a href="#为什么要划分职能" class="headerlink" title="为什么要划分职能"></a>为什么要划分职能</h3><p>当我们理解事物的时候，划分职能让我们的大脑清晰的思考。如果你认为不断的写代码，你的大脑就能习惯复杂的思维，是这样的。但是，这种思维能力并不是线性增长的，而且很快会到达瓶颈。所以，能够解决复杂问题的简单的方法就是：遵循<a href="https://zh.wikipedia.org/wiki/%E5%8D%95%E4%B8%80%E5%8A%9F%E8%83%BD%E5%8E%9F%E5%88%99" target="_blank" rel="external">单一功能原则</a> ，将职能划分给不同的实体。</p>
+<h3 id="为什么要易用"><a href="#为什么要易用" class="headerlink" title="为什么要易用"></a>为什么要易用</h3><p>最好的代码是从未被写过的代码，所以代码量越少，bug就越少。这就意味着更少的代码不代表一个程序员懒惰，同时也不应该为了一个高大上的解决方案而忽视了它的维护成本。</p>
+<h2 id="MV-X-系列"><a href="#MV-X-系列" class="headerlink" title="MV(X)系列"></a>MV(X)系列</h2><p>目前架构设计模式的选择：</p>
+<ul>
+<li>MVC</li>
+<li>MVP</li>
+<li>MVVM</li>
+<li>VIPER</li>
+</ul>
+<h2 id="MVC"><a href="#MVC" class="headerlink" title="MVC"></a>MVC</h2><h3 id="苹果的-MVC"><a href="#苹果的-MVC" class="headerlink" title="苹果的 MVC"></a>苹果的 MVC</h3><p>这里我们说得 MVC 特指苹果推荐的 MVC 模式，如图：</p>
+<p><img src="https://ww4.sinaimg.cn/large/006tNbRwgy1fd8kdc6dzjj30go06fgly.jpg" alt=""></p>
+<p>Controller 是介于 View 和 Model 之间， View 和 Model 没有任何直接联系。这种模式很直接，并且易学。这种模式看上去很美好，但现实中，这个模式往往变成了这样的：</p>
+<p><img src="https://ww4.sinaimg.cn/large/006tNbRwgy1fd8kkfmsc7j30m8074mxt.jpg" alt=""></p>
+<p>因为 Controller 包含了 View 的生命周期，很难说 view 和 Controller 是相互独立的。并且 Controller 处于桥接位置，很容易变成一个可以处理任何事情的容器。</p>
+<h3 id="违背-MVC-的日常代码"><a href="#违背-MVC-的日常代码" class="headerlink" title="违背 MVC 的日常代码"></a>违背 MVC 的日常代码</h3><p>经常会看到这样的代码：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">var userCell = tableView.dequeueReusableCellWithIdentifier(<span class="string">"identifier"</span>) as UserCell</div><div class="line">userCell.configureWithUser(user)</div></pre></td></tr></table></figure>
+<p>这个 cell（View）直接调用了 Model，实际上以及违背了 MVC，但是这种情况很普遍，以至于人们不觉得这里有哪些不对。如果严格遵守 MVC 的话，要把对 cell 的设置放在 Controller 中，而不是不向 View 传递一个 Model 对象，这会让 Controller 的体积变得更庞大。</p>
+<h3 id="MVC-实例"><a href="#MVC-实例" class="headerlink" title="MVC 实例"></a>MVC 实例</h3><figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">import <span class="built_in">UIKit</span></div><div class="line"> </div><div class="line"><span class="keyword">struct</span> Person &#123; <span class="comment">// Model</span></div><div class="line">    let firstName: String</div><div class="line">    let lastName: String</div><div class="line">&#125;</div><div class="line"> </div><div class="line"><span class="keyword">class</span> GreetingViewController : <span class="built_in">UIViewController</span> &#123; <span class="comment">// View + Controller</span></div><div class="line">    var person: Person!</div><div class="line">    let showGreetingButton = <span class="built_in">UIButton</span>()</div><div class="line">    let greetingLabel = <span class="built_in">UILabel</span>()</div><div class="line"> </div><div class="line">    override func viewDidLoad() &#123;</div><div class="line">        <span class="keyword">super</span>.viewDidLoad()</div><div class="line">        <span class="keyword">self</span>.showGreetingButton.addTarget(<span class="keyword">self</span>, action: <span class="string">"didTapButton:"</span>, forControlEvents: .TouchUpInside)</div><div class="line">    &#125;</div><div class="line"> </div><div class="line">    func didTapButton(button: <span class="built_in">UIButton</span>) &#123;</div><div class="line">        let greeting = <span class="string">"Hello"</span> + <span class="string">" "</span> + <span class="keyword">self</span>.person.firstName + <span class="string">" "</span> + <span class="keyword">self</span>.person.lastName</div><div class="line">        <span class="keyword">self</span>.greetingLabel.text = greeting</div><div class="line"> </div><div class="line">    &#125;</div><div class="line">    <span class="comment">// layout code goes here</span></div><div class="line">&#125;</div><div class="line"><span class="comment">// Assembling of MVC</span></div><div class="line">let model = Person(firstName: <span class="string">"David"</span>, lastName: <span class="string">"Blaine"</span>)</div><div class="line">let view = GreetingViewController()</div><div class="line">view.person = model;</div></pre></td></tr></table></figure>
+<p>我们评估下之前提出的架构特点：</p>
+<ol>
+<li>职能均分：View 和 Controller 紧密耦合。</li>
+<li>容易测试：紧密耦合不利于测试。</li>
+<li>易用，维护成本低：MVC 很容易理解，相比其他模式代码量少，开发速度快，新手也可以维护。当时随着项目变大，可维护性越来越差。</li>
+</ol>
 
       
     </div>
@@ -389,9 +422,7 @@ Last-ModifiedLast-Modified 在服务器返回的响应头中，标识资源的�
       
         <div class="post-tags">
           
-            <a href="/tags/缓存/" rel="tag"># 缓存</a>
-          
-            <a href="/tags/HTTP/" rel="tag"># HTTP</a>
+            <a href="/tags/架构/" rel="tag"># 架构</a>
           
         </div>
       
@@ -400,8 +431,8 @@ Last-ModifiedLast-Modified 在服务器返回的响应头中，标识资源的�
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/urlcache-cachedurlresponse/" rel="next" title="URLCache 与 CachedURLResponse">
-                <i class="fa fa-chevron-left"></i> URLCache 与 CachedURLResponse
+              <a href="/AsyncDisplayKit-6/" rel="next" title="AsyncDisplayKit 教程(6)：多方向的智能预加载">
+                <i class="fa fa-chevron-left"></i> AsyncDisplayKit 教程(6)：多方向的智能预加载
               </a>
             
           </div>
@@ -409,10 +440,6 @@ Last-ModifiedLast-Modified 在服务器返回的响应头中，标识资源的�
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/delegate-weak/" rel="prev" title="Swift 中 delegate 设计模式使用 weak 避免循环引用">
-                Swift 中 delegate 设计模式使用 weak 避免循环引用 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -542,7 +569,7 @@ Last-ModifiedLast-Modified 在服务器返回的响应头中，标识资源的�
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Last-Modified"><span class="nav-number">1.</span> <span class="nav-text">Last-Modified</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ETag"><span class="nav-number">2.</span> <span class="nav-text">ETag</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#客户端处理"><span class="nav-number">3.</span> <span class="nav-text">客户端处理</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么要考虑架构模式"><span class="nav-number">1.</span> <span class="nav-text">为什么要考虑架构模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#为什么要划分职能"><span class="nav-number">1.1.</span> <span class="nav-text">为什么要划分职能</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#为什么要易用"><span class="nav-number">1.2.</span> <span class="nav-text">为什么要易用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MV-X-系列"><span class="nav-number">2.</span> <span class="nav-text">MV(X)系列</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MVC"><span class="nav-number">3.</span> <span class="nav-text">MVC</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#苹果的-MVC"><span class="nav-number">3.1.</span> <span class="nav-text">苹果的 MVC</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#违背-MVC-的日常代码"><span class="nav-number">3.2.</span> <span class="nav-text">违背 MVC 的日常代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MVC-实例"><span class="nav-number">3.3.</span> <span class="nav-text">MVC 实例</span></a></li></ol></li></ol></div>
             
 
           </div>

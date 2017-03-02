@@ -253,6 +253,160 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://swift.diagon.me/urlcache-cachedurlresponse/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="万恶胖为首">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.gif">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="Swift学徒">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="Swift学徒" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/urlcache-cachedurlresponse/" itemprop="url">
+                  URLCache 与 CachedURLResponse
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-30T00:00:00+08:00">
+                2017-01-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/网络缓存/" itemprop="url" rel="index">
+                    <span itemprop="name">网络缓存</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><a href="http://swift.diagon.me/urlcache-condiguration/">《iOS 开发中 URLCache 的应用》</a>中介绍了 URLCache 的使用方法。本文将进一步讲解 URLCache 更加深层次的用法。 </p>
+<h2 id="CachedURLResponse"><a href="#CachedURLResponse" class="headerlink" title="CachedURLResponse"></a>CachedURLResponse</h2><p>CachedURLResponse 包含了一个服务端响应 metadata 的 URLResponse 和 一个包含实际存储数据 的 Data。</p>
+<h3 id="存取方法"><a href="#存取方法" class="headerlink" title="存取方法"></a>存取方法</h3><p>URLCache将 URLRequest/URLSessionDataTask 和 CachedURLResponse 进行了映射。</p>
+<p>得到和存储缓存对象的方法：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">cachedResponse</span><span class="params">(<span class="keyword">for</span> request: URLRequest)</span></span> -&gt; <span class="type">CachedURLResponse</span>?</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">storeCachedResponse</span><span class="params">(<span class="number">_</span> cachedResponse: CachedURLResponse, <span class="keyword">for</span> request: URLRequest)</span></span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">storeCachedResponse</span><span class="params">(<span class="number">_</span> cachedResponse: CachedURLResponse, <span class="keyword">for</span> dataTask: URLSessionDataTask)</span></span></div></pre></td></tr></table></figure>
+<h3 id="修改缓存数据"><a href="#修改缓存数据" class="headerlink" title="修改缓存数据"></a>修改缓存数据</h3><p>URLSessionDataDelegate 协议中方法可以在数据返回后即将缓存时调用的方法。可以在这个方法里可以对即将缓存的数据进行修改，在代理方法中必须调用 completionHandler，提供要缓存的数据，如果传 nil 则表示不缓存。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">urlSession</span><span class="params">(<span class="number">_</span> session: URLSession, dataTask: URLSessionDataTask, willCacheResponse proposedResponse: CachedURLResponse, completionHandler: @escaping <span class="params">(CachedURLResponse?)</span></span></span> -&gt; <span class="type">Void</span>) &#123;</div><div class="line"></div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<p>同时，这个方法中有说明：<strong>如果一个请求的响应内容的大小超过了 URLCache 中对应硬盘大小的 5%, 它就不会被缓存。</strong></p>
+<p>在 Alamofire 中可以这样写：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="type">Alamofire</span>.<span class="type">Manager</span></div><div class="line">.sharedInstance</div><div class="line">.delegate</div><div class="line">.dataTaskWillCacheResponse = &#123; (session, task, cachedResponse) -&gt; <span class="type">NSCachedURLResponse</span>? <span class="keyword">in</span></div><div class="line">    <span class="keyword">var</span> userInfo = [<span class="type">NSObject</span> : <span class="type">AnyObject</span>]()</div><div class="line">    <span class="comment">// 设置userInfo</span></div><div class="line">    <span class="keyword">return</span> <span class="type">NSCachedURLResponse</span>(response: cachedResponse.response,</div><div class="line">                               data: cachedResponse.data,</div><div class="line">                               userInfo: userInfo,</div><div class="line">                               storagePolicy: cachedResponse.storagePolicy)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="清理缓存"><a href="#清理缓存" class="headerlink" title="清理缓存"></a>清理缓存</h2><p>可以删除全部缓存或者针对某个 URLRequest/URLSessionDataTask 的缓存。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="type">URLCache</span>.shared.removeAllCachedResponses()</div></pre></td></tr></table></figure>
+<h2 id="线程安全"><a href="#线程安全" class="headerlink" title="线程安全"></a>线程安全</h2><p>在 iOS8 之后 URLCache 是线程安全的。尽管 URLCache 实例方法能够安全的被多个执行上下文同时调用，还是要注意有些方法的使用。比如使用 <code>cacheResponse(for:)</code> 和 <code>storeCachedResponse(_:for:)</code> 在同一个 request 中存取响应，不可避免的会出现竞争条件。URLCache的子类必须实现线程安全的方法重载。</p>
+<hr>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
   <link itemprop="mainEntityOfPage" href="http://swift.diagon.me/urlcache-cache-control/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1770,168 +1924,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://swift.diagon.me/value-semantic-advanced/">
-
-  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="万恶胖为首">
-    <meta itemprop="description" content="">
-    <meta itemprop="image" content="/images/avatar.gif">
-  </span>
-
-  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="Swift学徒">
-    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
-      <img style="display:none;" itemprop="url image" alt="Swift学徒" src="">
-    </span>
-  </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/value-semantic-advanced/" itemprop="url">
-                  Swift 中值类型内嵌套可变引用类型时值语义的实现
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-20T00:00:00+08:00">
-                2017-01-20
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/值类型/" itemprop="url" rel="index">
-                    <span itemprop="name">值类型</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-
-          
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="简单的嵌套结构"><a href="#简单的嵌套结构" class="headerlink" title="简单的嵌套结构"></a>简单的嵌套结构</h2><p>当一个值类型内嵌套一个可变引用类型拷贝时，引用类型作为 property 是引用的，拷贝所得的实例中 peoperty 和原实例中的 property 是同一个。<br>举个例子：</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">enum</span> <span class="title">Color</span></span>&#123;</div><div class="line">    <span class="keyword">case</span> blue</div><div class="line">    <span class="keyword">case</span> green</div><div class="line">&#125;</div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Bucket</span> </span>&#123;</div><div class="line">    <span class="keyword">var</span> color: <span class="type">Color</span></div><div class="line">    <span class="keyword">init</span>(color: <span class="type">Color</span>) &#123;</div><div class="line">        <span class="keyword">self</span>.color = color</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">PaintingPlan</span> // 值类型</span></div><div class="line">&#123;</div><div class="line">    <span class="comment">// 可变引用类型</span></div><div class="line">    <span class="keyword">var</span> bucket = <span class="type">Bucket</span>(color:.blue)</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">var</span> artPlan = <span class="type">PaintingPlan</span>()</div><div class="line"><span class="keyword">var</span> housePlan = artPlan</div></pre></td></tr></table></figure>
-<p>我们改变 bucket 的 color 试试：</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">artPlan.bucket.color <span class="comment">// =&gt; blue</span></div><div class="line">housePlan.bucket.color = .green</div><div class="line">artPlan.bucket.color <span class="comment">// =&gt; green. oops!</span></div></pre></td></tr></table></figure>
-<p>这是一种内隐的结构共享，<code>housePlan.bucket</code>和<code>artPlan.bucket</code>指向的是同一个实例。导致 <code>PaintingPlan</code> 虽然是值类型，但是没有值语义。</p>
-<p>我们直接改变 bucket 试试</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">artPlan.bucket.color <span class="comment">// =&gt; blue</span></div><div class="line">housePlan.bucket = <span class="type">Bucket</span>(color:.green)</div><div class="line">artPlan.bucket.color <span class="comment">// =&gt; blue OK!</span></div></pre></td></tr></table></figure>
-<p>这个时候好像没有任何问题。因为进行拷贝操作时，我们拷贝了bucket的引用，上面这几行代码中，我们并没有对该引用实例做修改，而是直接将引用指向了另外一个实例。</p>
-<p>更多嵌套结构参见：<a href="http://swift.diagon.me/swift-sturct-class-type/">《Swift 中的嵌套类型》</a></p>
-<h2 id="值语义的实现"><a href="#值语义的实现" class="headerlink" title="值语义的实现"></a>值语义的实现</h2><h3 id="修复值语义"><a href="#修复值语义" class="headerlink" title="修复值语义"></a>修复值语义</h3><p>首先，我们意识到，值语义的定义是相对于存取级别的。一个类型可能会对它的客户代码提供值语义，而对它内部的私有成员不提供值语义。</p>
-<p>所以，保留混合类型值语义的技巧在于：<strong>让客户无法改变内部的引用类型</strong>。上面这个例子中，我们让可变引用类型私有，<strong>提供一个可以控制读写的接口</strong>。</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">PaintingPlan</span> // 值类型</span></div><div class="line">&#123;</div><div class="line">  <span class="comment">// 一个私有引用类型, for "deep storage"</span></div><div class="line">  <span class="keyword">private</span> <span class="keyword">var</span> bucket = <span class="type">Bucket</span>(color: .blue)</div><div class="line">  </div><div class="line">  <span class="comment">// 一个伪装的值类型，使用了 deep storage</span></div><div class="line">  <span class="keyword">var</span> bucketColor: <span class="type">Color</span> &#123;</div><div class="line">    <span class="keyword">get</span> &#123;</div><div class="line">      <span class="keyword">return</span> bucket.color</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">set</span> &#123;</div><div class="line">    <span class="comment">//注意，这里我们做了控制，让 bucket 只能指向了一个新的实例，而不能修改之前指向的实例，使得它拥有值语义。</span></div><div class="line">      bucket = <span class="type">Bucket</span>(color: newValue)</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">var</span> artPlan = <span class="type">PaintingPlan</span>()</div><div class="line"><span class="keyword">var</span> housePlan = artPlan</div><div class="line"></div><div class="line">housePlan.bucketColor = <span class="type">Color</span>.green</div><div class="line">artPlan.bucketColor <span class="comment">// blue！</span></div></pre></td></tr></table></figure>
-<p>对该 struct 的客户来说，表现出来的就是值语义。引入了一个计算属性，使用 get 和 set 来控制私有的引用类型的存取级别。这个行为在苹果官方文档中被叫做 deep storage，也被叫做 indiect storage 或 backing storage。</p>
-<p>当用户修改 bucketColor 时， setter 创建了一个不同的实例。</p>
-<p>至此，值语义的实现算是解决了。</p>
-<h3 id="写时复制（COW）"><a href="#写时复制（COW）" class="headerlink" title="写时复制（COW）"></a>写时复制（COW）</h3><p>这样做，产生了另一个结果：和简单的值类型相比，给 PaintingPlan 分配一个值时，不会在分配时立刻拷贝 backing storage 。实际上多个实例会共享一个 backing storage。 但是看上去好像每个实例拥有他们自己的 backing storage，因为一旦需要，就会私下创建他自己的独特的 backing storage。</p>
-<p>这种模式被称作写时复制：因为系统只在当你需要修改变量的时候拷贝 backing storeage。</p>
-<p>Swift 标准库中大量使用了这种技术。Swift中很多值类型并不是原始的值类型，但是混合类型提供了值语义。</p>
-<p>这样做的好处在于提高性能。想象一个，如果 backing storeage 非常大，实例可以共用相同的 backing storeage， 这样可以节约拷贝占用的内存和计算力。</p>
-<p>但是一旦你使用变量修改实例，为了不影响别的变量，系统会拷贝 backing storeage 。这样可以推迟内存占用和计算力消耗直到必须拷贝时。</p>
-<p>这个例子还可以进一步的优化，详细介绍参考<a href="http://swift.diagon.me/copy-on-write/">《写时复制（COW）在 Swift 中的应用》</a>。</p>
-<hr>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1979,7 +1971,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">41</span>
+                <span class="site-state-item-count">42</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -1988,7 +1980,7 @@
           
             <div class="site-state-item site-state-categories">
               
-                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-count">8</span>
                 <span class="site-state-item-name">分类</span>
               
             </div>

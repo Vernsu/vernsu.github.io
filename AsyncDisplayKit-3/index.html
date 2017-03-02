@@ -98,7 +98,7 @@
 运行程序，App 中包含了一个 UITableView，显示了一个野生动物的列表。滚动页面，帧率开始下降。这个 App 明显的需要进行性能上调优。
 用 TableNode 替换 Table View在 AnimalTableController.m 中引入 AsyncDisplayKit：
 1#import &amp;lt;Async">
-<meta property="og:updated_time" content="2017-02-25T12:48:13.000Z">
+<meta property="og:updated_time" content="2017-02-27T04:07:06.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="AsyncDisplayKit 教程(3)：TableNode">
 <meta name="twitter:description" content="本教程的初始工程 RainforestStarter 可以点这里获取。
@@ -402,6 +402,7 @@
 <p>将 -tableView:heightForRowAtIndexPath: 方法替换为:</p>
 <figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">-(ASSizeRange)tableNode:(ASTableNode *)tableNode constrainedSizeForRowAtIndexPath:(<span class="built_in">NSIndexPath</span> *)indexPath</div><div class="line">&#123;</div><div class="line">    <span class="built_in">CGFloat</span> width = [<span class="built_in">UIScreen</span> mainScreen].bounds.size.width;</div><div class="line">    <span class="built_in">CGSize</span> min = <span class="built_in">CGSizeMake</span>(width, ([<span class="built_in">UIScreen</span> mainScreen].bounds.size.height/<span class="number">3</span>) * <span class="number">2</span>);</div><div class="line">    <span class="built_in">CGSize</span> max = <span class="built_in">CGSizeMake</span>(width, INFINITY);</div><div class="line">    </div><div class="line">    <span class="keyword">return</span> ASSizeRangeMake(min, max);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>搞定！ 运行一下，很流畅~</p>
+<hr>
 
       
     </div>
@@ -521,7 +522,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">41</span>
+                <span class="site-state-item-count">42</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -530,7 +531,7 @@
           
             <div class="site-state-item site-state-categories">
               
-                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-count">8</span>
                 <span class="site-state-item-name">分类</span>
               
             </div>
