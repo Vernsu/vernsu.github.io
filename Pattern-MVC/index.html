@@ -87,35 +87,35 @@
 
 
 <meta name="description" content="注1：本文中实例引述自《iOS Architecture Patterns》。
-注2：本系列从 M、V、C 角色定义以及数据流向的层面探讨架构模式设计。
+注2：本系列从 M、V、C 角色定义以及数据流向的层面探讨架构设计。
 为什么要考虑架构模式如果不关心架构模式，总有一天，你的一个复杂类会变得无比庞大，你会发现很难修改这个类的功能，无法快速的定位 bug。
 一个优秀的架构应该具备以下几个特点：
 
 职能均衡的划分给具有清晰角色的功能类（雨露均沾）。
-容易测试（往往得益">
+容易测试（往往得益于第">
 <meta property="og:type" content="article">
 <meta property="og:title" content="iOS 架构模式之 MVC">
 <meta property="og:url" content="http://swift.diagon.me/Pattern-MVC/index.html">
 <meta property="og:site_name" content="Swift学徒">
 <meta property="og:description" content="注1：本文中实例引述自《iOS Architecture Patterns》。
-注2：本系列从 M、V、C 角色定义以及数据流向的层面探讨架构模式设计。
+注2：本系列从 M、V、C 角色定义以及数据流向的层面探讨架构设计。
 为什么要考虑架构模式如果不关心架构模式，总有一天，你的一个复杂类会变得无比庞大，你会发现很难修改这个类的功能，无法快速的定位 bug。
 一个优秀的架构应该具备以下几个特点：
 
 职能均衡的划分给具有清晰角色的功能类（雨露均沾）。
-容易测试（往往得益">
+容易测试（往往得益于第">
 <meta property="og:image" content="https://ww4.sinaimg.cn/large/006tNbRwgy1fd8kdc6dzjj30go06fgly.jpg">
 <meta property="og:image" content="https://ww4.sinaimg.cn/large/006tNbRwgy1fd8kkfmsc7j30m8074mxt.jpg">
-<meta property="og:updated_time" content="2017-03-02T12:06:21.000Z">
+<meta property="og:updated_time" content="2017-03-03T07:52:05.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="iOS 架构模式之 MVC">
 <meta name="twitter:description" content="注1：本文中实例引述自《iOS Architecture Patterns》。
-注2：本系列从 M、V、C 角色定义以及数据流向的层面探讨架构模式设计。
+注2：本系列从 M、V、C 角色定义以及数据流向的层面探讨架构设计。
 为什么要考虑架构模式如果不关心架构模式，总有一天，你的一个复杂类会变得无比庞大，你会发现很难修改这个类的功能，无法快速的定位 bug。
 一个优秀的架构应该具备以下几个特点：
 
 职能均衡的划分给具有清晰角色的功能类（雨露均沾）。
-容易测试（往往得益">
+容易测试（往往得益于第">
 <meta name="twitter:image" content="https://ww4.sinaimg.cn/large/006tNbRwgy1fd8kdc6dzjj30go06fgly.jpg">
 
 
@@ -371,7 +371,7 @@
 
       
         <p>注1：本文中实例引述自<a href="https://medium.com/ios-os-x-development/ios-architecture-patterns-ecba4c38de52" target="_blank" rel="external">《iOS Architecture Patterns》</a>。</p>
-<p>注2：本系列从 M、V、C 角色定义以及数据流向的层面探讨架构模式设计。</p>
+<p>注2：本系列从 M、V、C 角色定义以及数据流向的层面探讨架构设计。</p>
 <h2 id="为什么要考虑架构模式"><a href="#为什么要考虑架构模式" class="headerlink" title="为什么要考虑架构模式"></a>为什么要考虑架构模式</h2><p>如果不关心架构模式，总有一天，你的一个复杂类会变得无比庞大，你会发现很难修改这个类的功能，无法快速的定位 bug。</p>
 <p>一个优秀的架构应该具备以下几个特点：</p>
 <ol>
@@ -391,13 +391,14 @@
 <p>架构模式没有教科书式的标准答案，关键在于架构师和团队成员达成一致认识，在遇到问题时不断的调整，跨越瓶颈。</p>
 <h2 id="MVC"><a href="#MVC" class="headerlink" title="MVC"></a>MVC</h2><h3 id="苹果的-MVC"><a href="#苹果的-MVC" class="headerlink" title="苹果的 MVC"></a>苹果的 MVC</h3><p>这里我们说得 MVC 特指苹果推荐的 MVC 模式，如图：</p>
 <p><img src="https://ww4.sinaimg.cn/large/006tNbRwgy1fd8kdc6dzjj30go06fgly.jpg" alt=""></p>
-<p>Controller 是介于 View 和 Model 之间， View 和 Model 没有任何直接联系。这种模式很直接，并且易学。这种模式看上去很美好，但现实中，这个模式往往变成了这样的：</p>
+<p>Controller 介于 View 和 Model 之间， View 和 Model 没有任何直接联系。Model 包含了数据模型，以及管理这些数据相关的逻辑计算，如本地数据变化、数据缓存等。</p>
+<p>这种模式很直接，并且易学。这种模式看上去很美好，但现实中，这个模式往往变成了这样的：</p>
 <p><img src="https://ww4.sinaimg.cn/large/006tNbRwgy1fd8kkfmsc7j30m8074mxt.jpg" alt=""></p>
-<p>因为 Controller 包含了 View 的生命周期，很难说 view 和 Controller 是相互独立的。并且 Controller 处于桥接位置，很容易变成一个可以处理任何事情的容器。</p>
+<p>因为 Controller 包含了 ViewController 的生命周期和布局代码，很难说 View 和 Controller 是相互独立的。并且 Controller 处于桥接位置，很容易成一个可以处理任何事情的容器，变得臃肿无比。这样的 Controller 之中会有大量的 “表示逻辑”(presentation logic)，就是那些将 Model 数据转换为 View 可以呈现的东西的事情，例如将一个 NSDate 转换为一个格式化过的 NSString，或者讲几个字符串拼接以便于显示的逻辑。</p>
 <h3 id="违背-MVC-的日常代码"><a href="#违背-MVC-的日常代码" class="headerlink" title="违背 MVC 的日常代码"></a>违背 MVC 的日常代码</h3><p>经常会看到这样的代码：</p>
-<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">var userCell = tableView.dequeueReusableCellWithIdentifier(<span class="string">"identifier"</span>) as UserCell</div><div class="line">userCell.configureWithUser(user)</div></pre></td></tr></table></figure>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> userCell = tableView.dequeueReusableCellWithIdentifier(<span class="string">"identifier"</span>) <span class="keyword">as</span> <span class="type">UserCell</span></div><div class="line">userCell.configureWithUser(user)</div></pre></td></tr></table></figure>
 <p>这个 cell（View）直接调用了 Model，实际上已经违背了 MVC 模型的规则，但这种情况很普遍，以至于人们不觉得这里有什么不对。如果严格遵守 MVC 的话，要把对 cell 的配置放在 Controller 中，而不是向 cell（View） 传递一个 Model 对象。当然这会让 Controller 的体积变得更庞大。</p>
-<h3 id="MVC-实例"><a href="#MVC-实例" class="headerlink" title="MVC 实例"></a>MVC 实例</h3><figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">import <span class="built_in">UIKit</span></div><div class="line"> </div><div class="line"><span class="keyword">struct</span> Person &#123; <span class="comment">// Model</span></div><div class="line">    let firstName: String</div><div class="line">    let lastName: String</div><div class="line">&#125;</div><div class="line"> </div><div class="line"><span class="keyword">class</span> GreetingViewController : <span class="built_in">UIViewController</span> &#123; <span class="comment">// View + Controller</span></div><div class="line">    var person: Person!</div><div class="line">    let showGreetingButton = <span class="built_in">UIButton</span>()</div><div class="line">    let greetingLabel = <span class="built_in">UILabel</span>()</div><div class="line"> </div><div class="line">    override func viewDidLoad() &#123;</div><div class="line">        <span class="keyword">super</span>.viewDidLoad()</div><div class="line">        <span class="keyword">self</span>.showGreetingButton.addTarget(<span class="keyword">self</span>, action: <span class="string">"didTapButton:"</span>, forControlEvents: .TouchUpInside)</div><div class="line">    &#125;</div><div class="line"> </div><div class="line">    func didTapButton(button: <span class="built_in">UIButton</span>) &#123;</div><div class="line">        let greeting = <span class="string">"Hello"</span> + <span class="string">" "</span> + <span class="keyword">self</span>.person.firstName + <span class="string">" "</span> + <span class="keyword">self</span>.person.lastName</div><div class="line">        <span class="keyword">self</span>.greetingLabel.text = greeting</div><div class="line"> </div><div class="line">    &#125;</div><div class="line">    <span class="comment">// layout code goes here</span></div><div class="line">&#125;</div><div class="line"><span class="comment">// MVC</span></div><div class="line">let model = Person(firstName: <span class="string">"David"</span>, lastName: <span class="string">"Blaine"</span>)</div><div class="line">let controller = GreetingViewController()</div><div class="line">controller.person = model;</div></pre></td></tr></table></figure>
+<h3 id="MVC-实例"><a href="#MVC-实例" class="headerlink" title="MVC 实例"></a>MVC 实例</h3><figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> UIKit</div><div class="line"> </div><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Person</span> </span>&#123; <span class="comment">// Model</span></div><div class="line">    <span class="keyword">let</span> firstName: <span class="type">String</span></div><div class="line">    <span class="keyword">let</span> lastName: <span class="type">String</span></div><div class="line">&#125;</div><div class="line"> </div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">GreetingViewController</span> : <span class="title">UIViewController</span> </span>&#123; <span class="comment">// View + Controller</span></div><div class="line">    <span class="keyword">var</span> person: <span class="type">Person</span>!</div><div class="line">    <span class="keyword">let</span> showGreetingButton = <span class="type">UIButton</span>()</div><div class="line">    <span class="keyword">let</span> greetingLabel = <span class="type">UILabel</span>()</div><div class="line"> </div><div class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">func</span> <span class="title">viewDidLoad</span><span class="params">()</span></span> &#123;</div><div class="line">        <span class="keyword">super</span>.viewDidLoad()</div><div class="line">        <span class="keyword">self</span>.showGreetingButton.addTarget(<span class="keyword">self</span>, action: <span class="string">"didTapButton:"</span>, forControlEvents: .<span class="type">TouchUpInside</span>)</div><div class="line">    &#125;</div><div class="line"> </div><div class="line">    <span class="function"><span class="keyword">func</span> <span class="title">didTapButton</span><span class="params">(button: UIButton)</span></span> &#123;</div><div class="line">        <span class="keyword">let</span> greeting = <span class="string">"Hello"</span> + <span class="string">" "</span> + <span class="keyword">self</span>.person.firstName + <span class="string">" "</span> + <span class="keyword">self</span>.person.lastName</div><div class="line">        <span class="keyword">self</span>.greetingLabel.text = greeting</div><div class="line"> </div><div class="line">    &#125;</div><div class="line">    <span class="comment">// 布局代码</span></div><div class="line">&#125;</div><div class="line"><span class="comment">// MVC</span></div><div class="line"><span class="keyword">let</span> model = <span class="type">Person</span>(firstName: <span class="string">"David"</span>, lastName: <span class="string">"Blaine"</span>)</div><div class="line"><span class="keyword">let</span> controller = <span class="type">GreetingViewController</span>()</div><div class="line">controller.person = model;</div></pre></td></tr></table></figure>
 <p>我们评估下之前提出的架构特点：</p>
 <ol>
 <li>职能均分：View 和 Controller 紧密耦合。</li>
@@ -523,7 +524,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">43</span>
+                <span class="site-state-item-count">44</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
