@@ -253,6 +253,174 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://swift.diagon.me/swift-optional/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="万恶胖为首">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.gif">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="Swift学徒">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="Swift学徒" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/swift-optional/" itemprop="url">
+                  Swift 中为什么要引入 Optional？
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-23T00:00:00+08:00">
+                2017-01-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Optional/" itemprop="url" rel="index">
+                    <span itemprop="name">Optional</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="历史原因"><a href="#历史原因" class="headerlink" title="历史原因"></a>历史原因</h2><p>来自 StackOverflow 一个<a href="http://stackoverflow.com/questions/4456438/how-to-pass-null-a-real-surname-to-a-soap-web-service-in-actionscript-3" target="_blank" rel="external">提问</a>里描述到：</p>
+<blockquote>
+<p>我们有一个员工姓 Null ，我们在查询这家伙的名字时，应用程序被弄崩溃了，肿么办！！！</p>
+</blockquote>
+<p>这个错误的出现可谓历史悠久，源自<a href="https://en.wikipedia.org/wiki/Tony_Hoare" target="_blank" rel="external">Tony Hoare</a>在1965年时提出的编程语言设计，而且广泛的被借鉴到其他语言中。Null 在其他语言中有各种各样的名字：NULL、nil、null、None、Nothing、Nil 和 nullptr。更糟糕的是，每种语言都有细微的差别。</p>
+<p>Tony Hoare 将这个错误的设计称为 <a href="https://www.infoq.com/presentations/Null-References-The-Billion-Dollar-Mistake-Tony-Hoare" target="_blank" rel="external">billion dollar mistake</a>,他说：</p>
+<blockquote>
+<p>它导致了数不清的错误、漏洞和系统崩溃，可能在之后 40 年中造成了十亿美元的损失。</p>
+</blockquote>
+<h2 id="哨兵值"><a href="#哨兵值" class="headerlink" title="哨兵值"></a>哨兵值</h2><p>Linux 系统中打开一个文件时，有时我们可能会失败：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">int</span> fd = open(<span class="string">"someFile"</span>, O_RDWR); </div><div class="line"><span class="keyword">if</span> (fd != <span class="number">-1</span>) &#123; </div><div class="line">  <span class="comment">// Some file operations here </span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>Linux 使用了一个整数 -1 来表示文件打开错误。</p>
+<p>很多时候用0或者空字符串来代表不存在或没有值。但是有一个问题。0或者空字符串本身也可能是有含义的。</p>
+<p>这种使用了和正常状态同类型的特殊值来表示失败，没有值，不存在的含义，我们通常将这种值就叫做哨兵值。</p>
+<p>很多语言简单的处理了哨兵值，比如 Objective-C 中有 nil概念，但是仅仅只是和0的含义相同。</p>
+<p>在Objective-C中由于调用值为nil的对象的方法是被允许的。我们举一个 nil 造成的 bug：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">NSString</span> * tmp = <span class="literal">nil</span>;</div><div class="line"><span class="keyword">if</span> ([tmp rangeOfString:<span class="string">@"Swift"</span>].location != <span class="built_in">NSNotFound</span>) &#123;</div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"Swift是最好的编程语言"</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>在这个例子中，tmp 中 明明不可能包含关键字，但是「Swift是最好的编程语言」这句话仍然被打印了出来。</p>
+<p>这就是哨兵值惹的祸，这样的问题防不胜防。</p>
+<p>如果一种语言允许任何东西为 null，那么任何东西都可以是 null。换句话说，我们使用任何一个对象都冒着它并不存在的风险，而编译器对这种状态一无所知。</p>
+<h2 id="Swift-中的优雅处理"><a href="#Swift-中的优雅处理" class="headerlink" title="Swift 中的优雅处理"></a>Swift 中的优雅处理</h2><p>Swift 用一个特殊类型 optional 处理一个值可能是 nil 的情况。当你使用 optional时，你必须处理nil的情况。这样就有效解决了解决了哨兵值含糊不清的问题。</p>
+<p>因为，null的问题之所以存在，是因为你可以在没有“检查” null 的情况下，对对象进行了操作。</p>
+<p>Optional 类型的设计让你没法在访问对象前不检查它。这让你没法犯错。</p>
+<p>比如，在 Swift 里面，你可以这样写：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span> <span class="keyword">let</span> content = something &#123;</div><div class="line">  <span class="built_in">print</span>(<span class="string">"找到: "</span> + content)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>假设 something 的类型是String?，它可能包含一个 String，也可能是 nil。使用这种特殊的 if 语法可以检查并访问 something。这个 if 语句跟普通的 if 语句不一样，它的条件并不是一个 Bool，而是一个变量绑定 let content = something。</p>
+<p>这几行代码的含义是：如果 something 是nil，那么整个 if 语句被忽略。如果它不是 nil，那么将 something 的值（unwrap操作） 分配给变量 content ，接下来执行 if 块中的代码。</p>
+<hr>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
   <link itemprop="mainEntityOfPage" href="http://swift.diagon.me/swift-sturct-class-type/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -967,7 +1135,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">44</span>
+                <span class="site-state-item-count">45</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -985,7 +1153,7 @@
           
             <div class="site-state-item site-state-tags">
               
-                <span class="site-state-item-count">29</span>
+                <span class="site-state-item-count">30</span>
                 <span class="site-state-item-name">标签</span>
               
             </div>

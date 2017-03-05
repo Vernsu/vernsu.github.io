@@ -8,8 +8,99 @@
     <atom:link href="/rss.xml" rel="self" type="application/rss+xml"/>
     
     <description>笨办法学Swift</description>
-    <pubDate>Fri, 03 Mar 2017 08:01:23 GMT</pubDate>
+    <pubDate>Sun, 05 Mar 2017 11:19:07 GMT</pubDate>
     <generator>http://hexo.io/</generator>
+    
+    <item>
+      <title>iOS 开发常用第三方库 [Objective-C 版]</title>
+      <link>http://swift.diagon.me/iOS-CommonLibs-Objc/</link>
+      <guid>http://swift.diagon.me/iOS-CommonLibs-Objc/</guid>
+      <pubDate>Fri, 03 Mar 2017 16:00:00 GMT</pubDate>
+      <description>
+      
+        &lt;p&gt;&lt;a href=&quot;&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;网络&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/AFNetworking/AFNetworking&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;AFN
+      
+      </description>
+      
+      <content:encoded><![CDATA[<p><a href=""></a></p>
+<ul>
+<li><p>网络</p>
+<ul>
+<li><a href="https://github.com/AFNetworking/AFNetworking" target="_blank" rel="external">AFNetworking</a> 强大的网络基础库</li>
+<li><a href="https://github.com/rs/SDWebImage" target="_blank" rel="external">SDWebImage</a> 网络图片下载、缓存、展示。支持UIImageView category</li>
+</ul>
+</li>
+<li><p>图片</p>
+<ul>
+<li><a href="https://github.com/BradLarson/GPUImage" target="_blank" rel="external">GPUImage</a> 基于 GPU 处理图片与视频</li>
+</ul>
+</li>
+<li><p>布局</p>
+<ul>
+<li><a href="https://github.com/SnapKit/Masonry" target="_blank" rel="external">Masonry</a>  对AutoLayout 进行了封装，提供了更优雅的链式语法</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p>数据</p>
+<ul>
+<li><a href="https://github.com/ccgus/fmdb" target="_blank" rel="external">fmdb</a> 用 Objective-C 封装的 SQLite</li>
+<li><a href="https://github.com/magicalpanda/MagicalRecord" target="_blank" rel="external">MagicalRecord</a> 神奇的 Core Data 封装</li>
+<li><a href="https://github.com/realm/realm-cocoa" target="_blank" rel="external">realm-cocoa</a> 移动数据库，可以代替 Core Data &amp; SQLite</li>
+</ul>
+</li>
+<li><p>Model</p>
+<ul>
+<li><a href="https://github.com/Mantle/Mantle" target="_blank" rel="external">Mantle</a> JSON Model 转换</li>
+<li><a href="https://github.com/RestKit/RestKit" target="_blank" rel="external">RestKit</a> JSON Model 转换</li>
+</ul>
+</li>
+<li><p>动态方案</p>
+<ul>
+<li><a href="https://github.com/bang590/JSPatch" target="_blank" rel="external">JSPatch</a> JSPatch bridge Objective-C and Javascript using the Objective-C runtime</li>
+</ul>
+</li>
+<li><p>日志</p>
+<ul>
+<li><a href="https://github.com/CocoaLumberjack/CocoaLumberjack" target="_blank" rel="external">CocoaLumberjack</a> 日志输出工具</li>
+</ul>
+</li>
+<li><p>其他</p>
+<ul>
+<li><a href="https://github.com/ViccAlexander/Chameleon" target="_blank" rel="external">Chameleon</a> 扁平颜色库</li>
+<li><a href="https://github.com/hackiftekhar/IQKeyboardManager" target="_blank" rel="external">IQKeyboardManager</a> 处理键盘弹出收起</li>
+</ul>
+</li>
+<li><p>UI控件</p>
+<ul>
+<li>提示<ul>
+<li><a href="https://github.com/jdg/MBProgressHUD" target="_blank" rel="external">MBProgressHUD</a> 各种样式的提示框</li>
+<li><a href="https://github.com/SVProgressHUD/SVProgressHUD" target="_blank" rel="external">SVProgressHUD</a> 简单轻量级的加载提示</li>
+</ul>
+</li>
+<li>刷新<ul>
+<li><a href="https://github.com/CoderMJLee/MJRefresh" target="_blank" rel="external">MJRefresh</a> 培训界的最爱</li>
+</ul>
+</li>
+<li>轮播 <ul>
+<li><a href="https://github.com/nicklockwood/iCarousel" target="_blank" rel="external">iCarousel</a></li>
+</ul>
+</li>
+<li>界面<ul>
+<li><a href="https://github.com/jessesquires/JSQMessagesViewController" target="_blank" rel="external">JSQMessagesViewController</a> 一个优雅的消息（IM）UI库</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+]]></content:encoded>
+      
+      <comments>http://swift.diagon.me/iOS-CommonLibs-Objc/#disqus_thread</comments>
+    </item>
     
     <item>
       <title>iOS 架构模式之 MVVM</title>
@@ -30,12 +121,11 @@
 <h3 id="绑定"><a href="#绑定" class="headerlink" title="绑定"></a>绑定</h3><p>实现绑定一般有两种方式：</p>
 <ul>
 <li>基于KVO的绑定：比如 <a href="https://github.com/Raizlabs/RZDataBinding" target="_blank" rel="external">RZDataBinding</a> 和 <a href="https://github.com/SwiftBond/Bond" target="_blank" rel="external">SwiftBond</a></li>
-<li><p><a href="https://gist.github.com/JaviLorbada/4a7bd6129275ebefd5a6" target="_blank" rel="external">函数响应式编程</a>：比如像 <a href="https://github.com/ReactiveCocoa/ReactiveCocoa" target="_blank" rel="external">ReactiveCocoa</a>、<a href="https://github.com/ReactiveX/RxSwift/" target="_blank" rel="external">RxSwift</a> 或者 <a href="https://github.com/mxcl/PromiseKit" target="_blank" rel="external">PromiseKit</a></p>
-<h3 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h3></li>
+<li><a href="https://gist.github.com/JaviLorbada/4a7bd6129275ebefd5a6" target="_blank" rel="external">函数响应式编程</a>：比如像 <a href="https://github.com/ReactiveCocoa/ReactiveCocoa" target="_blank" rel="external">ReactiveCocoa</a>、<a href="https://github.com/ReactiveX/RxSwift/" target="_blank" rel="external">RxSwift</a> 或者 <a href="https://github.com/mxcl/PromiseKit" target="_blank" rel="external">PromiseKit</a></li>
 </ul>
-<p>FRF 框架 和 KVO过度复杂，我们使用 showGreeting 方法 和 greetingDidChange 回调方法来达成这个目的。</p>
+<h3 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h3><p>FRF 框架 和 KVO过度复杂，我们使用 showGreeting 方法 和 greetingDidChange 回调方法来达成这个目的。</p>
 <figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div></pre></td><td class="code"><pre><div class="line"> <span class="keyword">import</span> UIKit</div><div class="line"> </div><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Person</span> </span>&#123; <span class="comment">// Model</span></div><div class="line">    <span class="keyword">let</span> firstName: <span class="type">String</span></div><div class="line">    <span class="keyword">let</span> lastName: <span class="type">String</span></div><div class="line">&#125;</div><div class="line"> </div><div class="line"><span class="class"><span class="keyword">protocol</span> <span class="title">GreetingViewModelProtocol</span>: <span class="title">class</span> </span>&#123;</div><div class="line">    <span class="keyword">var</span> greeting: <span class="type">String</span>? &#123; <span class="keyword">get</span> &#125;</div><div class="line">    <span class="keyword">var</span> greetingDidChange: ((<span class="type">GreetingViewModelProtocol</span>) -&gt; ())? &#123; <span class="keyword">get</span> <span class="keyword">set</span> &#125; <span class="comment">// function to call when greeting did change</span></div><div class="line">    <span class="keyword">init</span>(person: <span class="type">Person</span>)</div><div class="line">    <span class="function"><span class="keyword">func</span> <span class="title">showGreeting</span><span class="params">()</span></span></div><div class="line">&#125;</div><div class="line"> </div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">GreetingViewModel</span> : <span class="title">GreetingViewModelProtocol</span> </span>&#123;</div><div class="line">    <span class="keyword">let</span> person: <span class="type">Person</span></div><div class="line">    <span class="keyword">var</span> greeting: <span class="type">String</span>? &#123;</div><div class="line">        <span class="keyword">didSet</span> &#123;</div><div class="line">            <span class="keyword">self</span>.greetingDidChange?(<span class="keyword">self</span>)</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">var</span> greetingDidChange: ((<span class="type">GreetingViewModelProtocol</span>) -&gt; ())?</div><div class="line">    <span class="keyword">required</span> <span class="keyword">init</span>(person: <span class="type">Person</span>) &#123;</div><div class="line">        <span class="keyword">self</span>.person = person</div><div class="line">    &#125;</div><div class="line">    <span class="function"><span class="keyword">func</span> <span class="title">showGreeting</span><span class="params">()</span></span> &#123;</div><div class="line">        <span class="keyword">self</span>.greeting = <span class="string">"Hello"</span> + <span class="string">" "</span> + <span class="keyword">self</span>.person.firstName + <span class="string">" "</span> + <span class="keyword">self</span>.person.lastName</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"> </div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">GreetingViewController</span> : <span class="title">UIViewController</span> </span>&#123;</div><div class="line">    <span class="keyword">var</span> viewModel: <span class="type">GreetingViewModelProtocol</span>! &#123;</div><div class="line">        <span class="keyword">didSet</span> &#123;</div><div class="line">            <span class="keyword">self</span>.viewModel.greetingDidChange = &#123; [<span class="keyword">unowned</span> <span class="keyword">self</span>] viewModel <span class="keyword">in</span></div><div class="line">                <span class="keyword">self</span>.greetingLabel.text = viewModel.greeting</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">let</span> showGreetingButton = <span class="type">UIButton</span>()</div><div class="line">    <span class="keyword">let</span> greetingLabel = <span class="type">UILabel</span>()</div><div class="line"> </div><div class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">func</span> <span class="title">viewDidLoad</span><span class="params">()</span></span> &#123;</div><div class="line">        <span class="keyword">super</span>.viewDidLoad()</div><div class="line">        <span class="keyword">self</span>.showGreetingButton.addTarget(<span class="keyword">self</span>.viewModel, action: <span class="string">"showGreeting"</span>, forControlEvents: .<span class="type">TouchUpInside</span>)</div><div class="line">    &#125;</div><div class="line">    <span class="comment">// 布局代码</span></div><div class="line">&#125;</div><div class="line"><span class="comment">// MVVM</span></div><div class="line"><span class="keyword">let</span> model = <span class="type">Person</span>(firstName: <span class="string">"David"</span>, lastName: <span class="string">"Blaine"</span>)</div><div class="line"><span class="keyword">let</span> viewModel = <span class="type">GreetingViewModel</span>(person: model)</div><div class="line"><span class="keyword">let</span> view = <span class="type">GreetingViewController</span>()</div><div class="line">view.viewModel = viewModel</div></pre></td></tr></table></figure>
-<p>抛开绑定机制不说，ViewModel 做的就是表示逻辑的载体，最简单的实现就是在 ViewController中调用：</p>
+<p>抛开绑定机制不说，ViewModel 做的就是表示逻辑的载体，最简单的实现就是在 ViewController 中调用：</p>
 <figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">self</span>.greetingLabel.text = <span class="keyword">self</span>.viewModel.greeting</div></pre></td></tr></table></figure>
 <p>我们评估下之前提出的架构特点：</p>
 <ol>
@@ -43,7 +133,7 @@
 <li>容易测试：确实易于测试。如果我们没有将表示逻辑移入 ViewModel，我们将不得不实例化一个完整的 ViewController 以及伴随的 View，然后去比较我们 View 中的数值。但另一方面，数据绑定机制使得 定位 bug 变得更难了。数据绑定使程序异常能快速的传递到其他位置，在 View 上发现的 bug 有可能是由 ViewModel 造成的，也有可能是由 Model 造成的，传递链越长，对 Bug 的定位就越困难。</li>
 <li>易用，维护成本低：在我们例子中的代码量和 MVP 的差不多，但是在实际开发中，使用了诸如 ReativeCocoa 这样的第三方库 ，MVVM 代码量将会小的多。 </li>
 </ol>
-<p>没有完美的架构模式，只有适用于你的 App 业务场景和团队的架构模式。比如数据逻辑简单、注重视觉展示的页面，原始的 MVC 可能是最优解。而 MVP 的特点是有更好的灵活性和扩展性。MVVM 可以兼容当前使用 MVC架构模式 。</p>
+<h3 id="架构模式选择"><a href="#架构模式选择" class="headerlink" title="架构模式选择"></a>架构模式选择</h3><p>没有完美的架构模式，只有适用于你的 App 业务场景和团队的架构模式。比如数据逻辑简单、注重视觉展示的页面，原始的 MVC 可能是最优解。而 MVP 的特点是有更好的灵活性和扩展性。MVVM 可以兼容当前使用 MVC架构模式 。</p>
 ]]></content:encoded>
       
       <comments>http://swift.diagon.me/Pattern-MVVM/#disqus_thread</comments>
@@ -123,7 +213,7 @@
 <ol>
 <li>职能均分：View 和 Controller 紧密耦合。</li>
 <li>容易测试：紧密耦合不利于测试。</li>
-<li>易用，维护成本低：MVC 很容易理解，相比其他模式代码量少，开发速度快，新手也可以维护。当时随着项目变大，可维护性越来越差。</li>
+<li>易用，维护成本低：这种模式在语言框架层就得到了苹果的支持，新手容易上手，相比其他模式代码量少，开发速度快。但随着项目变大，由于其耦和度很高，可维护性越来越差。</li>
 </ol>
 ]]></content:encoded>
       
@@ -965,34 +1055,6 @@
 ]]></content:encoded>
       
       <comments>http://swift.diagon.me/Alamofire-Moya-TargetType/#disqus_thread</comments>
-    </item>
-    
-    <item>
-      <title>iOS 性能优化之光栅化</title>
-      <link>http://swift.diagon.me/shouldRasterize/</link>
-      <guid>http://swift.diagon.me/shouldRasterize/</guid>
-      <pubDate>Sat, 11 Feb 2017 16:00:00 GMT</pubDate>
-      <description>
-      
-        &lt;p&gt;在&lt;a href=&quot;http://swift.diagon.me/off-screen-rendering/&quot;&gt;《iOS 开发中的离屏渲染问题》&lt;/a&gt;一文中提到，离屏渲染通常发生在 GPU 中。一个 tableView 中有大量带圆角的视图，当 tableView 快速滑
-      
-      </description>
-      
-      <content:encoded><![CDATA[<p>在<a href="http://swift.diagon.me/off-screen-rendering/">《iOS 开发中的离屏渲染问题》</a>一文中提到，离屏渲染通常发生在 GPU 中。一个 tableView 中有大量带圆角的视图，当 tableView 快速滑动时，可以看到 GPU 已经被占满，而 CPU 占用量很少。这时界面仍然能正常滑动，但平均帧数会降到很低。为了避免这种情况，可以尝试开启光栅化（CALayer.shouldRasterize ），但这会把原本 GPU 离屏渲染的操作转嫁到 CPU 上去。</p>
-<h2 id="光栅化"><a href="#光栅化" class="headerlink" title="光栅化"></a>光栅化</h2><p><a href="http://swift.diagon.me/off-screen-rendering/">《iOS 开发中的离屏渲染问题》</a>中提到的 GPU 离屏渲染是自动触发的，而开启光栅化，是手动启动离屏渲染，并且将离屏渲染的工作交由 CPU 处理。</p>
-<p>开启光栅化会将图层渲染为一个屏幕之外的位图(bitmap)，然后将这个位图缓存起来。图层有复杂的视觉效果，这样做就会比重绘所有帧划划算的多。但是光栅化原始图像需要时间，而且还会消耗额外的内存。</p>
-<p>当我们使用得当，光栅化可以提供很大的性能优势，但是一定要避免用在内容是动态变化的图层上，不然它缓存方面的优势就会丧失，而且会让性能变的更糟。</p>
-<p>另外要注意的一点，设置 <code>shouldRasterize</code> 的同时也要设置 <code>rasterizationScale</code>。</p>
-<h2 id="最优设置"><a href="#最优设置" class="headerlink" title="最优设置"></a>最优设置</h2><p>在<a href="http://swift.diagon.me/cornerRadius/">《iOS 性能优化之视图圆角》</a>中提到了几种性能优化的方法，开启光栅化也能起到一定的性能优化作用。</p>
-<p>经过测试，对于 tableView 来说，光栅化性能最好的方式是是开启 cell 的 <code>shouldRasterize</code>，并将  <code>rasterizationScale</code> 设置为 <code>UIScreen.main.scale</code>。如果设置<code>cell.layer.rasterizationScale = cell.layer.contentsScale</code>则会出现视图模糊的现象。</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">cell.layer.shouldRasterize = <span class="literal">true</span></div><div class="line">cell.layer.rasterizationScale = <span class="type">UIScreen</span>.main.scale</div></pre></td></tr></table></figure>
-<p>若 cell 中有多个需要离屏渲染的子视图，对每个子视图分别开启光栅化并不会优化性能，反而可能造成性能下降。</p>
-<h2 id="使用-Instruments-监测性能"><a href="#使用-Instruments-监测性能" class="headerlink" title="使用 Instruments 监测性能"></a>使用 Instruments 监测性能</h2><p>Instruments 的 Core Animation 工具里有检测光栅化是否正确使用的选项：<code>Color Hits Green and Misses Red</code>，如果开启了光栅化，渲染结果会被缓存，如果图层是绿色，就表示有渲染缓存可用；如果是红色，就表示无渲染缓存可用，缓存会被重复创建，这就可能导致性能问题。</p>
-<p>注意：这个工具只能在真机上调试时使用。</p>
-<hr>
-]]></content:encoded>
-      
-      <comments>http://swift.diagon.me/shouldRasterize/#disqus_thread</comments>
     </item>
     
   </channel>
