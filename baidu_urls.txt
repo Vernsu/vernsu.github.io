@@ -1,1 +1,1 @@
-http://swift.diagon.me/iOS-CommonLibs-Objc/
+http://swift.diagon.me/Pattern-MVVM/

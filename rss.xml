@@ -8,105 +8,14 @@
     <atom:link href="/rss.xml" rel="self" type="application/rss+xml"/>
     
     <description>笨办法学Swift</description>
-    <pubDate>Sun, 05 Mar 2017 11:19:07 GMT</pubDate>
+    <pubDate>Mon, 06 Mar 2017 11:40:16 GMT</pubDate>
     <generator>http://hexo.io/</generator>
-    
-    <item>
-      <title>iOS 开发常用第三方库 [Objective-C 版]</title>
-      <link>http://swift.diagon.me/iOS-CommonLibs-Objc/</link>
-      <guid>http://swift.diagon.me/iOS-CommonLibs-Objc/</guid>
-      <pubDate>Fri, 03 Mar 2017 16:00:00 GMT</pubDate>
-      <description>
-      
-        &lt;p&gt;&lt;a href=&quot;&quot;&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;网络&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;https://github.com/AFNetworking/AFNetworking&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;AFN
-      
-      </description>
-      
-      <content:encoded><![CDATA[<p><a href=""></a></p>
-<ul>
-<li><p>网络</p>
-<ul>
-<li><a href="https://github.com/AFNetworking/AFNetworking" target="_blank" rel="external">AFNetworking</a> 强大的网络基础库</li>
-<li><a href="https://github.com/rs/SDWebImage" target="_blank" rel="external">SDWebImage</a> 网络图片下载、缓存、展示。支持UIImageView category</li>
-</ul>
-</li>
-<li><p>图片</p>
-<ul>
-<li><a href="https://github.com/BradLarson/GPUImage" target="_blank" rel="external">GPUImage</a> 基于 GPU 处理图片与视频</li>
-</ul>
-</li>
-<li><p>布局</p>
-<ul>
-<li><a href="https://github.com/SnapKit/Masonry" target="_blank" rel="external">Masonry</a>  对AutoLayout 进行了封装，提供了更优雅的链式语法</li>
-</ul>
-</li>
-</ul>
-<ul>
-<li><p>数据</p>
-<ul>
-<li><a href="https://github.com/ccgus/fmdb" target="_blank" rel="external">fmdb</a> 用 Objective-C 封装的 SQLite</li>
-<li><a href="https://github.com/magicalpanda/MagicalRecord" target="_blank" rel="external">MagicalRecord</a> 神奇的 Core Data 封装</li>
-<li><a href="https://github.com/realm/realm-cocoa" target="_blank" rel="external">realm-cocoa</a> 移动数据库，可以代替 Core Data &amp; SQLite</li>
-</ul>
-</li>
-<li><p>Model</p>
-<ul>
-<li><a href="https://github.com/Mantle/Mantle" target="_blank" rel="external">Mantle</a> JSON Model 转换</li>
-<li><a href="https://github.com/RestKit/RestKit" target="_blank" rel="external">RestKit</a> JSON Model 转换</li>
-</ul>
-</li>
-<li><p>动态方案</p>
-<ul>
-<li><a href="https://github.com/bang590/JSPatch" target="_blank" rel="external">JSPatch</a> JSPatch bridge Objective-C and Javascript using the Objective-C runtime</li>
-</ul>
-</li>
-<li><p>日志</p>
-<ul>
-<li><a href="https://github.com/CocoaLumberjack/CocoaLumberjack" target="_blank" rel="external">CocoaLumberjack</a> 日志输出工具</li>
-</ul>
-</li>
-<li><p>其他</p>
-<ul>
-<li><a href="https://github.com/ViccAlexander/Chameleon" target="_blank" rel="external">Chameleon</a> 扁平颜色库</li>
-<li><a href="https://github.com/hackiftekhar/IQKeyboardManager" target="_blank" rel="external">IQKeyboardManager</a> 处理键盘弹出收起</li>
-</ul>
-</li>
-<li><p>UI控件</p>
-<ul>
-<li>提示<ul>
-<li><a href="https://github.com/jdg/MBProgressHUD" target="_blank" rel="external">MBProgressHUD</a> 各种样式的提示框</li>
-<li><a href="https://github.com/SVProgressHUD/SVProgressHUD" target="_blank" rel="external">SVProgressHUD</a> 简单轻量级的加载提示</li>
-</ul>
-</li>
-<li>刷新<ul>
-<li><a href="https://github.com/CoderMJLee/MJRefresh" target="_blank" rel="external">MJRefresh</a> 培训界的最爱</li>
-</ul>
-</li>
-<li>轮播 <ul>
-<li><a href="https://github.com/nicklockwood/iCarousel" target="_blank" rel="external">iCarousel</a></li>
-</ul>
-</li>
-<li>界面<ul>
-<li><a href="https://github.com/jessesquires/JSQMessagesViewController" target="_blank" rel="external">JSQMessagesViewController</a> 一个优雅的消息（IM）UI库</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-]]></content:encoded>
-      
-      <comments>http://swift.diagon.me/iOS-CommonLibs-Objc/#disqus_thread</comments>
-    </item>
     
     <item>
       <title>iOS 架构模式之 MVVM</title>
       <link>http://swift.diagon.me/Pattern-MVVM/</link>
       <guid>http://swift.diagon.me/Pattern-MVVM/</guid>
-      <pubDate>Thu, 02 Mar 2017 16:00:00 GMT</pubDate>
+      <pubDate>Fri, 03 Mar 2017 16:00:00 GMT</pubDate>
       <description>
       
         &lt;h3 id=&quot;MVVM-构成&quot;&gt;&lt;a href=&quot;#MVVM-构成&quot; class=&quot;headerlink&quot; title=&quot;MVVM 构成&quot;&gt;&lt;/a&gt;MVVM 构成&lt;/h3&gt;&lt;p&gt;MVVM 看上去和 MVP 很像：&lt;/p&gt;
@@ -134,6 +43,7 @@
 <li>易用，维护成本低：在我们例子中的代码量和 MVP 的差不多，但是在实际开发中，使用了诸如 ReativeCocoa 这样的第三方库 ，MVVM 代码量将会小的多。 </li>
 </ol>
 <h3 id="架构模式选择"><a href="#架构模式选择" class="headerlink" title="架构模式选择"></a>架构模式选择</h3><p>没有完美的架构模式，只有适用于你的 App 业务场景和团队的架构模式。比如数据逻辑简单、注重视觉展示的页面，原始的 MVC 可能是最优解。而 MVP 的特点是有更好的灵活性和扩展性。MVVM 可以兼容当前使用 MVC架构模式 。</p>
+<hr>
 ]]></content:encoded>
       
       <comments>http://swift.diagon.me/Pattern-MVVM/#disqus_thread</comments>
@@ -143,7 +53,7 @@
       <title>iOS 架构模式之 MVP</title>
       <link>http://swift.diagon.me/Pattern-MVP/</link>
       <guid>http://swift.diagon.me/Pattern-MVP/</guid>
-      <pubDate>Wed, 01 Mar 2017 16:00:00 GMT</pubDate>
+      <pubDate>Thu, 02 Mar 2017 16:00:00 GMT</pubDate>
       <description>
       
         &lt;h3 id=&quot;MVP-构成&quot;&gt;&lt;a href=&quot;#MVP-构成&quot; class=&quot;headerlink&quot; title=&quot;MVP 构成&quot;&gt;&lt;/a&gt;MVP 构成&lt;/h3&gt;&lt;p&gt;在了解 MVC 之后，我们再来看看 MVP：&lt;/p&gt;
@@ -164,6 +74,7 @@
 <li>容易测试：确实易于测试。</li>
 <li>易用，维护成本低：这个实例的代码量是 MVC 的两倍。换句话说，使用 MVP 意味着代码量大。</li>
 </ol>
+<hr>
 ]]></content:encoded>
       
       <comments>http://swift.diagon.me/Pattern-MVP/#disqus_thread</comments>
@@ -173,7 +84,7 @@
       <title>iOS 架构模式之 MVC</title>
       <link>http://swift.diagon.me/Pattern-MVC/</link>
       <guid>http://swift.diagon.me/Pattern-MVC/</guid>
-      <pubDate>Tue, 28 Feb 2017 16:00:00 GMT</pubDate>
+      <pubDate>Wed, 01 Mar 2017 16:00:00 GMT</pubDate>
       <description>
       
         &lt;p&gt;注1：本文中实例引述自&lt;a href=&quot;https://medium.com/ios-os-x-development/ios-architecture-patterns-ecba4c38de52&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;《iOS A
@@ -215,9 +126,126 @@
 <li>容易测试：紧密耦合不利于测试。</li>
 <li>易用，维护成本低：这种模式在语言框架层就得到了苹果的支持，新手容易上手，相比其他模式代码量少，开发速度快。但随着项目变大，由于其耦和度很高，可维护性越来越差。</li>
 </ol>
+<hr>
 ]]></content:encoded>
       
       <comments>http://swift.diagon.me/Pattern-MVC/#disqus_thread</comments>
+    </item>
+    
+    <item>
+      <title>iOS 开发常用第三方库 [Objective-C 版]</title>
+      <link>http://swift.diagon.me/iOS-CommonLibs-Objc/</link>
+      <guid>http://swift.diagon.me/iOS-CommonLibs-Objc/</guid>
+      <pubDate>Tue, 28 Feb 2017 16:00:00 GMT</pubDate>
+      <description>
+      
+        &lt;p&gt;&lt;a href=&quot;&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;网络&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/AFNetworking/AFNetworking&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;AFN
+      
+      </description>
+      
+      <content:encoded><![CDATA[<p><a href=""></a></p>
+<ul>
+<li><p>网络</p>
+<ul>
+<li><a href="https://github.com/AFNetworking/AFNetworking" target="_blank" rel="external">AFNetworking</a> 强大的网络基础库</li>
+<li><a href="https://github.com/rs/SDWebImage" target="_blank" rel="external">SDWebImage</a> 网络图片下载、缓存、展示。支持UIImageView category</li>
+<li><a href="https://github.com/robbiehanson/CocoaAsyncSocket" target="_blank" rel="external">CocoaAsyncSocket</a> 异步 socket 网络库</li>
+</ul>
+</li>
+<li><p>图片</p>
+<ul>
+<li><a href="https://github.com/BradLarson/GPUImage" target="_blank" rel="external">GPUImage</a> 基于 GPU 处理图片与视频</li>
+<li><a href="https://github.com/path/FastImageCache" target="_blank" rel="external">FastImageCache</a> 高效的图片缓存库</li>
+<li><a href="https://github.com/Flipboard/FLAnimatedImage" target="_blank" rel="external">FLAnimatedImage</a> GIF引擎</li>
+</ul>
+</li>
+<li><p>布局</p>
+<ul>
+<li><a href="https://github.com/SnapKit/Masonry" target="_blank" rel="external">Masonry</a>  对AutoLayout 进行了封装，提供了更优雅的链式语法</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p>数据</p>
+<ul>
+<li><a href="https://github.com/ccgus/fmdb" target="_blank" rel="external">fmdb</a> 用 Objective-C 封装的 SQLite</li>
+<li><a href="https://github.com/magicalpanda/MagicalRecord" target="_blank" rel="external">MagicalRecord</a> 神奇的 Core Data 封装</li>
+<li><a href="https://github.com/realm/realm-cocoa" target="_blank" rel="external">realm-cocoa</a> 移动数据库，可以代替 Core Data &amp; SQLite</li>
+</ul>
+</li>
+<li><p>Model</p>
+<ul>
+<li><a href="https://github.com/Mantle/Mantle" target="_blank" rel="external">Mantle</a> JSON Model 转换</li>
+<li><a href="https://github.com/RestKit/RestKit" target="_blank" rel="external">RestKit</a> JSON Model 转换</li>
+<li><a href="https://github.com/jsonmodel/jsonmodel" target="_blank" rel="external">jsonmodel</a> JSON Model 转换</li>
+</ul>
+</li>
+<li><p>动态方案</p>
+<ul>
+<li><a href="https://github.com/bang590/JSPatch" target="_blank" rel="external">JSPatch</a> JSPatch bridge Objective-C and Javascript using the Objective-C runtime</li>
+</ul>
+</li>
+<li><p>日志</p>
+<ul>
+<li><a href="https://github.com/CocoaLumberjack/CocoaLumberjack" target="_blank" rel="external">CocoaLumberjack</a> 日志输出工具</li>
+</ul>
+</li>
+<li>其他<ul>
+<li><a href="https://github.com/ViccAlexander/Chameleon" target="_blank" rel="external">Chameleon</a> 扁平颜色库</li>
+<li><a href="https://github.com/hackiftekhar/IQKeyboardManager" target="_blank" rel="external">IQKeyboardManager</a> 处理键盘弹出收起</li>
+<li><a href="https://github.com/marcuswestin/WebViewJavascriptBridge" target="_blank" rel="external">WebViewJavascriptBridge</a> UIWebViews 中 Objective-C and JavaScript 桥接</li>
+<li><a href="https://github.com/Flipboard/FLEX" target="_blank" rel="external">FLEX</a> UI 分析工具</li>
+<li><a href="https://github.com/forkingdog/UITableView-FDTemplateLayoutCell" target="_blank" rel="external">UITableView-FDTemplateLayoutCell</a> TableViewCell 高度计算</li>
+<li><a href="https://github.com/facebook/KVOController" target="_blank" rel="external">KVOController</a> KVO 监听</li>
+<li><a href="https://github.com/nst/iOS-Runtime-Headers" target="_blank" rel="external">iOS-Runtime-Headers</a> Runtime 工具</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p>UI控件</p>
+<ul>
+<li>提示<ul>
+<li><a href="https://github.com/jdg/MBProgressHUD" target="_blank" rel="external">MBProgressHUD</a> 各种样式的提示框</li>
+<li><a href="https://github.com/SVProgressHUD/SVProgressHUD" target="_blank" rel="external">SVProgressHUD</a> 简单轻量级的加载提示</li>
+</ul>
+</li>
+<li>刷新<ul>
+<li><a href="https://github.com/CoderMJLee/MJRefresh" target="_blank" rel="external">MJRefresh</a> 培训界的最爱</li>
+</ul>
+</li>
+<li>轮播 <ul>
+<li><a href="https://github.com/nicklockwood/iCarousel" target="_blank" rel="external">iCarousel</a></li>
+</ul>
+</li>
+<li>界面<ul>
+<li><a href="https://github.com/jessesquires/JSQMessagesViewController" target="_blank" rel="external">JSQMessagesViewController</a> 一个优雅的消息（IM）UI库</li>
+<li><a href="https://github.com/dzenbot/DZNEmptyDataSet" target="_blank" rel="external">DZNEmptyDataSet</a> 列表页为空时的提示页</li>
+<li><a href="https://github.com/mwaterfall/MWPhotoBrowser]" target="_blank" rel="external">MWPhotoBrowser</a> 图片浏览器</li>
+</ul>
+</li>
+<li><p>图表</p>
+<ul>
+<li><a href="https://github.com/kevinzhow/PNChart" target="_blank" rel="external">PNChart</a> 柱状图，饼状图等</li>
+<li><a href="https://github.com/MatthewYork/DateTools" target="_blank" rel="external">DateTools</a> 日历工具</li>
+</ul>
+</li>
+<li><p>其他</p>
+<ul>
+<li><a href="https://github.com/facebook/Shimmer" target="_blank" rel="external">Shimmer</a> 闪烁效果</li>
+<li><a href="https://github.com/CEWendel/SWTableViewCell" target="_blank" rel="external">SWTableViewCell</a>  UITableViewCell 滑动功能按钮</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<hr>
+]]></content:encoded>
+      
+      <comments>http://swift.diagon.me/iOS-CommonLibs-Objc/#disqus_thread</comments>
     </item>
     
     <item>
